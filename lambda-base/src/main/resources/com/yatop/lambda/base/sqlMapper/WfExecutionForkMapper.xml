@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yatop.lambda.base.mapper.WfExecutionForkMapper">
+  <resultMap id="BaseResultMap" type="com.yatop.lambda.base.model.WfExecutionFork">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="FORK_ID" jdbcType="BIGINT" property="forkId" />
+    <result column="OWNER_JOB_ID" jdbcType="BIGINT" property="ownerJobId" />
+    <result column="FORK_NODE_ID" jdbcType="BIGINT" property="forkNodeId" />
+    <result column="FORK_NUM" jdbcType="INTEGER" property="forkNum" />
+    <result column="FORK_STATE" jdbcType="INTEGER" property="forkState" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="LAST_UPDATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="LAST_UPDATE_OPER" jdbcType="VARCHAR" property="lastUpdateOper" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_OPER" jdbcType="VARCHAR" property="createOper" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    FORK_ID, OWNER_JOB_ID, FORK_NODE_ID, FORK_NUM, FORK_STATE, DESCRIPTION, STATUS, LAST_UPDATE_TIME, 
+    LAST_UPDATE_OPER, CREATE_TIME, CREATE_OPER
+  </sql>
+  <select id="selectByExample" parameterType="com.yatop.lambda.base.model.WfExecutionForkExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wf_execution_fork
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="MysqlSuffix" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.yatop.lambda.base.model.WfExecutionForkExample">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from wf_execution_fork
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.yatop.lambda.base.model.WfExecutionForkExample" resultType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from wf_execution_fork
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update wf_execution_fork
+    <set>
+      <if test="record.forkId != null">
+        FORK_ID = #{record.forkId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ownerJobId != null">
+        OWNER_JOB_ID = #{record.ownerJobId,jdbcType=BIGINT},
+      </if>
+      <if test="record.forkNodeId != null">
+        FORK_NODE_ID = #{record.forkNodeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.forkNum != null">
+        FORK_NUM = #{record.forkNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.forkState != null">
+        FORK_STATE = #{record.forkState,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null">
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastUpdateTime != null">
+        LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastUpdateOper != null">
+        LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createOper != null">
+        CREATE_OPER = #{record.createOper,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update wf_execution_fork
+    set FORK_ID = #{record.forkId,jdbcType=BIGINT},
+      OWNER_JOB_ID = #{record.ownerJobId,jdbcType=BIGINT},
+      FORK_NODE_ID = #{record.forkNodeId,jdbcType=BIGINT},
+      FORK_NUM = #{record.forkNum,jdbcType=INTEGER},
+      FORK_STATE = #{record.forkState,jdbcType=INTEGER},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=INTEGER},
+      LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      CREATE_OPER = #{record.createOper,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <sql id="MysqlSuffix">
+    <if test="page != null">
+      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlSuffix">
+    <if test="page != null">
+      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlSuffix">
+    <if test="page != null">
+      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlSuffix">
+    <if test="page != null">
+      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
+    </if>
+  </sql>
+</mapper>

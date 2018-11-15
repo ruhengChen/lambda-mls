@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yatop.lambda.base.mapper.MwModelEvaluationReportMapper">
+  <resultMap id="BaseResultMap" type="com.yatop.lambda.base.model.MwModelEvaluationReport">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="REPORT_ID" jdbcType="BIGINT" property="reportId" />
+    <result column="REPORT_NAME" jdbcType="VARCHAR" property="reportName" />
+    <result column="OWNER_MODEL_ID" jdbcType="BIGINT" property="ownerModelId" />
+    <result column="REL_SNAPSHOT_ID" jdbcType="BIGINT" property="relSnapshotId" />
+    <result column="REL_NODE_ID" jdbcType="BIGINT" property="relNodeId" />
+    <result column="TEST_TABLE_ID" jdbcType="BIGINT" property="testTableId" />
+    <result column="REPORT_STATE" jdbcType="INTEGER" property="reportState" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="LAST_UPDATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="LAST_UPDATE_OPER" jdbcType="VARCHAR" property="lastUpdateOper" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_OPER" jdbcType="VARCHAR" property="createOper" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yatop.lambda.base.model.MwModelEvaluationReport">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <result column="REPORT_FILE" jdbcType="LONGVARBINARY" property="reportFile" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    REPORT_ID, REPORT_NAME, OWNER_MODEL_ID, REL_SNAPSHOT_ID, REL_NODE_ID, TEST_TABLE_ID, 
+    REPORT_STATE, STATUS, LAST_UPDATE_TIME, LAST_UPDATE_OPER, CREATE_TIME, CREATE_OPER
+  </sql>
+  <sql id="Blob_Column_List">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    REPORT_FILE
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.yatop.lambda.base.model.MwModelEvaluationReportExample" resultMap="ResultMapWithBLOBs">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mw_model_evaluation_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.yatop.lambda.base.model.MwModelEvaluationReportExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mw_model_evaluation_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="MysqlSuffix" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.yatop.lambda.base.model.MwModelEvaluationReportExample">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from mw_model_evaluation_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.yatop.lambda.base.model.MwModelEvaluationReportExample" resultType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from mw_model_evaluation_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update mw_model_evaluation_report
+    <set>
+      <if test="record.reportId != null">
+        REPORT_ID = #{record.reportId,jdbcType=BIGINT},
+      </if>
+      <if test="record.reportName != null">
+        REPORT_NAME = #{record.reportName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownerModelId != null">
+        OWNER_MODEL_ID = #{record.ownerModelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.relSnapshotId != null">
+        REL_SNAPSHOT_ID = #{record.relSnapshotId,jdbcType=BIGINT},
+      </if>
+      <if test="record.relNodeId != null">
+        REL_NODE_ID = #{record.relNodeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.testTableId != null">
+        TEST_TABLE_ID = #{record.testTableId,jdbcType=BIGINT},
+      </if>
+      <if test="record.reportState != null">
+        REPORT_STATE = #{record.reportState,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastUpdateTime != null">
+        LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastUpdateOper != null">
+        LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createOper != null">
+        CREATE_OPER = #{record.createOper,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportFile != null">
+        REPORT_FILE = #{record.reportFile,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update mw_model_evaluation_report
+    set REPORT_ID = #{record.reportId,jdbcType=BIGINT},
+      REPORT_NAME = #{record.reportName,jdbcType=VARCHAR},
+      OWNER_MODEL_ID = #{record.ownerModelId,jdbcType=BIGINT},
+      REL_SNAPSHOT_ID = #{record.relSnapshotId,jdbcType=BIGINT},
+      REL_NODE_ID = #{record.relNodeId,jdbcType=BIGINT},
+      TEST_TABLE_ID = #{record.testTableId,jdbcType=BIGINT},
+      REPORT_STATE = #{record.reportState,jdbcType=INTEGER},
+      STATUS = #{record.status,jdbcType=INTEGER},
+      LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      CREATE_OPER = #{record.createOper,jdbcType=VARCHAR},
+      REPORT_FILE = #{record.reportFile,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update mw_model_evaluation_report
+    set REPORT_ID = #{record.reportId,jdbcType=BIGINT},
+      REPORT_NAME = #{record.reportName,jdbcType=VARCHAR},
+      OWNER_MODEL_ID = #{record.ownerModelId,jdbcType=BIGINT},
+      REL_SNAPSHOT_ID = #{record.relSnapshotId,jdbcType=BIGINT},
+      REL_NODE_ID = #{record.relNodeId,jdbcType=BIGINT},
+      TEST_TABLE_ID = #{record.testTableId,jdbcType=BIGINT},
+      REPORT_STATE = #{record.reportState,jdbcType=INTEGER},
+      STATUS = #{record.status,jdbcType=INTEGER},
+      LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      CREATE_OPER = #{record.createOper,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <sql id="MysqlSuffix">
+    <if test="page != null">
+      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlSuffix">
+    <if test="page != null">
+      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlSuffix">
+    <if test="page != null">
+      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
+    </if>
+  </sql>
+  <sql id="MysqlSuffix">
+    <if test="page != null">
+      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
+    </if>
+  </sql>
+</mapper>

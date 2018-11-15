@@ -1,0 +1,15 @@
+/*
+!/lambda-base/
+!/lambda-core/
+!/lambda-tools/
+!/lambda-workflow-core/
+!/lambda-workflow-module/
+!/lambda-workflow-engine/
+!/lambda-studio/
+!/lambda-studio-ui/
+!/lambda-open/
+!/lambda-decision/
+!/lambda-cluster-adapter/
+!/lambda-component-common/
+!pom.xml
+!.gitignore
