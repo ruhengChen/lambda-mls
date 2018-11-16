@@ -11,6 +11,7 @@
     
     <artifactId>lambda-cluster-adapter</artifactId>
     <packaging>jar</packaging>
+    <version>1.0.0</version>
 
     <name>lambda-cluster-adapter</name>
     <url>http://maven.apache.org</url>

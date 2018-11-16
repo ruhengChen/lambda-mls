@@ -11,6 +11,7 @@
     
     <artifactId>lambda-component-common</artifactId>
     <packaging>jar</packaging>
+    <version>1.0.0</version>
 
     <name>lambda-component-common</name>
     <url>http://maven.apache.org</url>

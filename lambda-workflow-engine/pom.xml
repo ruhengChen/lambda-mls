@@ -11,12 +11,28 @@
 
 	<artifactId>lambda-workflow-engine</artifactId>
 	<packaging>jar</packaging>
+	<version>1.0.0</version>
 
 	<name>lambda-workflow-engine</name>
 	<url>http://maven.apache.org</url>
 
 
 	<dependencies>
+		<dependency>
+			<groupId>com.yatop.lambda</groupId>
+			<artifactId>lambda-core</artifactId>
+			<version>${yatop.lambda.core}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.yatop.lambda</groupId>
+			<artifactId>lambda-workflow-core</artifactId>
+			<version>${yatop.lambda.workflow.core}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.yatop.lambda</groupId>
+			<artifactId>lambda-workflow-module</artifactId>
+			<version>${yatop.lambda.workflow.module}</version>
+		</dependency>
 
 		<!-- =========================================spring================= -->
 		<dependency>
