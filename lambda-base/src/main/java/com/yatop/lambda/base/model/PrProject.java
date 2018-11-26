@@ -38,6 +38,12 @@ public class PrProject implements Serializable {
     private Long mwId;
 
     /**
+     * 临时数据表过期天数，每天2点扫描清理，另外提供主动清理接口
+     */
+    @Column(name = "CACHE_EXIPRE_DAYS")
+    private Integer cacheExipreDays;
+
+    /**
      * 描述
      */
     @Column(name = "DESCRIPTION")
@@ -165,6 +171,24 @@ public class PrProject implements Serializable {
      */
     public void setMwId(Long mwId) {
         this.mwId = mwId;
+    }
+
+    /**
+     * 获取临时数据表过期天数，每天2点扫描清理，另外提供主动清理接口
+     *
+     * @return CACHE_EXIPRE_DAYS - 临时数据表过期天数，每天2点扫描清理，另外提供主动清理接口
+     */
+    public Integer getCacheExipreDays() {
+        return cacheExipreDays;
+    }
+
+    /**
+     * 设置临时数据表过期天数，每天2点扫描清理，另外提供主动清理接口
+     *
+     * @param cacheExipreDays 临时数据表过期天数，每天2点扫描清理，另外提供主动清理接口
+     */
+    public void setCacheExipreDays(Integer cacheExipreDays) {
+        this.cacheExipreDays = cacheExipreDays;
     }
 
     /**
@@ -300,6 +324,7 @@ public class PrProject implements Serializable {
             && (this.getProjectName() == null ? other.getProjectName() == null : this.getProjectName().equals(other.getProjectName()))
             && (this.getDwId() == null ? other.getDwId() == null : this.getDwId().equals(other.getDwId()))
             && (this.getMwId() == null ? other.getMwId() == null : this.getMwId().equals(other.getMwId()))
+            && (this.getCacheExipreDays() == null ? other.getCacheExipreDays() == null : this.getCacheExipreDays().equals(other.getCacheExipreDays()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getLastUpdateTime() == null ? other.getLastUpdateTime() == null : this.getLastUpdateTime().equals(other.getLastUpdateTime()))
@@ -317,6 +342,7 @@ public class PrProject implements Serializable {
         result = prime * result + ((getProjectName() == null) ? 0 : getProjectName().hashCode());
         result = prime * result + ((getDwId() == null) ? 0 : getDwId().hashCode());
         result = prime * result + ((getMwId() == null) ? 0 : getMwId().hashCode());
+        result = prime * result + ((getCacheExipreDays() == null) ? 0 : getCacheExipreDays().hashCode());
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getLastUpdateTime() == null) ? 0 : getLastUpdateTime().hashCode());

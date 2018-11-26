@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yatop.lambda.base.mapper.CcComponentMapper" >
+  <resultMap id="BaseResultMap" type="com.yatop.lambda.base.model.CcComponent" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="CMPT_ID" property="cmptId" jdbcType="VARCHAR" />
+    <result column="CMPT_CODE" property="cmptCode" jdbcType="VARCHAR" />
+    <result column="CMPT_NAME" property="cmptName" jdbcType="VARCHAR" />
+    <result column="CMPT_TYPE" property="cmptType" jdbcType="INTEGER" />
+    <result column="REL_ALGORITHM_ID" property="relAlgorithmId" jdbcType="BIGINT" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_UPDATE_OPER" property="lastUpdateOper" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPER" property="createOper" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    CMPT_ID, CMPT_CODE, CMPT_NAME, CMPT_TYPE, REL_ALGORITHM_ID, DESCRIPTION, STATUS, 
+    LAST_UPDATE_TIME, LAST_UPDATE_OPER, CREATE_TIME, CREATE_OPER
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yatop.lambda.base.model.CcComponentExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cc_component
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="MysqlSuffix" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.yatop.lambda.base.model.CcComponentExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from cc_component
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.yatop.lambda.base.model.CcComponentExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from cc_component
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update cc_component
+    <set >
+      <if test="record.cmptId != null" >
+        CMPT_ID = #{record.cmptId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmptCode != null" >
+        CMPT_CODE = #{record.cmptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmptName != null" >
+        CMPT_NAME = #{record.cmptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmptType != null" >
+        CMPT_TYPE = #{record.cmptType,jdbcType=INTEGER},
+      </if>
+      <if test="record.relAlgorithmId != null" >
+        REL_ALGORITHM_ID = #{record.relAlgorithmId,jdbcType=BIGINT},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastUpdateTime != null" >
+        LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastUpdateOper != null" >
+        LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createOper != null" >
+        CREATE_OPER = #{record.createOper,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update cc_component
+    set CMPT_ID = #{record.cmptId,jdbcType=VARCHAR},
+      CMPT_CODE = #{record.cmptCode,jdbcType=VARCHAR},
+      CMPT_NAME = #{record.cmptName,jdbcType=VARCHAR},
+      CMPT_TYPE = #{record.cmptType,jdbcType=INTEGER},
+      REL_ALGORITHM_ID = #{record.relAlgorithmId,jdbcType=BIGINT},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=INTEGER},
+      LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      CREATE_OPER = #{record.createOper,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <sql id="MysqlSuffix" >
+    <if test="page != null" >
+      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
+    </if>
+  </sql>
+</mapper>

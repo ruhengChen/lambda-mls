@@ -1,54 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yatop.lambda.base.mapper.DwDataTableMapper">
-  <resultMap id="BaseResultMap" type="com.yatop.lambda.base.model.DwDataTable">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yatop.lambda.base.mapper.DwDataTableMapper" >
+  <resultMap id="BaseResultMap" type="com.yatop.lambda.base.model.DwDataTable" >
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="TABLE_ID" jdbcType="BIGINT" property="tableId" />
-    <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
-    <result column="TABLE_TYPE" jdbcType="INTEGER" property="tableType" />
-    <result column="TABLE_SRC" jdbcType="INTEGER" property="tableSrc" />
-    <result column="OWNER_DW_ID" jdbcType="BIGINT" property="ownerDwId" />
-    <result column="REL_SNAPSHOT_ID" jdbcType="BIGINT" property="relSnapshotId" />
-    <result column="REL_NODE_ID" jdbcType="BIGINT" property="relNodeId" />
-    <result column="REL_CHAR_ID" jdbcType="BIGINT" property="relCharId" />
-    <result column="TABLE_COLUMNS" jdbcType="BIGINT" property="tableColumns" />
-    <result column="TABLE_ROWS" jdbcType="BIGINT" property="tableRows" />
-    <result column="DATA_FILE_TYPE" jdbcType="INTEGER" property="dataFileType" />
-    <result column="DATA_FILE_SIZE" jdbcType="BIGINT" property="dataFileSize" />
-    <result column="DATA_FILE" jdbcType="VARCHAR" property="dataFile" />
-    <result column="DATA_SUMMARY_FILE" jdbcType="VARCHAR" property="dataSummaryFile" />
-    <result column="TABLE_STATE" jdbcType="INTEGER" property="tableState" />
-    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
-    <result column="STATUS" jdbcType="INTEGER" property="status" />
-    <result column="LAST_UPDATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateTime" />
-    <result column="LAST_UPDATE_OPER" jdbcType="VARCHAR" property="lastUpdateOper" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="CREATE_OPER" jdbcType="VARCHAR" property="createOper" />
+    <id column="TABLE_ID" property="tableId" jdbcType="BIGINT" />
+    <result column="TABLE_NAME" property="tableName" jdbcType="VARCHAR" />
+    <result column="TABLE_TYPE" property="tableType" jdbcType="INTEGER" />
+    <result column="TABLE_SRC" property="tableSrc" jdbcType="INTEGER" />
+    <result column="OWNER_DW_ID" property="ownerDwId" jdbcType="BIGINT" />
+    <result column="REL_EXPERIMENT_ID" property="relExperimentId" jdbcType="BIGINT" />
+    <result column="REL_JOB_ID" property="relJobId" jdbcType="BIGINT" />
+    <result column="REL_NODE_ID" property="relNodeId" jdbcType="BIGINT" />
+    <result column="REL_CHAR_ID" property="relCharId" jdbcType="BIGINT" />
+    <result column="TABLE_COLUMNS" property="tableColumns" jdbcType="BIGINT" />
+    <result column="TABLE_ROWS" property="tableRows" jdbcType="BIGINT" />
+    <result column="DATA_FILE_TYPE" property="dataFileType" jdbcType="INTEGER" />
+    <result column="DATA_FILE_SIZE" property="dataFileSize" jdbcType="BIGINT" />
+    <result column="DATA_FILE" property="dataFile" jdbcType="VARCHAR" />
+    <result column="DATA_SUMMARY_FILE" property="dataSummaryFile" jdbcType="VARCHAR" />
+    <result column="TABLE_STATE" property="tableState" jdbcType="INTEGER" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_UPDATE_OPER" property="lastUpdateOper" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPER" property="createOper" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause">
+  <sql id="Example_Where_Clause" >
     <!--
       WARNING - @mbggenerated
     -->
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -59,28 +60,28 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
+  <sql id="Update_By_Example_Where_Clause" >
     <!--
       WARNING - @mbggenerated
     -->
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -91,126 +92,129 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     <!--
       WARNING - @mbggenerated
     -->
-    TABLE_ID, TABLE_NAME, TABLE_TYPE, TABLE_SRC, OWNER_DW_ID, REL_SNAPSHOT_ID, REL_NODE_ID, 
-    REL_CHAR_ID, TABLE_COLUMNS, TABLE_ROWS, DATA_FILE_TYPE, DATA_FILE_SIZE, DATA_FILE, 
-    DATA_SUMMARY_FILE, TABLE_STATE, DESCRIPTION, STATUS, LAST_UPDATE_TIME, LAST_UPDATE_OPER, 
-    CREATE_TIME, CREATE_OPER
+    TABLE_ID, TABLE_NAME, TABLE_TYPE, TABLE_SRC, OWNER_DW_ID, REL_EXPERIMENT_ID, REL_JOB_ID, 
+    REL_NODE_ID, REL_CHAR_ID, TABLE_COLUMNS, TABLE_ROWS, DATA_FILE_TYPE, DATA_FILE_SIZE, 
+    DATA_FILE, DATA_SUMMARY_FILE, TABLE_STATE, DESCRIPTION, STATUS, LAST_UPDATE_TIME, 
+    LAST_UPDATE_OPER, CREATE_TIME, CREATE_OPER
   </sql>
-  <select id="selectByExample" parameterType="com.yatop.lambda.base.model.DwDataTableExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yatop.lambda.base.model.DwDataTableExample" >
     <!--
       WARNING - @mbggenerated
     -->
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from dw_data_table
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
     <include refid="MysqlSuffix" />
   </select>
-  <delete id="deleteByExample" parameterType="com.yatop.lambda.base.model.DwDataTableExample">
+  <delete id="deleteByExample" parameterType="com.yatop.lambda.base.model.DwDataTableExample" >
     <!--
       WARNING - @mbggenerated
     -->
     delete from dw_data_table
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <select id="countByExample" parameterType="com.yatop.lambda.base.model.DwDataTableExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.yatop.lambda.base.model.DwDataTableExample" resultType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated
     -->
     select count(*) from dw_data_table
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     <!--
       WARNING - @mbggenerated
     -->
     update dw_data_table
-    <set>
-      <if test="record.tableId != null">
+    <set >
+      <if test="record.tableId != null" >
         TABLE_ID = #{record.tableId,jdbcType=BIGINT},
       </if>
-      <if test="record.tableName != null">
+      <if test="record.tableName != null" >
         TABLE_NAME = #{record.tableName,jdbcType=VARCHAR},
       </if>
-      <if test="record.tableType != null">
+      <if test="record.tableType != null" >
         TABLE_TYPE = #{record.tableType,jdbcType=INTEGER},
       </if>
-      <if test="record.tableSrc != null">
+      <if test="record.tableSrc != null" >
         TABLE_SRC = #{record.tableSrc,jdbcType=INTEGER},
       </if>
-      <if test="record.ownerDwId != null">
+      <if test="record.ownerDwId != null" >
         OWNER_DW_ID = #{record.ownerDwId,jdbcType=BIGINT},
       </if>
-      <if test="record.relSnapshotId != null">
-        REL_SNAPSHOT_ID = #{record.relSnapshotId,jdbcType=BIGINT},
+      <if test="record.relExperimentId != null" >
+        REL_EXPERIMENT_ID = #{record.relExperimentId,jdbcType=BIGINT},
       </if>
-      <if test="record.relNodeId != null">
+      <if test="record.relJobId != null" >
+        REL_JOB_ID = #{record.relJobId,jdbcType=BIGINT},
+      </if>
+      <if test="record.relNodeId != null" >
         REL_NODE_ID = #{record.relNodeId,jdbcType=BIGINT},
       </if>
-      <if test="record.relCharId != null">
+      <if test="record.relCharId != null" >
         REL_CHAR_ID = #{record.relCharId,jdbcType=BIGINT},
       </if>
-      <if test="record.tableColumns != null">
+      <if test="record.tableColumns != null" >
         TABLE_COLUMNS = #{record.tableColumns,jdbcType=BIGINT},
       </if>
-      <if test="record.tableRows != null">
+      <if test="record.tableRows != null" >
         TABLE_ROWS = #{record.tableRows,jdbcType=BIGINT},
       </if>
-      <if test="record.dataFileType != null">
+      <if test="record.dataFileType != null" >
         DATA_FILE_TYPE = #{record.dataFileType,jdbcType=INTEGER},
       </if>
-      <if test="record.dataFileSize != null">
+      <if test="record.dataFileSize != null" >
         DATA_FILE_SIZE = #{record.dataFileSize,jdbcType=BIGINT},
       </if>
-      <if test="record.dataFile != null">
+      <if test="record.dataFile != null" >
         DATA_FILE = #{record.dataFile,jdbcType=VARCHAR},
       </if>
-      <if test="record.dataSummaryFile != null">
+      <if test="record.dataSummaryFile != null" >
         DATA_SUMMARY_FILE = #{record.dataSummaryFile,jdbcType=VARCHAR},
       </if>
-      <if test="record.tableState != null">
+      <if test="record.tableState != null" >
         TABLE_STATE = #{record.tableState,jdbcType=INTEGER},
       </if>
-      <if test="record.description != null">
+      <if test="record.description != null" >
         DESCRIPTION = #{record.description,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null">
+      <if test="record.status != null" >
         STATUS = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.lastUpdateTime != null">
+      <if test="record.lastUpdateTime != null" >
         LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.lastUpdateOper != null">
+      <if test="record.lastUpdateOper != null" >
         LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
       </if>
-      <if test="record.createTime != null">
+      <if test="record.createTime != null" >
         CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.createOper != null">
+      <if test="record.createOper != null" >
         CREATE_OPER = #{record.createOper,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     <!--
       WARNING - @mbggenerated
     -->
@@ -220,7 +224,8 @@
       TABLE_TYPE = #{record.tableType,jdbcType=INTEGER},
       TABLE_SRC = #{record.tableSrc,jdbcType=INTEGER},
       OWNER_DW_ID = #{record.ownerDwId,jdbcType=BIGINT},
-      REL_SNAPSHOT_ID = #{record.relSnapshotId,jdbcType=BIGINT},
+      REL_EXPERIMENT_ID = #{record.relExperimentId,jdbcType=BIGINT},
+      REL_JOB_ID = #{record.relJobId,jdbcType=BIGINT},
       REL_NODE_ID = #{record.relNodeId,jdbcType=BIGINT},
       REL_CHAR_ID = #{record.relCharId,jdbcType=BIGINT},
       TABLE_COLUMNS = #{record.tableColumns,jdbcType=BIGINT},
@@ -236,27 +241,12 @@
       LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
       CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
       CREATE_OPER = #{record.createOper,jdbcType=VARCHAR}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
-      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
-    </if>
-  </sql>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
-      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
-    </if>
-  </sql>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
-      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
-    </if>
-  </sql>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
+  <sql id="MysqlSuffix" >
+    <if test="page != null" >
       <![CDATA[ limit #{page.begin} , #{page.length} ]]>
     </if>
   </sql>

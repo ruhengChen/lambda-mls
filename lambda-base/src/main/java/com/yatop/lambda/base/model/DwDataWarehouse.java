@@ -30,7 +30,7 @@ public class DwDataWarehouse implements Serializable {
 
     /**
      * 数据库类型
-            0：公共数据库，暂用于存放实验模版所预置的数据表
+            0：公共数据库，仅有一个，用于存放实验模版所预置的数据表
             1：项目数据库，随项目创建同时生成，存放项目中产生的数据表
      */
     @Column(name = "DW_TYPE")
@@ -43,22 +43,20 @@ public class DwDataWarehouse implements Serializable {
     private Long ownerProjectId;
 
     /**
-     * DFS数据目录，存放全量数据文件和数据概要文件
+     * DFS数据目录，存放普通数据表的数据文件和数据概要文件
             
-            示例如下：
             ${HDFS_SITE}/${DFS_WORK_ROOT}/dw_data/<dw_code>
      */
-    @Column(name = "DFS_DATA_DIR")
-    private String dfsDataDir;
+    @Column(name = "DATA_DFS_DIR")
+    private String dataDfsDir;
 
     /**
-     * 本地数据目录，仅缓存数据概要文件
+     * 本地数据目录，缓存普通数据表的数据概要文件
             
-            示例如下：
             ${LOCAL_WORK_ROOT}/dw_data/<dw_code>
      */
-    @Column(name = "LOCAL_DATA_DIR")
-    private String localDataDir;
+    @Column(name = "DATA_LOCAL_DIR")
+    private String dataLocalDir;
 
     /**
      * 描述
@@ -168,11 +166,11 @@ public class DwDataWarehouse implements Serializable {
 
     /**
      * 获取数据库类型
-            0：公共数据库，暂用于存放实验模版所预置的数据表
+            0：公共数据库，仅有一个，用于存放实验模版所预置的数据表
             1：项目数据库，随项目创建同时生成，存放项目中产生的数据表
      *
      * @return DW_TYPE - 数据库类型
-            0：公共数据库，暂用于存放实验模版所预置的数据表
+            0：公共数据库，仅有一个，用于存放实验模版所预置的数据表
             1：项目数据库，随项目创建同时生成，存放项目中产生的数据表
      */
     public Integer getDwType() {
@@ -181,11 +179,11 @@ public class DwDataWarehouse implements Serializable {
 
     /**
      * 设置数据库类型
-            0：公共数据库，暂用于存放实验模版所预置的数据表
+            0：公共数据库，仅有一个，用于存放实验模版所预置的数据表
             1：项目数据库，随项目创建同时生成，存放项目中产生的数据表
      *
      * @param dwType 数据库类型
-            0：公共数据库，暂用于存放实验模版所预置的数据表
+            0：公共数据库，仅有一个，用于存放实验模版所预置的数据表
             1：项目数据库，随项目创建同时生成，存放项目中产生的数据表
      */
     public void setDwType(Integer dwType) {
@@ -211,63 +209,55 @@ public class DwDataWarehouse implements Serializable {
     }
 
     /**
-     * 获取DFS数据目录，存放全量数据文件和数据概要文件
+     * 获取DFS数据目录，存放普通数据表的数据文件和数据概要文件
             
-            示例如下：
             ${HDFS_SITE}/${DFS_WORK_ROOT}/dw_data/<dw_code>
      *
-     * @return DFS_DATA_DIR - DFS数据目录，存放全量数据文件和数据概要文件
+     * @return DATA_DFS_DIR - DFS数据目录，存放普通数据表的数据文件和数据概要文件
             
-            示例如下：
             ${HDFS_SITE}/${DFS_WORK_ROOT}/dw_data/<dw_code>
      */
-    public String getDfsDataDir() {
-        return dfsDataDir;
+    public String getDataDfsDir() {
+        return dataDfsDir;
     }
 
     /**
-     * 设置DFS数据目录，存放全量数据文件和数据概要文件
+     * 设置DFS数据目录，存放普通数据表的数据文件和数据概要文件
             
-            示例如下：
             ${HDFS_SITE}/${DFS_WORK_ROOT}/dw_data/<dw_code>
      *
-     * @param dfsDataDir DFS数据目录，存放全量数据文件和数据概要文件
+     * @param dataDfsDir DFS数据目录，存放普通数据表的数据文件和数据概要文件
             
-            示例如下：
             ${HDFS_SITE}/${DFS_WORK_ROOT}/dw_data/<dw_code>
      */
-    public void setDfsDataDir(String dfsDataDir) {
-        this.dfsDataDir = dfsDataDir == null ? null : dfsDataDir.trim();
+    public void setDataDfsDir(String dataDfsDir) {
+        this.dataDfsDir = dataDfsDir == null ? null : dataDfsDir.trim();
     }
 
     /**
-     * 获取本地数据目录，仅缓存数据概要文件
+     * 获取本地数据目录，缓存普通数据表的数据概要文件
             
-            示例如下：
             ${LOCAL_WORK_ROOT}/dw_data/<dw_code>
      *
-     * @return LOCAL_DATA_DIR - 本地数据目录，仅缓存数据概要文件
+     * @return DATA_LOCAL_DIR - 本地数据目录，缓存普通数据表的数据概要文件
             
-            示例如下：
             ${LOCAL_WORK_ROOT}/dw_data/<dw_code>
      */
-    public String getLocalDataDir() {
-        return localDataDir;
+    public String getDataLocalDir() {
+        return dataLocalDir;
     }
 
     /**
-     * 设置本地数据目录，仅缓存数据概要文件
+     * 设置本地数据目录，缓存普通数据表的数据概要文件
             
-            示例如下：
             ${LOCAL_WORK_ROOT}/dw_data/<dw_code>
      *
-     * @param localDataDir 本地数据目录，仅缓存数据概要文件
+     * @param dataLocalDir 本地数据目录，缓存普通数据表的数据概要文件
             
-            示例如下：
             ${LOCAL_WORK_ROOT}/dw_data/<dw_code>
      */
-    public void setLocalDataDir(String localDataDir) {
-        this.localDataDir = localDataDir == null ? null : localDataDir.trim();
+    public void setDataLocalDir(String dataLocalDir) {
+        this.dataLocalDir = dataLocalDir == null ? null : dataLocalDir.trim();
     }
 
     /**
@@ -403,8 +393,8 @@ public class DwDataWarehouse implements Serializable {
             && (this.getDwName() == null ? other.getDwName() == null : this.getDwName().equals(other.getDwName()))
             && (this.getDwType() == null ? other.getDwType() == null : this.getDwType().equals(other.getDwType()))
             && (this.getOwnerProjectId() == null ? other.getOwnerProjectId() == null : this.getOwnerProjectId().equals(other.getOwnerProjectId()))
-            && (this.getDfsDataDir() == null ? other.getDfsDataDir() == null : this.getDfsDataDir().equals(other.getDfsDataDir()))
-            && (this.getLocalDataDir() == null ? other.getLocalDataDir() == null : this.getLocalDataDir().equals(other.getLocalDataDir()))
+            && (this.getDataDfsDir() == null ? other.getDataDfsDir() == null : this.getDataDfsDir().equals(other.getDataDfsDir()))
+            && (this.getDataLocalDir() == null ? other.getDataLocalDir() == null : this.getDataLocalDir().equals(other.getDataLocalDir()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getLastUpdateTime() == null ? other.getLastUpdateTime() == null : this.getLastUpdateTime().equals(other.getLastUpdateTime()))
@@ -422,8 +412,8 @@ public class DwDataWarehouse implements Serializable {
         result = prime * result + ((getDwName() == null) ? 0 : getDwName().hashCode());
         result = prime * result + ((getDwType() == null) ? 0 : getDwType().hashCode());
         result = prime * result + ((getOwnerProjectId() == null) ? 0 : getOwnerProjectId().hashCode());
-        result = prime * result + ((getDfsDataDir() == null) ? 0 : getDfsDataDir().hashCode());
-        result = prime * result + ((getLocalDataDir() == null) ? 0 : getLocalDataDir().hashCode());
+        result = prime * result + ((getDataDfsDir() == null) ? 0 : getDataDfsDir().hashCode());
+        result = prime * result + ((getDataLocalDir() == null) ? 0 : getDataLocalDir().hashCode());
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getLastUpdateTime() == null) ? 0 : getLastUpdateTime().hashCode());

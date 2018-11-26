@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yatop.lambda.base.mapper.CcCmptCharMapper" >
+  <resultMap id="BaseResultMap" type="com.yatop.lambda.base.model.CcCmptChar" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="CHAR_ID" property="charId" jdbcType="VARCHAR" />
+    <result column="CHAR_CODE" property="charCode" jdbcType="VARCHAR" />
+    <result column="CHAR_NAME" property="charName" jdbcType="VARCHAR" />
+    <result column="CHAR_ALIAS" property="charAlias" jdbcType="VARCHAR" />
+    <result column="SPEC_TYPE" property="specType" jdbcType="INTEGER" />
+    <result column="CHAR_TYPE" property="charType" jdbcType="INTEGER" />
+    <result column="SRC_LEVEL" property="srcLevel" jdbcType="INTEGER" />
+    <result column="ALLOW_GLOBAL" property="allowGlobal" jdbcType="INTEGER" />
+    <result column="IS_REQUIRED" property="isRequired" jdbcType="INTEGER" />
+    <result column="IS_LIMITED" property="isLimited" jdbcType="INTEGER" />
+    <result column="MAX_LENGTH" property="maxLength" jdbcType="INTEGER" />
+    <result column="STEP_SIZE" property="stepSize" jdbcType="VARCHAR" />
+    <result column="MIN_VALUE" property="minValue" jdbcType="VARCHAR" />
+    <result column="MAX_VALUE" property="maxValue" jdbcType="VARCHAR" />
+    <result column="DEFAULT_VALUE" property="defaultValue" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_UPDATE_OPER" property="lastUpdateOper" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPER" property="createOper" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    CHAR_ID, CHAR_CODE, CHAR_NAME, CHAR_ALIAS, SPEC_TYPE, CHAR_TYPE, SRC_LEVEL, ALLOW_GLOBAL, 
+    IS_REQUIRED, IS_LIMITED, MAX_LENGTH, STEP_SIZE, MIN_VALUE, MAX_VALUE, DEFAULT_VALUE, 
+    DESCRIPTION, STATUS, LAST_UPDATE_TIME, LAST_UPDATE_OPER, CREATE_TIME, CREATE_OPER
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yatop.lambda.base.model.CcCmptCharExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cc_cmpt_char
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="MysqlSuffix" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.yatop.lambda.base.model.CcCmptCharExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from cc_cmpt_char
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.yatop.lambda.base.model.CcCmptCharExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from cc_cmpt_char
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update cc_cmpt_char
+    <set >
+      <if test="record.charId != null" >
+        CHAR_ID = #{record.charId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.charCode != null" >
+        CHAR_CODE = #{record.charCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.charName != null" >
+        CHAR_NAME = #{record.charName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.charAlias != null" >
+        CHAR_ALIAS = #{record.charAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specType != null" >
+        SPEC_TYPE = #{record.specType,jdbcType=INTEGER},
+      </if>
+      <if test="record.charType != null" >
+        CHAR_TYPE = #{record.charType,jdbcType=INTEGER},
+      </if>
+      <if test="record.srcLevel != null" >
+        SRC_LEVEL = #{record.srcLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.allowGlobal != null" >
+        ALLOW_GLOBAL = #{record.allowGlobal,jdbcType=INTEGER},
+      </if>
+      <if test="record.isRequired != null" >
+        IS_REQUIRED = #{record.isRequired,jdbcType=INTEGER},
+      </if>
+      <if test="record.isLimited != null" >
+        IS_LIMITED = #{record.isLimited,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxLength != null" >
+        MAX_LENGTH = #{record.maxLength,jdbcType=INTEGER},
+      </if>
+      <if test="record.stepSize != null" >
+        STEP_SIZE = #{record.stepSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minValue != null" >
+        MIN_VALUE = #{record.minValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxValue != null" >
+        MAX_VALUE = #{record.maxValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultValue != null" >
+        DEFAULT_VALUE = #{record.defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastUpdateTime != null" >
+        LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastUpdateOper != null" >
+        LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createOper != null" >
+        CREATE_OPER = #{record.createOper,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update cc_cmpt_char
+    set CHAR_ID = #{record.charId,jdbcType=VARCHAR},
+      CHAR_CODE = #{record.charCode,jdbcType=VARCHAR},
+      CHAR_NAME = #{record.charName,jdbcType=VARCHAR},
+      CHAR_ALIAS = #{record.charAlias,jdbcType=VARCHAR},
+      SPEC_TYPE = #{record.specType,jdbcType=INTEGER},
+      CHAR_TYPE = #{record.charType,jdbcType=INTEGER},
+      SRC_LEVEL = #{record.srcLevel,jdbcType=INTEGER},
+      ALLOW_GLOBAL = #{record.allowGlobal,jdbcType=INTEGER},
+      IS_REQUIRED = #{record.isRequired,jdbcType=INTEGER},
+      IS_LIMITED = #{record.isLimited,jdbcType=INTEGER},
+      MAX_LENGTH = #{record.maxLength,jdbcType=INTEGER},
+      STEP_SIZE = #{record.stepSize,jdbcType=VARCHAR},
+      MIN_VALUE = #{record.minValue,jdbcType=VARCHAR},
+      MAX_VALUE = #{record.maxValue,jdbcType=VARCHAR},
+      DEFAULT_VALUE = #{record.defaultValue,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=INTEGER},
+      LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      CREATE_OPER = #{record.createOper,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <sql id="MysqlSuffix" >
+    <if test="page != null" >
+      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
+    </if>
+  </sql>
+</mapper>

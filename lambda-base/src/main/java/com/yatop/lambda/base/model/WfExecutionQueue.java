@@ -14,12 +14,37 @@ public class WfExecutionQueue implements Serializable {
     private Long jobId;
 
     /**
+     * 所属项目ID
+     */
+    @Column(name = "OWNER_PROJECT_ID")
+    private Long ownerProjectId;
+
+    /**
+     * 作业时间
+            
+            指定作业的开始处理时间，值来自进入队列时和继续执行时
+     */
+    @Column(name = "JOB_TIME")
+    private Date jobTime;
+
+    /**
+     * 作业信号
+            0：SIG_NORMAL，正常信号
+            1：SIG_KILL，杀死作业信号
+            2：SIG_STOP，停止执行信号
+            3：SIG_CONT，继续执行信号
+     */
+    @Column(name = "JOB_SIGNAL")
+    private Integer jobSignal;
+
+    /**
      * 处理状态
             0：queueing，排队中
             1：processing，处理中
+            2：finished，运行结束
      */
-    @Column(name = "STATE")
-    private Integer state;
+    @Column(name = "JOB_STATE")
+    private Integer jobState;
 
     /**
      * 描述
@@ -72,29 +97,111 @@ public class WfExecutionQueue implements Serializable {
     }
 
     /**
+     * 获取所属项目ID
+     *
+     * @return OWNER_PROJECT_ID - 所属项目ID
+     */
+    public Long getOwnerProjectId() {
+        return ownerProjectId;
+    }
+
+    /**
+     * 设置所属项目ID
+     *
+     * @param ownerProjectId 所属项目ID
+     */
+    public void setOwnerProjectId(Long ownerProjectId) {
+        this.ownerProjectId = ownerProjectId;
+    }
+
+    /**
+     * 获取作业时间
+            
+            指定作业的开始处理时间，值来自进入队列时和继续执行时
+     *
+     * @return JOB_TIME - 作业时间
+            
+            指定作业的开始处理时间，值来自进入队列时和继续执行时
+     */
+    public Date getJobTime() {
+        return jobTime;
+    }
+
+    /**
+     * 设置作业时间
+            
+            指定作业的开始处理时间，值来自进入队列时和继续执行时
+     *
+     * @param jobTime 作业时间
+            
+            指定作业的开始处理时间，值来自进入队列时和继续执行时
+     */
+    public void setJobTime(Date jobTime) {
+        this.jobTime = jobTime;
+    }
+
+    /**
+     * 获取作业信号
+            0：SIG_NORMAL，正常信号
+            1：SIG_KILL，杀死作业信号
+            2：SIG_STOP，停止执行信号
+            3：SIG_CONT，继续执行信号
+     *
+     * @return JOB_SIGNAL - 作业信号
+            0：SIG_NORMAL，正常信号
+            1：SIG_KILL，杀死作业信号
+            2：SIG_STOP，停止执行信号
+            3：SIG_CONT，继续执行信号
+     */
+    public Integer getJobSignal() {
+        return jobSignal;
+    }
+
+    /**
+     * 设置作业信号
+            0：SIG_NORMAL，正常信号
+            1：SIG_KILL，杀死作业信号
+            2：SIG_STOP，停止执行信号
+            3：SIG_CONT，继续执行信号
+     *
+     * @param jobSignal 作业信号
+            0：SIG_NORMAL，正常信号
+            1：SIG_KILL，杀死作业信号
+            2：SIG_STOP，停止执行信号
+            3：SIG_CONT，继续执行信号
+     */
+    public void setJobSignal(Integer jobSignal) {
+        this.jobSignal = jobSignal;
+    }
+
+    /**
      * 获取处理状态
             0：queueing，排队中
             1：processing，处理中
+            2：finished，运行结束
      *
-     * @return STATE - 处理状态
+     * @return JOB_STATE - 处理状态
             0：queueing，排队中
             1：processing，处理中
+            2：finished，运行结束
      */
-    public Integer getState() {
-        return state;
+    public Integer getJobState() {
+        return jobState;
     }
 
     /**
      * 设置处理状态
             0：queueing，排队中
             1：processing，处理中
+            2：finished，运行结束
      *
-     * @param state 处理状态
+     * @param jobState 处理状态
             0：queueing，排队中
             1：processing，处理中
+            2：finished，运行结束
      */
-    public void setState(Integer state) {
-        this.state = state;
+    public void setJobState(Integer jobState) {
+        this.jobState = jobState;
     }
 
     /**
@@ -200,7 +307,10 @@ public class WfExecutionQueue implements Serializable {
         }
         WfExecutionQueue other = (WfExecutionQueue) that;
         return (this.getJobId() == null ? other.getJobId() == null : this.getJobId().equals(other.getJobId()))
-            && (this.getState() == null ? other.getState() == null : this.getState().equals(other.getState()))
+            && (this.getOwnerProjectId() == null ? other.getOwnerProjectId() == null : this.getOwnerProjectId().equals(other.getOwnerProjectId()))
+            && (this.getJobTime() == null ? other.getJobTime() == null : this.getJobTime().equals(other.getJobTime()))
+            && (this.getJobSignal() == null ? other.getJobSignal() == null : this.getJobSignal().equals(other.getJobSignal()))
+            && (this.getJobState() == null ? other.getJobState() == null : this.getJobState().equals(other.getJobState()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getLastUpdateTime() == null ? other.getLastUpdateTime() == null : this.getLastUpdateTime().equals(other.getLastUpdateTime()))
             && (this.getLastUpdateOper() == null ? other.getLastUpdateOper() == null : this.getLastUpdateOper().equals(other.getLastUpdateOper()))
@@ -213,7 +323,10 @@ public class WfExecutionQueue implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getJobId() == null) ? 0 : getJobId().hashCode());
-        result = prime * result + ((getState() == null) ? 0 : getState().hashCode());
+        result = prime * result + ((getOwnerProjectId() == null) ? 0 : getOwnerProjectId().hashCode());
+        result = prime * result + ((getJobTime() == null) ? 0 : getJobTime().hashCode());
+        result = prime * result + ((getJobSignal() == null) ? 0 : getJobSignal().hashCode());
+        result = prime * result + ((getJobState() == null) ? 0 : getJobState().hashCode());
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getLastUpdateTime() == null) ? 0 : getLastUpdateTime().hashCode());
         result = prime * result + ((getLastUpdateOper() == null) ? 0 : getLastUpdateOper().hashCode());

@@ -436,143 +436,143 @@ public class DwDataWarehouseExample {
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirIsNull() {
-            addCriterion("DFS_DATA_DIR is null");
+        public Criteria andDataDfsDirIsNull() {
+            addCriterion("DATA_DFS_DIR is null");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirIsNotNull() {
-            addCriterion("DFS_DATA_DIR is not null");
+        public Criteria andDataDfsDirIsNotNull() {
+            addCriterion("DATA_DFS_DIR is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirEqualTo(String value) {
-            addCriterion("DFS_DATA_DIR =", value, "dfsDataDir");
+        public Criteria andDataDfsDirEqualTo(String value) {
+            addCriterion("DATA_DFS_DIR =", value, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirNotEqualTo(String value) {
-            addCriterion("DFS_DATA_DIR <>", value, "dfsDataDir");
+        public Criteria andDataDfsDirNotEqualTo(String value) {
+            addCriterion("DATA_DFS_DIR <>", value, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirGreaterThan(String value) {
-            addCriterion("DFS_DATA_DIR >", value, "dfsDataDir");
+        public Criteria andDataDfsDirGreaterThan(String value) {
+            addCriterion("DATA_DFS_DIR >", value, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirGreaterThanOrEqualTo(String value) {
-            addCriterion("DFS_DATA_DIR >=", value, "dfsDataDir");
+        public Criteria andDataDfsDirGreaterThanOrEqualTo(String value) {
+            addCriterion("DATA_DFS_DIR >=", value, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirLessThan(String value) {
-            addCriterion("DFS_DATA_DIR <", value, "dfsDataDir");
+        public Criteria andDataDfsDirLessThan(String value) {
+            addCriterion("DATA_DFS_DIR <", value, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirLessThanOrEqualTo(String value) {
-            addCriterion("DFS_DATA_DIR <=", value, "dfsDataDir");
+        public Criteria andDataDfsDirLessThanOrEqualTo(String value) {
+            addCriterion("DATA_DFS_DIR <=", value, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirLike(String value) {
-            addCriterion("DFS_DATA_DIR like", value, "dfsDataDir");
+        public Criteria andDataDfsDirLike(String value) {
+            addCriterion("DATA_DFS_DIR like", value, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirNotLike(String value) {
-            addCriterion("DFS_DATA_DIR not like", value, "dfsDataDir");
+        public Criteria andDataDfsDirNotLike(String value) {
+            addCriterion("DATA_DFS_DIR not like", value, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirIn(List<String> values) {
-            addCriterion("DFS_DATA_DIR in", values, "dfsDataDir");
+        public Criteria andDataDfsDirIn(List<String> values) {
+            addCriterion("DATA_DFS_DIR in", values, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirNotIn(List<String> values) {
-            addCriterion("DFS_DATA_DIR not in", values, "dfsDataDir");
+        public Criteria andDataDfsDirNotIn(List<String> values) {
+            addCriterion("DATA_DFS_DIR not in", values, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirBetween(String value1, String value2) {
-            addCriterion("DFS_DATA_DIR between", value1, value2, "dfsDataDir");
+        public Criteria andDataDfsDirBetween(String value1, String value2) {
+            addCriterion("DATA_DFS_DIR between", value1, value2, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirNotBetween(String value1, String value2) {
-            addCriterion("DFS_DATA_DIR not between", value1, value2, "dfsDataDir");
+        public Criteria andDataDfsDirNotBetween(String value1, String value2) {
+            addCriterion("DATA_DFS_DIR not between", value1, value2, "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirIsNull() {
-            addCriterion("LOCAL_DATA_DIR is null");
+        public Criteria andDataLocalDirIsNull() {
+            addCriterion("DATA_LOCAL_DIR is null");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirIsNotNull() {
-            addCriterion("LOCAL_DATA_DIR is not null");
+        public Criteria andDataLocalDirIsNotNull() {
+            addCriterion("DATA_LOCAL_DIR is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirEqualTo(String value) {
-            addCriterion("LOCAL_DATA_DIR =", value, "localDataDir");
+        public Criteria andDataLocalDirEqualTo(String value) {
+            addCriterion("DATA_LOCAL_DIR =", value, "dataLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirNotEqualTo(String value) {
-            addCriterion("LOCAL_DATA_DIR <>", value, "localDataDir");
+        public Criteria andDataLocalDirNotEqualTo(String value) {
+            addCriterion("DATA_LOCAL_DIR <>", value, "dataLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirGreaterThan(String value) {
-            addCriterion("LOCAL_DATA_DIR >", value, "localDataDir");
+        public Criteria andDataLocalDirGreaterThan(String value) {
+            addCriterion("DATA_LOCAL_DIR >", value, "dataLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirGreaterThanOrEqualTo(String value) {
-            addCriterion("LOCAL_DATA_DIR >=", value, "localDataDir");
+        public Criteria andDataLocalDirGreaterThanOrEqualTo(String value) {
+            addCriterion("DATA_LOCAL_DIR >=", value, "dataLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirLessThan(String value) {
-            addCriterion("LOCAL_DATA_DIR <", value, "localDataDir");
+        public Criteria andDataLocalDirLessThan(String value) {
+            addCriterion("DATA_LOCAL_DIR <", value, "dataLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirLessThanOrEqualTo(String value) {
-            addCriterion("LOCAL_DATA_DIR <=", value, "localDataDir");
+        public Criteria andDataLocalDirLessThanOrEqualTo(String value) {
+            addCriterion("DATA_LOCAL_DIR <=", value, "dataLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirLike(String value) {
-            addCriterion("LOCAL_DATA_DIR like", value, "localDataDir");
+        public Criteria andDataLocalDirLike(String value) {
+            addCriterion("DATA_LOCAL_DIR like", value, "dataLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirNotLike(String value) {
-            addCriterion("LOCAL_DATA_DIR not like", value, "localDataDir");
+        public Criteria andDataLocalDirNotLike(String value) {
+            addCriterion("DATA_LOCAL_DIR not like", value, "dataLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirIn(List<String> values) {
-            addCriterion("LOCAL_DATA_DIR in", values, "localDataDir");
+        public Criteria andDataLocalDirIn(List<String> values) {
+            addCriterion("DATA_LOCAL_DIR in", values, "dataLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirNotIn(List<String> values) {
-            addCriterion("LOCAL_DATA_DIR not in", values, "localDataDir");
+        public Criteria andDataLocalDirNotIn(List<String> values) {
+            addCriterion("DATA_LOCAL_DIR not in", values, "dataLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirBetween(String value1, String value2) {
-            addCriterion("LOCAL_DATA_DIR between", value1, value2, "localDataDir");
+        public Criteria andDataLocalDirBetween(String value1, String value2) {
+            addCriterion("DATA_LOCAL_DIR between", value1, value2, "dataLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirNotBetween(String value1, String value2) {
-            addCriterion("LOCAL_DATA_DIR not between", value1, value2, "localDataDir");
+        public Criteria andDataLocalDirNotBetween(String value1, String value2) {
+            addCriterion("DATA_LOCAL_DIR not between", value1, value2, "dataLocalDir");
             return (Criteria) this;
         }
 
@@ -976,13 +976,13 @@ public class DwDataWarehouseExample {
             return (Criteria) this;
         }
 
-        public Criteria andDfsDataDirLikeInsensitive(String value) {
-            addCriterion("upper(DFS_DATA_DIR) like", value.toUpperCase(), "dfsDataDir");
+        public Criteria andDataDfsDirLikeInsensitive(String value) {
+            addCriterion("upper(DATA_DFS_DIR) like", value.toUpperCase(), "dataDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalDataDirLikeInsensitive(String value) {
-            addCriterion("upper(LOCAL_DATA_DIR) like", value.toUpperCase(), "localDataDir");
+        public Criteria andDataLocalDirLikeInsensitive(String value) {
+            addCriterion("upper(DATA_LOCAL_DIR) like", value.toUpperCase(), "dataLocalDir");
             return (Criteria) this;
         }
 

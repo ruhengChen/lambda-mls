@@ -22,8 +22,8 @@ public class WfModulePort implements Serializable {
 
     /**
      * 端口类型
-            0：输入端口
-            1：输出端口
+            1：输入端口
+            2：输出端口
      */
     @Column(name = "PORT_TYPE")
     private Integer portType;
@@ -128,12 +128,12 @@ public class WfModulePort implements Serializable {
 
     /**
      * 获取端口类型
-            0：输入端口
-            1：输出端口
+            1：输入端口
+            2：输出端口
      *
      * @return PORT_TYPE - 端口类型
-            0：输入端口
-            1：输出端口
+            1：输入端口
+            2：输出端口
      */
     public Integer getPortType() {
         return portType;
@@ -141,12 +141,12 @@ public class WfModulePort implements Serializable {
 
     /**
      * 设置端口类型
-            0：输入端口
-            1：输出端口
+            1：输入端口
+            2：输出端口
      *
      * @param portType 端口类型
-            0：输入端口
-            1：输出端口
+            1：输入端口
+            2：输出端口
      */
     public void setPortType(Integer portType) {
         this.portType = portType;

@@ -25,7 +25,7 @@ public class WfFlowNodeParameter extends WfFlowNodeParameterKey implements Seria
             0：否
             1：是
             
-            创建快照和运行任务时对象数据类型会以浅拷贝方式复制，同时该标记会被置位，辅助于对象类型特征值发生更新时，判断是否创建新对象来保存新值
+            创建副本和运行任务时对象数据类型会以浅拷贝方式复制，同时该标记会被置位，辅助于对象类型组件参数发生更新时，判断是否创建新对象来保存新值
      */
     @Column(name = "IS_DUPLICATED")
     private Integer isDuplicated;
@@ -113,13 +113,13 @@ public class WfFlowNodeParameter extends WfFlowNodeParameterKey implements Seria
             0：否
             1：是
             
-            创建快照和运行任务时对象数据类型会以浅拷贝方式复制，同时该标记会被置位，辅助于对象类型特征值发生更新时，判断是否创建新对象来保存新值
+            创建副本和运行任务时对象数据类型会以浅拷贝方式复制，同时该标记会被置位，辅助于对象类型组件参数发生更新时，判断是否创建新对象来保存新值
      *
      * @return IS_DUPLICATED - 是否被复制
             0：否
             1：是
             
-            创建快照和运行任务时对象数据类型会以浅拷贝方式复制，同时该标记会被置位，辅助于对象类型特征值发生更新时，判断是否创建新对象来保存新值
+            创建副本和运行任务时对象数据类型会以浅拷贝方式复制，同时该标记会被置位，辅助于对象类型组件参数发生更新时，判断是否创建新对象来保存新值
      */
     public Integer getIsDuplicated() {
         return isDuplicated;
@@ -130,13 +130,13 @@ public class WfFlowNodeParameter extends WfFlowNodeParameterKey implements Seria
             0：否
             1：是
             
-            创建快照和运行任务时对象数据类型会以浅拷贝方式复制，同时该标记会被置位，辅助于对象类型特征值发生更新时，判断是否创建新对象来保存新值
+            创建副本和运行任务时对象数据类型会以浅拷贝方式复制，同时该标记会被置位，辅助于对象类型组件参数发生更新时，判断是否创建新对象来保存新值
      *
      * @param isDuplicated 是否被复制
             0：否
             1：是
             
-            创建快照和运行任务时对象数据类型会以浅拷贝方式复制，同时该标记会被置位，辅助于对象类型特征值发生更新时，判断是否创建新对象来保存新值
+            创建副本和运行任务时对象数据类型会以浅拷贝方式复制，同时该标记会被置位，辅助于对象类型组件参数发生更新时，判断是否创建新对象来保存新值
      */
     public void setIsDuplicated(Integer isDuplicated) {
         this.isDuplicated = isDuplicated;

@@ -176,6 +176,66 @@ public class PrProjectMemberExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsOwnerIsNull() {
+            addCriterion("IS_OWNER is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerIsNotNull() {
+            addCriterion("IS_OWNER is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerEqualTo(Integer value) {
+            addCriterion("IS_OWNER =", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerNotEqualTo(Integer value) {
+            addCriterion("IS_OWNER <>", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerGreaterThan(Integer value) {
+            addCriterion("IS_OWNER >", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerGreaterThanOrEqualTo(Integer value) {
+            addCriterion("IS_OWNER >=", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerLessThan(Integer value) {
+            addCriterion("IS_OWNER <", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerLessThanOrEqualTo(Integer value) {
+            addCriterion("IS_OWNER <=", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerIn(List<Integer> values) {
+            addCriterion("IS_OWNER in", values, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerNotIn(List<Integer> values) {
+            addCriterion("IS_OWNER not in", values, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerBetween(Integer value1, Integer value2) {
+            addCriterion("IS_OWNER between", value1, value2, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerNotBetween(Integer value1, Integer value2) {
+            addCriterion("IS_OWNER not between", value1, value2, "isOwner");
+            return (Criteria) this;
+        }
+
         public Criteria andMemberUserIsNull() {
             addCriterion("MEMBER_USER is null");
             return (Criteria) this;
@@ -243,66 +303,6 @@ public class PrProjectMemberExample {
 
         public Criteria andMemberUserNotBetween(String value1, String value2) {
             addCriterion("MEMBER_USER not between", value1, value2, "memberUser");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerIsNull() {
-            addCriterion("IS_OWNER is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerIsNotNull() {
-            addCriterion("IS_OWNER is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerEqualTo(Integer value) {
-            addCriterion("IS_OWNER =", value, "isOwner");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerNotEqualTo(Integer value) {
-            addCriterion("IS_OWNER <>", value, "isOwner");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerGreaterThan(Integer value) {
-            addCriterion("IS_OWNER >", value, "isOwner");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerGreaterThanOrEqualTo(Integer value) {
-            addCriterion("IS_OWNER >=", value, "isOwner");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerLessThan(Integer value) {
-            addCriterion("IS_OWNER <", value, "isOwner");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerLessThanOrEqualTo(Integer value) {
-            addCriterion("IS_OWNER <=", value, "isOwner");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerIn(List<Integer> values) {
-            addCriterion("IS_OWNER in", values, "isOwner");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerNotIn(List<Integer> values) {
-            addCriterion("IS_OWNER not in", values, "isOwner");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerBetween(Integer value1, Integer value2) {
-            addCriterion("IS_OWNER between", value1, value2, "isOwner");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsOwnerNotBetween(Integer value1, Integer value2) {
-            addCriterion("IS_OWNER not between", value1, value2, "isOwner");
             return (Criteria) this;
         }
 

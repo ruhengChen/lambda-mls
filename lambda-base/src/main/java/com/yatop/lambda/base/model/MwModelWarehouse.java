@@ -14,7 +14,7 @@ public class MwModelWarehouse implements Serializable {
     private Long mwId;
 
     /**
-     * 模型库代码（预留）
+     * 模型库代码
             
             公共模型库：由英文字符、数字和下划线组成，起始字符不能为下划线
             项目模型库：$符号前缀 + 项目代码
@@ -30,7 +30,7 @@ public class MwModelWarehouse implements Serializable {
 
     /**
      * 数据库类型
-            0：公共模型库（预留）
+            0：公共模型库（长期建议不支持）
             1：项目模型库，随项目创建同时生成，存放项目中产生的模型
      */
     @Column(name = "MW_TYPE")
@@ -43,22 +43,20 @@ public class MwModelWarehouse implements Serializable {
     private Long ownerProjectId;
 
     /**
-     * DFS模型目录，存放模型文件、模型概要文件、模型评估文件
+     * DFS模型目录，存放普通模型的模型文件和模型概要文件
             
-            示例如下：
             ${HDFS_SITE}/${DFS_WORK_ROOT}/mw_model/<mw_code>
      */
-    @Column(name = "DFS_MODEL_DIR")
-    private String dfsModelDir;
+    @Column(name = "MODEL_DFS_DIR")
+    private String modelDfsDir;
 
     /**
-     * 本地模型目录，缓存模型文件、模型概要文件、模型评估文件
+     * 本地模型目录，缓存普通模型的模型概要文件
             
-            示例如下：
             ${LOCAL_WORK_ROOT}/mw_model/<mw_code>
      */
-    @Column(name = "LOCAL_MODEL_DIR")
-    private String localModelDir;
+    @Column(name = "MODEL_LOCAL_DIR")
+    private String modelLocalDir;
 
     /**
      * 描述
@@ -119,12 +117,12 @@ public class MwModelWarehouse implements Serializable {
     }
 
     /**
-     * 获取模型库代码（预留）
+     * 获取模型库代码
             
             公共模型库：由英文字符、数字和下划线组成，起始字符不能为下划线
             项目模型库：$符号前缀 + 项目代码
      *
-     * @return MW_CODE - 模型库代码（预留）
+     * @return MW_CODE - 模型库代码
             
             公共模型库：由英文字符、数字和下划线组成，起始字符不能为下划线
             项目模型库：$符号前缀 + 项目代码
@@ -134,12 +132,12 @@ public class MwModelWarehouse implements Serializable {
     }
 
     /**
-     * 设置模型库代码（预留）
+     * 设置模型库代码
             
             公共模型库：由英文字符、数字和下划线组成，起始字符不能为下划线
             项目模型库：$符号前缀 + 项目代码
      *
-     * @param mwCode 模型库代码（预留）
+     * @param mwCode 模型库代码
             
             公共模型库：由英文字符、数字和下划线组成，起始字符不能为下划线
             项目模型库：$符号前缀 + 项目代码
@@ -168,11 +166,11 @@ public class MwModelWarehouse implements Serializable {
 
     /**
      * 获取数据库类型
-            0：公共模型库（预留）
+            0：公共模型库（长期建议不支持）
             1：项目模型库，随项目创建同时生成，存放项目中产生的模型
      *
      * @return MW_TYPE - 数据库类型
-            0：公共模型库（预留）
+            0：公共模型库（长期建议不支持）
             1：项目模型库，随项目创建同时生成，存放项目中产生的模型
      */
     public Integer getMwType() {
@@ -181,11 +179,11 @@ public class MwModelWarehouse implements Serializable {
 
     /**
      * 设置数据库类型
-            0：公共模型库（预留）
+            0：公共模型库（长期建议不支持）
             1：项目模型库，随项目创建同时生成，存放项目中产生的模型
      *
      * @param mwType 数据库类型
-            0：公共模型库（预留）
+            0：公共模型库（长期建议不支持）
             1：项目模型库，随项目创建同时生成，存放项目中产生的模型
      */
     public void setMwType(Integer mwType) {
@@ -211,63 +209,55 @@ public class MwModelWarehouse implements Serializable {
     }
 
     /**
-     * 获取DFS模型目录，存放模型文件、模型概要文件、模型评估文件
+     * 获取DFS模型目录，存放普通模型的模型文件和模型概要文件
             
-            示例如下：
             ${HDFS_SITE}/${DFS_WORK_ROOT}/mw_model/<mw_code>
      *
-     * @return DFS_MODEL_DIR - DFS模型目录，存放模型文件、模型概要文件、模型评估文件
+     * @return MODEL_DFS_DIR - DFS模型目录，存放普通模型的模型文件和模型概要文件
             
-            示例如下：
             ${HDFS_SITE}/${DFS_WORK_ROOT}/mw_model/<mw_code>
      */
-    public String getDfsModelDir() {
-        return dfsModelDir;
+    public String getModelDfsDir() {
+        return modelDfsDir;
     }
 
     /**
-     * 设置DFS模型目录，存放模型文件、模型概要文件、模型评估文件
+     * 设置DFS模型目录，存放普通模型的模型文件和模型概要文件
             
-            示例如下：
             ${HDFS_SITE}/${DFS_WORK_ROOT}/mw_model/<mw_code>
      *
-     * @param dfsModelDir DFS模型目录，存放模型文件、模型概要文件、模型评估文件
+     * @param modelDfsDir DFS模型目录，存放普通模型的模型文件和模型概要文件
             
-            示例如下：
             ${HDFS_SITE}/${DFS_WORK_ROOT}/mw_model/<mw_code>
      */
-    public void setDfsModelDir(String dfsModelDir) {
-        this.dfsModelDir = dfsModelDir == null ? null : dfsModelDir.trim();
+    public void setModelDfsDir(String modelDfsDir) {
+        this.modelDfsDir = modelDfsDir == null ? null : modelDfsDir.trim();
     }
 
     /**
-     * 获取本地模型目录，缓存模型文件、模型概要文件、模型评估文件
+     * 获取本地模型目录，缓存普通模型的模型概要文件
             
-            示例如下：
             ${LOCAL_WORK_ROOT}/mw_model/<mw_code>
      *
-     * @return LOCAL_MODEL_DIR - 本地模型目录，缓存模型文件、模型概要文件、模型评估文件
+     * @return MODEL_LOCAL_DIR - 本地模型目录，缓存普通模型的模型概要文件
             
-            示例如下：
             ${LOCAL_WORK_ROOT}/mw_model/<mw_code>
      */
-    public String getLocalModelDir() {
-        return localModelDir;
+    public String getModelLocalDir() {
+        return modelLocalDir;
     }
 
     /**
-     * 设置本地模型目录，缓存模型文件、模型概要文件、模型评估文件
+     * 设置本地模型目录，缓存普通模型的模型概要文件
             
-            示例如下：
             ${LOCAL_WORK_ROOT}/mw_model/<mw_code>
      *
-     * @param localModelDir 本地模型目录，缓存模型文件、模型概要文件、模型评估文件
+     * @param modelLocalDir 本地模型目录，缓存普通模型的模型概要文件
             
-            示例如下：
             ${LOCAL_WORK_ROOT}/mw_model/<mw_code>
      */
-    public void setLocalModelDir(String localModelDir) {
-        this.localModelDir = localModelDir == null ? null : localModelDir.trim();
+    public void setModelLocalDir(String modelLocalDir) {
+        this.modelLocalDir = modelLocalDir == null ? null : modelLocalDir.trim();
     }
 
     /**
@@ -403,8 +393,8 @@ public class MwModelWarehouse implements Serializable {
             && (this.getMwName() == null ? other.getMwName() == null : this.getMwName().equals(other.getMwName()))
             && (this.getMwType() == null ? other.getMwType() == null : this.getMwType().equals(other.getMwType()))
             && (this.getOwnerProjectId() == null ? other.getOwnerProjectId() == null : this.getOwnerProjectId().equals(other.getOwnerProjectId()))
-            && (this.getDfsModelDir() == null ? other.getDfsModelDir() == null : this.getDfsModelDir().equals(other.getDfsModelDir()))
-            && (this.getLocalModelDir() == null ? other.getLocalModelDir() == null : this.getLocalModelDir().equals(other.getLocalModelDir()))
+            && (this.getModelDfsDir() == null ? other.getModelDfsDir() == null : this.getModelDfsDir().equals(other.getModelDfsDir()))
+            && (this.getModelLocalDir() == null ? other.getModelLocalDir() == null : this.getModelLocalDir().equals(other.getModelLocalDir()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getLastUpdateTime() == null ? other.getLastUpdateTime() == null : this.getLastUpdateTime().equals(other.getLastUpdateTime()))
@@ -422,8 +412,8 @@ public class MwModelWarehouse implements Serializable {
         result = prime * result + ((getMwName() == null) ? 0 : getMwName().hashCode());
         result = prime * result + ((getMwType() == null) ? 0 : getMwType().hashCode());
         result = prime * result + ((getOwnerProjectId() == null) ? 0 : getOwnerProjectId().hashCode());
-        result = prime * result + ((getDfsModelDir() == null) ? 0 : getDfsModelDir().hashCode());
-        result = prime * result + ((getLocalModelDir() == null) ? 0 : getLocalModelDir().hashCode());
+        result = prime * result + ((getModelDfsDir() == null) ? 0 : getModelDfsDir().hashCode());
+        result = prime * result + ((getModelLocalDir() == null) ? 0 : getModelLocalDir().hashCode());
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getLastUpdateTime() == null) ? 0 : getLastUpdateTime().hashCode());

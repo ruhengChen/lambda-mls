@@ -486,63 +486,143 @@ public class EmExperimentExample {
             return (Criteria) this;
         }
 
-        public Criteria andSequenceIsNull() {
-            addCriterion("SEQUENCE is null");
+        public Criteria andExperimentDfsDirIsNull() {
+            addCriterion("EXPERIMENT_DFS_DIR is null");
             return (Criteria) this;
         }
 
-        public Criteria andSequenceIsNotNull() {
-            addCriterion("SEQUENCE is not null");
+        public Criteria andExperimentDfsDirIsNotNull() {
+            addCriterion("EXPERIMENT_DFS_DIR is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSequenceEqualTo(Integer value) {
-            addCriterion("SEQUENCE =", value, "sequence");
+        public Criteria andExperimentDfsDirEqualTo(String value) {
+            addCriterion("EXPERIMENT_DFS_DIR =", value, "experimentDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andSequenceNotEqualTo(Integer value) {
-            addCriterion("SEQUENCE <>", value, "sequence");
+        public Criteria andExperimentDfsDirNotEqualTo(String value) {
+            addCriterion("EXPERIMENT_DFS_DIR <>", value, "experimentDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andSequenceGreaterThan(Integer value) {
-            addCriterion("SEQUENCE >", value, "sequence");
+        public Criteria andExperimentDfsDirGreaterThan(String value) {
+            addCriterion("EXPERIMENT_DFS_DIR >", value, "experimentDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andSequenceGreaterThanOrEqualTo(Integer value) {
-            addCriterion("SEQUENCE >=", value, "sequence");
+        public Criteria andExperimentDfsDirGreaterThanOrEqualTo(String value) {
+            addCriterion("EXPERIMENT_DFS_DIR >=", value, "experimentDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andSequenceLessThan(Integer value) {
-            addCriterion("SEQUENCE <", value, "sequence");
+        public Criteria andExperimentDfsDirLessThan(String value) {
+            addCriterion("EXPERIMENT_DFS_DIR <", value, "experimentDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andSequenceLessThanOrEqualTo(Integer value) {
-            addCriterion("SEQUENCE <=", value, "sequence");
+        public Criteria andExperimentDfsDirLessThanOrEqualTo(String value) {
+            addCriterion("EXPERIMENT_DFS_DIR <=", value, "experimentDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andSequenceIn(List<Integer> values) {
-            addCriterion("SEQUENCE in", values, "sequence");
+        public Criteria andExperimentDfsDirLike(String value) {
+            addCriterion("EXPERIMENT_DFS_DIR like", value, "experimentDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andSequenceNotIn(List<Integer> values) {
-            addCriterion("SEQUENCE not in", values, "sequence");
+        public Criteria andExperimentDfsDirNotLike(String value) {
+            addCriterion("EXPERIMENT_DFS_DIR not like", value, "experimentDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andSequenceBetween(Integer value1, Integer value2) {
-            addCriterion("SEQUENCE between", value1, value2, "sequence");
+        public Criteria andExperimentDfsDirIn(List<String> values) {
+            addCriterion("EXPERIMENT_DFS_DIR in", values, "experimentDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andSequenceNotBetween(Integer value1, Integer value2) {
-            addCriterion("SEQUENCE not between", value1, value2, "sequence");
+        public Criteria andExperimentDfsDirNotIn(List<String> values) {
+            addCriterion("EXPERIMENT_DFS_DIR not in", values, "experimentDfsDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentDfsDirBetween(String value1, String value2) {
+            addCriterion("EXPERIMENT_DFS_DIR between", value1, value2, "experimentDfsDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentDfsDirNotBetween(String value1, String value2) {
+            addCriterion("EXPERIMENT_DFS_DIR not between", value1, value2, "experimentDfsDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirIsNull() {
+            addCriterion("EXPERIMENT_LOCAL_DIR is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirIsNotNull() {
+            addCriterion("EXPERIMENT_LOCAL_DIR is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirEqualTo(String value) {
+            addCriterion("EXPERIMENT_LOCAL_DIR =", value, "experimentLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirNotEqualTo(String value) {
+            addCriterion("EXPERIMENT_LOCAL_DIR <>", value, "experimentLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirGreaterThan(String value) {
+            addCriterion("EXPERIMENT_LOCAL_DIR >", value, "experimentLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirGreaterThanOrEqualTo(String value) {
+            addCriterion("EXPERIMENT_LOCAL_DIR >=", value, "experimentLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirLessThan(String value) {
+            addCriterion("EXPERIMENT_LOCAL_DIR <", value, "experimentLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirLessThanOrEqualTo(String value) {
+            addCriterion("EXPERIMENT_LOCAL_DIR <=", value, "experimentLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirLike(String value) {
+            addCriterion("EXPERIMENT_LOCAL_DIR like", value, "experimentLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirNotLike(String value) {
+            addCriterion("EXPERIMENT_LOCAL_DIR not like", value, "experimentLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirIn(List<String> values) {
+            addCriterion("EXPERIMENT_LOCAL_DIR in", values, "experimentLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirNotIn(List<String> values) {
+            addCriterion("EXPERIMENT_LOCAL_DIR not in", values, "experimentLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirBetween(String value1, String value2) {
+            addCriterion("EXPERIMENT_LOCAL_DIR between", value1, value2, "experimentLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirNotBetween(String value1, String value2) {
+            addCriterion("EXPERIMENT_LOCAL_DIR not between", value1, value2, "experimentLocalDir");
             return (Criteria) this;
         }
 
@@ -1008,6 +1088,16 @@ public class EmExperimentExample {
 
         public Criteria andExperimentNameLikeInsensitive(String value) {
             addCriterion("upper(EXPERIMENT_NAME) like", value.toUpperCase(), "experimentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentDfsDirLikeInsensitive(String value) {
+            addCriterion("upper(EXPERIMENT_DFS_DIR) like", value.toUpperCase(), "experimentDfsDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andExperimentLocalDirLikeInsensitive(String value) {
+            addCriterion("upper(EXPERIMENT_LOCAL_DIR) like", value.toUpperCase(), "experimentLocalDir");
             return (Criteria) this;
         }
 

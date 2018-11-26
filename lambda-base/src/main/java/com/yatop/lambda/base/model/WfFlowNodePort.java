@@ -26,6 +26,18 @@ public class WfFlowNodePort implements Serializable {
     private Long refPortId;
 
     /**
+     * 引用计算组件输入输出特征ID
+     */
+    @Column(name = "REF_CHAR_ID")
+    private String refCharId;
+
+    /**
+     * 描述
+     */
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    /**
      * 状态
             0：正常
             1：失效
@@ -111,6 +123,42 @@ public class WfFlowNodePort implements Serializable {
      */
     public void setRefPortId(Long refPortId) {
         this.refPortId = refPortId;
+    }
+
+    /**
+     * 获取引用计算组件输入输出特征ID
+     *
+     * @return REF_CHAR_ID - 引用计算组件输入输出特征ID
+     */
+    public String getRefCharId() {
+        return refCharId;
+    }
+
+    /**
+     * 设置引用计算组件输入输出特征ID
+     *
+     * @param refCharId 引用计算组件输入输出特征ID
+     */
+    public void setRefCharId(String refCharId) {
+        this.refCharId = refCharId == null ? null : refCharId.trim();
+    }
+
+    /**
+     * 获取描述
+     *
+     * @return DESCRIPTION - 描述
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * 设置描述
+     *
+     * @param description 描述
+     */
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     /**
@@ -226,6 +274,8 @@ public class WfFlowNodePort implements Serializable {
         return (this.getNodePortId() == null ? other.getNodePortId() == null : this.getNodePortId().equals(other.getNodePortId()))
             && (this.getOwnerNodeId() == null ? other.getOwnerNodeId() == null : this.getOwnerNodeId().equals(other.getOwnerNodeId()))
             && (this.getRefPortId() == null ? other.getRefPortId() == null : this.getRefPortId().equals(other.getRefPortId()))
+            && (this.getRefCharId() == null ? other.getRefCharId() == null : this.getRefCharId().equals(other.getRefCharId()))
+            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getLastUpdateTime() == null ? other.getLastUpdateTime() == null : this.getLastUpdateTime().equals(other.getLastUpdateTime()))
             && (this.getLastUpdateOper() == null ? other.getLastUpdateOper() == null : this.getLastUpdateOper().equals(other.getLastUpdateOper()))
@@ -240,6 +290,8 @@ public class WfFlowNodePort implements Serializable {
         result = prime * result + ((getNodePortId() == null) ? 0 : getNodePortId().hashCode());
         result = prime * result + ((getOwnerNodeId() == null) ? 0 : getOwnerNodeId().hashCode());
         result = prime * result + ((getRefPortId() == null) ? 0 : getRefPortId().hashCode());
+        result = prime * result + ((getRefCharId() == null) ? 0 : getRefCharId().hashCode());
+        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getLastUpdateTime() == null) ? 0 : getLastUpdateTime().hashCode());
         result = prime * result + ((getLastUpdateOper() == null) ? 0 : getLastUpdateOper().hashCode());

@@ -246,6 +246,66 @@ public class WfFlowNodeExample {
             return (Criteria) this;
         }
 
+        public Criteria andOwnerProjectIdIsNull() {
+            addCriterion("OWNER_PROJECT_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwnerProjectIdIsNotNull() {
+            addCriterion("OWNER_PROJECT_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwnerProjectIdEqualTo(Long value) {
+            addCriterion("OWNER_PROJECT_ID =", value, "ownerProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwnerProjectIdNotEqualTo(Long value) {
+            addCriterion("OWNER_PROJECT_ID <>", value, "ownerProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwnerProjectIdGreaterThan(Long value) {
+            addCriterion("OWNER_PROJECT_ID >", value, "ownerProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwnerProjectIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("OWNER_PROJECT_ID >=", value, "ownerProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwnerProjectIdLessThan(Long value) {
+            addCriterion("OWNER_PROJECT_ID <", value, "ownerProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwnerProjectIdLessThanOrEqualTo(Long value) {
+            addCriterion("OWNER_PROJECT_ID <=", value, "ownerProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwnerProjectIdIn(List<Long> values) {
+            addCriterion("OWNER_PROJECT_ID in", values, "ownerProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwnerProjectIdNotIn(List<Long> values) {
+            addCriterion("OWNER_PROJECT_ID not in", values, "ownerProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwnerProjectIdBetween(Long value1, Long value2) {
+            addCriterion("OWNER_PROJECT_ID between", value1, value2, "ownerProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwnerProjectIdNotBetween(Long value1, Long value2) {
+            addCriterion("OWNER_PROJECT_ID not between", value1, value2, "ownerProjectId");
+            return (Criteria) this;
+        }
+
         public Criteria andOwnerFlowIdIsNull() {
             addCriterion("OWNER_FLOW_ID is null");
             return (Criteria) this;
@@ -486,66 +546,6 @@ public class WfFlowNodeExample {
             return (Criteria) this;
         }
 
-        public Criteria andSequenceIsNull() {
-            addCriterion("SEQUENCE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceIsNotNull() {
-            addCriterion("SEQUENCE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceEqualTo(Integer value) {
-            addCriterion("SEQUENCE =", value, "sequence");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNotEqualTo(Integer value) {
-            addCriterion("SEQUENCE <>", value, "sequence");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceGreaterThan(Integer value) {
-            addCriterion("SEQUENCE >", value, "sequence");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceGreaterThanOrEqualTo(Integer value) {
-            addCriterion("SEQUENCE >=", value, "sequence");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceLessThan(Integer value) {
-            addCriterion("SEQUENCE <", value, "sequence");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceLessThanOrEqualTo(Integer value) {
-            addCriterion("SEQUENCE <=", value, "sequence");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceIn(List<Integer> values) {
-            addCriterion("SEQUENCE in", values, "sequence");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNotIn(List<Integer> values) {
-            addCriterion("SEQUENCE not in", values, "sequence");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceBetween(Integer value1, Integer value2) {
-            addCriterion("SEQUENCE between", value1, value2, "sequence");
-            return (Criteria) this;
-        }
-
-        public Criteria andSequenceNotBetween(Integer value1, Integer value2) {
-            addCriterion("SEQUENCE not between", value1, value2, "sequence");
-            return (Criteria) this;
-        }
-
         public Criteria andLastTaskIdIsNull() {
             addCriterion("LAST_TASK_ID is null");
             return (Criteria) this;
@@ -603,6 +603,136 @@ public class WfFlowNodeExample {
 
         public Criteria andLastTaskIdNotBetween(Long value1, Long value2) {
             addCriterion("LAST_TASK_ID not between", value1, value2, "lastTaskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgIsNull() {
+            addCriterion("WARNING_MSG is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgIsNotNull() {
+            addCriterion("WARNING_MSG is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgEqualTo(String value) {
+            addCriterion("WARNING_MSG =", value, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgNotEqualTo(String value) {
+            addCriterion("WARNING_MSG <>", value, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgGreaterThan(String value) {
+            addCriterion("WARNING_MSG >", value, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgGreaterThanOrEqualTo(String value) {
+            addCriterion("WARNING_MSG >=", value, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgLessThan(String value) {
+            addCriterion("WARNING_MSG <", value, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgLessThanOrEqualTo(String value) {
+            addCriterion("WARNING_MSG <=", value, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgLike(String value) {
+            addCriterion("WARNING_MSG like", value, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgNotLike(String value) {
+            addCriterion("WARNING_MSG not like", value, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgIn(List<String> values) {
+            addCriterion("WARNING_MSG in", values, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgNotIn(List<String> values) {
+            addCriterion("WARNING_MSG not in", values, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgBetween(String value1, String value2) {
+            addCriterion("WARNING_MSG between", value1, value2, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgNotBetween(String value1, String value2) {
+            addCriterion("WARNING_MSG not between", value1, value2, "warningMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateIsNull() {
+            addCriterion("NODE_STATE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateIsNotNull() {
+            addCriterion("NODE_STATE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateEqualTo(Integer value) {
+            addCriterion("NODE_STATE =", value, "nodeState");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateNotEqualTo(Integer value) {
+            addCriterion("NODE_STATE <>", value, "nodeState");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateGreaterThan(Integer value) {
+            addCriterion("NODE_STATE >", value, "nodeState");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateGreaterThanOrEqualTo(Integer value) {
+            addCriterion("NODE_STATE >=", value, "nodeState");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateLessThan(Integer value) {
+            addCriterion("NODE_STATE <", value, "nodeState");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateLessThanOrEqualTo(Integer value) {
+            addCriterion("NODE_STATE <=", value, "nodeState");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateIn(List<Integer> values) {
+            addCriterion("NODE_STATE in", values, "nodeState");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateNotIn(List<Integer> values) {
+            addCriterion("NODE_STATE not in", values, "nodeState");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateBetween(Integer value1, Integer value2) {
+            addCriterion("NODE_STATE between", value1, value2, "nodeState");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeStateNotBetween(Integer value1, Integer value2) {
+            addCriterion("NODE_STATE not between", value1, value2, "nodeState");
             return (Criteria) this;
         }
 
@@ -673,66 +803,6 @@ public class WfFlowNodeExample {
 
         public Criteria andDescriptionNotBetween(String value1, String value2) {
             addCriterion("DESCRIPTION not between", value1, value2, "description");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateIsNull() {
-            addCriterion("NODE_STATE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateIsNotNull() {
-            addCriterion("NODE_STATE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateEqualTo(Integer value) {
-            addCriterion("NODE_STATE =", value, "nodeState");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateNotEqualTo(Integer value) {
-            addCriterion("NODE_STATE <>", value, "nodeState");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateGreaterThan(Integer value) {
-            addCriterion("NODE_STATE >", value, "nodeState");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateGreaterThanOrEqualTo(Integer value) {
-            addCriterion("NODE_STATE >=", value, "nodeState");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateLessThan(Integer value) {
-            addCriterion("NODE_STATE <", value, "nodeState");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateLessThanOrEqualTo(Integer value) {
-            addCriterion("NODE_STATE <=", value, "nodeState");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateIn(List<Integer> values) {
-            addCriterion("NODE_STATE in", values, "nodeState");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateNotIn(List<Integer> values) {
-            addCriterion("NODE_STATE not in", values, "nodeState");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateBetween(Integer value1, Integer value2) {
-            addCriterion("NODE_STATE between", value1, value2, "nodeState");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeStateNotBetween(Integer value1, Integer value2) {
-            addCriterion("NODE_STATE not between", value1, value2, "nodeState");
             return (Criteria) this;
         }
 
@@ -1058,6 +1128,11 @@ public class WfFlowNodeExample {
 
         public Criteria andNodeNameLikeInsensitive(String value) {
             addCriterion("upper(NODE_NAME) like", value.toUpperCase(), "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarningMsgLikeInsensitive(String value) {
+            addCriterion("upper(WARNING_MSG) like", value.toUpperCase(), "warningMsg");
             return (Criteria) this;
         }
 

@@ -5,7 +5,13 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "pr_project_member")
-public class PrProjectMember extends PrProjectMemberKey implements Serializable {
+public class PrProjectMember implements Serializable {
+    /**
+     * 项目ID
+     */
+    @Column(name = "PROJECT_ID")
+    private Long projectId;
+
     /**
      * 是否为项目所有者
             0：否
@@ -13,6 +19,12 @@ public class PrProjectMember extends PrProjectMemberKey implements Serializable 
      */
     @Column(name = "IS_OWNER")
     private Integer isOwner;
+
+    /**
+     * 项目成员用户名
+     */
+    @Column(name = "MEMBER_USER")
+    private String memberUser;
 
     /**
      * 描述
@@ -55,6 +67,24 @@ public class PrProjectMember extends PrProjectMemberKey implements Serializable 
     private static final long serialVersionUID = 1L;
 
     /**
+     * 获取项目ID
+     *
+     * @return PROJECT_ID - 项目ID
+     */
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    /**
+     * 设置项目ID
+     *
+     * @param projectId 项目ID
+     */
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    /**
      * 获取是否为项目所有者
             0：否
             1：是
@@ -78,6 +108,24 @@ public class PrProjectMember extends PrProjectMemberKey implements Serializable 
      */
     public void setIsOwner(Integer isOwner) {
         this.isOwner = isOwner;
+    }
+
+    /**
+     * 获取项目成员用户名
+     *
+     * @return MEMBER_USER - 项目成员用户名
+     */
+    public String getMemberUser() {
+        return memberUser;
+    }
+
+    /**
+     * 设置项目成员用户名
+     *
+     * @param memberUser 项目成员用户名
+     */
+    public void setMemberUser(String memberUser) {
+        this.memberUser = memberUser == null ? null : memberUser.trim();
     }
 
     /**
@@ -209,8 +257,8 @@ public class PrProjectMember extends PrProjectMemberKey implements Serializable 
         }
         PrProjectMember other = (PrProjectMember) that;
         return (this.getProjectId() == null ? other.getProjectId() == null : this.getProjectId().equals(other.getProjectId()))
-            && (this.getMemberUser() == null ? other.getMemberUser() == null : this.getMemberUser().equals(other.getMemberUser()))
             && (this.getIsOwner() == null ? other.getIsOwner() == null : this.getIsOwner().equals(other.getIsOwner()))
+            && (this.getMemberUser() == null ? other.getMemberUser() == null : this.getMemberUser().equals(other.getMemberUser()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getLastUpdateTime() == null ? other.getLastUpdateTime() == null : this.getLastUpdateTime().equals(other.getLastUpdateTime()))
@@ -224,8 +272,8 @@ public class PrProjectMember extends PrProjectMemberKey implements Serializable 
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getProjectId() == null) ? 0 : getProjectId().hashCode());
-        result = prime * result + ((getMemberUser() == null) ? 0 : getMemberUser().hashCode());
         result = prime * result + ((getIsOwner() == null) ? 0 : getIsOwner().hashCode());
+        result = prime * result + ((getMemberUser() == null) ? 0 : getMemberUser().hashCode());
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getLastUpdateTime() == null) ? 0 : getLastUpdateTime().hashCode());

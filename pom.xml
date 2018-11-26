@@ -72,7 +72,7 @@
         <!-- <module>lambda-open</module> -->
         <!-- <module>lambda-decision</module> -->
         <module>lambda-cluster-adapter</module>
-        <module>lambda-component-common</module>
+        <module>lambda-component-scala</module>
         <module>lambda-open</module>
         <module>lambda-decision</module>
     </modules>

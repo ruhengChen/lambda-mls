@@ -436,6 +436,66 @@ public class PrProjectExample {
             return (Criteria) this;
         }
 
+        public Criteria andCacheExipreDaysIsNull() {
+            addCriterion("CACHE_EXIPRE_DAYS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCacheExipreDaysIsNotNull() {
+            addCriterion("CACHE_EXIPRE_DAYS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCacheExipreDaysEqualTo(Integer value) {
+            addCriterion("CACHE_EXIPRE_DAYS =", value, "cacheExipreDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andCacheExipreDaysNotEqualTo(Integer value) {
+            addCriterion("CACHE_EXIPRE_DAYS <>", value, "cacheExipreDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andCacheExipreDaysGreaterThan(Integer value) {
+            addCriterion("CACHE_EXIPRE_DAYS >", value, "cacheExipreDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andCacheExipreDaysGreaterThanOrEqualTo(Integer value) {
+            addCriterion("CACHE_EXIPRE_DAYS >=", value, "cacheExipreDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andCacheExipreDaysLessThan(Integer value) {
+            addCriterion("CACHE_EXIPRE_DAYS <", value, "cacheExipreDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andCacheExipreDaysLessThanOrEqualTo(Integer value) {
+            addCriterion("CACHE_EXIPRE_DAYS <=", value, "cacheExipreDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andCacheExipreDaysIn(List<Integer> values) {
+            addCriterion("CACHE_EXIPRE_DAYS in", values, "cacheExipreDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andCacheExipreDaysNotIn(List<Integer> values) {
+            addCriterion("CACHE_EXIPRE_DAYS not in", values, "cacheExipreDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andCacheExipreDaysBetween(Integer value1, Integer value2) {
+            addCriterion("CACHE_EXIPRE_DAYS between", value1, value2, "cacheExipreDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andCacheExipreDaysNotBetween(Integer value1, Integer value2) {
+            addCriterion("CACHE_EXIPRE_DAYS not between", value1, value2, "cacheExipreDays");
+            return (Criteria) this;
+        }
+
         public Criteria andDescriptionIsNull() {
             addCriterion("DESCRIPTION is null");
             return (Criteria) this;

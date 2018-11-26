@@ -50,7 +50,7 @@ public class WfModule implements Serializable {
     private Integer iconType;
 
     /**
-     * 组件类class path
+     * 组件java类class path
      */
     @Column(name = "CLASS_PATH")
     private String classPath;
@@ -228,18 +228,18 @@ public class WfModule implements Serializable {
     }
 
     /**
-     * 获取组件类class path
+     * 获取组件java类class path
      *
-     * @return CLASS_PATH - 组件类class path
+     * @return CLASS_PATH - 组件java类class path
      */
     public String getClassPath() {
         return classPath;
     }
 
     /**
-     * 设置组件类class path
+     * 设置组件java类class path
      *
-     * @param classPath 组件类class path
+     * @param classPath 组件java类class path
      */
     public void setClassPath(String classPath) {
         this.classPath = classPath == null ? null : classPath.trim();

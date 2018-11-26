@@ -546,143 +546,203 @@ public class WfExecutionJobExample {
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirIsNull() {
-            addCriterion("DFS_EXEC_DIR is null");
+        public Criteria andJobDfsDirIsNull() {
+            addCriterion("JOB_DFS_DIR is null");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirIsNotNull() {
-            addCriterion("DFS_EXEC_DIR is not null");
+        public Criteria andJobDfsDirIsNotNull() {
+            addCriterion("JOB_DFS_DIR is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirEqualTo(String value) {
-            addCriterion("DFS_EXEC_DIR =", value, "dfsExecDir");
+        public Criteria andJobDfsDirEqualTo(String value) {
+            addCriterion("JOB_DFS_DIR =", value, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirNotEqualTo(String value) {
-            addCriterion("DFS_EXEC_DIR <>", value, "dfsExecDir");
+        public Criteria andJobDfsDirNotEqualTo(String value) {
+            addCriterion("JOB_DFS_DIR <>", value, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirGreaterThan(String value) {
-            addCriterion("DFS_EXEC_DIR >", value, "dfsExecDir");
+        public Criteria andJobDfsDirGreaterThan(String value) {
+            addCriterion("JOB_DFS_DIR >", value, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirGreaterThanOrEqualTo(String value) {
-            addCriterion("DFS_EXEC_DIR >=", value, "dfsExecDir");
+        public Criteria andJobDfsDirGreaterThanOrEqualTo(String value) {
+            addCriterion("JOB_DFS_DIR >=", value, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirLessThan(String value) {
-            addCriterion("DFS_EXEC_DIR <", value, "dfsExecDir");
+        public Criteria andJobDfsDirLessThan(String value) {
+            addCriterion("JOB_DFS_DIR <", value, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirLessThanOrEqualTo(String value) {
-            addCriterion("DFS_EXEC_DIR <=", value, "dfsExecDir");
+        public Criteria andJobDfsDirLessThanOrEqualTo(String value) {
+            addCriterion("JOB_DFS_DIR <=", value, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirLike(String value) {
-            addCriterion("DFS_EXEC_DIR like", value, "dfsExecDir");
+        public Criteria andJobDfsDirLike(String value) {
+            addCriterion("JOB_DFS_DIR like", value, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirNotLike(String value) {
-            addCriterion("DFS_EXEC_DIR not like", value, "dfsExecDir");
+        public Criteria andJobDfsDirNotLike(String value) {
+            addCriterion("JOB_DFS_DIR not like", value, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirIn(List<String> values) {
-            addCriterion("DFS_EXEC_DIR in", values, "dfsExecDir");
+        public Criteria andJobDfsDirIn(List<String> values) {
+            addCriterion("JOB_DFS_DIR in", values, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirNotIn(List<String> values) {
-            addCriterion("DFS_EXEC_DIR not in", values, "dfsExecDir");
+        public Criteria andJobDfsDirNotIn(List<String> values) {
+            addCriterion("JOB_DFS_DIR not in", values, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirBetween(String value1, String value2) {
-            addCriterion("DFS_EXEC_DIR between", value1, value2, "dfsExecDir");
+        public Criteria andJobDfsDirBetween(String value1, String value2) {
+            addCriterion("JOB_DFS_DIR between", value1, value2, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirNotBetween(String value1, String value2) {
-            addCriterion("DFS_EXEC_DIR not between", value1, value2, "dfsExecDir");
+        public Criteria andJobDfsDirNotBetween(String value1, String value2) {
+            addCriterion("JOB_DFS_DIR not between", value1, value2, "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirIsNull() {
-            addCriterion("LOCAL_EXEC_DIR is null");
+        public Criteria andJobLocalDirIsNull() {
+            addCriterion("JOB_LOCAL_DIR is null");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirIsNotNull() {
-            addCriterion("LOCAL_EXEC_DIR is not null");
+        public Criteria andJobLocalDirIsNotNull() {
+            addCriterion("JOB_LOCAL_DIR is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirEqualTo(String value) {
-            addCriterion("LOCAL_EXEC_DIR =", value, "localExecDir");
+        public Criteria andJobLocalDirEqualTo(String value) {
+            addCriterion("JOB_LOCAL_DIR =", value, "jobLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirNotEqualTo(String value) {
-            addCriterion("LOCAL_EXEC_DIR <>", value, "localExecDir");
+        public Criteria andJobLocalDirNotEqualTo(String value) {
+            addCriterion("JOB_LOCAL_DIR <>", value, "jobLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirGreaterThan(String value) {
-            addCriterion("LOCAL_EXEC_DIR >", value, "localExecDir");
+        public Criteria andJobLocalDirGreaterThan(String value) {
+            addCriterion("JOB_LOCAL_DIR >", value, "jobLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirGreaterThanOrEqualTo(String value) {
-            addCriterion("LOCAL_EXEC_DIR >=", value, "localExecDir");
+        public Criteria andJobLocalDirGreaterThanOrEqualTo(String value) {
+            addCriterion("JOB_LOCAL_DIR >=", value, "jobLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirLessThan(String value) {
-            addCriterion("LOCAL_EXEC_DIR <", value, "localExecDir");
+        public Criteria andJobLocalDirLessThan(String value) {
+            addCriterion("JOB_LOCAL_DIR <", value, "jobLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirLessThanOrEqualTo(String value) {
-            addCriterion("LOCAL_EXEC_DIR <=", value, "localExecDir");
+        public Criteria andJobLocalDirLessThanOrEqualTo(String value) {
+            addCriterion("JOB_LOCAL_DIR <=", value, "jobLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirLike(String value) {
-            addCriterion("LOCAL_EXEC_DIR like", value, "localExecDir");
+        public Criteria andJobLocalDirLike(String value) {
+            addCriterion("JOB_LOCAL_DIR like", value, "jobLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirNotLike(String value) {
-            addCriterion("LOCAL_EXEC_DIR not like", value, "localExecDir");
+        public Criteria andJobLocalDirNotLike(String value) {
+            addCriterion("JOB_LOCAL_DIR not like", value, "jobLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirIn(List<String> values) {
-            addCriterion("LOCAL_EXEC_DIR in", values, "localExecDir");
+        public Criteria andJobLocalDirIn(List<String> values) {
+            addCriterion("JOB_LOCAL_DIR in", values, "jobLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirNotIn(List<String> values) {
-            addCriterion("LOCAL_EXEC_DIR not in", values, "localExecDir");
+        public Criteria andJobLocalDirNotIn(List<String> values) {
+            addCriterion("JOB_LOCAL_DIR not in", values, "jobLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirBetween(String value1, String value2) {
-            addCriterion("LOCAL_EXEC_DIR between", value1, value2, "localExecDir");
+        public Criteria andJobLocalDirBetween(String value1, String value2) {
+            addCriterion("JOB_LOCAL_DIR between", value1, value2, "jobLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirNotBetween(String value1, String value2) {
-            addCriterion("LOCAL_EXEC_DIR not between", value1, value2, "localExecDir");
+        public Criteria andJobLocalDirNotBetween(String value1, String value2) {
+            addCriterion("JOB_LOCAL_DIR not between", value1, value2, "jobLocalDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceIsNull() {
+            addCriterion("NEXT_TASK_SEQUENCE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceIsNotNull() {
+            addCriterion("NEXT_TASK_SEQUENCE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceEqualTo(Long value) {
+            addCriterion("NEXT_TASK_SEQUENCE =", value, "nextTaskSequence");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceNotEqualTo(Long value) {
+            addCriterion("NEXT_TASK_SEQUENCE <>", value, "nextTaskSequence");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceGreaterThan(Long value) {
+            addCriterion("NEXT_TASK_SEQUENCE >", value, "nextTaskSequence");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceGreaterThanOrEqualTo(Long value) {
+            addCriterion("NEXT_TASK_SEQUENCE >=", value, "nextTaskSequence");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceLessThan(Long value) {
+            addCriterion("NEXT_TASK_SEQUENCE <", value, "nextTaskSequence");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceLessThanOrEqualTo(Long value) {
+            addCriterion("NEXT_TASK_SEQUENCE <=", value, "nextTaskSequence");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceIn(List<Long> values) {
+            addCriterion("NEXT_TASK_SEQUENCE in", values, "nextTaskSequence");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceNotIn(List<Long> values) {
+            addCriterion("NEXT_TASK_SEQUENCE not in", values, "nextTaskSequence");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceBetween(Long value1, Long value2) {
+            addCriterion("NEXT_TASK_SEQUENCE between", value1, value2, "nextTaskSequence");
+            return (Criteria) this;
+        }
+
+        public Criteria andNextTaskSequenceNotBetween(Long value1, Long value2) {
+            addCriterion("NEXT_TASK_SEQUENCE not between", value1, value2, "nextTaskSequence");
             return (Criteria) this;
         }
 
@@ -1321,13 +1381,13 @@ public class WfExecutionJobExample {
             return (Criteria) this;
         }
 
-        public Criteria andDfsExecDirLikeInsensitive(String value) {
-            addCriterion("upper(DFS_EXEC_DIR) like", value.toUpperCase(), "dfsExecDir");
+        public Criteria andJobDfsDirLikeInsensitive(String value) {
+            addCriterion("upper(JOB_DFS_DIR) like", value.toUpperCase(), "jobDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalExecDirLikeInsensitive(String value) {
-            addCriterion("upper(LOCAL_EXEC_DIR) like", value.toUpperCase(), "localExecDir");
+        public Criteria andJobLocalDirLikeInsensitive(String value) {
+            addCriterion("upper(JOB_LOCAL_DIR) like", value.toUpperCase(), "jobLocalDir");
             return (Criteria) this;
         }
 

@@ -31,7 +31,7 @@ public class WfExecutionJob implements Serializable {
             13：执行该节点（小数据试运行）
             20：定时调度运行
             30：在线调度运行
-            99：非实验中的任务运行（数据文件上传）
+            1001：数据文件上传
      */
     @Column(name = "JOB_TYPE")
     private Integer jobType;
@@ -61,22 +61,28 @@ public class WfExecutionJob implements Serializable {
     private Long relNodeId;
 
     /**
-     * DFS运行目录
+     * DFS作业目录
             
-            ${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/<experiment_id>/<exec_id>
-            ${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/other/<exec_id>
+            实验作业：${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/<experiment_id>/<job_id>
+            其他作业：${HDFS_SITE}/${DFS_WORK_ROOT}/proc<project_id>/other/<job_id>
      */
-    @Column(name = "DFS_EXEC_DIR")
-    private String dfsExecDir;
+    @Column(name = "JOB_DFS_DIR")
+    private String jobDfsDir;
 
     /**
-     * 本地运行目录（预留）
+     * 本地作业目录（预留）
             
-            ${LOCAL_WORK_ROOT}/proc/<project_id>/<experiment_id>/<exec_id>
-            ${LOCAL_WORK_ROOT}/proc/<project_id>/other/<exec_id>
+            实验作业：${LOCAL_WORK_ROOT}/proc/<project_id>/<experiment_id>/<job_id>
+            其他作业：${LOCAL_WORK_ROOT}/proc/<project_id>/other/<job_id>
      */
-    @Column(name = "LOCAL_EXEC_DIR")
-    private String localExecDir;
+    @Column(name = "JOB_LOCAL_DIR")
+    private String jobLocalDir;
+
+    /**
+     * 下一任务序号
+     */
+    @Column(name = "NEXT_TASK_SEQUENCE")
+    private Long nextTaskSequence;
 
     /**
      * 作业提交时间
@@ -147,10 +153,10 @@ public class WfExecutionJob implements Serializable {
     private String createOper;
 
     /**
-     * 任务上下文
+     * 作业上下文
      */
-    @Column(name = "JOB_CONTENT")
-    private String jobContent;
+    @Column(name = "JOB_CONTEXT")
+    private String jobContext;
 
     private static final long serialVersionUID = 1L;
 
@@ -202,7 +208,7 @@ public class WfExecutionJob implements Serializable {
             13：执行该节点（小数据试运行）
             20：定时调度运行
             30：在线调度运行
-            99：非实验中的任务运行（数据文件上传）
+            1001：数据文件上传
      *
      * @return JOB_TYPE - 作业类型
             0：全部运行
@@ -215,7 +221,7 @@ public class WfExecutionJob implements Serializable {
             13：执行该节点（小数据试运行）
             20：定时调度运行
             30：在线调度运行
-            99：非实验中的任务运行（数据文件上传）
+            1001：数据文件上传
      */
     public Integer getJobType() {
         return jobType;
@@ -233,7 +239,7 @@ public class WfExecutionJob implements Serializable {
             13：执行该节点（小数据试运行）
             20：定时调度运行
             30：在线调度运行
-            99：非实验中的任务运行（数据文件上传）
+            1001：数据文件上传
      *
      * @param jobType 作业类型
             0：全部运行
@@ -246,7 +252,7 @@ public class WfExecutionJob implements Serializable {
             13：执行该节点（小数据试运行）
             20：定时调度运行
             30：在线调度运行
-            99：非实验中的任务运行（数据文件上传）
+            1001：数据文件上传
      */
     public void setJobType(Integer jobType) {
         this.jobType = jobType;
@@ -325,63 +331,81 @@ public class WfExecutionJob implements Serializable {
     }
 
     /**
-     * 获取DFS运行目录
+     * 获取DFS作业目录
             
-            ${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/<experiment_id>/<exec_id>
-            ${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/other/<exec_id>
+            实验作业：${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/<experiment_id>/<job_id>
+            其他作业：${HDFS_SITE}/${DFS_WORK_ROOT}/proc<project_id>/other/<job_id>
      *
-     * @return DFS_EXEC_DIR - DFS运行目录
+     * @return JOB_DFS_DIR - DFS作业目录
             
-            ${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/<experiment_id>/<exec_id>
-            ${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/other/<exec_id>
+            实验作业：${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/<experiment_id>/<job_id>
+            其他作业：${HDFS_SITE}/${DFS_WORK_ROOT}/proc<project_id>/other/<job_id>
      */
-    public String getDfsExecDir() {
-        return dfsExecDir;
+    public String getJobDfsDir() {
+        return jobDfsDir;
     }
 
     /**
-     * 设置DFS运行目录
+     * 设置DFS作业目录
             
-            ${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/<experiment_id>/<exec_id>
-            ${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/other/<exec_id>
+            实验作业：${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/<experiment_id>/<job_id>
+            其他作业：${HDFS_SITE}/${DFS_WORK_ROOT}/proc<project_id>/other/<job_id>
      *
-     * @param dfsExecDir DFS运行目录
+     * @param jobDfsDir DFS作业目录
             
-            ${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/<experiment_id>/<exec_id>
-            ${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/other/<exec_id>
+            实验作业：${HDFS_SITE}/${DFS_WORK_ROOT}/proc/<project_id>/<experiment_id>/<job_id>
+            其他作业：${HDFS_SITE}/${DFS_WORK_ROOT}/proc<project_id>/other/<job_id>
      */
-    public void setDfsExecDir(String dfsExecDir) {
-        this.dfsExecDir = dfsExecDir == null ? null : dfsExecDir.trim();
+    public void setJobDfsDir(String jobDfsDir) {
+        this.jobDfsDir = jobDfsDir == null ? null : jobDfsDir.trim();
     }
 
     /**
-     * 获取本地运行目录（预留）
+     * 获取本地作业目录（预留）
             
-            ${LOCAL_WORK_ROOT}/proc/<project_id>/<experiment_id>/<exec_id>
-            ${LOCAL_WORK_ROOT}/proc/<project_id>/other/<exec_id>
+            实验作业：${LOCAL_WORK_ROOT}/proc/<project_id>/<experiment_id>/<job_id>
+            其他作业：${LOCAL_WORK_ROOT}/proc/<project_id>/other/<job_id>
      *
-     * @return LOCAL_EXEC_DIR - 本地运行目录（预留）
+     * @return JOB_LOCAL_DIR - 本地作业目录（预留）
             
-            ${LOCAL_WORK_ROOT}/proc/<project_id>/<experiment_id>/<exec_id>
-            ${LOCAL_WORK_ROOT}/proc/<project_id>/other/<exec_id>
+            实验作业：${LOCAL_WORK_ROOT}/proc/<project_id>/<experiment_id>/<job_id>
+            其他作业：${LOCAL_WORK_ROOT}/proc/<project_id>/other/<job_id>
      */
-    public String getLocalExecDir() {
-        return localExecDir;
+    public String getJobLocalDir() {
+        return jobLocalDir;
     }
 
     /**
-     * 设置本地运行目录（预留）
+     * 设置本地作业目录（预留）
             
-            ${LOCAL_WORK_ROOT}/proc/<project_id>/<experiment_id>/<exec_id>
-            ${LOCAL_WORK_ROOT}/proc/<project_id>/other/<exec_id>
+            实验作业：${LOCAL_WORK_ROOT}/proc/<project_id>/<experiment_id>/<job_id>
+            其他作业：${LOCAL_WORK_ROOT}/proc/<project_id>/other/<job_id>
      *
-     * @param localExecDir 本地运行目录（预留）
+     * @param jobLocalDir 本地作业目录（预留）
             
-            ${LOCAL_WORK_ROOT}/proc/<project_id>/<experiment_id>/<exec_id>
-            ${LOCAL_WORK_ROOT}/proc/<project_id>/other/<exec_id>
+            实验作业：${LOCAL_WORK_ROOT}/proc/<project_id>/<experiment_id>/<job_id>
+            其他作业：${LOCAL_WORK_ROOT}/proc/<project_id>/other/<job_id>
      */
-    public void setLocalExecDir(String localExecDir) {
-        this.localExecDir = localExecDir == null ? null : localExecDir.trim();
+    public void setJobLocalDir(String jobLocalDir) {
+        this.jobLocalDir = jobLocalDir == null ? null : jobLocalDir.trim();
+    }
+
+    /**
+     * 获取下一任务序号
+     *
+     * @return NEXT_TASK_SEQUENCE - 下一任务序号
+     */
+    public Long getNextTaskSequence() {
+        return nextTaskSequence;
+    }
+
+    /**
+     * 设置下一任务序号
+     *
+     * @param nextTaskSequence 下一任务序号
+     */
+    public void setNextTaskSequence(Long nextTaskSequence) {
+        this.nextTaskSequence = nextTaskSequence;
     }
 
     /**
@@ -597,21 +621,21 @@ public class WfExecutionJob implements Serializable {
     }
 
     /**
-     * 获取任务上下文
+     * 获取作业上下文
      *
-     * @return JOB_CONTENT - 任务上下文
+     * @return JOB_CONTEXT - 作业上下文
      */
-    public String getJobContent() {
-        return jobContent;
+    public String getJobContext() {
+        return jobContext;
     }
 
     /**
-     * 设置任务上下文
+     * 设置作业上下文
      *
-     * @param jobContent 任务上下文
+     * @param jobContext 作业上下文
      */
-    public void setJobContent(String jobContent) {
-        this.jobContent = jobContent == null ? null : jobContent.trim();
+    public void setJobContext(String jobContext) {
+        this.jobContext = jobContext == null ? null : jobContext.trim();
     }
 
     @Override
@@ -633,8 +657,9 @@ public class WfExecutionJob implements Serializable {
             && (this.getRelFlowId() == null ? other.getRelFlowId() == null : this.getRelFlowId().equals(other.getRelFlowId()))
             && (this.getRelSnapshotId() == null ? other.getRelSnapshotId() == null : this.getRelSnapshotId().equals(other.getRelSnapshotId()))
             && (this.getRelNodeId() == null ? other.getRelNodeId() == null : this.getRelNodeId().equals(other.getRelNodeId()))
-            && (this.getDfsExecDir() == null ? other.getDfsExecDir() == null : this.getDfsExecDir().equals(other.getDfsExecDir()))
-            && (this.getLocalExecDir() == null ? other.getLocalExecDir() == null : this.getLocalExecDir().equals(other.getLocalExecDir()))
+            && (this.getJobDfsDir() == null ? other.getJobDfsDir() == null : this.getJobDfsDir().equals(other.getJobDfsDir()))
+            && (this.getJobLocalDir() == null ? other.getJobLocalDir() == null : this.getJobLocalDir().equals(other.getJobLocalDir()))
+            && (this.getNextTaskSequence() == null ? other.getNextTaskSequence() == null : this.getNextTaskSequence().equals(other.getNextTaskSequence()))
             && (this.getJobSubmitTime() == null ? other.getJobSubmitTime() == null : this.getJobSubmitTime().equals(other.getJobSubmitTime()))
             && (this.getJobStartTime() == null ? other.getJobStartTime() == null : this.getJobStartTime().equals(other.getJobStartTime()))
             && (this.getJobEndTime() == null ? other.getJobEndTime() == null : this.getJobEndTime().equals(other.getJobEndTime()))
@@ -645,7 +670,7 @@ public class WfExecutionJob implements Serializable {
             && (this.getLastUpdateOper() == null ? other.getLastUpdateOper() == null : this.getLastUpdateOper().equals(other.getLastUpdateOper()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getCreateOper() == null ? other.getCreateOper() == null : this.getCreateOper().equals(other.getCreateOper()))
-            && (this.getJobContent() == null ? other.getJobContent() == null : this.getJobContent().equals(other.getJobContent()));
+            && (this.getJobContext() == null ? other.getJobContext() == null : this.getJobContext().equals(other.getJobContext()));
     }
 
     @Override
@@ -659,8 +684,9 @@ public class WfExecutionJob implements Serializable {
         result = prime * result + ((getRelFlowId() == null) ? 0 : getRelFlowId().hashCode());
         result = prime * result + ((getRelSnapshotId() == null) ? 0 : getRelSnapshotId().hashCode());
         result = prime * result + ((getRelNodeId() == null) ? 0 : getRelNodeId().hashCode());
-        result = prime * result + ((getDfsExecDir() == null) ? 0 : getDfsExecDir().hashCode());
-        result = prime * result + ((getLocalExecDir() == null) ? 0 : getLocalExecDir().hashCode());
+        result = prime * result + ((getJobDfsDir() == null) ? 0 : getJobDfsDir().hashCode());
+        result = prime * result + ((getJobLocalDir() == null) ? 0 : getJobLocalDir().hashCode());
+        result = prime * result + ((getNextTaskSequence() == null) ? 0 : getNextTaskSequence().hashCode());
         result = prime * result + ((getJobSubmitTime() == null) ? 0 : getJobSubmitTime().hashCode());
         result = prime * result + ((getJobStartTime() == null) ? 0 : getJobStartTime().hashCode());
         result = prime * result + ((getJobEndTime() == null) ? 0 : getJobEndTime().hashCode());
@@ -671,7 +697,7 @@ public class WfExecutionJob implements Serializable {
         result = prime * result + ((getLastUpdateOper() == null) ? 0 : getLastUpdateOper().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getCreateOper() == null) ? 0 : getCreateOper().hashCode());
-        result = prime * result + ((getJobContent() == null) ? 0 : getJobContent().hashCode());
+        result = prime * result + ((getJobContext() == null) ? 0 : getJobContext().hashCode());
         return result;
     }
 }

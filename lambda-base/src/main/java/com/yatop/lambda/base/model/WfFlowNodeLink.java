@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Table(name = "wf_flow_node_link")
 public class WfFlowNodeLink implements Serializable {
     /**
-     * 链路ID
+     * 链接ID
      */
     @Id
     @Column(name = "LINK_ID")
@@ -20,16 +20,30 @@ public class WfFlowNodeLink implements Serializable {
     private Long ownerFlowId;
 
     /**
+     * 是否为web组件的流出链接
+            0：否
+            1：是
+     */
+    @Column(name = "IS_WEB_LINK")
+    private Integer isWebLink;
+
+    /**
      * 流出节点端口ID
      */
-    @Column(name = "SRC_NODE_PORT_ID")
-    private Long srcNodePortId;
+    @Column(name = "SRC_PORT_ID")
+    private Long srcPortId;
 
     /**
      * 流入节点端口ID
      */
-    @Column(name = "DST_NODE_PORT_ID")
-    private Long dstNodePortId;
+    @Column(name = "DST_PORT_ID")
+    private Long dstPortId;
+
+    /**
+     * 描述
+     */
+    @Column(name = "DESCRIPTION")
+    private String description;
 
     /**
      * 状态
@@ -66,18 +80,18 @@ public class WfFlowNodeLink implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 获取链路ID
+     * 获取链接ID
      *
-     * @return LINK_ID - 链路ID
+     * @return LINK_ID - 链接ID
      */
     public Long getLinkId() {
         return linkId;
     }
 
     /**
-     * 设置链路ID
+     * 设置链接ID
      *
-     * @param linkId 链路ID
+     * @param linkId 链接ID
      */
     public void setLinkId(Long linkId) {
         this.linkId = linkId;
@@ -102,39 +116,83 @@ public class WfFlowNodeLink implements Serializable {
     }
 
     /**
+     * 获取是否为web组件的流出链接
+            0：否
+            1：是
+     *
+     * @return IS_WEB_LINK - 是否为web组件的流出链接
+            0：否
+            1：是
+     */
+    public Integer getIsWebLink() {
+        return isWebLink;
+    }
+
+    /**
+     * 设置是否为web组件的流出链接
+            0：否
+            1：是
+     *
+     * @param isWebLink 是否为web组件的流出链接
+            0：否
+            1：是
+     */
+    public void setIsWebLink(Integer isWebLink) {
+        this.isWebLink = isWebLink;
+    }
+
+    /**
      * 获取流出节点端口ID
      *
-     * @return SRC_NODE_PORT_ID - 流出节点端口ID
+     * @return SRC_PORT_ID - 流出节点端口ID
      */
-    public Long getSrcNodePortId() {
-        return srcNodePortId;
+    public Long getSrcPortId() {
+        return srcPortId;
     }
 
     /**
      * 设置流出节点端口ID
      *
-     * @param srcNodePortId 流出节点端口ID
+     * @param srcPortId 流出节点端口ID
      */
-    public void setSrcNodePortId(Long srcNodePortId) {
-        this.srcNodePortId = srcNodePortId;
+    public void setSrcPortId(Long srcPortId) {
+        this.srcPortId = srcPortId;
     }
 
     /**
      * 获取流入节点端口ID
      *
-     * @return DST_NODE_PORT_ID - 流入节点端口ID
+     * @return DST_PORT_ID - 流入节点端口ID
      */
-    public Long getDstNodePortId() {
-        return dstNodePortId;
+    public Long getDstPortId() {
+        return dstPortId;
     }
 
     /**
      * 设置流入节点端口ID
      *
-     * @param dstNodePortId 流入节点端口ID
+     * @param dstPortId 流入节点端口ID
      */
-    public void setDstNodePortId(Long dstNodePortId) {
-        this.dstNodePortId = dstNodePortId;
+    public void setDstPortId(Long dstPortId) {
+        this.dstPortId = dstPortId;
+    }
+
+    /**
+     * 获取描述
+     *
+     * @return DESCRIPTION - 描述
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * 设置描述
+     *
+     * @param description 描述
+     */
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     /**
@@ -249,8 +307,10 @@ public class WfFlowNodeLink implements Serializable {
         WfFlowNodeLink other = (WfFlowNodeLink) that;
         return (this.getLinkId() == null ? other.getLinkId() == null : this.getLinkId().equals(other.getLinkId()))
             && (this.getOwnerFlowId() == null ? other.getOwnerFlowId() == null : this.getOwnerFlowId().equals(other.getOwnerFlowId()))
-            && (this.getSrcNodePortId() == null ? other.getSrcNodePortId() == null : this.getSrcNodePortId().equals(other.getSrcNodePortId()))
-            && (this.getDstNodePortId() == null ? other.getDstNodePortId() == null : this.getDstNodePortId().equals(other.getDstNodePortId()))
+            && (this.getIsWebLink() == null ? other.getIsWebLink() == null : this.getIsWebLink().equals(other.getIsWebLink()))
+            && (this.getSrcPortId() == null ? other.getSrcPortId() == null : this.getSrcPortId().equals(other.getSrcPortId()))
+            && (this.getDstPortId() == null ? other.getDstPortId() == null : this.getDstPortId().equals(other.getDstPortId()))
+            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getLastUpdateTime() == null ? other.getLastUpdateTime() == null : this.getLastUpdateTime().equals(other.getLastUpdateTime()))
             && (this.getLastUpdateOper() == null ? other.getLastUpdateOper() == null : this.getLastUpdateOper().equals(other.getLastUpdateOper()))
@@ -264,8 +324,10 @@ public class WfFlowNodeLink implements Serializable {
         int result = 1;
         result = prime * result + ((getLinkId() == null) ? 0 : getLinkId().hashCode());
         result = prime * result + ((getOwnerFlowId() == null) ? 0 : getOwnerFlowId().hashCode());
-        result = prime * result + ((getSrcNodePortId() == null) ? 0 : getSrcNodePortId().hashCode());
-        result = prime * result + ((getDstNodePortId() == null) ? 0 : getDstNodePortId().hashCode());
+        result = prime * result + ((getIsWebLink() == null) ? 0 : getIsWebLink().hashCode());
+        result = prime * result + ((getSrcPortId() == null) ? 0 : getSrcPortId().hashCode());
+        result = prime * result + ((getDstPortId() == null) ? 0 : getDstPortId().hashCode());
+        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getLastUpdateTime() == null) ? 0 : getLastUpdateTime().hashCode());
         result = prime * result + ((getLastUpdateOper() == null) ? 0 : getLastUpdateOper().hashCode());

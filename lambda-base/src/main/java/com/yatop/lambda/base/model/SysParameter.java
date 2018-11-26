@@ -27,12 +27,22 @@ public class SysParameter implements Serializable {
 
     /**
      * 参数类别，按系统模块划分
+            
+            1：系统管理
+            2：项目管理
+            3：实验管理
+            4：数据管理
+            5：模型管理
+            6：工作流引擎
+            7：计算集群
+            8：开放服务
+            9：预测服务
      */
     @Column(name = "PARAM_CLASS")
     private Integer paramClass;
 
     /**
-     * 参数子类别，按系统模块下的功能模块划分
+     * 参数子类别（预留），按系统模块下的功能模块划分
      */
     @Column(name = "PARAM_SUB_CLASS")
     private Integer paramSubClass;
@@ -139,8 +149,28 @@ public class SysParameter implements Serializable {
 
     /**
      * 获取参数类别，按系统模块划分
+            
+            1：系统管理
+            2：项目管理
+            3：实验管理
+            4：数据管理
+            5：模型管理
+            6：工作流引擎
+            7：计算集群
+            8：开放服务
+            9：预测服务
      *
      * @return PARAM_CLASS - 参数类别，按系统模块划分
+            
+            1：系统管理
+            2：项目管理
+            3：实验管理
+            4：数据管理
+            5：模型管理
+            6：工作流引擎
+            7：计算集群
+            8：开放服务
+            9：预测服务
      */
     public Integer getParamClass() {
         return paramClass;
@@ -148,26 +178,46 @@ public class SysParameter implements Serializable {
 
     /**
      * 设置参数类别，按系统模块划分
+            
+            1：系统管理
+            2：项目管理
+            3：实验管理
+            4：数据管理
+            5：模型管理
+            6：工作流引擎
+            7：计算集群
+            8：开放服务
+            9：预测服务
      *
      * @param paramClass 参数类别，按系统模块划分
+            
+            1：系统管理
+            2：项目管理
+            3：实验管理
+            4：数据管理
+            5：模型管理
+            6：工作流引擎
+            7：计算集群
+            8：开放服务
+            9：预测服务
      */
     public void setParamClass(Integer paramClass) {
         this.paramClass = paramClass;
     }
 
     /**
-     * 获取参数子类别，按系统模块下的功能模块划分
+     * 获取参数子类别（预留），按系统模块下的功能模块划分
      *
-     * @return PARAM_SUB_CLASS - 参数子类别，按系统模块下的功能模块划分
+     * @return PARAM_SUB_CLASS - 参数子类别（预留），按系统模块下的功能模块划分
      */
     public Integer getParamSubClass() {
         return paramSubClass;
     }
 
     /**
-     * 设置参数子类别，按系统模块下的功能模块划分
+     * 设置参数子类别（预留），按系统模块下的功能模块划分
      *
-     * @param paramSubClass 参数子类别，按系统模块下的功能模块划分
+     * @param paramSubClass 参数子类别（预留），按系统模块下的功能模块划分
      */
     public void setParamSubClass(Integer paramSubClass) {
         this.paramSubClass = paramSubClass;

@@ -20,13 +20,13 @@ public class EmExperimentTemplate implements Serializable {
     private String templateName;
 
     /**
-     * 模版序号
+     * 模版序号，排序用
      */
     @Column(name = "SEQUENCE")
     private Integer sequence;
 
     /**
-     * 模版计数
+     * 模版使用计数
      */
     @Column(name = "TEMPLATE_COUNT")
     private Long templateCount;
@@ -120,36 +120,36 @@ public class EmExperimentTemplate implements Serializable {
     }
 
     /**
-     * 获取模版序号
+     * 获取模版序号，排序用
      *
-     * @return SEQUENCE - 模版序号
+     * @return SEQUENCE - 模版序号，排序用
      */
     public Integer getSequence() {
         return sequence;
     }
 
     /**
-     * 设置模版序号
+     * 设置模版序号，排序用
      *
-     * @param sequence 模版序号
+     * @param sequence 模版序号，排序用
      */
     public void setSequence(Integer sequence) {
         this.sequence = sequence;
     }
 
     /**
-     * 获取模版计数
+     * 获取模版使用计数
      *
-     * @return TEMPLATE_COUNT - 模版计数
+     * @return TEMPLATE_COUNT - 模版使用计数
      */
     public Long getTemplateCount() {
         return templateCount;
     }
 
     /**
-     * 设置模版计数
+     * 设置模版使用计数
      *
-     * @param templateCount 模版计数
+     * @param templateCount 模版使用计数
      */
     public void setTemplateCount(Long templateCount) {
         this.templateCount = templateCount;

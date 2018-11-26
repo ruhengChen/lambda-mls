@@ -306,6 +306,66 @@ public class WfJsonObjectExample {
             return (Criteria) this;
         }
 
+        public Criteria andObjectSrcIsNull() {
+            addCriterion("OBJECT_SRC is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andObjectSrcIsNotNull() {
+            addCriterion("OBJECT_SRC is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andObjectSrcEqualTo(Integer value) {
+            addCriterion("OBJECT_SRC =", value, "objectSrc");
+            return (Criteria) this;
+        }
+
+        public Criteria andObjectSrcNotEqualTo(Integer value) {
+            addCriterion("OBJECT_SRC <>", value, "objectSrc");
+            return (Criteria) this;
+        }
+
+        public Criteria andObjectSrcGreaterThan(Integer value) {
+            addCriterion("OBJECT_SRC >", value, "objectSrc");
+            return (Criteria) this;
+        }
+
+        public Criteria andObjectSrcGreaterThanOrEqualTo(Integer value) {
+            addCriterion("OBJECT_SRC >=", value, "objectSrc");
+            return (Criteria) this;
+        }
+
+        public Criteria andObjectSrcLessThan(Integer value) {
+            addCriterion("OBJECT_SRC <", value, "objectSrc");
+            return (Criteria) this;
+        }
+
+        public Criteria andObjectSrcLessThanOrEqualTo(Integer value) {
+            addCriterion("OBJECT_SRC <=", value, "objectSrc");
+            return (Criteria) this;
+        }
+
+        public Criteria andObjectSrcIn(List<Integer> values) {
+            addCriterion("OBJECT_SRC in", values, "objectSrc");
+            return (Criteria) this;
+        }
+
+        public Criteria andObjectSrcNotIn(List<Integer> values) {
+            addCriterion("OBJECT_SRC not in", values, "objectSrc");
+            return (Criteria) this;
+        }
+
+        public Criteria andObjectSrcBetween(Integer value1, Integer value2) {
+            addCriterion("OBJECT_SRC between", value1, value2, "objectSrc");
+            return (Criteria) this;
+        }
+
+        public Criteria andObjectSrcNotBetween(Integer value1, Integer value2) {
+            addCriterion("OBJECT_SRC not between", value1, value2, "objectSrc");
+            return (Criteria) this;
+        }
+
         public Criteria andOwnerProjectIdIsNull() {
             addCriterion("OWNER_PROJECT_ID is null");
             return (Criteria) this;
@@ -366,63 +426,183 @@ public class WfJsonObjectExample {
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdIsNull() {
-            addCriterion("REL_SNAPSHOT_ID is null");
+        public Criteria andRelFlowIdIsNull() {
+            addCriterion("REL_FLOW_ID is null");
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdIsNotNull() {
-            addCriterion("REL_SNAPSHOT_ID is not null");
+        public Criteria andRelFlowIdIsNotNull() {
+            addCriterion("REL_FLOW_ID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdEqualTo(Long value) {
-            addCriterion("REL_SNAPSHOT_ID =", value, "relSnapshotId");
+        public Criteria andRelFlowIdEqualTo(Long value) {
+            addCriterion("REL_FLOW_ID =", value, "relFlowId");
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdNotEqualTo(Long value) {
-            addCriterion("REL_SNAPSHOT_ID <>", value, "relSnapshotId");
+        public Criteria andRelFlowIdNotEqualTo(Long value) {
+            addCriterion("REL_FLOW_ID <>", value, "relFlowId");
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdGreaterThan(Long value) {
-            addCriterion("REL_SNAPSHOT_ID >", value, "relSnapshotId");
+        public Criteria andRelFlowIdGreaterThan(Long value) {
+            addCriterion("REL_FLOW_ID >", value, "relFlowId");
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("REL_SNAPSHOT_ID >=", value, "relSnapshotId");
+        public Criteria andRelFlowIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("REL_FLOW_ID >=", value, "relFlowId");
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdLessThan(Long value) {
-            addCriterion("REL_SNAPSHOT_ID <", value, "relSnapshotId");
+        public Criteria andRelFlowIdLessThan(Long value) {
+            addCriterion("REL_FLOW_ID <", value, "relFlowId");
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdLessThanOrEqualTo(Long value) {
-            addCriterion("REL_SNAPSHOT_ID <=", value, "relSnapshotId");
+        public Criteria andRelFlowIdLessThanOrEqualTo(Long value) {
+            addCriterion("REL_FLOW_ID <=", value, "relFlowId");
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdIn(List<Long> values) {
-            addCriterion("REL_SNAPSHOT_ID in", values, "relSnapshotId");
+        public Criteria andRelFlowIdIn(List<Long> values) {
+            addCriterion("REL_FLOW_ID in", values, "relFlowId");
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdNotIn(List<Long> values) {
-            addCriterion("REL_SNAPSHOT_ID not in", values, "relSnapshotId");
+        public Criteria andRelFlowIdNotIn(List<Long> values) {
+            addCriterion("REL_FLOW_ID not in", values, "relFlowId");
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdBetween(Long value1, Long value2) {
-            addCriterion("REL_SNAPSHOT_ID between", value1, value2, "relSnapshotId");
+        public Criteria andRelFlowIdBetween(Long value1, Long value2) {
+            addCriterion("REL_FLOW_ID between", value1, value2, "relFlowId");
             return (Criteria) this;
         }
 
-        public Criteria andRelSnapshotIdNotBetween(Long value1, Long value2) {
-            addCriterion("REL_SNAPSHOT_ID not between", value1, value2, "relSnapshotId");
+        public Criteria andRelFlowIdNotBetween(Long value1, Long value2) {
+            addCriterion("REL_FLOW_ID not between", value1, value2, "relFlowId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionIsNull() {
+            addCriterion("REL_SNAPSHOT_VERSION is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionIsNotNull() {
+            addCriterion("REL_SNAPSHOT_VERSION is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionEqualTo(Long value) {
+            addCriterion("REL_SNAPSHOT_VERSION =", value, "relSnapshotVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionNotEqualTo(Long value) {
+            addCriterion("REL_SNAPSHOT_VERSION <>", value, "relSnapshotVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionGreaterThan(Long value) {
+            addCriterion("REL_SNAPSHOT_VERSION >", value, "relSnapshotVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionGreaterThanOrEqualTo(Long value) {
+            addCriterion("REL_SNAPSHOT_VERSION >=", value, "relSnapshotVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionLessThan(Long value) {
+            addCriterion("REL_SNAPSHOT_VERSION <", value, "relSnapshotVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionLessThanOrEqualTo(Long value) {
+            addCriterion("REL_SNAPSHOT_VERSION <=", value, "relSnapshotVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionIn(List<Long> values) {
+            addCriterion("REL_SNAPSHOT_VERSION in", values, "relSnapshotVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionNotIn(List<Long> values) {
+            addCriterion("REL_SNAPSHOT_VERSION not in", values, "relSnapshotVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionBetween(Long value1, Long value2) {
+            addCriterion("REL_SNAPSHOT_VERSION between", value1, value2, "relSnapshotVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelSnapshotVersionNotBetween(Long value1, Long value2) {
+            addCriterion("REL_SNAPSHOT_VERSION not between", value1, value2, "relSnapshotVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdIsNull() {
+            addCriterion("REL_JOB_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdIsNotNull() {
+            addCriterion("REL_JOB_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdEqualTo(Long value) {
+            addCriterion("REL_JOB_ID =", value, "relJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdNotEqualTo(Long value) {
+            addCriterion("REL_JOB_ID <>", value, "relJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdGreaterThan(Long value) {
+            addCriterion("REL_JOB_ID >", value, "relJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("REL_JOB_ID >=", value, "relJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdLessThan(Long value) {
+            addCriterion("REL_JOB_ID <", value, "relJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdLessThanOrEqualTo(Long value) {
+            addCriterion("REL_JOB_ID <=", value, "relJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdIn(List<Long> values) {
+            addCriterion("REL_JOB_ID in", values, "relJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdNotIn(List<Long> values) {
+            addCriterion("REL_JOB_ID not in", values, "relJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdBetween(Long value1, Long value2) {
+            addCriterion("REL_JOB_ID between", value1, value2, "relJobId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelJobIdNotBetween(Long value1, Long value2) {
+            addCriterion("REL_JOB_ID not between", value1, value2, "relJobId");
             return (Criteria) this;
         }
 
@@ -733,6 +913,76 @@ public class WfJsonObjectExample {
 
         public Criteria andObjectStateNotBetween(Integer value1, Integer value2) {
             addCriterion("OBJECT_STATE not between", value1, value2, "objectState");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNull() {
+            addCriterion("DESCRIPTION is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNotNull() {
+            addCriterion("DESCRIPTION is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionEqualTo(String value) {
+            addCriterion("DESCRIPTION =", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotEqualTo(String value) {
+            addCriterion("DESCRIPTION <>", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThan(String value) {
+            addCriterion("DESCRIPTION >", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION >=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThan(String value) {
+            addCriterion("DESCRIPTION <", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION <=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLike(String value) {
+            addCriterion("DESCRIPTION like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotLike(String value) {
+            addCriterion("DESCRIPTION not like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIn(List<String> values) {
+            addCriterion("DESCRIPTION in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotIn(List<String> values) {
+            addCriterion("DESCRIPTION not in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION between", value1, value2, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION not between", value1, value2, "description");
             return (Criteria) this;
         }
 
@@ -1063,6 +1313,11 @@ public class WfJsonObjectExample {
 
         public Criteria andObjectFileLikeInsensitive(String value) {
             addCriterion("upper(OBJECT_FILE) like", value.toUpperCase(), "objectFile");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLikeInsensitive(String value) {
+            addCriterion("upper(DESCRIPTION) like", value.toUpperCase(), "description");
             return (Criteria) this;
         }
 

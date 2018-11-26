@@ -436,143 +436,143 @@ public class MwModelWarehouseExample {
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirIsNull() {
-            addCriterion("DFS_MODEL_DIR is null");
+        public Criteria andModelDfsDirIsNull() {
+            addCriterion("MODEL_DFS_DIR is null");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirIsNotNull() {
-            addCriterion("DFS_MODEL_DIR is not null");
+        public Criteria andModelDfsDirIsNotNull() {
+            addCriterion("MODEL_DFS_DIR is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirEqualTo(String value) {
-            addCriterion("DFS_MODEL_DIR =", value, "dfsModelDir");
+        public Criteria andModelDfsDirEqualTo(String value) {
+            addCriterion("MODEL_DFS_DIR =", value, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirNotEqualTo(String value) {
-            addCriterion("DFS_MODEL_DIR <>", value, "dfsModelDir");
+        public Criteria andModelDfsDirNotEqualTo(String value) {
+            addCriterion("MODEL_DFS_DIR <>", value, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirGreaterThan(String value) {
-            addCriterion("DFS_MODEL_DIR >", value, "dfsModelDir");
+        public Criteria andModelDfsDirGreaterThan(String value) {
+            addCriterion("MODEL_DFS_DIR >", value, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirGreaterThanOrEqualTo(String value) {
-            addCriterion("DFS_MODEL_DIR >=", value, "dfsModelDir");
+        public Criteria andModelDfsDirGreaterThanOrEqualTo(String value) {
+            addCriterion("MODEL_DFS_DIR >=", value, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirLessThan(String value) {
-            addCriterion("DFS_MODEL_DIR <", value, "dfsModelDir");
+        public Criteria andModelDfsDirLessThan(String value) {
+            addCriterion("MODEL_DFS_DIR <", value, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirLessThanOrEqualTo(String value) {
-            addCriterion("DFS_MODEL_DIR <=", value, "dfsModelDir");
+        public Criteria andModelDfsDirLessThanOrEqualTo(String value) {
+            addCriterion("MODEL_DFS_DIR <=", value, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirLike(String value) {
-            addCriterion("DFS_MODEL_DIR like", value, "dfsModelDir");
+        public Criteria andModelDfsDirLike(String value) {
+            addCriterion("MODEL_DFS_DIR like", value, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirNotLike(String value) {
-            addCriterion("DFS_MODEL_DIR not like", value, "dfsModelDir");
+        public Criteria andModelDfsDirNotLike(String value) {
+            addCriterion("MODEL_DFS_DIR not like", value, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirIn(List<String> values) {
-            addCriterion("DFS_MODEL_DIR in", values, "dfsModelDir");
+        public Criteria andModelDfsDirIn(List<String> values) {
+            addCriterion("MODEL_DFS_DIR in", values, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirNotIn(List<String> values) {
-            addCriterion("DFS_MODEL_DIR not in", values, "dfsModelDir");
+        public Criteria andModelDfsDirNotIn(List<String> values) {
+            addCriterion("MODEL_DFS_DIR not in", values, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirBetween(String value1, String value2) {
-            addCriterion("DFS_MODEL_DIR between", value1, value2, "dfsModelDir");
+        public Criteria andModelDfsDirBetween(String value1, String value2) {
+            addCriterion("MODEL_DFS_DIR between", value1, value2, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirNotBetween(String value1, String value2) {
-            addCriterion("DFS_MODEL_DIR not between", value1, value2, "dfsModelDir");
+        public Criteria andModelDfsDirNotBetween(String value1, String value2) {
+            addCriterion("MODEL_DFS_DIR not between", value1, value2, "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirIsNull() {
-            addCriterion("LOCAL_MODEL_DIR is null");
+        public Criteria andModelLocalDirIsNull() {
+            addCriterion("MODEL_LOCAL_DIR is null");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirIsNotNull() {
-            addCriterion("LOCAL_MODEL_DIR is not null");
+        public Criteria andModelLocalDirIsNotNull() {
+            addCriterion("MODEL_LOCAL_DIR is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirEqualTo(String value) {
-            addCriterion("LOCAL_MODEL_DIR =", value, "localModelDir");
+        public Criteria andModelLocalDirEqualTo(String value) {
+            addCriterion("MODEL_LOCAL_DIR =", value, "modelLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirNotEqualTo(String value) {
-            addCriterion("LOCAL_MODEL_DIR <>", value, "localModelDir");
+        public Criteria andModelLocalDirNotEqualTo(String value) {
+            addCriterion("MODEL_LOCAL_DIR <>", value, "modelLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirGreaterThan(String value) {
-            addCriterion("LOCAL_MODEL_DIR >", value, "localModelDir");
+        public Criteria andModelLocalDirGreaterThan(String value) {
+            addCriterion("MODEL_LOCAL_DIR >", value, "modelLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirGreaterThanOrEqualTo(String value) {
-            addCriterion("LOCAL_MODEL_DIR >=", value, "localModelDir");
+        public Criteria andModelLocalDirGreaterThanOrEqualTo(String value) {
+            addCriterion("MODEL_LOCAL_DIR >=", value, "modelLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirLessThan(String value) {
-            addCriterion("LOCAL_MODEL_DIR <", value, "localModelDir");
+        public Criteria andModelLocalDirLessThan(String value) {
+            addCriterion("MODEL_LOCAL_DIR <", value, "modelLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirLessThanOrEqualTo(String value) {
-            addCriterion("LOCAL_MODEL_DIR <=", value, "localModelDir");
+        public Criteria andModelLocalDirLessThanOrEqualTo(String value) {
+            addCriterion("MODEL_LOCAL_DIR <=", value, "modelLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirLike(String value) {
-            addCriterion("LOCAL_MODEL_DIR like", value, "localModelDir");
+        public Criteria andModelLocalDirLike(String value) {
+            addCriterion("MODEL_LOCAL_DIR like", value, "modelLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirNotLike(String value) {
-            addCriterion("LOCAL_MODEL_DIR not like", value, "localModelDir");
+        public Criteria andModelLocalDirNotLike(String value) {
+            addCriterion("MODEL_LOCAL_DIR not like", value, "modelLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirIn(List<String> values) {
-            addCriterion("LOCAL_MODEL_DIR in", values, "localModelDir");
+        public Criteria andModelLocalDirIn(List<String> values) {
+            addCriterion("MODEL_LOCAL_DIR in", values, "modelLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirNotIn(List<String> values) {
-            addCriterion("LOCAL_MODEL_DIR not in", values, "localModelDir");
+        public Criteria andModelLocalDirNotIn(List<String> values) {
+            addCriterion("MODEL_LOCAL_DIR not in", values, "modelLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirBetween(String value1, String value2) {
-            addCriterion("LOCAL_MODEL_DIR between", value1, value2, "localModelDir");
+        public Criteria andModelLocalDirBetween(String value1, String value2) {
+            addCriterion("MODEL_LOCAL_DIR between", value1, value2, "modelLocalDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirNotBetween(String value1, String value2) {
-            addCriterion("LOCAL_MODEL_DIR not between", value1, value2, "localModelDir");
+        public Criteria andModelLocalDirNotBetween(String value1, String value2) {
+            addCriterion("MODEL_LOCAL_DIR not between", value1, value2, "modelLocalDir");
             return (Criteria) this;
         }
 
@@ -976,13 +976,13 @@ public class MwModelWarehouseExample {
             return (Criteria) this;
         }
 
-        public Criteria andDfsModelDirLikeInsensitive(String value) {
-            addCriterion("upper(DFS_MODEL_DIR) like", value.toUpperCase(), "dfsModelDir");
+        public Criteria andModelDfsDirLikeInsensitive(String value) {
+            addCriterion("upper(MODEL_DFS_DIR) like", value.toUpperCase(), "modelDfsDir");
             return (Criteria) this;
         }
 
-        public Criteria andLocalModelDirLikeInsensitive(String value) {
-            addCriterion("upper(LOCAL_MODEL_DIR) like", value.toUpperCase(), "localModelDir");
+        public Criteria andModelLocalDirLikeInsensitive(String value) {
+            addCriterion("upper(MODEL_LOCAL_DIR) like", value.toUpperCase(), "modelLocalDir");
             return (Criteria) this;
         }
 

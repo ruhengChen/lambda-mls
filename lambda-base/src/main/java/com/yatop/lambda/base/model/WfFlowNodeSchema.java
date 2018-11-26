@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Table(name = "wf_flow_node_schema")
 public class WfFlowNodeSchema implements Serializable {
     /**
-     * 所属节点输出端口ID
+     * 节点输出端口ID
      */
     @Id
     @Column(name = "NODE_PORT_ID")
@@ -16,16 +16,24 @@ public class WfFlowNodeSchema implements Serializable {
     /**
      * json对象ID
      */
-    @Column(name = "JSON_OBJECT_ID")
-    private Long jsonObjectId;
+    @Column(name = "OBJECT_ID")
+    private Long objectId;
 
     /**
-     * JSON数据状态
-            0：空对象
-            1：非空对象
+     * schema状态
+            0：空schema
+            1：正常
+            2：不支持
+            3：超限中断
      */
     @Column(name = "SCHEMA_STATE")
     private Integer schemaState;
+
+    /**
+     * 描述
+     */
+    @Column(name = "DESCRIPTION")
+    private String description;
 
     /**
      * 状态
@@ -62,18 +70,18 @@ public class WfFlowNodeSchema implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 获取所属节点输出端口ID
+     * 获取节点输出端口ID
      *
-     * @return NODE_PORT_ID - 所属节点输出端口ID
+     * @return NODE_PORT_ID - 节点输出端口ID
      */
     public Long getNodePortId() {
         return nodePortId;
     }
 
     /**
-     * 设置所属节点输出端口ID
+     * 设置节点输出端口ID
      *
-     * @param nodePortId 所属节点输出端口ID
+     * @param nodePortId 节点输出端口ID
      */
     public void setNodePortId(Long nodePortId) {
         this.nodePortId = nodePortId;
@@ -82,45 +90,71 @@ public class WfFlowNodeSchema implements Serializable {
     /**
      * 获取json对象ID
      *
-     * @return JSON_OBJECT_ID - json对象ID
+     * @return OBJECT_ID - json对象ID
      */
-    public Long getJsonObjectId() {
-        return jsonObjectId;
+    public Long getObjectId() {
+        return objectId;
     }
 
     /**
      * 设置json对象ID
      *
-     * @param jsonObjectId json对象ID
+     * @param objectId json对象ID
      */
-    public void setJsonObjectId(Long jsonObjectId) {
-        this.jsonObjectId = jsonObjectId;
+    public void setObjectId(Long objectId) {
+        this.objectId = objectId;
     }
 
     /**
-     * 获取JSON数据状态
-            0：空对象
-            1：非空对象
+     * 获取schema状态
+            0：空schema
+            1：正常
+            2：不支持
+            3：超限中断
      *
-     * @return SCHEMA_STATE - JSON数据状态
-            0：空对象
-            1：非空对象
+     * @return SCHEMA_STATE - schema状态
+            0：空schema
+            1：正常
+            2：不支持
+            3：超限中断
      */
     public Integer getSchemaState() {
         return schemaState;
     }
 
     /**
-     * 设置JSON数据状态
-            0：空对象
-            1：非空对象
+     * 设置schema状态
+            0：空schema
+            1：正常
+            2：不支持
+            3：超限中断
      *
-     * @param schemaState JSON数据状态
-            0：空对象
-            1：非空对象
+     * @param schemaState schema状态
+            0：空schema
+            1：正常
+            2：不支持
+            3：超限中断
      */
     public void setSchemaState(Integer schemaState) {
         this.schemaState = schemaState;
+    }
+
+    /**
+     * 获取描述
+     *
+     * @return DESCRIPTION - 描述
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * 设置描述
+     *
+     * @param description 描述
+     */
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     /**
@@ -234,8 +268,9 @@ public class WfFlowNodeSchema implements Serializable {
         }
         WfFlowNodeSchema other = (WfFlowNodeSchema) that;
         return (this.getNodePortId() == null ? other.getNodePortId() == null : this.getNodePortId().equals(other.getNodePortId()))
-            && (this.getJsonObjectId() == null ? other.getJsonObjectId() == null : this.getJsonObjectId().equals(other.getJsonObjectId()))
+            && (this.getObjectId() == null ? other.getObjectId() == null : this.getObjectId().equals(other.getObjectId()))
             && (this.getSchemaState() == null ? other.getSchemaState() == null : this.getSchemaState().equals(other.getSchemaState()))
+            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getLastUpdateTime() == null ? other.getLastUpdateTime() == null : this.getLastUpdateTime().equals(other.getLastUpdateTime()))
             && (this.getLastUpdateOper() == null ? other.getLastUpdateOper() == null : this.getLastUpdateOper().equals(other.getLastUpdateOper()))
@@ -248,8 +283,9 @@ public class WfFlowNodeSchema implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getNodePortId() == null) ? 0 : getNodePortId().hashCode());
-        result = prime * result + ((getJsonObjectId() == null) ? 0 : getJsonObjectId().hashCode());
+        result = prime * result + ((getObjectId() == null) ? 0 : getObjectId().hashCode());
         result = prime * result + ((getSchemaState() == null) ? 0 : getSchemaState().hashCode());
+        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getLastUpdateTime() == null) ? 0 : getLastUpdateTime().hashCode());
         result = prime * result + ((getLastUpdateOper() == null) ? 0 : getLastUpdateOper().hashCode());

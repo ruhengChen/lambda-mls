@@ -16,8 +16,8 @@ public class DwDataTable implements Serializable {
     /**
      * 数据表名
             
-            普通数据表：由英文字符、数字和下划线组成，起始字符不能为下划线
-            临时数据表：tmp$<node_id>_<node_port_id>_<snapshot_version>
+            普通和动态数据表：由英文字符、数字和下划线组成，起始字符不能为下划线
+            临时数据表：tmp$<node_id>_<node_port_id>_<job_id>
      */
     @Column(name = "TABLE_NAME")
     private String tableName;
@@ -25,8 +25,8 @@ public class DwDataTable implements Serializable {
     /**
      * 数据表类型
             0：普通数据表
-            1：动态数据表（预留）
-            2：临时数据表
+            1：临时数据表
+            2：外部数据表，由在线服务的数据文件输入组件产生，DATA_FILE关联完整文件路径，作业完成时被立即清理
      */
     @Column(name = "TABLE_TYPE")
     private Integer tableType;
@@ -46,10 +46,16 @@ public class DwDataTable implements Serializable {
     private Long ownerDwId;
 
     /**
-     * 关联快照ID，创建数据表时的工作流快照，无关联则设为-1
+     * 关联实验ID，无关联实验设为-1
      */
-    @Column(name = "REL_SNAPSHOT_ID")
-    private Long relSnapshotId;
+    @Column(name = "REL_EXPERIMENT_ID")
+    private Long relExperimentId;
+
+    /**
+     * 关联作业ID，无关联则设为-1
+     */
+    @Column(name = "REL_JOB_ID")
+    private Long relJobId;
 
     /**
      * 关联节点ID，创建数据表的工作流节点，无关联则设为-1
@@ -89,19 +95,19 @@ public class DwDataTable implements Serializable {
     private Long dataFileSize;
 
     /**
-     * 数据文件名，存放于数据目录下
+     * 数据文件名，普通数据表存放于数据目录下，临时数据表存放于作业目录下
             
-            普通数据表：tab_<table_id>.parquet
-            临时数据表完整路径：<data_dir>/tmp/<flow_id>/<snapshot_version>/tab_<table_id>.parquet
+            普通和动态数据表：${DATA_DIR}/table_<table_id>.parquet
+            临时数据表：${JOB_DIR}/table_<task_id>_<table_id>.parquet
      */
     @Column(name = "DATA_FILE")
     private String dataFile;
 
     /**
-     * 数据概要文件名，存放于数据目录下
+     * 数据概要文件名，普通数据表存放于数据目录下，临时数据表存放于作业目录下
             
-            普通数据表：tab_<table_id>_summary.json
-            临时数据表完整路径：<data_dir>/tmp/<flow_id>/<snapshot_version>/tab_<table_id>_summary.json
+            普通和动态数据表：${DATA_DIR}/table_summary_<table_id>.parquet
+            临时数据表：${JOB_DIR}/table_summary_<task_id>_<table_id>.parquet
      */
     @Column(name = "DATA_SUMMARY_FILE")
     private String dataSummaryFile;
@@ -176,13 +182,13 @@ public class DwDataTable implements Serializable {
     /**
      * 获取数据表名
             
-            普通数据表：由英文字符、数字和下划线组成，起始字符不能为下划线
-            临时数据表：tmp$<node_id>_<node_port_id>_<snapshot_version>
+            普通和动态数据表：由英文字符、数字和下划线组成，起始字符不能为下划线
+            临时数据表：tmp$<node_id>_<node_port_id>_<job_id>
      *
      * @return TABLE_NAME - 数据表名
             
-            普通数据表：由英文字符、数字和下划线组成，起始字符不能为下划线
-            临时数据表：tmp$<node_id>_<node_port_id>_<snapshot_version>
+            普通和动态数据表：由英文字符、数字和下划线组成，起始字符不能为下划线
+            临时数据表：tmp$<node_id>_<node_port_id>_<job_id>
      */
     public String getTableName() {
         return tableName;
@@ -191,13 +197,13 @@ public class DwDataTable implements Serializable {
     /**
      * 设置数据表名
             
-            普通数据表：由英文字符、数字和下划线组成，起始字符不能为下划线
-            临时数据表：tmp$<node_id>_<node_port_id>_<snapshot_version>
+            普通和动态数据表：由英文字符、数字和下划线组成，起始字符不能为下划线
+            临时数据表：tmp$<node_id>_<node_port_id>_<job_id>
      *
      * @param tableName 数据表名
             
-            普通数据表：由英文字符、数字和下划线组成，起始字符不能为下划线
-            临时数据表：tmp$<node_id>_<node_port_id>_<snapshot_version>
+            普通和动态数据表：由英文字符、数字和下划线组成，起始字符不能为下划线
+            临时数据表：tmp$<node_id>_<node_port_id>_<job_id>
      */
     public void setTableName(String tableName) {
         this.tableName = tableName == null ? null : tableName.trim();
@@ -206,13 +212,13 @@ public class DwDataTable implements Serializable {
     /**
      * 获取数据表类型
             0：普通数据表
-            1：动态数据表（预留）
-            2：临时数据表
+            1：临时数据表
+            2：外部数据表，由在线服务的数据文件输入组件产生，DATA_FILE关联完整文件路径，作业完成时被立即清理
      *
      * @return TABLE_TYPE - 数据表类型
             0：普通数据表
-            1：动态数据表（预留）
-            2：临时数据表
+            1：临时数据表
+            2：外部数据表，由在线服务的数据文件输入组件产生，DATA_FILE关联完整文件路径，作业完成时被立即清理
      */
     public Integer getTableType() {
         return tableType;
@@ -221,13 +227,13 @@ public class DwDataTable implements Serializable {
     /**
      * 设置数据表类型
             0：普通数据表
-            1：动态数据表（预留）
-            2：临时数据表
+            1：临时数据表
+            2：外部数据表，由在线服务的数据文件输入组件产生，DATA_FILE关联完整文件路径，作业完成时被立即清理
      *
      * @param tableType 数据表类型
             0：普通数据表
-            1：动态数据表（预留）
-            2：临时数据表
+            1：临时数据表
+            2：外部数据表，由在线服务的数据文件输入组件产生，DATA_FILE关联完整文件路径，作业完成时被立即清理
      */
     public void setTableType(Integer tableType) {
         this.tableType = tableType;
@@ -278,21 +284,39 @@ public class DwDataTable implements Serializable {
     }
 
     /**
-     * 获取关联快照ID，创建数据表时的工作流快照，无关联则设为-1
+     * 获取关联实验ID，无关联实验设为-1
      *
-     * @return REL_SNAPSHOT_ID - 关联快照ID，创建数据表时的工作流快照，无关联则设为-1
+     * @return REL_EXPERIMENT_ID - 关联实验ID，无关联实验设为-1
      */
-    public Long getRelSnapshotId() {
-        return relSnapshotId;
+    public Long getRelExperimentId() {
+        return relExperimentId;
     }
 
     /**
-     * 设置关联快照ID，创建数据表时的工作流快照，无关联则设为-1
+     * 设置关联实验ID，无关联实验设为-1
      *
-     * @param relSnapshotId 关联快照ID，创建数据表时的工作流快照，无关联则设为-1
+     * @param relExperimentId 关联实验ID，无关联实验设为-1
      */
-    public void setRelSnapshotId(Long relSnapshotId) {
-        this.relSnapshotId = relSnapshotId;
+    public void setRelExperimentId(Long relExperimentId) {
+        this.relExperimentId = relExperimentId;
+    }
+
+    /**
+     * 获取关联作业ID，无关联则设为-1
+     *
+     * @return REL_JOB_ID - 关联作业ID，无关联则设为-1
+     */
+    public Long getRelJobId() {
+        return relJobId;
+    }
+
+    /**
+     * 设置关联作业ID，无关联则设为-1
+     *
+     * @param relJobId 关联作业ID，无关联则设为-1
+     */
+    public void setRelJobId(Long relJobId) {
+        this.relJobId = relJobId;
     }
 
     /**
@@ -408,60 +432,60 @@ public class DwDataTable implements Serializable {
     }
 
     /**
-     * 获取数据文件名，存放于数据目录下
+     * 获取数据文件名，普通数据表存放于数据目录下，临时数据表存放于作业目录下
             
-            普通数据表：tab_<table_id>.parquet
-            临时数据表完整路径：<data_dir>/tmp/<flow_id>/<snapshot_version>/tab_<table_id>.parquet
+            普通和动态数据表：${DATA_DIR}/table_<table_id>.parquet
+            临时数据表：${JOB_DIR}/table_<task_id>_<table_id>.parquet
      *
-     * @return DATA_FILE - 数据文件名，存放于数据目录下
+     * @return DATA_FILE - 数据文件名，普通数据表存放于数据目录下，临时数据表存放于作业目录下
             
-            普通数据表：tab_<table_id>.parquet
-            临时数据表完整路径：<data_dir>/tmp/<flow_id>/<snapshot_version>/tab_<table_id>.parquet
+            普通和动态数据表：${DATA_DIR}/table_<table_id>.parquet
+            临时数据表：${JOB_DIR}/table_<task_id>_<table_id>.parquet
      */
     public String getDataFile() {
         return dataFile;
     }
 
     /**
-     * 设置数据文件名，存放于数据目录下
+     * 设置数据文件名，普通数据表存放于数据目录下，临时数据表存放于作业目录下
             
-            普通数据表：tab_<table_id>.parquet
-            临时数据表完整路径：<data_dir>/tmp/<flow_id>/<snapshot_version>/tab_<table_id>.parquet
+            普通和动态数据表：${DATA_DIR}/table_<table_id>.parquet
+            临时数据表：${JOB_DIR}/table_<task_id>_<table_id>.parquet
      *
-     * @param dataFile 数据文件名，存放于数据目录下
+     * @param dataFile 数据文件名，普通数据表存放于数据目录下，临时数据表存放于作业目录下
             
-            普通数据表：tab_<table_id>.parquet
-            临时数据表完整路径：<data_dir>/tmp/<flow_id>/<snapshot_version>/tab_<table_id>.parquet
+            普通和动态数据表：${DATA_DIR}/table_<table_id>.parquet
+            临时数据表：${JOB_DIR}/table_<task_id>_<table_id>.parquet
      */
     public void setDataFile(String dataFile) {
         this.dataFile = dataFile == null ? null : dataFile.trim();
     }
 
     /**
-     * 获取数据概要文件名，存放于数据目录下
+     * 获取数据概要文件名，普通数据表存放于数据目录下，临时数据表存放于作业目录下
             
-            普通数据表：tab_<table_id>_summary.json
-            临时数据表完整路径：<data_dir>/tmp/<flow_id>/<snapshot_version>/tab_<table_id>_summary.json
+            普通和动态数据表：${DATA_DIR}/table_summary_<table_id>.parquet
+            临时数据表：${JOB_DIR}/table_summary_<task_id>_<table_id>.parquet
      *
-     * @return DATA_SUMMARY_FILE - 数据概要文件名，存放于数据目录下
+     * @return DATA_SUMMARY_FILE - 数据概要文件名，普通数据表存放于数据目录下，临时数据表存放于作业目录下
             
-            普通数据表：tab_<table_id>_summary.json
-            临时数据表完整路径：<data_dir>/tmp/<flow_id>/<snapshot_version>/tab_<table_id>_summary.json
+            普通和动态数据表：${DATA_DIR}/table_summary_<table_id>.parquet
+            临时数据表：${JOB_DIR}/table_summary_<task_id>_<table_id>.parquet
      */
     public String getDataSummaryFile() {
         return dataSummaryFile;
     }
 
     /**
-     * 设置数据概要文件名，存放于数据目录下
+     * 设置数据概要文件名，普通数据表存放于数据目录下，临时数据表存放于作业目录下
             
-            普通数据表：tab_<table_id>_summary.json
-            临时数据表完整路径：<data_dir>/tmp/<flow_id>/<snapshot_version>/tab_<table_id>_summary.json
+            普通和动态数据表：${DATA_DIR}/table_summary_<table_id>.parquet
+            临时数据表：${JOB_DIR}/table_summary_<task_id>_<table_id>.parquet
      *
-     * @param dataSummaryFile 数据概要文件名，存放于数据目录下
+     * @param dataSummaryFile 数据概要文件名，普通数据表存放于数据目录下，临时数据表存放于作业目录下
             
-            普通数据表：tab_<table_id>_summary.json
-            临时数据表完整路径：<data_dir>/tmp/<flow_id>/<snapshot_version>/tab_<table_id>_summary.json
+            普通和动态数据表：${DATA_DIR}/table_summary_<table_id>.parquet
+            临时数据表：${JOB_DIR}/table_summary_<task_id>_<table_id>.parquet
      */
     public void setDataSummaryFile(String dataSummaryFile) {
         this.dataSummaryFile = dataSummaryFile == null ? null : dataSummaryFile.trim();
@@ -630,7 +654,8 @@ public class DwDataTable implements Serializable {
             && (this.getTableType() == null ? other.getTableType() == null : this.getTableType().equals(other.getTableType()))
             && (this.getTableSrc() == null ? other.getTableSrc() == null : this.getTableSrc().equals(other.getTableSrc()))
             && (this.getOwnerDwId() == null ? other.getOwnerDwId() == null : this.getOwnerDwId().equals(other.getOwnerDwId()))
-            && (this.getRelSnapshotId() == null ? other.getRelSnapshotId() == null : this.getRelSnapshotId().equals(other.getRelSnapshotId()))
+            && (this.getRelExperimentId() == null ? other.getRelExperimentId() == null : this.getRelExperimentId().equals(other.getRelExperimentId()))
+            && (this.getRelJobId() == null ? other.getRelJobId() == null : this.getRelJobId().equals(other.getRelJobId()))
             && (this.getRelNodeId() == null ? other.getRelNodeId() == null : this.getRelNodeId().equals(other.getRelNodeId()))
             && (this.getRelCharId() == null ? other.getRelCharId() == null : this.getRelCharId().equals(other.getRelCharId()))
             && (this.getTableColumns() == null ? other.getTableColumns() == null : this.getTableColumns().equals(other.getTableColumns()))
@@ -657,7 +682,8 @@ public class DwDataTable implements Serializable {
         result = prime * result + ((getTableType() == null) ? 0 : getTableType().hashCode());
         result = prime * result + ((getTableSrc() == null) ? 0 : getTableSrc().hashCode());
         result = prime * result + ((getOwnerDwId() == null) ? 0 : getOwnerDwId().hashCode());
-        result = prime * result + ((getRelSnapshotId() == null) ? 0 : getRelSnapshotId().hashCode());
+        result = prime * result + ((getRelExperimentId() == null) ? 0 : getRelExperimentId().hashCode());
+        result = prime * result + ((getRelJobId() == null) ? 0 : getRelJobId().hashCode());
         result = prime * result + ((getRelNodeId() == null) ? 0 : getRelNodeId().hashCode());
         result = prime * result + ((getRelCharId() == null) ? 0 : getRelCharId().hashCode());
         result = prime * result + ((getTableColumns() == null) ? 0 : getTableColumns().hashCode());

@@ -236,123 +236,253 @@ public class WfFlowNodeLinkExample {
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdIsNull() {
-            addCriterion("SRC_NODE_PORT_ID is null");
+        public Criteria andIsWebLinkIsNull() {
+            addCriterion("IS_WEB_LINK is null");
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdIsNotNull() {
-            addCriterion("SRC_NODE_PORT_ID is not null");
+        public Criteria andIsWebLinkIsNotNull() {
+            addCriterion("IS_WEB_LINK is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdEqualTo(Long value) {
-            addCriterion("SRC_NODE_PORT_ID =", value, "srcNodePortId");
+        public Criteria andIsWebLinkEqualTo(Integer value) {
+            addCriterion("IS_WEB_LINK =", value, "isWebLink");
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdNotEqualTo(Long value) {
-            addCriterion("SRC_NODE_PORT_ID <>", value, "srcNodePortId");
+        public Criteria andIsWebLinkNotEqualTo(Integer value) {
+            addCriterion("IS_WEB_LINK <>", value, "isWebLink");
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdGreaterThan(Long value) {
-            addCriterion("SRC_NODE_PORT_ID >", value, "srcNodePortId");
+        public Criteria andIsWebLinkGreaterThan(Integer value) {
+            addCriterion("IS_WEB_LINK >", value, "isWebLink");
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("SRC_NODE_PORT_ID >=", value, "srcNodePortId");
+        public Criteria andIsWebLinkGreaterThanOrEqualTo(Integer value) {
+            addCriterion("IS_WEB_LINK >=", value, "isWebLink");
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdLessThan(Long value) {
-            addCriterion("SRC_NODE_PORT_ID <", value, "srcNodePortId");
+        public Criteria andIsWebLinkLessThan(Integer value) {
+            addCriterion("IS_WEB_LINK <", value, "isWebLink");
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdLessThanOrEqualTo(Long value) {
-            addCriterion("SRC_NODE_PORT_ID <=", value, "srcNodePortId");
+        public Criteria andIsWebLinkLessThanOrEqualTo(Integer value) {
+            addCriterion("IS_WEB_LINK <=", value, "isWebLink");
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdIn(List<Long> values) {
-            addCriterion("SRC_NODE_PORT_ID in", values, "srcNodePortId");
+        public Criteria andIsWebLinkIn(List<Integer> values) {
+            addCriterion("IS_WEB_LINK in", values, "isWebLink");
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdNotIn(List<Long> values) {
-            addCriterion("SRC_NODE_PORT_ID not in", values, "srcNodePortId");
+        public Criteria andIsWebLinkNotIn(List<Integer> values) {
+            addCriterion("IS_WEB_LINK not in", values, "isWebLink");
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdBetween(Long value1, Long value2) {
-            addCriterion("SRC_NODE_PORT_ID between", value1, value2, "srcNodePortId");
+        public Criteria andIsWebLinkBetween(Integer value1, Integer value2) {
+            addCriterion("IS_WEB_LINK between", value1, value2, "isWebLink");
             return (Criteria) this;
         }
 
-        public Criteria andSrcNodePortIdNotBetween(Long value1, Long value2) {
-            addCriterion("SRC_NODE_PORT_ID not between", value1, value2, "srcNodePortId");
+        public Criteria andIsWebLinkNotBetween(Integer value1, Integer value2) {
+            addCriterion("IS_WEB_LINK not between", value1, value2, "isWebLink");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdIsNull() {
-            addCriterion("DST_NODE_PORT_ID is null");
+        public Criteria andSrcPortIdIsNull() {
+            addCriterion("SRC_PORT_ID is null");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdIsNotNull() {
-            addCriterion("DST_NODE_PORT_ID is not null");
+        public Criteria andSrcPortIdIsNotNull() {
+            addCriterion("SRC_PORT_ID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdEqualTo(Long value) {
-            addCriterion("DST_NODE_PORT_ID =", value, "dstNodePortId");
+        public Criteria andSrcPortIdEqualTo(Long value) {
+            addCriterion("SRC_PORT_ID =", value, "srcPortId");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdNotEqualTo(Long value) {
-            addCriterion("DST_NODE_PORT_ID <>", value, "dstNodePortId");
+        public Criteria andSrcPortIdNotEqualTo(Long value) {
+            addCriterion("SRC_PORT_ID <>", value, "srcPortId");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdGreaterThan(Long value) {
-            addCriterion("DST_NODE_PORT_ID >", value, "dstNodePortId");
+        public Criteria andSrcPortIdGreaterThan(Long value) {
+            addCriterion("SRC_PORT_ID >", value, "srcPortId");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("DST_NODE_PORT_ID >=", value, "dstNodePortId");
+        public Criteria andSrcPortIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("SRC_PORT_ID >=", value, "srcPortId");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdLessThan(Long value) {
-            addCriterion("DST_NODE_PORT_ID <", value, "dstNodePortId");
+        public Criteria andSrcPortIdLessThan(Long value) {
+            addCriterion("SRC_PORT_ID <", value, "srcPortId");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdLessThanOrEqualTo(Long value) {
-            addCriterion("DST_NODE_PORT_ID <=", value, "dstNodePortId");
+        public Criteria andSrcPortIdLessThanOrEqualTo(Long value) {
+            addCriterion("SRC_PORT_ID <=", value, "srcPortId");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdIn(List<Long> values) {
-            addCriterion("DST_NODE_PORT_ID in", values, "dstNodePortId");
+        public Criteria andSrcPortIdIn(List<Long> values) {
+            addCriterion("SRC_PORT_ID in", values, "srcPortId");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdNotIn(List<Long> values) {
-            addCriterion("DST_NODE_PORT_ID not in", values, "dstNodePortId");
+        public Criteria andSrcPortIdNotIn(List<Long> values) {
+            addCriterion("SRC_PORT_ID not in", values, "srcPortId");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdBetween(Long value1, Long value2) {
-            addCriterion("DST_NODE_PORT_ID between", value1, value2, "dstNodePortId");
+        public Criteria andSrcPortIdBetween(Long value1, Long value2) {
+            addCriterion("SRC_PORT_ID between", value1, value2, "srcPortId");
             return (Criteria) this;
         }
 
-        public Criteria andDstNodePortIdNotBetween(Long value1, Long value2) {
-            addCriterion("DST_NODE_PORT_ID not between", value1, value2, "dstNodePortId");
+        public Criteria andSrcPortIdNotBetween(Long value1, Long value2) {
+            addCriterion("SRC_PORT_ID not between", value1, value2, "srcPortId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdIsNull() {
+            addCriterion("DST_PORT_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdIsNotNull() {
+            addCriterion("DST_PORT_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdEqualTo(Long value) {
+            addCriterion("DST_PORT_ID =", value, "dstPortId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdNotEqualTo(Long value) {
+            addCriterion("DST_PORT_ID <>", value, "dstPortId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdGreaterThan(Long value) {
+            addCriterion("DST_PORT_ID >", value, "dstPortId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("DST_PORT_ID >=", value, "dstPortId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdLessThan(Long value) {
+            addCriterion("DST_PORT_ID <", value, "dstPortId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdLessThanOrEqualTo(Long value) {
+            addCriterion("DST_PORT_ID <=", value, "dstPortId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdIn(List<Long> values) {
+            addCriterion("DST_PORT_ID in", values, "dstPortId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdNotIn(List<Long> values) {
+            addCriterion("DST_PORT_ID not in", values, "dstPortId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdBetween(Long value1, Long value2) {
+            addCriterion("DST_PORT_ID between", value1, value2, "dstPortId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDstPortIdNotBetween(Long value1, Long value2) {
+            addCriterion("DST_PORT_ID not between", value1, value2, "dstPortId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNull() {
+            addCriterion("DESCRIPTION is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNotNull() {
+            addCriterion("DESCRIPTION is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionEqualTo(String value) {
+            addCriterion("DESCRIPTION =", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotEqualTo(String value) {
+            addCriterion("DESCRIPTION <>", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThan(String value) {
+            addCriterion("DESCRIPTION >", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION >=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThan(String value) {
+            addCriterion("DESCRIPTION <", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION <=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLike(String value) {
+            addCriterion("DESCRIPTION like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotLike(String value) {
+            addCriterion("DESCRIPTION not like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIn(List<String> values) {
+            addCriterion("DESCRIPTION in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotIn(List<String> values) {
+            addCriterion("DESCRIPTION not in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION between", value1, value2, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION not between", value1, value2, "description");
             return (Criteria) this;
         }
 
@@ -673,6 +803,11 @@ public class WfFlowNodeLinkExample {
 
         public Criteria andCreateOperNotBetween(String value1, String value2) {
             addCriterion("CREATE_OPER not between", value1, value2, "createOper");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLikeInsensitive(String value) {
+            addCriterion("upper(DESCRIPTION) like", value.toUpperCase(), "description");
             return (Criteria) this;
         }
 

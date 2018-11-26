@@ -176,63 +176,243 @@ public class WfExecutionQueueExample {
             return (Criteria) this;
         }
 
-        public Criteria andStateIsNull() {
-            addCriterion("STATE is null");
+        public Criteria andOwnerProjectIdIsNull() {
+            addCriterion("OWNER_PROJECT_ID is null");
             return (Criteria) this;
         }
 
-        public Criteria andStateIsNotNull() {
-            addCriterion("STATE is not null");
+        public Criteria andOwnerProjectIdIsNotNull() {
+            addCriterion("OWNER_PROJECT_ID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStateEqualTo(Integer value) {
-            addCriterion("STATE =", value, "state");
+        public Criteria andOwnerProjectIdEqualTo(Long value) {
+            addCriterion("OWNER_PROJECT_ID =", value, "ownerProjectId");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotEqualTo(Integer value) {
-            addCriterion("STATE <>", value, "state");
+        public Criteria andOwnerProjectIdNotEqualTo(Long value) {
+            addCriterion("OWNER_PROJECT_ID <>", value, "ownerProjectId");
             return (Criteria) this;
         }
 
-        public Criteria andStateGreaterThan(Integer value) {
-            addCriterion("STATE >", value, "state");
+        public Criteria andOwnerProjectIdGreaterThan(Long value) {
+            addCriterion("OWNER_PROJECT_ID >", value, "ownerProjectId");
             return (Criteria) this;
         }
 
-        public Criteria andStateGreaterThanOrEqualTo(Integer value) {
-            addCriterion("STATE >=", value, "state");
+        public Criteria andOwnerProjectIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("OWNER_PROJECT_ID >=", value, "ownerProjectId");
             return (Criteria) this;
         }
 
-        public Criteria andStateLessThan(Integer value) {
-            addCriterion("STATE <", value, "state");
+        public Criteria andOwnerProjectIdLessThan(Long value) {
+            addCriterion("OWNER_PROJECT_ID <", value, "ownerProjectId");
             return (Criteria) this;
         }
 
-        public Criteria andStateLessThanOrEqualTo(Integer value) {
-            addCriterion("STATE <=", value, "state");
+        public Criteria andOwnerProjectIdLessThanOrEqualTo(Long value) {
+            addCriterion("OWNER_PROJECT_ID <=", value, "ownerProjectId");
             return (Criteria) this;
         }
 
-        public Criteria andStateIn(List<Integer> values) {
-            addCriterion("STATE in", values, "state");
+        public Criteria andOwnerProjectIdIn(List<Long> values) {
+            addCriterion("OWNER_PROJECT_ID in", values, "ownerProjectId");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotIn(List<Integer> values) {
-            addCriterion("STATE not in", values, "state");
+        public Criteria andOwnerProjectIdNotIn(List<Long> values) {
+            addCriterion("OWNER_PROJECT_ID not in", values, "ownerProjectId");
             return (Criteria) this;
         }
 
-        public Criteria andStateBetween(Integer value1, Integer value2) {
-            addCriterion("STATE between", value1, value2, "state");
+        public Criteria andOwnerProjectIdBetween(Long value1, Long value2) {
+            addCriterion("OWNER_PROJECT_ID between", value1, value2, "ownerProjectId");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotBetween(Integer value1, Integer value2) {
-            addCriterion("STATE not between", value1, value2, "state");
+        public Criteria andOwnerProjectIdNotBetween(Long value1, Long value2) {
+            addCriterion("OWNER_PROJECT_ID not between", value1, value2, "ownerProjectId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeIsNull() {
+            addCriterion("JOB_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeIsNotNull() {
+            addCriterion("JOB_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeEqualTo(Date value) {
+            addCriterion("JOB_TIME =", value, "jobTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeNotEqualTo(Date value) {
+            addCriterion("JOB_TIME <>", value, "jobTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeGreaterThan(Date value) {
+            addCriterion("JOB_TIME >", value, "jobTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("JOB_TIME >=", value, "jobTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeLessThan(Date value) {
+            addCriterion("JOB_TIME <", value, "jobTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeLessThanOrEqualTo(Date value) {
+            addCriterion("JOB_TIME <=", value, "jobTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeIn(List<Date> values) {
+            addCriterion("JOB_TIME in", values, "jobTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeNotIn(List<Date> values) {
+            addCriterion("JOB_TIME not in", values, "jobTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeBetween(Date value1, Date value2) {
+            addCriterion("JOB_TIME between", value1, value2, "jobTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobTimeNotBetween(Date value1, Date value2) {
+            addCriterion("JOB_TIME not between", value1, value2, "jobTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalIsNull() {
+            addCriterion("JOB_SIGNAL is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalIsNotNull() {
+            addCriterion("JOB_SIGNAL is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalEqualTo(Integer value) {
+            addCriterion("JOB_SIGNAL =", value, "jobSignal");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalNotEqualTo(Integer value) {
+            addCriterion("JOB_SIGNAL <>", value, "jobSignal");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalGreaterThan(Integer value) {
+            addCriterion("JOB_SIGNAL >", value, "jobSignal");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalGreaterThanOrEqualTo(Integer value) {
+            addCriterion("JOB_SIGNAL >=", value, "jobSignal");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalLessThan(Integer value) {
+            addCriterion("JOB_SIGNAL <", value, "jobSignal");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalLessThanOrEqualTo(Integer value) {
+            addCriterion("JOB_SIGNAL <=", value, "jobSignal");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalIn(List<Integer> values) {
+            addCriterion("JOB_SIGNAL in", values, "jobSignal");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalNotIn(List<Integer> values) {
+            addCriterion("JOB_SIGNAL not in", values, "jobSignal");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalBetween(Integer value1, Integer value2) {
+            addCriterion("JOB_SIGNAL between", value1, value2, "jobSignal");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobSignalNotBetween(Integer value1, Integer value2) {
+            addCriterion("JOB_SIGNAL not between", value1, value2, "jobSignal");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateIsNull() {
+            addCriterion("JOB_STATE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateIsNotNull() {
+            addCriterion("JOB_STATE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateEqualTo(Integer value) {
+            addCriterion("JOB_STATE =", value, "jobState");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateNotEqualTo(Integer value) {
+            addCriterion("JOB_STATE <>", value, "jobState");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateGreaterThan(Integer value) {
+            addCriterion("JOB_STATE >", value, "jobState");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateGreaterThanOrEqualTo(Integer value) {
+            addCriterion("JOB_STATE >=", value, "jobState");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateLessThan(Integer value) {
+            addCriterion("JOB_STATE <", value, "jobState");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateLessThanOrEqualTo(Integer value) {
+            addCriterion("JOB_STATE <=", value, "jobState");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateIn(List<Integer> values) {
+            addCriterion("JOB_STATE in", values, "jobState");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateNotIn(List<Integer> values) {
+            addCriterion("JOB_STATE not in", values, "jobState");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateBetween(Integer value1, Integer value2) {
+            addCriterion("JOB_STATE between", value1, value2, "jobState");
+            return (Criteria) this;
+        }
+
+        public Criteria andJobStateNotBetween(Integer value1, Integer value2) {
+            addCriterion("JOB_STATE not between", value1, value2, "jobState");
             return (Criteria) this;
         }
 

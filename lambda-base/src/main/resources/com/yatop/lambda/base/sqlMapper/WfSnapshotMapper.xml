@@ -1,52 +1,52 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yatop.lambda.base.mapper.WfSnapshotMapper">
-  <resultMap id="BaseResultMap" type="com.yatop.lambda.base.model.WfSnapshot">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yatop.lambda.base.mapper.WfSnapshotMapper" >
+  <resultMap id="BaseResultMap" type="com.yatop.lambda.base.model.WfSnapshot" >
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="SNAPSHOT_ID" jdbcType="BIGINT" property="snapshotId" />
-    <result column="SNAPSHOT_NAME" jdbcType="VARCHAR" property="snapshotName" />
-    <result column="SHAPSHOT_SRC" jdbcType="INTEGER" property="shapshotSrc" />
-    <result column="OWNER_PROJECT_ID" jdbcType="BIGINT" property="ownerProjectId" />
-    <result column="OWNER_FLOW_ID" jdbcType="BIGINT" property="ownerFlowId" />
-    <result column="SNAPSHOT_VERSION" jdbcType="BIGINT" property="snapshotVersion" />
-    <result column="SNAPSHOT_STATE" jdbcType="INTEGER" property="snapshotState" />
-    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
-    <result column="STATUS" jdbcType="INTEGER" property="status" />
-    <result column="LAST_UPDATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateTime" />
-    <result column="LAST_UPDATE_OPER" jdbcType="VARCHAR" property="lastUpdateOper" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="CREATE_OPER" jdbcType="VARCHAR" property="createOper" />
+    <id column="SNAPSHOT_ID" property="snapshotId" jdbcType="BIGINT" />
+    <result column="SNAPSHOT_NAME" property="snapshotName" jdbcType="VARCHAR" />
+    <result column="SHAPSHOT_SRC" property="shapshotSrc" jdbcType="INTEGER" />
+    <result column="OWNER_PROJECT_ID" property="ownerProjectId" jdbcType="BIGINT" />
+    <result column="OWNER_FLOW_ID" property="ownerFlowId" jdbcType="BIGINT" />
+    <result column="SNAPSHOT_VERSION" property="snapshotVersion" jdbcType="BIGINT" />
+    <result column="SNAPSHOT_STATE" property="snapshotState" jdbcType="INTEGER" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_UPDATE_OPER" property="lastUpdateOper" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPER" property="createOper" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yatop.lambda.base.model.WfSnapshot">
+  <resultMap id="ResultMapWithBLOBs" type="com.yatop.lambda.base.model.WfSnapshot" extends="BaseResultMap" >
     <!--
       WARNING - @mbggenerated
     -->
-    <result column="SNAPSHOT_CONTENT" jdbcType="LONGVARCHAR" property="snapshotContent" />
+    <result column="SNAPSHOT_CONTENT" property="snapshotContent" jdbcType="LONGVARCHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause">
+  <sql id="Example_Where_Clause" >
     <!--
       WARNING - @mbggenerated
     -->
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -57,28 +57,28 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
+  <sql id="Update_By_Example_Where_Clause" >
     <!--
       WARNING - @mbggenerated
     -->
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -89,7 +89,7 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     <!--
       WARNING - @mbggenerated
     -->
@@ -97,121 +97,121 @@
     SNAPSHOT_STATE, DESCRIPTION, STATUS, LAST_UPDATE_TIME, LAST_UPDATE_OPER, CREATE_TIME, 
     CREATE_OPER
   </sql>
-  <sql id="Blob_Column_List">
+  <sql id="Blob_Column_List" >
     <!--
       WARNING - @mbggenerated
     -->
     SNAPSHOT_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.yatop.lambda.base.model.WfSnapshotExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.yatop.lambda.base.model.WfSnapshotExample" >
     <!--
       WARNING - @mbggenerated
     -->
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from wf_snapshot
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.yatop.lambda.base.model.WfSnapshotExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yatop.lambda.base.model.WfSnapshotExample" >
     <!--
       WARNING - @mbggenerated
     -->
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from wf_snapshot
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
     <include refid="MysqlSuffix" />
   </select>
-  <delete id="deleteByExample" parameterType="com.yatop.lambda.base.model.WfSnapshotExample">
+  <delete id="deleteByExample" parameterType="com.yatop.lambda.base.model.WfSnapshotExample" >
     <!--
       WARNING - @mbggenerated
     -->
     delete from wf_snapshot
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <select id="countByExample" parameterType="com.yatop.lambda.base.model.WfSnapshotExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.yatop.lambda.base.model.WfSnapshotExample" resultType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated
     -->
     select count(*) from wf_snapshot
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     <!--
       WARNING - @mbggenerated
     -->
     update wf_snapshot
-    <set>
-      <if test="record.snapshotId != null">
+    <set >
+      <if test="record.snapshotId != null" >
         SNAPSHOT_ID = #{record.snapshotId,jdbcType=BIGINT},
       </if>
-      <if test="record.snapshotName != null">
+      <if test="record.snapshotName != null" >
         SNAPSHOT_NAME = #{record.snapshotName,jdbcType=VARCHAR},
       </if>
-      <if test="record.shapshotSrc != null">
+      <if test="record.shapshotSrc != null" >
         SHAPSHOT_SRC = #{record.shapshotSrc,jdbcType=INTEGER},
       </if>
-      <if test="record.ownerProjectId != null">
+      <if test="record.ownerProjectId != null" >
         OWNER_PROJECT_ID = #{record.ownerProjectId,jdbcType=BIGINT},
       </if>
-      <if test="record.ownerFlowId != null">
+      <if test="record.ownerFlowId != null" >
         OWNER_FLOW_ID = #{record.ownerFlowId,jdbcType=BIGINT},
       </if>
-      <if test="record.snapshotVersion != null">
+      <if test="record.snapshotVersion != null" >
         SNAPSHOT_VERSION = #{record.snapshotVersion,jdbcType=BIGINT},
       </if>
-      <if test="record.snapshotState != null">
+      <if test="record.snapshotState != null" >
         SNAPSHOT_STATE = #{record.snapshotState,jdbcType=INTEGER},
       </if>
-      <if test="record.description != null">
+      <if test="record.description != null" >
         DESCRIPTION = #{record.description,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null">
+      <if test="record.status != null" >
         STATUS = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.lastUpdateTime != null">
+      <if test="record.lastUpdateTime != null" >
         LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.lastUpdateOper != null">
+      <if test="record.lastUpdateOper != null" >
         LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
       </if>
-      <if test="record.createTime != null">
+      <if test="record.createTime != null" >
         CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.createOper != null">
+      <if test="record.createOper != null" >
         CREATE_OPER = #{record.createOper,jdbcType=VARCHAR},
       </if>
-      <if test="record.snapshotContent != null">
+      <if test="record.snapshotContent != null" >
         SNAPSHOT_CONTENT = #{record.snapshotContent,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
     <!--
       WARNING - @mbggenerated
     -->
@@ -230,11 +230,11 @@
       CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
       CREATE_OPER = #{record.createOper,jdbcType=VARCHAR},
       SNAPSHOT_CONTENT = #{record.snapshotContent,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     <!--
       WARNING - @mbggenerated
     -->
@@ -252,27 +252,12 @@
       LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
       CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
       CREATE_OPER = #{record.createOper,jdbcType=VARCHAR}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
-      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
-    </if>
-  </sql>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
-      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
-    </if>
-  </sql>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
-      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
-    </if>
-  </sql>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
+  <sql id="MysqlSuffix" >
+    <if test="page != null" >
       <![CDATA[ limit #{page.begin} , #{page.length} ]]>
     </if>
   </sql>

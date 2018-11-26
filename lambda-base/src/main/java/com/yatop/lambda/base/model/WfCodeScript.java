@@ -23,7 +23,6 @@ public class WfCodeScript implements Serializable {
 
     /**
      * 脚本类型
-            0：普通脚本
             1：SQL脚本
             2：Python脚本（预留）
             3：R脚本（预留）
@@ -39,10 +38,22 @@ public class WfCodeScript implements Serializable {
     private Long ownerProjectId;
 
     /**
-     * 关联快照ID，创建脚本时的工作流快照，无关联则设为-1
+     * 关联工作流ID，无关联工作流设为-1
      */
-    @Column(name = "REL_SNAPSHOT_ID")
-    private Long relSnapshotId;
+    @Column(name = "REL_FLOW_ID")
+    private Long relFlowId;
+
+    /**
+     * 关联快照版本，取FLOW表的NEXT_SNAPSHOT_VERSION值，无关联则设为-1
+     */
+    @Column(name = "REL_SNAPSHOT_VERSION")
+    private Long relSnapshotVersion;
+
+    /**
+     * 关联作业ID，无关联则设为-1
+     */
+    @Column(name = "REL_JOB_ID")
+    private Long relJobId;
 
     /**
      * 关联节点ID，创建脚本的工作流节点，无关联则设为-1
@@ -63,6 +74,12 @@ public class WfCodeScript implements Serializable {
      */
     @Column(name = "SCRIPT_STATE")
     private Integer scriptState;
+
+    /**
+     * 描述
+     */
+    @Column(name = "DESCRIPTION")
+    private String description;
 
     /**
      * 状态
@@ -150,14 +167,12 @@ public class WfCodeScript implements Serializable {
 
     /**
      * 获取脚本类型
-            0：普通脚本
             1：SQL脚本
             2：Python脚本（预留）
             3：R脚本（预留）
             4：特征抽取脚本（预留）
      *
      * @return SCRIPT_TYPE - 脚本类型
-            0：普通脚本
             1：SQL脚本
             2：Python脚本（预留）
             3：R脚本（预留）
@@ -169,14 +184,12 @@ public class WfCodeScript implements Serializable {
 
     /**
      * 设置脚本类型
-            0：普通脚本
             1：SQL脚本
             2：Python脚本（预留）
             3：R脚本（预留）
             4：特征抽取脚本（预留）
      *
      * @param scriptType 脚本类型
-            0：普通脚本
             1：SQL脚本
             2：Python脚本（预留）
             3：R脚本（预留）
@@ -205,21 +218,57 @@ public class WfCodeScript implements Serializable {
     }
 
     /**
-     * 获取关联快照ID，创建脚本时的工作流快照，无关联则设为-1
+     * 获取关联工作流ID，无关联工作流设为-1
      *
-     * @return REL_SNAPSHOT_ID - 关联快照ID，创建脚本时的工作流快照，无关联则设为-1
+     * @return REL_FLOW_ID - 关联工作流ID，无关联工作流设为-1
      */
-    public Long getRelSnapshotId() {
-        return relSnapshotId;
+    public Long getRelFlowId() {
+        return relFlowId;
     }
 
     /**
-     * 设置关联快照ID，创建脚本时的工作流快照，无关联则设为-1
+     * 设置关联工作流ID，无关联工作流设为-1
      *
-     * @param relSnapshotId 关联快照ID，创建脚本时的工作流快照，无关联则设为-1
+     * @param relFlowId 关联工作流ID，无关联工作流设为-1
      */
-    public void setRelSnapshotId(Long relSnapshotId) {
-        this.relSnapshotId = relSnapshotId;
+    public void setRelFlowId(Long relFlowId) {
+        this.relFlowId = relFlowId;
+    }
+
+    /**
+     * 获取关联快照版本，取FLOW表的NEXT_SNAPSHOT_VERSION值，无关联则设为-1
+     *
+     * @return REL_SNAPSHOT_VERSION - 关联快照版本，取FLOW表的NEXT_SNAPSHOT_VERSION值，无关联则设为-1
+     */
+    public Long getRelSnapshotVersion() {
+        return relSnapshotVersion;
+    }
+
+    /**
+     * 设置关联快照版本，取FLOW表的NEXT_SNAPSHOT_VERSION值，无关联则设为-1
+     *
+     * @param relSnapshotVersion 关联快照版本，取FLOW表的NEXT_SNAPSHOT_VERSION值，无关联则设为-1
+     */
+    public void setRelSnapshotVersion(Long relSnapshotVersion) {
+        this.relSnapshotVersion = relSnapshotVersion;
+    }
+
+    /**
+     * 获取关联作业ID，无关联则设为-1
+     *
+     * @return REL_JOB_ID - 关联作业ID，无关联则设为-1
+     */
+    public Long getRelJobId() {
+        return relJobId;
+    }
+
+    /**
+     * 设置关联作业ID，无关联则设为-1
+     *
+     * @param relJobId 关联作业ID，无关联则设为-1
+     */
+    public void setRelJobId(Long relJobId) {
+        this.relJobId = relJobId;
     }
 
     /**
@@ -282,6 +331,24 @@ public class WfCodeScript implements Serializable {
      */
     public void setScriptState(Integer scriptState) {
         this.scriptState = scriptState;
+    }
+
+    /**
+     * 获取描述
+     *
+     * @return DESCRIPTION - 描述
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * 设置描述
+     *
+     * @param description 描述
+     */
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     /**
@@ -416,10 +483,13 @@ public class WfCodeScript implements Serializable {
             && (this.getScriptName() == null ? other.getScriptName() == null : this.getScriptName().equals(other.getScriptName()))
             && (this.getScriptType() == null ? other.getScriptType() == null : this.getScriptType().equals(other.getScriptType()))
             && (this.getOwnerProjectId() == null ? other.getOwnerProjectId() == null : this.getOwnerProjectId().equals(other.getOwnerProjectId()))
-            && (this.getRelSnapshotId() == null ? other.getRelSnapshotId() == null : this.getRelSnapshotId().equals(other.getRelSnapshotId()))
+            && (this.getRelFlowId() == null ? other.getRelFlowId() == null : this.getRelFlowId().equals(other.getRelFlowId()))
+            && (this.getRelSnapshotVersion() == null ? other.getRelSnapshotVersion() == null : this.getRelSnapshotVersion().equals(other.getRelSnapshotVersion()))
+            && (this.getRelJobId() == null ? other.getRelJobId() == null : this.getRelJobId().equals(other.getRelJobId()))
             && (this.getRelNodeId() == null ? other.getRelNodeId() == null : this.getRelNodeId().equals(other.getRelNodeId()))
             && (this.getRelCharId() == null ? other.getRelCharId() == null : this.getRelCharId().equals(other.getRelCharId()))
             && (this.getScriptState() == null ? other.getScriptState() == null : this.getScriptState().equals(other.getScriptState()))
+            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getLastUpdateTime() == null ? other.getLastUpdateTime() == null : this.getLastUpdateTime().equals(other.getLastUpdateTime()))
             && (this.getLastUpdateOper() == null ? other.getLastUpdateOper() == null : this.getLastUpdateOper().equals(other.getLastUpdateOper()))
@@ -436,10 +506,13 @@ public class WfCodeScript implements Serializable {
         result = prime * result + ((getScriptName() == null) ? 0 : getScriptName().hashCode());
         result = prime * result + ((getScriptType() == null) ? 0 : getScriptType().hashCode());
         result = prime * result + ((getOwnerProjectId() == null) ? 0 : getOwnerProjectId().hashCode());
-        result = prime * result + ((getRelSnapshotId() == null) ? 0 : getRelSnapshotId().hashCode());
+        result = prime * result + ((getRelFlowId() == null) ? 0 : getRelFlowId().hashCode());
+        result = prime * result + ((getRelSnapshotVersion() == null) ? 0 : getRelSnapshotVersion().hashCode());
+        result = prime * result + ((getRelJobId() == null) ? 0 : getRelJobId().hashCode());
         result = prime * result + ((getRelNodeId() == null) ? 0 : getRelNodeId().hashCode());
         result = prime * result + ((getRelCharId() == null) ? 0 : getRelCharId().hashCode());
         result = prime * result + ((getScriptState() == null) ? 0 : getScriptState().hashCode());
+        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getLastUpdateTime() == null) ? 0 : getLastUpdateTime().hashCode());
         result = prime * result + ((getLastUpdateOper() == null) ? 0 : getLastUpdateOper().hashCode());

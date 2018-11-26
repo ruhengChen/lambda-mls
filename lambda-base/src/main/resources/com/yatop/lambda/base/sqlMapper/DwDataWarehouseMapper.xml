@@ -1,46 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yatop.lambda.base.mapper.DwDataWarehouseMapper">
-  <resultMap id="BaseResultMap" type="com.yatop.lambda.base.model.DwDataWarehouse">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yatop.lambda.base.mapper.DwDataWarehouseMapper" >
+  <resultMap id="BaseResultMap" type="com.yatop.lambda.base.model.DwDataWarehouse" >
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="DW_ID" jdbcType="BIGINT" property="dwId" />
-    <result column="DW_CODE" jdbcType="VARCHAR" property="dwCode" />
-    <result column="DW_NAME" jdbcType="VARCHAR" property="dwName" />
-    <result column="DW_TYPE" jdbcType="INTEGER" property="dwType" />
-    <result column="OWNER_PROJECT_ID" jdbcType="BIGINT" property="ownerProjectId" />
-    <result column="DFS_DATA_DIR" jdbcType="VARCHAR" property="dfsDataDir" />
-    <result column="LOCAL_DATA_DIR" jdbcType="VARCHAR" property="localDataDir" />
-    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
-    <result column="STATUS" jdbcType="INTEGER" property="status" />
-    <result column="LAST_UPDATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateTime" />
-    <result column="LAST_UPDATE_OPER" jdbcType="VARCHAR" property="lastUpdateOper" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="CREATE_OPER" jdbcType="VARCHAR" property="createOper" />
+    <id column="DW_ID" property="dwId" jdbcType="BIGINT" />
+    <result column="DW_CODE" property="dwCode" jdbcType="VARCHAR" />
+    <result column="DW_NAME" property="dwName" jdbcType="VARCHAR" />
+    <result column="DW_TYPE" property="dwType" jdbcType="INTEGER" />
+    <result column="OWNER_PROJECT_ID" property="ownerProjectId" jdbcType="BIGINT" />
+    <result column="DATA_DFS_DIR" property="dataDfsDir" jdbcType="VARCHAR" />
+    <result column="DATA_LOCAL_DIR" property="dataLocalDir" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_UPDATE_OPER" property="lastUpdateOper" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_OPER" property="createOper" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause">
+  <sql id="Example_Where_Clause" >
     <!--
       WARNING - @mbggenerated
     -->
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -51,28 +51,28 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
+  <sql id="Update_By_Example_Where_Clause" >
     <!--
       WARNING - @mbggenerated
     -->
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -83,100 +83,100 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     <!--
       WARNING - @mbggenerated
     -->
-    DW_ID, DW_CODE, DW_NAME, DW_TYPE, OWNER_PROJECT_ID, DFS_DATA_DIR, LOCAL_DATA_DIR, 
+    DW_ID, DW_CODE, DW_NAME, DW_TYPE, OWNER_PROJECT_ID, DATA_DFS_DIR, DATA_LOCAL_DIR, 
     DESCRIPTION, STATUS, LAST_UPDATE_TIME, LAST_UPDATE_OPER, CREATE_TIME, CREATE_OPER
   </sql>
-  <select id="selectByExample" parameterType="com.yatop.lambda.base.model.DwDataWarehouseExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yatop.lambda.base.model.DwDataWarehouseExample" >
     <!--
       WARNING - @mbggenerated
     -->
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from dw_data_warehouse
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
     <include refid="MysqlSuffix" />
   </select>
-  <delete id="deleteByExample" parameterType="com.yatop.lambda.base.model.DwDataWarehouseExample">
+  <delete id="deleteByExample" parameterType="com.yatop.lambda.base.model.DwDataWarehouseExample" >
     <!--
       WARNING - @mbggenerated
     -->
     delete from dw_data_warehouse
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <select id="countByExample" parameterType="com.yatop.lambda.base.model.DwDataWarehouseExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.yatop.lambda.base.model.DwDataWarehouseExample" resultType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated
     -->
     select count(*) from dw_data_warehouse
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     <!--
       WARNING - @mbggenerated
     -->
     update dw_data_warehouse
-    <set>
-      <if test="record.dwId != null">
+    <set >
+      <if test="record.dwId != null" >
         DW_ID = #{record.dwId,jdbcType=BIGINT},
       </if>
-      <if test="record.dwCode != null">
+      <if test="record.dwCode != null" >
         DW_CODE = #{record.dwCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.dwName != null">
+      <if test="record.dwName != null" >
         DW_NAME = #{record.dwName,jdbcType=VARCHAR},
       </if>
-      <if test="record.dwType != null">
+      <if test="record.dwType != null" >
         DW_TYPE = #{record.dwType,jdbcType=INTEGER},
       </if>
-      <if test="record.ownerProjectId != null">
+      <if test="record.ownerProjectId != null" >
         OWNER_PROJECT_ID = #{record.ownerProjectId,jdbcType=BIGINT},
       </if>
-      <if test="record.dfsDataDir != null">
-        DFS_DATA_DIR = #{record.dfsDataDir,jdbcType=VARCHAR},
+      <if test="record.dataDfsDir != null" >
+        DATA_DFS_DIR = #{record.dataDfsDir,jdbcType=VARCHAR},
       </if>
-      <if test="record.localDataDir != null">
-        LOCAL_DATA_DIR = #{record.localDataDir,jdbcType=VARCHAR},
+      <if test="record.dataLocalDir != null" >
+        DATA_LOCAL_DIR = #{record.dataLocalDir,jdbcType=VARCHAR},
       </if>
-      <if test="record.description != null">
+      <if test="record.description != null" >
         DESCRIPTION = #{record.description,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null">
+      <if test="record.status != null" >
         STATUS = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.lastUpdateTime != null">
+      <if test="record.lastUpdateTime != null" >
         LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.lastUpdateOper != null">
+      <if test="record.lastUpdateOper != null" >
         LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
       </if>
-      <if test="record.createTime != null">
+      <if test="record.createTime != null" >
         CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.createOper != null">
+      <if test="record.createOper != null" >
         CREATE_OPER = #{record.createOper,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     <!--
       WARNING - @mbggenerated
     -->
@@ -186,35 +186,20 @@
       DW_NAME = #{record.dwName,jdbcType=VARCHAR},
       DW_TYPE = #{record.dwType,jdbcType=INTEGER},
       OWNER_PROJECT_ID = #{record.ownerProjectId,jdbcType=BIGINT},
-      DFS_DATA_DIR = #{record.dfsDataDir,jdbcType=VARCHAR},
-      LOCAL_DATA_DIR = #{record.localDataDir,jdbcType=VARCHAR},
+      DATA_DFS_DIR = #{record.dataDfsDir,jdbcType=VARCHAR},
+      DATA_LOCAL_DIR = #{record.dataLocalDir,jdbcType=VARCHAR},
       DESCRIPTION = #{record.description,jdbcType=VARCHAR},
       STATUS = #{record.status,jdbcType=INTEGER},
       LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
       LAST_UPDATE_OPER = #{record.lastUpdateOper,jdbcType=VARCHAR},
       CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
       CREATE_OPER = #{record.createOper,jdbcType=VARCHAR}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
-      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
-    </if>
-  </sql>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
-      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
-    </if>
-  </sql>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
-      <![CDATA[ limit #{page.begin} , #{page.length} ]]>
-    </if>
-  </sql>
-  <sql id="MysqlSuffix">
-    <if test="page != null">
+  <sql id="MysqlSuffix" >
+    <if test="page != null" >
       <![CDATA[ limit #{page.begin} , #{page.length} ]]>
     </if>
   </sql>

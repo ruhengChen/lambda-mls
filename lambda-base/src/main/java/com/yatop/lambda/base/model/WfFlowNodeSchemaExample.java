@@ -176,63 +176,63 @@ public class WfFlowNodeSchemaExample {
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdIsNull() {
-            addCriterion("JSON_OBJECT_ID is null");
+        public Criteria andObjectIdIsNull() {
+            addCriterion("OBJECT_ID is null");
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdIsNotNull() {
-            addCriterion("JSON_OBJECT_ID is not null");
+        public Criteria andObjectIdIsNotNull() {
+            addCriterion("OBJECT_ID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdEqualTo(Long value) {
-            addCriterion("JSON_OBJECT_ID =", value, "jsonObjectId");
+        public Criteria andObjectIdEqualTo(Long value) {
+            addCriterion("OBJECT_ID =", value, "objectId");
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdNotEqualTo(Long value) {
-            addCriterion("JSON_OBJECT_ID <>", value, "jsonObjectId");
+        public Criteria andObjectIdNotEqualTo(Long value) {
+            addCriterion("OBJECT_ID <>", value, "objectId");
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdGreaterThan(Long value) {
-            addCriterion("JSON_OBJECT_ID >", value, "jsonObjectId");
+        public Criteria andObjectIdGreaterThan(Long value) {
+            addCriterion("OBJECT_ID >", value, "objectId");
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("JSON_OBJECT_ID >=", value, "jsonObjectId");
+        public Criteria andObjectIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("OBJECT_ID >=", value, "objectId");
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdLessThan(Long value) {
-            addCriterion("JSON_OBJECT_ID <", value, "jsonObjectId");
+        public Criteria andObjectIdLessThan(Long value) {
+            addCriterion("OBJECT_ID <", value, "objectId");
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdLessThanOrEqualTo(Long value) {
-            addCriterion("JSON_OBJECT_ID <=", value, "jsonObjectId");
+        public Criteria andObjectIdLessThanOrEqualTo(Long value) {
+            addCriterion("OBJECT_ID <=", value, "objectId");
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdIn(List<Long> values) {
-            addCriterion("JSON_OBJECT_ID in", values, "jsonObjectId");
+        public Criteria andObjectIdIn(List<Long> values) {
+            addCriterion("OBJECT_ID in", values, "objectId");
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdNotIn(List<Long> values) {
-            addCriterion("JSON_OBJECT_ID not in", values, "jsonObjectId");
+        public Criteria andObjectIdNotIn(List<Long> values) {
+            addCriterion("OBJECT_ID not in", values, "objectId");
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdBetween(Long value1, Long value2) {
-            addCriterion("JSON_OBJECT_ID between", value1, value2, "jsonObjectId");
+        public Criteria andObjectIdBetween(Long value1, Long value2) {
+            addCriterion("OBJECT_ID between", value1, value2, "objectId");
             return (Criteria) this;
         }
 
-        public Criteria andJsonObjectIdNotBetween(Long value1, Long value2) {
-            addCriterion("JSON_OBJECT_ID not between", value1, value2, "jsonObjectId");
+        public Criteria andObjectIdNotBetween(Long value1, Long value2) {
+            addCriterion("OBJECT_ID not between", value1, value2, "objectId");
             return (Criteria) this;
         }
 
@@ -293,6 +293,76 @@ public class WfFlowNodeSchemaExample {
 
         public Criteria andSchemaStateNotBetween(Integer value1, Integer value2) {
             addCriterion("SCHEMA_STATE not between", value1, value2, "schemaState");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNull() {
+            addCriterion("DESCRIPTION is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNotNull() {
+            addCriterion("DESCRIPTION is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionEqualTo(String value) {
+            addCriterion("DESCRIPTION =", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotEqualTo(String value) {
+            addCriterion("DESCRIPTION <>", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThan(String value) {
+            addCriterion("DESCRIPTION >", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION >=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThan(String value) {
+            addCriterion("DESCRIPTION <", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION <=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLike(String value) {
+            addCriterion("DESCRIPTION like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotLike(String value) {
+            addCriterion("DESCRIPTION not like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIn(List<String> values) {
+            addCriterion("DESCRIPTION in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotIn(List<String> values) {
+            addCriterion("DESCRIPTION not in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION between", value1, value2, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION not between", value1, value2, "description");
             return (Criteria) this;
         }
 
@@ -613,6 +683,11 @@ public class WfFlowNodeSchemaExample {
 
         public Criteria andCreateOperNotBetween(String value1, String value2) {
             addCriterion("CREATE_OPER not between", value1, value2, "createOper");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLikeInsensitive(String value) {
+            addCriterion("upper(DESCRIPTION) like", value.toUpperCase(), "description");
             return (Criteria) this;
         }
 

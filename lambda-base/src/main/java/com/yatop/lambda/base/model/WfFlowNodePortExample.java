@@ -296,6 +296,146 @@ public class WfFlowNodePortExample {
             return (Criteria) this;
         }
 
+        public Criteria andRefCharIdIsNull() {
+            addCriterion("REF_CHAR_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdIsNotNull() {
+            addCriterion("REF_CHAR_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdEqualTo(String value) {
+            addCriterion("REF_CHAR_ID =", value, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdNotEqualTo(String value) {
+            addCriterion("REF_CHAR_ID <>", value, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdGreaterThan(String value) {
+            addCriterion("REF_CHAR_ID >", value, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdGreaterThanOrEqualTo(String value) {
+            addCriterion("REF_CHAR_ID >=", value, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdLessThan(String value) {
+            addCriterion("REF_CHAR_ID <", value, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdLessThanOrEqualTo(String value) {
+            addCriterion("REF_CHAR_ID <=", value, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdLike(String value) {
+            addCriterion("REF_CHAR_ID like", value, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdNotLike(String value) {
+            addCriterion("REF_CHAR_ID not like", value, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdIn(List<String> values) {
+            addCriterion("REF_CHAR_ID in", values, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdNotIn(List<String> values) {
+            addCriterion("REF_CHAR_ID not in", values, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdBetween(String value1, String value2) {
+            addCriterion("REF_CHAR_ID between", value1, value2, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdNotBetween(String value1, String value2) {
+            addCriterion("REF_CHAR_ID not between", value1, value2, "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNull() {
+            addCriterion("DESCRIPTION is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNotNull() {
+            addCriterion("DESCRIPTION is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionEqualTo(String value) {
+            addCriterion("DESCRIPTION =", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotEqualTo(String value) {
+            addCriterion("DESCRIPTION <>", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThan(String value) {
+            addCriterion("DESCRIPTION >", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION >=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThan(String value) {
+            addCriterion("DESCRIPTION <", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("DESCRIPTION <=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLike(String value) {
+            addCriterion("DESCRIPTION like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotLike(String value) {
+            addCriterion("DESCRIPTION not like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIn(List<String> values) {
+            addCriterion("DESCRIPTION in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotIn(List<String> values) {
+            addCriterion("DESCRIPTION not in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION between", value1, value2, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotBetween(String value1, String value2) {
+            addCriterion("DESCRIPTION not between", value1, value2, "description");
+            return (Criteria) this;
+        }
+
         public Criteria andStatusIsNull() {
             addCriterion("STATUS is null");
             return (Criteria) this;
@@ -613,6 +753,16 @@ public class WfFlowNodePortExample {
 
         public Criteria andCreateOperNotBetween(String value1, String value2) {
             addCriterion("CREATE_OPER not between", value1, value2, "createOper");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefCharIdLikeInsensitive(String value) {
+            addCriterion("upper(REF_CHAR_ID) like", value.toUpperCase(), "refCharId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLikeInsensitive(String value) {
+            addCriterion("upper(DESCRIPTION) like", value.toUpperCase(), "description");
             return (Criteria) this;
         }
 
