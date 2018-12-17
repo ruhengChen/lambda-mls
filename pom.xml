@@ -17,6 +17,7 @@
     <url>http://maven.apache.org</url>
 	
 	<properties>
+        <yatop.lambda.framework>1.0.0</yatop.lambda.framework>
         <yatop.lambda.base>1.0.0</yatop.lambda.base>
         <yatop.lambda.core>1.0.0</yatop.lambda.core>
         <yatop.lambda.tools>1.0.0</yatop.lambda.tools>
@@ -32,9 +33,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jdk.tool.version>1.7</jdk.tool.version>
-        <jar.source>1.7</jar.source>
+        <jar.state>1.7</jar.state>
         <jar.target>1.7</jar.target>
-        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.state>1.7</maven.compiler.state>
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.plugin.version>3.6.2</maven.compiler.plugin.version>
 
@@ -61,18 +62,20 @@
     </properties>
 
     <modules>
+        <module>lambda-mybatis-generator</module>
+        <module>lambda-framework</module>
         <module>lambda-base</module>
         <module>lambda-core</module>
         <module>lambda-tools</module>
         <module>lambda-workflow-core</module>
         <module>lambda-workflow-engine</module>
         <module>lambda-workflow-module</module>
-        <module>lambda-studio</module>
-        <!-- <module>lambda-studio-ui</module> -->
+        <module>lambda-manager</module>
+        <!-- <module>lambda-manager-ui</module> -->
         <!-- <module>lambda-open</module> -->
         <!-- <module>lambda-decision</module> -->
         <module>lambda-cluster-adapter</module>
-        <module>lambda-component-scala</module>
+        <module>lambda-component</module>
         <module>lambda-open</module>
         <module>lambda-decision</module>
     </modules>
@@ -122,7 +125,7 @@
             </dependency>
             
             <!-- =====================swagger===================== -->
-            <dependency>
+            <!--<dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
                 <version>${springfox-swagger2.version}</version>
@@ -131,7 +134,7 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${springfox-swagger-ui.version}</version>
-            </dependency>
+            </dependency>-->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>

@@ -1,0 +1,7 @@
+/*
+!/mybatis-generator-core/
+!/mybatis-generator-maven-plugin/
+/target/*
+!/src/
+!pom.xml
+!.gitignore

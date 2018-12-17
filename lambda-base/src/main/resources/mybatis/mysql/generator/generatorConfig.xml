@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+		PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+		"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<properties resource="mybatis/mysql/generator/generator.properties" />
+	<context id="lambda-mls" targetRuntime="MyBatis3" defaultModelType="flat">
+		<property name="beginningDelimiter" value="`"/>
+		<property name="endingDelimiter" value="`"/>
+
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+		<plugin type="org.mybatis.generator.plugins.LambdaEnhancedPlugin" />
+<!--
+		<plugin type="org.mybatis.generator.plugins.MapperConfigPlugin">
+			<property name="targetProject" value="./src/main/resources" />
+			<property name="targetPackage" value="mybatis/mysql" />
+		</plugin>
+-->
+
+<!--		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+-->
+
+		<jdbcConnection driverClass="${jdbc.driverClassName}"
+						connectionURL="${jdbc.jdbcUrl}" userId="${jdbc.username}" password="${jdbc.password}">
+		</jdbcConnection>
+
+		<javaModelGenerator targetPackage="com.yatop.lambda.base.model"
+							targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+			<property name="rootClass" value="com.yatop.lambda.base.utils.LambdaRootModel" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="com/yatop/lambda/base/sqlmapper"
+						 targetProject="./src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<javaClientGenerator targetPackage="com.yatop.lambda.base.mapper"
+							 targetProject="./src/main/java"
+							 type="XMLMAPPER">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<table tableName="%" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+		</table>
+		<table tableName="DW_DATA_TABLE" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="TABLE_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="DW_DATA_WAREHOUSE" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="DW_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="EM_EXPERIMENT" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="EXPERIMENT_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="EM_EXPERIMENT" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="EXPERIMENT_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="EM_EXPERIMENT_TEMPLATE" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="TEMPLATE_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="MW_MODEL" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="MODEL_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="MW_MODEL_WAREHOUSE" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="MW_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="PR_PROJECT" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="PROJECT_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="SYS_PARAMETER" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="PARAM_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="WF_CODE_SCRIPT" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="SCRIPT_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="WF_EXECUTION_JOB" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="JOB_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="WF_EXECUTION_TASK" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="TASK_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="WF_FLOW" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="FLOW_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="WF_FLOW_GLOBAL_PARAMETER" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="GLOBAL_PARAM_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="WF_FLOW_NODE" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="NODE_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="WF_FLOW_NODE_LINK" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="LINK_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="WF_FLOW_NODE_PORT" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="NODE_PORT_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="WF_JSON_OBJECT" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="OBJECT_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="WF_SNAPSHOT" >
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="SNAPSHOT_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+	</context>
+</generatorConfiguration>
