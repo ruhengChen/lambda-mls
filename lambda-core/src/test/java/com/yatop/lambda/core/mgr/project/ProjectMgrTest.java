@@ -1,6 +1,6 @@
 package com.yatop.lambda.core.mgr.project;
 
-import com.yatop.lambda.FramewrokApplication;
+import com.yatop.lambda.LambdaApplication;
 import com.yatop.lambda.base.model.PrProject;
 import com.yatop.lambda.core.utils.DataUtil;
 import com.yatop.lambda.core.utils.PagerUtil;
@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = FramewrokApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = LambdaApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@AutoConfigureMockMvc
 public class ProjectMgrTest {
 

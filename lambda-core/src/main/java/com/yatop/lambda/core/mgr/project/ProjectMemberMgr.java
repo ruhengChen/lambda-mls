@@ -65,17 +65,17 @@ public class ProjectMemberMgr extends BaseMgr {
      *   返回删除数量
      *
      * */
-    public int deleteProjectMember(PrProjectMember member, String operId)  {
-        if(DataUtil.isNull(member) || member.isProjectIdNotColoured() || member.isMemberUserNotColoured() || DataUtil.isEmpty(operId)){
+    public int deleteProjectMember(Long projectId, String memberId, String operId)  {
+        if(DataUtil.isNull(projectId) || DataUtil.isEmpty(memberId) || DataUtil.isEmpty(operId)){
             throw new LambdaException(LambdaExceptionEnum.B_PROJECT_DEFAULT_ERROR, "Delete project member failed -- invalid delete condition.", "无效删除条件");
         }
 
-        if(!existsProjectMember(member.getProjectId(), member.getMemberUser())) {
+        if(!existsProjectMember(projectId, memberId)) {
             throw new LambdaException(LambdaExceptionEnum.B_PROJECT_DEFAULT_ERROR, "Delete project member failed -- project member not found.", "项目成员记录未找到");
         }
 
-        PrProjectMember ownerMember = queryProjectOwner(member.getProjectId());
-        long allCount = countProjectMember(member.getProjectId());
+        PrProjectMember ownerMember = queryProjectOwner(projectId);
+        long allCount = countProjectMember(projectId);
         if(ownerMember.getProjectRole() == ProjectRoleEnum.PROJECT_OWNER.getRole() && allCount > 1) {
             throw new LambdaException(LambdaExceptionEnum.B_PROJECT_DEFAULT_ERROR, "Delete project member failed -- owner should transfer before delete.", "项目转出后再操作删除");
         }
@@ -87,7 +87,7 @@ public class ProjectMemberMgr extends BaseMgr {
             deleteMember.setLastUpdateOper(operId);
 
             PrProjectMemberExample example = new PrProjectMemberExample();
-            example.createCriteria().andProjectIdEqualTo(member.getProjectId()).andMemberUserEqualTo(member.getMemberUser()).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
+            example.createCriteria().andProjectIdEqualTo(projectId).andMemberUserEqualTo(memberId).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
             return prProjectMemberMapper.updateByExampleSelective(deleteMember, example);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.B_PROJECT_DEFAULT_ERROR, "Delete project member exists failed.", "删除项目成员记录失败", e);
@@ -104,6 +104,7 @@ public class ProjectMemberMgr extends BaseMgr {
         if(DataUtil.isNull(projectId) ||
                 DataUtil.isEmpty(srcOwner) ||
                 DataUtil.isEmpty(dstOwner) ||
+                srcOwner.equals(dstOwner) ||
                 DataUtil.isEmpty(operId)){
             throw new LambdaException(LambdaExceptionEnum.B_PROJECT_DEFAULT_ERROR, "Change project Owner failed -- invalid change condition.", "无效更改条件");
         }

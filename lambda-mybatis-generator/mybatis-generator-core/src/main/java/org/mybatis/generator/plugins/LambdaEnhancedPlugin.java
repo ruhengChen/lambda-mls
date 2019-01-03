@@ -67,6 +67,8 @@ public class LambdaEnhancedPlugin extends PluginAdapter {
         generateLambdaCopyProperties(topLevelClass, columns, introspectedTable);
         generateLambdaToJSON(topLevelClass, columns, introspectedTable);
         generateLambdaClear(topLevelClass, columns, introspectedTable);
+        generateLambdaClearColoured(topLevelClass, columns, introspectedTable);
+        generateLambdaIsColoured(topLevelClass, columns, introspectedTable);
 
         return true;
     }
@@ -88,6 +90,8 @@ public class LambdaEnhancedPlugin extends PluginAdapter {
         generateLambdaCopyProperties(topLevelClass, introspectedTable.getAllColumns(), introspectedTable);
         generateLambdaToJSON(topLevelClass, introspectedTable.getAllColumns(), introspectedTable);
         generateLambdaClear(topLevelClass, introspectedTable.getAllColumns(), introspectedTable);
+        generateLambdaClearColoured(topLevelClass, introspectedTable.getAllColumns(), introspectedTable);
+        generateLambdaIsColoured(topLevelClass, introspectedTable.getAllColumns(), introspectedTable);
 
         return true;
     }
@@ -198,6 +202,79 @@ public class LambdaEnhancedPlugin extends PluginAdapter {
      * @param introspectedTable
      *            the table corresponding to this class
      */
+    protected void generateLambdaClearColoured(TopLevelClass topLevelClass,
+                                               List<IntrospectedColumn> introspectedColumns,
+                                               IntrospectedTable introspectedTable) {
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setName("clearColoured");
+        if (introspectedTable.isJava5Targeted()) {
+            method.addAnnotation("@Override"); //$NON-NLS-1$
+        }
+
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+
+        StringBuilder sb = new StringBuilder();
+        Iterator<IntrospectedColumn> iter = introspectedColumns.iterator();
+        while (iter.hasNext()) {
+            IntrospectedColumn introspectedColumn = iter.next();
+            String fieldName = introspectedColumn.getJavaProperty();
+            sb.setLength(0);
+            sb.append("this.").append(fieldName).append("Coloured = false;");
+            method.addBodyLine(sb.toString());
+        }
+
+        method.addBodyLine("return;"); //$NON-NLS-1$
+        topLevelClass.addMethod(method);
+    }
+
+    /**
+     *
+     * @param topLevelClass
+     *            the class to which the method will be added
+     * @param introspectedColumns
+     *            column definitions of this class and any superclass of this
+     *            class
+     * @param introspectedTable
+     *            the table corresponding to this class
+     */
+    protected void generateLambdaIsColoured(TopLevelClass topLevelClass,
+                                       List<IntrospectedColumn> introspectedColumns,
+                                       IntrospectedTable introspectedTable) {
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setName("isColoured");
+        method.setReturnType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());
+        if (introspectedTable.isJava5Targeted()) {
+            method.addAnnotation("@Override"); //$NON-NLS-1$
+        }
+
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+
+        StringBuilder sb = new StringBuilder();
+        Iterator<IntrospectedColumn> iter = introspectedColumns.iterator();
+        while (iter.hasNext()) {
+            IntrospectedColumn introspectedColumn = iter.next();
+            String fieldName = introspectedColumn.getJavaProperty();
+            sb.setLength(0);
+            sb.append("if(this.").append(fieldName).append("Coloured) return true;");
+            method.addBodyLine(sb.toString());
+        }
+
+        method.addBodyLine("return false;"); //$NON-NLS-1$
+        topLevelClass.addMethod(method);
+    }
+
+    /**
+     *
+     * @param topLevelClass
+     *            the class to which the method will be added
+     * @param introspectedColumns
+     *            column definitions of this class and any superclass of this
+     *            class
+     * @param introspectedTable
+     *            the table corresponding to this class
+     */
     protected void generateLambdaToJSON(TopLevelClass topLevelClass,
                                         List<IntrospectedColumn> introspectedColumns,
                                         IntrospectedTable introspectedTable) {
@@ -219,7 +296,7 @@ public class LambdaEnhancedPlugin extends PluginAdapter {
             IntrospectedColumn introspectedColumn = iter.next();
             String fieldName = introspectedColumn.getJavaProperty();
             sb.setLength(0);
-            sb.append("if(this.").append(fieldName).append("Coloured)");
+            sb.append("if(this.").append(fieldName).append(" != null)");
             sb.append(" {jsonObj.put(\"").append(fieldName).append("\", ").append("this.").append(fieldName).append(");}");
             method.addBodyLine(sb.toString());
         }

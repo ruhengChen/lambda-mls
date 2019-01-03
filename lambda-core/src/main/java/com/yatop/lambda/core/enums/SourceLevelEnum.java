@@ -40,4 +40,13 @@ public enum SourceLevelEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static SourceLevelEnum valueOf(int source) {
+        switch (source) {
+            case 1: return SPECIFICATION;
+            case 2: return COMPONENT;
+            case 3: return WORKFLOW;
+            default: return null;
+        }
+    }
 }

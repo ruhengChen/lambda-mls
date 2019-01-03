@@ -74,14 +74,14 @@ public class ExperimentMgr extends BaseMgr {
      *   返回删除数量
      *
      * */
-    public int deleteExperiment(EmExperiment experiment, String operId) {
-        if(DataUtil.isNull(experiment) || experiment.isExperimentIdNotColoured() || DataUtil.isEmpty(operId)){
+    public int deleteExperiment(Long experimentId, String operId) {
+        if(DataUtil.isNull(experimentId) || DataUtil.isEmpty(operId)){
             throw new LambdaException(LambdaExceptionEnum.C_EXPERMNT_DEFAULT_ERROR, "Delete experiment info failed -- invalid delete condition.", "无效删除条件");
         }
 
         try {
             EmExperiment deleteExperiment = new EmExperiment();
-            deleteExperiment.setExperimentId(experiment.getExperimentId());
+            deleteExperiment.setExperimentId(experimentId);
             deleteExperiment.setStatus(DataStatusEnum.INVALID.getStatus());
             deleteExperiment.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             deleteExperiment.setLastUpdateOper(operId);
@@ -98,13 +98,11 @@ public class ExperimentMgr extends BaseMgr {
      *
      * */
     public int updateExperiment(EmExperiment experiment, String operId) {
-        if( DataUtil.isNull(experiment) || experiment.isExperimentIdNotColoured() || DataUtil.isEmpty(operId)) {
+        if( DataUtil.isNull(experiment) || DataUtil.isNull(experiment.getExperimentId()) || DataUtil.isEmpty(operId)) {
             throw new LambdaException(LambdaExceptionEnum.C_EXPERMNT_DEFAULT_ERROR, "Update experiment info failed -- invalid update condition.", "无效更新条件");
         }
 
         if(experiment.isExperimentNameNotColoured() &&
-                experiment.isExperimentDfsDirNotColoured() &&
-                experiment.isExperimentLocalDirNotColoured() &&
                 experiment.isSummaryNotColoured() &&
                 experiment.isDescriptionNotColoured() ) {
             throw new LambdaException(LambdaExceptionEnum.C_EXPERMNT_DEFAULT_ERROR, "Update experiment info failed -- invalid update data.", "无效更新内容");
@@ -115,10 +113,6 @@ public class ExperimentMgr extends BaseMgr {
             updateExperiment.setExperimentId(experiment.getExperimentId());
             if(experiment.isExperimentNameColoured())
                 updateExperiment.setExperimentName(experiment.getExperimentName());
-            if(experiment.isExperimentDfsDirColoured())
-                updateExperiment.setExperimentDfsDir(experiment.getExperimentDfsDir());
-            if(experiment.isExperimentLocalDirColoured())
-                updateExperiment.setExperimentLocalDir(experiment.getExperimentLocalDir());
             if(experiment.isSummaryColoured())
                 updateExperiment.setSummary(experiment.getSummary());
             if(experiment.isDescriptionColoured())
@@ -126,6 +120,9 @@ public class ExperimentMgr extends BaseMgr {
 
             updateExperiment.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             updateExperiment.setLastUpdateOper((operId));
+
+            experiment.setLastUpdateTime(updateExperiment.getLastUpdateTime());
+            experiment.setLastUpdateOper(updateExperiment.getLastUpdateOper());
             return emExperimentMapper.updateByPrimaryKeySelective(updateExperiment);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.C_EXPERMNT_DEFAULT_ERROR, "Update experiment info failed.", "更新实验信息失败", e);

@@ -67,14 +67,14 @@ public class ModelWarehouseMgr extends BaseMgr {
      *   返回删除数量
      *
      * */
-    public int deleteDataWarehouse(MwModelWarehouse warehouse, String operId) {
-        if(DataUtil.isNull(warehouse) || warehouse.isMwIdNotColoured() || DataUtil.isEmpty(operId)){
+    public int deleteDataWarehouse(Long warehouseId, String operId) {
+        if(DataUtil.isNull(warehouseId) || DataUtil.isEmpty(operId)){
             throw new LambdaException(LambdaExceptionEnum.E_MODEL_DEFAULT_ERROR, "Delete model warehouse info failed -- invalid delete condition.", "无效删除条件");
         }
 
         try {
             MwModelWarehouse deleteWarehouse = new MwModelWarehouse();
-            deleteWarehouse.setMwId(warehouse.getMwId());
+            deleteWarehouse.setMwId(warehouseId);
             deleteWarehouse.setStatus(DataStatusEnum.INVALID.getStatus());
             deleteWarehouse.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             deleteWarehouse.setLastUpdateOper(operId);
@@ -91,7 +91,7 @@ public class ModelWarehouseMgr extends BaseMgr {
      *
      * */
     public int updateDataWarehouse(MwModelWarehouse warehouse, String operId) {
-        if( DataUtil.isNull(warehouse) || warehouse.isMwIdNotColoured() || DataUtil.isEmpty(operId)) {
+        if( DataUtil.isNull(warehouse) || DataUtil.isNull(warehouse.getMwId()) || DataUtil.isEmpty(operId)) {
             throw new LambdaException(LambdaExceptionEnum.E_MODEL_DEFAULT_ERROR, "Update model warehouse info failed -- invalid update condition.", "无效更新条件");
         }
 
@@ -124,6 +124,9 @@ public class ModelWarehouseMgr extends BaseMgr {
 
             updateWarehouse.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             updateWarehouse.setLastUpdateOper((operId));
+
+            warehouse.setLastUpdateTime(updateWarehouse.getLastUpdateTime());
+            warehouse.setLastUpdateOper(updateWarehouse.getLastUpdateOper());
             return mwModelWarehouseMapper.updateByPrimaryKeySelective(updateWarehouse);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.E_MODEL_DEFAULT_ERROR, "Update model warehouse info failed.", "更新模型库信息失败", e);

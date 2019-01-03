@@ -19,7 +19,7 @@ public class CmptCharEnumMgr extends BaseMgr {
      *   返回结果集
      *
      * */
-    public List<CfCmptCharEnum> queryCharTypeEnum() {
+    public List<CfCmptCharEnum> queryCharEnum() {
 
         try {
             CfCmptCharEnumExample example = new CfCmptCharEnumExample();

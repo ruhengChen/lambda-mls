@@ -3,29 +3,34 @@ package com.yatop.lambda.core.enums;
 public enum TaskStateEnum {
 
     /**
+     * 准备中
+     */
+    PREPARING(0, "Preparing"),
+
+    /**
      * 已就绪
      */
-    READY(0, "Ready"),
+    READY(1, "Ready"),
 
     /**
      * 运行中
      */
-    RUNNING(1, "Running"),
+    RUNNING(2, "Running"),
 
     /**
      * 运行完成
      */
-    FINISHED(2, "Finished"),
+    FINISHED(3, "Finished"),
 
     /**
      * 出错终止
      */
-    ERROR_TERMINATED(3, "Error Terminated"),
+    ERROR_TERMINATED(4, "Error Terminated"),
 
     /**
      * 用户终止
      */
-    USER_TERMINATED(4, "User Terminated");
+    USER_TERMINATED(5, "User Terminated");
 
     private int state;
     private String name;
@@ -49,5 +54,17 @@ public enum TaskStateEnum {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static TaskStateEnum valueOf(int state) {
+        switch (state) {
+            case 0: return PREPARING;
+            case 1: return READY;
+            case 2: return RUNNING;
+            case 3: return FINISHED;
+            case 4: return ERROR_TERMINATED;
+            case 5: return USER_TERMINATED;
+            default: return null;
+        }
     }
 }

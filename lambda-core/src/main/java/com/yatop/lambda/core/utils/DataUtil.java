@@ -3,6 +3,7 @@ package com.yatop.lambda.core.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.yatop.lambda.base.utils.LambdaRootModel;
 import org.apache.commons.lang3.StringUtils;
@@ -72,8 +73,16 @@ public class DataUtil {
         return JSON.toJSONString(json, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
     }
 
+    public static String prettyFormat(LambdaRootModel model) {
+        return JSON.toJSONString(DataUtil.toJSONObject(model), SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+    }
+
     public static String prettyFormat(Collection<? extends LambdaRootModel> models) {
         return JSON.toJSONString(DataUtil.toJSONArray(models), SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+    }
+
+    public static JSONObject toJSONObject(LambdaRootModel model) {
+        return DataUtil.isNotNull(model) ? model.toJSON() : null;
     }
 
     public static JSONArray toJSONArray(Collection<? extends LambdaRootModel> models) {
@@ -93,5 +102,20 @@ public class DataUtil {
 
     public static boolean isNotEmpty(Collection<? extends Object> list) {
         return !DataUtil.isEmpty(list);
+    }
+
+    public static <D extends LambdaRootModel> void clear(D data) {
+        if(DataUtil.isNull(data))
+            return;
+
+        data.clear();
+    }
+
+    public static String format(String message, LambdaRootModel m1) {
+        return String.format("%s\n%s",message, DataUtil.prettyFormat(m1));
+    }
+
+    public static String format(String message, LambdaRootModel m1, LambdaRootModel m2) {
+        return String.format("%s\n%s\n%s",message, DataUtil.prettyFormat(m1), DataUtil.prettyFormat(m2));
     }
 }

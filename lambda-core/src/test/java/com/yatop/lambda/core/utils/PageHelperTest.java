@@ -5,8 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.yatop.lambda.base.mapper.CfComponentMapper;
 import com.yatop.lambda.base.model.CfComponent;
 import com.yatop.lambda.base.model.CfComponentExample;
-import com.yatop.lambda.FramewrokApplication;
-import com.yatop.lambda.core.utils.DataUtil;
+import com.yatop.lambda.LambdaApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = FramewrokApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = LambdaApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@AutoConfigureMockMvc
 public class PageHelperTest {
 

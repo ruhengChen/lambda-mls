@@ -35,4 +35,12 @@ public enum DataStatusEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static DataStatusEnum valueOf(int status) {
+        switch (status) {
+            case 0: return NORMAL;
+            case 1: return INVALID;
+            default: return null;
+        }
+    }
 }

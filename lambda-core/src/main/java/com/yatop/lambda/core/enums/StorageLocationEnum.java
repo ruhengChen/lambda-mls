@@ -5,18 +5,18 @@ public enum StorageLocationEnum {
     /**
      * 表字段OBJECT_DATA
      */
-    TABLE(0, "Table.Object_Data"),
+    TABLE_FIELD(0, "Table Field<OBJECT_DATA>"),
 
     /**
      * 文件系统
      */
-    FILESYSTEM(1, "File System");
+    FILE_SYSTEM(1, "File System");
 
     private int location;
     private String name;
 
-    StorageLocationEnum(int tag, String name) {
-        this.location = tag;
+    StorageLocationEnum(int location, String name) {
+        this.location = location;
         this.name = name;
     }
 
@@ -24,8 +24,8 @@ public enum StorageLocationEnum {
         return location;
     }
 
-    public void setLocation(int tag) {
-        this.location = tag;
+    public void setLocation(int location) {
+        this.location = location;
     }
 
     public String getName() {
@@ -34,5 +34,13 @@ public enum StorageLocationEnum {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static StorageLocationEnum valueOf(int location) {
+        switch (location) {
+            case 0: return TABLE_FIELD;
+            case 1: return FILE_SYSTEM;
+            default: return null;
+        }
     }
 }

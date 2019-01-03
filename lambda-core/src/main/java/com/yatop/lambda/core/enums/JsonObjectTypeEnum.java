@@ -25,7 +25,7 @@ public enum JsonObjectTypeEnum {
     /**
      * 统计分析报告
      */
-    STATISTICS_ANALYSIS_REPORT(4, "Statistics Analysis Report"),
+    STATISTICAL_ANALYSIS_REPORT(4, "Statistics Analysis Report"),
 
     /**
      * 自动调参报告
@@ -40,7 +40,7 @@ public enum JsonObjectTypeEnum {
     /**
      * 输出端口Schema
      */
-    OUTPUT_SCHEMA(99, "Output Port Schema");
+    OUTPUT_PORT_SCHEMA(99, "Output Port Schema");
 
     private int type;
     private String name;
@@ -64,5 +64,19 @@ public enum JsonObjectTypeEnum {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static JsonObjectTypeEnum valueOf(int type) {
+        switch (type) {
+            case 0: return GERNERAL;
+            case 1: return ALGORITHM_PARAMTERS;
+            case 2: return MODEL_EVALUATION_REPORT;
+            case 3: return CROSS_VALIDATION_REPORT;
+            case 4: return STATISTICAL_ANALYSIS_REPORT;
+            case 5: return TUNE_PARAMETERS_REPORT;
+            case 6: return GENERATE_RULES_REPORT;
+            case 99: return OUTPUT_PORT_SCHEMA;
+            default: return null;
+        }
     }
 }

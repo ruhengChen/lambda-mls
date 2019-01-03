@@ -21,7 +21,7 @@ public class ExecutionTaskMgr extends BaseMgr {
 
     /*
      *
-     *   插入新任务信息（名称、所属作业ID、任务序号、关联节点ID、计算引擎、任务上下文、提交文件、返回文件、日志文件 ...）
+     *   插入新任务信息（名称、所属作业ID、任务序号、关联节点ID ...）
      *   返回插入记录
      *
      * */
@@ -31,11 +31,6 @@ public class ExecutionTaskMgr extends BaseMgr {
                 task.isOwnerJobIdNotColoured() ||
                 task.isSequenceNotColoured() ||
                 task.isRelNodeIdNotColoured() ||
-                task.isEngineTypeNotColoured() ||
-                task.isTaskContextNotColoured() ||
-                task.isSubmitFileNotColoured() ||
-                task.isReturnFileNotColoured() ||
-                task.isLogFileNotColoured() ||
                 DataUtil.isEmpty(operId) ) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Insert task info failed -- invalid insert data.", "无效插入数据");
         }
@@ -45,12 +40,18 @@ public class ExecutionTaskMgr extends BaseMgr {
             Date dtCurrentTime = SystemTimeUtil.getCurrentTime();
             insertTask.copyProperties(task);
             insertTask.setTaskIdColoured(false);
+            insertTask.setEngineTypeColoured(false);
             insertTask.setExternalIdColoured(false);
+            insertTask.setTaskContentColoured(false);
+            insertTask.setSubmitFileColoured(false);
+            insertTask.setReturnFileColoured(false);
+            insertTask.setLogFileColoured(false);
             insertTask.setCostTimeColoured(false);
             insertTask.setTaskStartTimeColoured(false);
             insertTask.setTaskEndTimeColoured(false);
             insertTask.setTaskProgress(0);
-            insertTask.setTaskState(TaskStateEnum.READY.getState());
+            insertTask.setWarningMsgColoured(false);
+            insertTask.setTaskState(TaskStateEnum.PREPARING.getState());
             insertTask.setStatus(DataStatusEnum.NORMAL.getStatus());
             insertTask.setLastUpdateTime(dtCurrentTime);
             insertTask.setLastUpdateOper(operId);
@@ -69,8 +70,8 @@ public class ExecutionTaskMgr extends BaseMgr {
      *   返回删除数量
      *
      * */
-    public int deleteTask(WfExecutionJob job, String operId) {
-        if(DataUtil.isNull(job) || job.isJobIdNotColoured() || DataUtil.isEmpty(operId)){
+    public int deleteTask(Long jobId, String operId) {
+        if(DataUtil.isNull(jobId) || DataUtil.isEmpty(operId)){
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete task info -- invalid delete condition.", "无效删除条件");
         }
 
@@ -80,7 +81,7 @@ public class ExecutionTaskMgr extends BaseMgr {
             deleteTask.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             deleteTask.setLastUpdateOper(operId);
             WfExecutionTaskExample example = new WfExecutionTaskExample();
-            example.createCriteria().andOwnerJobIdEqualTo(job.getJobId());
+            example.createCriteria().andOwnerJobIdEqualTo(jobId);
             return wfExecutionTaskMapper.updateByExampleSelective(deleteTask, example);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete task info failed.", "删除任务信息失败", e);
@@ -89,7 +90,7 @@ public class ExecutionTaskMgr extends BaseMgr {
 
     /*
      *
-     *   更新任务信息（外部任务ID、运行耗时、开始时间、结束时间、任务进度、任务状态、描述）
+     *   更新任务信息（计算引擎、外部任务ID、任务上下文、提交文件、返回文件、日志文件、运行耗时、开始时间、结束时间、任务进度、警告消息、任务状态、描述）
      *   返回更新数量
      *
      * */
@@ -98,11 +99,17 @@ public class ExecutionTaskMgr extends BaseMgr {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Update task info failed -- invalid update condition.", "无效更新条件");
         }
 
-        if(task.isExternalIdNotColoured() &&
+        if(task.isEngineTypeNotColoured() &&
+                task.isExternalIdNotColoured() &&
+                task.isTaskContentNotColoured() &&
+                task.isSubmitFileNotColoured() &&
+                task.isReturnFileNotColoured() &&
+                task.isLogFileNotColoured() &&
                 task.isCostTimeNotColoured() &&
                 task.isTaskStartTimeNotColoured() &&
                 task.isTaskEndTimeNotColoured() &&
                 task.isTaskProgressNotColoured() &&
+                task.isWarningMsgNotColoured() &&
                 task.isTaskStateNotColoured() &&
                 task.isDescriptionNotColoured()) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Update task info failed -- invalid update data.", "无效更新内容");
@@ -113,6 +120,14 @@ public class ExecutionTaskMgr extends BaseMgr {
             updateTask.setTaskId(task.getTaskId());
             if(task.isExternalIdColoured())
                 updateTask.setExternalId(task.getExternalId());
+            if(task.isExternalIdColoured())
+                updateTask.setExternalId(task.getExternalId());
+            if(task.isSubmitFileColoured())
+                updateTask.setSubmitFile(task.getSubmitFile());
+            if(task.isReturnFileColoured())
+                updateTask.setReturnFile(task.getReturnFile());
+            if(task.isLogFileColoured())
+                updateTask.setLogFile(task.getLogFile());
             if(task.isCostTimeColoured())
                 updateTask.setCostTime(task.getCostTime());
             if(task.isTaskStartTimeColoured())
@@ -121,6 +136,8 @@ public class ExecutionTaskMgr extends BaseMgr {
                 updateTask.setTaskEndTime(task.getTaskEndTime());
             if(task.isTaskProgressColoured())
                 updateTask.setTaskProgress(task.getTaskProgress());
+            if(task.isWarningMsgColoured())
+                updateTask.setWarningMsg(task.getWarningMsg());
             if(task.isTaskStateColoured())
                 updateTask.setTaskState(task.getTaskState());
             if(task.isDescriptionColoured())
@@ -128,6 +145,9 @@ public class ExecutionTaskMgr extends BaseMgr {
 
             updateTask.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             updateTask.setLastUpdateOper((operId));
+
+            task.setLastUpdateTime(updateTask.getLastUpdateTime());
+            task.setLastUpdateOper(updateTask.getLastUpdateOper());
             return wfExecutionTaskMapper.updateByPrimaryKeySelective(updateTask);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Update task info failed.", "更新任务信息失败", e);
@@ -140,14 +160,14 @@ public class ExecutionTaskMgr extends BaseMgr {
      *   返回结果
      *
      * */
-    public WfExecutionTask queryTask(Long id) {
-        if(DataUtil.isNull(id)){
+    public WfExecutionTask queryTask(Long taskId) {
+        if(DataUtil.isNull(taskId)){
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query task info failed -- invalid query condition.", "无效查询条件");
         }
 
         WfExecutionTask task;
         try {
-            task = wfExecutionTaskMapper.selectByPrimaryKey(id);
+            task = wfExecutionTaskMapper.selectByPrimaryKey(taskId);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query task info failed.", "查询任务信息失败", e);
         }

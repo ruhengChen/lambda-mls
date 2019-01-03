@@ -40,4 +40,13 @@ public enum ModelTypeEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static ModelTypeEnum valueOf(int type) {
+        switch (type) {
+            case 0: return GENERAL;
+            case 1: return CACHED;
+//            case 2: return EXTERNAL;
+            default: return null;
+        }
+    }
 }

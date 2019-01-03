@@ -55,4 +55,16 @@ public enum JobStateEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static JobStateEnum valueOf(int state) {
+        switch (state) {
+            case 0: return PREPARING;
+            case 1: return QUEUEING;
+            case 2: return RUNNING;
+            case 3: return FINISHED;
+            case 4: return ERROR_TERMINATED;
+            case 5: return USER_TERMINATED;
+            default: return null;
+        }
+    }
 }

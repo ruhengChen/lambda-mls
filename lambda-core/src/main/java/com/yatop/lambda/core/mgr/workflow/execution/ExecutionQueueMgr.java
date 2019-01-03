@@ -57,13 +57,13 @@ public class ExecutionQueueMgr extends BaseMgr {
      *   返回删除数量
      *
      * */
-    public int removeQueue(WfExecutionQueue jobQueue) {
-        if(DataUtil.isNull(jobQueue) || jobQueue.isJobIdNotColoured()){
+    public int removeQueue(Long jobId) {
+        if(DataUtil.isNull(jobId)){
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete job queue -- invalid delete condition.", "无效删除条件");
         }
 
         try {
-            return wfExecutionQueueMapper.deleteByPrimaryKey(jobQueue.getJobId());
+            return wfExecutionQueueMapper.deleteByPrimaryKey(jobId);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete job queue failed.", "删除作业队列失败", e);
         }
@@ -101,6 +101,9 @@ public class ExecutionQueueMgr extends BaseMgr {
 
             updateQueue.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             updateQueue.setLastUpdateOper((operId));
+
+            jobQueue.setLastUpdateTime(updateQueue.getLastUpdateTime());
+            jobQueue.setLastUpdateOper(updateQueue.getLastUpdateOper());
             return wfExecutionQueueMapper.updateByPrimaryKeySelective(updateQueue);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Update job queue failed.", "更新作业队列失败", e);
@@ -147,7 +150,7 @@ public class ExecutionQueueMgr extends BaseMgr {
             WfExecutionQueueExample example = new WfExecutionQueueExample();
             WfExecutionQueueExample.Criteria cond = example.createCriteria().andJobStateEqualTo(stateEnum.getState());
             if(DataUtil.isNotNull(signalEnum))
-                cond.andJobSignalEqualTo(signalEnum.getType());
+                cond.andJobSignalEqualTo(signalEnum.getSignal());
             example.setOrderByClause("JOB_TIME ASC");
             return wfExecutionQueueMapper.selectByExample(example);
         } catch (Throwable e) {

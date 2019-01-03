@@ -56,8 +56,8 @@ public class NodePortMgr extends BaseMgr {
      *   返回删除数量
      *
      * */
-    public int deleteNodePort(WfFlowNode node, String operId) {
-        if(DataUtil.isNull(node) || node.isNodeIdNotColoured() || DataUtil.isEmpty(operId)){
+    public int deleteNodePort(Long nodeId, String operId) {
+        if(DataUtil.isNull(nodeId) || DataUtil.isEmpty(operId)){
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete node port -- invalid delete condition.", "无效删除条件");
         }
 
@@ -67,7 +67,7 @@ public class NodePortMgr extends BaseMgr {
             deleteNodePort.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             deleteNodePort.setLastUpdateOper(operId);
             WfFlowNodePortExample example = new WfFlowNodePortExample();
-            example.createCriteria().andOwnerNodeIdEqualTo(node.getNodeId()).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
+            example.createCriteria().andOwnerNodeIdEqualTo(nodeId).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
             return wfFlowNodePortMapper.updateByExampleSelective(deleteNodePort, example);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete node port failed.", "删除节点端口失败", e);
@@ -80,8 +80,8 @@ public class NodePortMgr extends BaseMgr {
      *   返回恢复数量
      *
      * */
-    public int recoverNodePort(WfFlowNode node, String operId) {
-        if(DataUtil.isNull(node) || node.isNodeIdNotColoured() || DataUtil.isEmpty(operId)){
+    public int recoverNodePort(Long nodeId, String operId) {
+        if(DataUtil.isNull(nodeId) || DataUtil.isEmpty(operId)){
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Recover node port -- invalid recover condition.", "无效恢复条件");
         }
 
@@ -91,7 +91,7 @@ public class NodePortMgr extends BaseMgr {
             recoverNodePort.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             recoverNodePort.setLastUpdateOper(operId);
             WfFlowNodePortExample example = new WfFlowNodePortExample();
-            example.createCriteria().andOwnerNodeIdEqualTo(node.getNodeId()).andStatusEqualTo(DataStatusEnum.INVALID.getStatus());
+            example.createCriteria().andOwnerNodeIdEqualTo(nodeId).andStatusEqualTo(DataStatusEnum.INVALID.getStatus());
             return wfFlowNodePortMapper.updateByExampleSelective(recoverNodePort, example);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Recover node port failed.", "恢复节点端口失败", e);

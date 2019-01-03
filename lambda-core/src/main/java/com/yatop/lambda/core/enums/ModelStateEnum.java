@@ -35,4 +35,12 @@ public enum ModelStateEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static ModelStateEnum valueOf(int state) {
+        switch (state) {
+            case 0: return EMPTY;
+            case 1: return NORMAL;
+            default: return null;
+        }
+    }
 }

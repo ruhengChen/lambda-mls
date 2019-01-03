@@ -1,6 +1,5 @@
 package com.yatop.lambda.workflow.core.richmodel.component.characteristic;
 
-import com.alibaba.fastjson.JSONObject;
 import com.yatop.lambda.base.model.CfCmptCharType;
 import com.yatop.lambda.workflow.core.richmodel.IRichModel;
 import com.yatop.lambda.workflow.core.utils.CollectionUtil;
@@ -9,28 +8,39 @@ import java.util.*;
 
 public class CmptCharType extends CfCmptCharType implements IRichModel {
 
-    private TreeSet<Integer> matchTypes = new TreeSet<Integer>();
+    //作为输出端时，所适配的输入端特征类型
+    private TreeMap<Integer, CmptCharType> matchTargetTypes = new TreeMap<Integer, CmptCharType>();   //适配特征类型，用于节点连线时的校验
 
-    public CmptCharType() {}
-
-    public CmptCharType(CfCmptCharType data) {super.copyProperties(data);}
+    public CmptCharType(CfCmptCharType data) {
+        super.copyProperties(data);
+        this.clearColoured();
+    }
 
     @Override
     public void clear() {
-        matchTypes.clear();
-        matchTypes = null;
+        matchTargetTypes.clear();
+        matchTargetTypes = null;
         super.clear();
     }
 
-    public boolean isMatchType(Integer charTypeId) {
-        return CollectionUtil.contains(matchTypes, charTypeId);
+    public boolean matchTargetType(CmptCharType target) {
+        return this.getCharTypeId().equals(target.getCharTypeId()) || CollectionUtil.containsKey(matchTargetTypes, target.getCharTypeId());
     }
 
-    public List<Integer> getMatchTypes() {
-        return CollectionUtil.toList(matchTypes);
+    public int matchTargetTypeCount() {
+        return matchTargetTypes.size();
     }
 
-    public void addMatchType(Integer charTypeId) {
-        CollectionUtil.add(matchTypes, charTypeId);
+    public List<CmptCharType> getMatchTargetTypes() {
+        return CollectionUtil.toList(matchTargetTypes);
+    }
+
+    public void putMatchTargetType(CmptCharType targetType) {
+        CollectionUtil.put(matchTargetTypes, targetType.getCharTypeId(), targetType);
+    }
+
+    public void replaceMatchTargetTypes(TreeMap<Integer, CmptCharType> expandedTargetCharTypes) {
+        matchTargetTypes.clear();
+        this.matchTargetTypes = expandedTargetCharTypes;
     }
 }

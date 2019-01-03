@@ -1,7 +1,7 @@
 package com.yatop.lambda.core.concurrent;
 
-import com.yatop.lambda.FramewrokApplication;
-import com.yatop.lambda.core.concurrent.workflow.WorkflowNamedLockServiceService;
+import com.yatop.lambda.LambdaApplication;
+import com.yatop.lambda.core.concurrent.workflow.WorkflowNamedLockService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,11 @@ import java.util.Random;
 import java.util.Date;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = FramewrokApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = LambdaApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class WorkflowNamedLockServiceTest implements Runnable {
 
     @Autowired
-    WorkflowNamedLockServiceService workflowNamedLock;
+    WorkflowNamedLockService workflowNamedLock;
 
     private int generator = 0;
 

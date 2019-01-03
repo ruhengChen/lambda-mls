@@ -85,4 +85,22 @@ public enum CmptTypeEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static CmptTypeEnum valueOf(int type) {
+        switch (type) {
+            case 0: return IO_CMPT;
+            case 1: return SCRIPT_CMPT;
+            case 2: return PRERPOCESS_CMPT;
+            case 3: return FEATURE_CMPT;
+            case 4: return STATISTICAL_CMPT;
+            case 5: return ML_CMPT;
+            case 6: return DP_CMPT;
+            case 7: return TEXT_CMPT;
+            case 8: return NETWORK_CMPT;
+            case 9: return TIME_CMPT;
+            case 10: return WEB_CMPT;
+            case 11: return BUSINESS_CMPT;
+            default: return null;
+        }
+    }
 }

@@ -22,20 +22,20 @@ public enum JobSignalEnum {
      */
     //SIG_CONT(3, "Continue Signal");
 
-    private int type;
+    private int signal;
     private String name;
 
-    JobSignalEnum(int type, String name) {
-        this.type = type;
+    JobSignalEnum(int signal, String name) {
+        this.signal = signal;
         this.name = name;
     }
 
-    public int getType() {
-        return type;
+    public int getSignal() {
+        return signal;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setSignal(int signal) {
+        this.signal = signal;
     }
 
     public String getName() {
@@ -44,5 +44,15 @@ public enum JobSignalEnum {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static JobSignalEnum valueOf(int signal) {
+        switch (signal) {
+            case 0: return SIG_NORMAL;
+            case 1: return SIG_KILL;
+//            case 2: return SIG_PAUSE;
+//            case 3: return SIG_CONT;
+            default: return null;
+        }
     }
 }

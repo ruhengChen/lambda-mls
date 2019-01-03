@@ -19,7 +19,7 @@ public class CmptCharTypeMgr extends BaseMgr {
      *   返回结果集
      *
      * */
-    public List<CfCmptCharType> queryComponent() {
+    public List<CfCmptCharType> queryCharType() {
 
         try {
             CfCmptCharTypeExample example = new CfCmptCharTypeExample();

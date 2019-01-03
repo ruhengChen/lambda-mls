@@ -35,4 +35,12 @@ public enum IsAllowGlobalEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static IsAllowGlobalEnum valueOf(int mark) {
+        switch (mark) {
+            case 0: return NO;
+            case 1: return YES;
+            default: return null;
+        }
+    }
 }

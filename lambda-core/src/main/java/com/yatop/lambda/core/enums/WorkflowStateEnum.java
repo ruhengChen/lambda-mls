@@ -45,4 +45,14 @@ public enum WorkflowStateEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static WorkflowStateEnum valueOf(int state) {
+        switch (state) {
+            case 0: return DRAFT;
+            case 1: return PREPARING;
+            case 2: return RUNNING;
+            case 3: return FINISHED_RUNNING;
+            default: return null;
+        }
+    }
 }

@@ -1,6 +1,6 @@
 package com.yatop.lambda.core.utils;
 
-import com.yatop.lambda.FramewrokApplication;
+import com.yatop.lambda.LambdaApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = FramewrokApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = LambdaApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@AutoConfigureMockMvc
 public class SystemTimeUtilTest {
 

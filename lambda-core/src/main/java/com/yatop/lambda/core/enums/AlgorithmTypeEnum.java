@@ -60,4 +60,17 @@ public enum AlgorithmTypeEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static AlgorithmTypeEnum valueOf(int type) {
+        switch (type) {
+            case 1: return ONE_CLASS;
+            case 2: return TWO_CLASS;
+            case 3: return MULTIPLE_CLASS;
+            case 4: return CLUSTERING;
+            case 5: return REGRESSION;
+            case 6: return ASSOCIATION_RULES;
+            case 7: return COLLABORATIVE_FILTERING;
+            default: return null;
+        }
+    }
 }

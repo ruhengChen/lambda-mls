@@ -50,4 +50,15 @@ public enum SpecTypeEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static SpecTypeEnum valueOf(int type) {
+        switch (type) {
+            case 1: return INPUT;
+            case 2: return OUTPUT;
+            case 3: return EXECUTION;
+            case 4: return OPTIMIZE_EXECUTION;
+            case 5: return PARAMETER;
+            default: return null;
+        }
+    }
 }

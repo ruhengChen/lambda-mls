@@ -26,7 +26,5 @@ public class CommonTest {
         } catch (Throwable e) {
             e.printStackTrace();
         }*/
-
-        System.out.println("substring: " + "abc".substring(0,0).length());
     }
 }

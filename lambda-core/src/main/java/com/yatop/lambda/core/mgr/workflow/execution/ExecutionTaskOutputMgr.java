@@ -55,8 +55,8 @@ public class ExecutionTaskOutputMgr extends BaseMgr {
      *   返回删除数量
      *
      * */
-    public int deleteTaskOutput(WfExecutionTask task, String operId) {
-        if(DataUtil.isNull(task) || task.isTaskIdNotColoured() || DataUtil.isEmpty(operId)){
+    public int deleteTaskOutput(Long taskId, String operId) {
+        if(DataUtil.isNull(taskId) || DataUtil.isEmpty(operId)){
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete task output -- invalid delete condition.", "无效删除条件");
         }
 
@@ -66,7 +66,7 @@ public class ExecutionTaskOutputMgr extends BaseMgr {
             deleteTaskOutput.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             deleteTaskOutput.setLastUpdateOper(operId);
             WfExecutionTaskOutputExample example = new WfExecutionTaskOutputExample();
-            example.createCriteria().andTaskIdEqualTo(task.getTaskId()).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
+            example.createCriteria().andTaskIdEqualTo(taskId);
             return wfExecutionTaskOutputMapper.updateByExampleSelective(deleteTaskOutput, example);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete task output failed.", "删除任务输出失败", e);
@@ -100,6 +100,9 @@ public class ExecutionTaskOutputMgr extends BaseMgr {
                 updateTaskOutput.setDescription(taskOutput.getDescription());
             updateTaskOutput.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             updateTaskOutput.setLastUpdateOper((operId));
+
+            taskOutput.setLastUpdateTime(updateTaskOutput.getLastUpdateTime());
+            taskOutput.setLastUpdateOper(updateTaskOutput.getLastUpdateOper());
 
             WfExecutionTaskOutputExample example = new WfExecutionTaskOutputExample();
             example.createCriteria().andTaskIdEqualTo(taskOutput.getTaskId()).andCharIdEqualTo(taskOutput.getCharId()).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());

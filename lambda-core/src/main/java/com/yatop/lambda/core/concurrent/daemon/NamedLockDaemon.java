@@ -121,7 +121,7 @@ public class NamedLockDaemon implements DisposableBean, Runnable {
 
                     try {
                         lockRequest.getEvent().resetEvent();
-                        lockRequest.getEvent().waitEvent(8, TimeUnit.SECONDS);
+                        lockRequest.getEvent().waitEvent(BaseNamedLockService.NAMED_LOCK_WAIT_EVENT_SECONDS, TimeUnit.SECONDS);
                     } catch (InterruptedException e) {
                         //TODO
                     } catch (Throwable e) {
@@ -142,7 +142,7 @@ public class NamedLockDaemon implements DisposableBean, Runnable {
 
             try {
                 unlockRequest.getEvent().resetEvent();
-                unlockRequest.getEvent().waitEvent(8, TimeUnit.SECONDS);
+                unlockRequest.getEvent().waitEvent(BaseNamedLockService.NAMED_LOCK_WAIT_EVENT_SECONDS, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 //TODO
             } catch (Throwable e) {

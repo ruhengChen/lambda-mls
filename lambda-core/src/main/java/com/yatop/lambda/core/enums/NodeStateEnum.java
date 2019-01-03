@@ -30,7 +30,7 @@ public enum NodeStateEnum {
     /**
      * 运行出错
      */
-    ERROR(4, "Error");
+    ERROR(5, "Error");
 
     private int state;
     private String name;
@@ -54,5 +54,17 @@ public enum NodeStateEnum {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static NodeStateEnum valueOf(int state) {
+        switch (state) {
+            case 0: return NOT_READY;
+            case 1: return READY;
+            case 2: return PREPARING;
+            case 3: return RUNNING;
+            case 4: return SUCCESS;
+            case 5: return ERROR;
+            default: return null;
+        }
     }
 }

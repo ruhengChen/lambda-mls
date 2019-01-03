@@ -15,6 +15,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public abstract class BaseNamedLockService {
 
+    public static final long NAMED_LOCK_EXPIRE_MILLIS_DURATION = 30 * 1000;
+    public static final long NAMED_LOCK_WAIT_EVENT_SECONDS = 8;
+
     public static Logger logger = LoggerFactory.getLogger(BaseNamedLockService.class);
 
     //加锁线程ID, 默认加锁请求（请求多个资源时，需另外new LockRequest）
@@ -225,7 +228,7 @@ public abstract class BaseNamedLockService {
         }
 
         private Long generateExpireTime() {
-            return System.currentTimeMillis() + 16 * 1000;
+            return System.currentTimeMillis() + NAMED_LOCK_EXPIRE_MILLIS_DURATION;
         }
 
         public void lockResource() {

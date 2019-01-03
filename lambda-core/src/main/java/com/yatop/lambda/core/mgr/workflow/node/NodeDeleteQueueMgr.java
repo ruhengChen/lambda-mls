@@ -54,14 +54,14 @@ public class NodeDeleteQueueMgr extends BaseMgr {
      *   返回删除数量
      *
      * */
-    public int removeNodeDelete(WfFlowNodeDeleteQueue nodeDelete) {
-        if(DataUtil.isNull(nodeDelete) || nodeDelete.isFlowIdNotColoured() || nodeDelete.isSequenceNotColoured()){
+    public int removeNodeDelete(Long flowId, Long Sequence) {
+        if(DataUtil.isNull(flowId) || DataUtil.isNull(Sequence)){
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Remove node delete -- invalid remove condition.", "无效移除条件");
         }
 
         try {
             WfFlowNodeDeleteQueueExample example = new WfFlowNodeDeleteQueueExample();
-            example.createCriteria().andFlowIdEqualTo(nodeDelete.getFlowId()).andSequenceEqualTo(nodeDelete.getSequence());
+            example.createCriteria().andFlowIdEqualTo(flowId).andSequenceEqualTo(Sequence);
             return wfFlowNodeDeleteQueueMapper.deleteByExample(example);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Remove node delete failed.", "移除节点删除失败", e);
@@ -74,15 +74,15 @@ public class NodeDeleteQueueMgr extends BaseMgr {
      *   返回结果
      *
      * */
-    public List<WfFlowNodeDeleteQueue> queryNodeDelete(Long flowId, Long Sequnce) {
-        if(DataUtil.isNull(flowId) || DataUtil.isNull(Sequnce)){
+    public List<WfFlowNodeDeleteQueue> queryNodeDelete(Long flowId, Long Sequence) {
+        if(DataUtil.isNull(flowId) || DataUtil.isNull(Sequence)){
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query node delete failed -- invalid query condition.", "无效查询条件");
         }
 
         List<WfFlowNodeDeleteQueue> resultList;
         try {
             WfFlowNodeDeleteQueueExample example = new WfFlowNodeDeleteQueueExample();
-            example.createCriteria().andFlowIdEqualTo(flowId).andSequenceEqualTo(Sequnce);
+            example.createCriteria().andFlowIdEqualTo(flowId).andSequenceEqualTo(Sequence);
             return wfFlowNodeDeleteQueueMapper.selectByExample(example);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query node delete failed.", "查询节点删除失败", e);

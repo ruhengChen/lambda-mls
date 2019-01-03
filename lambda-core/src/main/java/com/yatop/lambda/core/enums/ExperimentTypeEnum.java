@@ -35,4 +35,12 @@ public enum ExperimentTypeEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static ExperimentTypeEnum valueOf(int type) {
+        switch (type) {
+            case 0: return MAIN;
+            case 1: return PREDICTION;
+            default: return null;
+        }
+    }
 }

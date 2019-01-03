@@ -5,12 +5,12 @@ public enum CodeScriptStateEnum {
     /**
      * 空脚本
      */
-    NORMAL(0, "Empty"),
+    EMPTY(0, "Empty"),
 
     /**
      * 正常
      */
-    EMPTY(1, "Normal");
+    NORMAL(1, "Normal");
 
     private int state;
     private String name;
@@ -34,5 +34,13 @@ public enum CodeScriptStateEnum {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static CodeScriptStateEnum valueOf(int state) {
+        switch (state) {
+            case 0: return EMPTY;
+            case 1: return NORMAL;
+            default: return null;
+        }
     }
 }

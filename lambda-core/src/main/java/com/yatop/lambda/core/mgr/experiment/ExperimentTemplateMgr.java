@@ -63,14 +63,14 @@ public class ExperimentTemplateMgr extends BaseMgr {
      *   返回删除数量
      *
      * */
-    public int deleteDataTemplate(EmExperimentTemplate template, String operId) {
-        if(DataUtil.isNull(template) || template.isTemplateIdNotColoured() || DataUtil.isEmpty(operId)){
+    public int deleteDataTemplate(Long templateId, String operId) {
+        if(DataUtil.isNull(templateId) || DataUtil.isEmpty(operId)){
             throw new LambdaException(LambdaExceptionEnum.C_EXPERMNT_DEFAULT_ERROR, "Delete experiment template info failed -- invalid delete condition.", "无效删除条件");
         }
 
         try {
             EmExperimentTemplate deleteTemplate = new EmExperimentTemplate();
-            deleteTemplate.setTemplateId(template.getTemplateId());
+            deleteTemplate.setTemplateId(templateId);
             deleteTemplate.setStatus(DataStatusEnum.INVALID.getStatus());
             deleteTemplate.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             deleteTemplate.setLastUpdateOper(operId);
@@ -87,7 +87,7 @@ public class ExperimentTemplateMgr extends BaseMgr {
      *
      * */
     public int updateDataTemplate(EmExperimentTemplate template, String operId) {
-        if( DataUtil.isNull(template) || template.isTemplateIdNotColoured() || DataUtil.isEmpty(operId)) {
+        if( DataUtil.isNull(template) || DataUtil.isNull(template.getTemplateId()) || DataUtil.isEmpty(operId)) {
             throw new LambdaException(LambdaExceptionEnum.C_EXPERMNT_DEFAULT_ERROR, "Update experiment template info failed -- invalid update condition.", "无效更新条件");
         }
 
@@ -115,6 +115,9 @@ public class ExperimentTemplateMgr extends BaseMgr {
 
             updateTemplate.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             updateTemplate.setLastUpdateOper((operId));
+
+            template.setLastUpdateTime(updateTemplate.getLastUpdateTime());
+            template.setLastUpdateOper(updateTemplate.getLastUpdateOper());
             return emExperimentTemplateMapper.updateByPrimaryKeySelective(updateTemplate);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.C_EXPERMNT_DEFAULT_ERROR, "Update experiment template info failed.", "更新实验模版信息失败", e);
@@ -175,13 +178,13 @@ public class ExperimentTemplateMgr extends BaseMgr {
      *   返回更新数量
      *
      * */
-    public int increaseTemplateCount(Long id, String operId) {
-        if(DataUtil.isNull(id) || DataUtil.isEmpty(operId)){
+    public int increaseTemplateCount(Long templateId, String operId) {
+        if(DataUtil.isNull(templateId) || DataUtil.isEmpty(operId)){
             throw new LambdaException(LambdaExceptionEnum.C_EXPERMNT_DEFAULT_ERROR, "Experiment template count plus one -- invalid plus condition.", "无效计数条件");
         }
 
         try {
-           return experimentTemplateMapper.increaseTemplateCount(id, SystemTimeUtil.getCurrentTime(), operId);
+           return experimentTemplateMapper.increaseTemplateCount(templateId, SystemTimeUtil.getCurrentTime(), operId);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.C_EXPERMNT_DEFAULT_ERROR, "Experiment template count plus one.", "实验模版计数加一失败", e);
         }

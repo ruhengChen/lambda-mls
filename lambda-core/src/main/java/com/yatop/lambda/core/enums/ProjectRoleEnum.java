@@ -10,18 +10,18 @@ public enum ProjectRoleEnum {
     /**
      * 项目所有者
      */
-    PROJECT_OWNER(1, "Owner"),
+    PROJECT_OWNER(1, "Owner");
 
     /**
      * 项目维护者
      */
-    PROJECT_MAINTAINER(2, "Maintainer");
+    //PROJECT_MAINTAINER(2, "Maintainer");
 
     private int role;
     private String name;
 
-    ProjectRoleEnum(int tag, String name) {
-        this.role = tag;
+    ProjectRoleEnum(int role, String name) {
+        this.role = role;
         this.name = name;
     }
 
@@ -29,8 +29,8 @@ public enum ProjectRoleEnum {
         return role;
     }
 
-    public void setRole(int tag) {
-        this.role = tag;
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public String getName() {
@@ -39,5 +39,14 @@ public enum ProjectRoleEnum {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static ProjectRoleEnum valueOf(int role) {
+        switch (role) {
+            case 0: return GENERAL_MEMBER;
+            case 1: return PROJECT_OWNER;
+            //case 2: return PROJECT_MAINTAINER;
+            default: return null;
+        }
     }
 }

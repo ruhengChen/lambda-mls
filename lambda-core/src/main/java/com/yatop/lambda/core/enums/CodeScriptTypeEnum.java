@@ -45,4 +45,14 @@ public enum CodeScriptTypeEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static CodeScriptTypeEnum valueOf(int type) {
+        switch (type) {
+            case 1: return SQL;
+//            case 2: return PYTHON;
+//            case 3: return R;
+//            case 4: return FEATURE_EXTACT;
+            default: return null;
+        }
+    }
 }

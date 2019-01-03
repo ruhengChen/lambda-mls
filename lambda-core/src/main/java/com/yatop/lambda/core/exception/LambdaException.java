@@ -1,6 +1,8 @@
 package com.yatop.lambda.core.exception;
 
+import com.yatop.lambda.base.utils.LambdaRootModel;
 import com.yatop.lambda.core.enums.LambdaExceptionEnum;
+import com.yatop.lambda.core.utils.DataUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +30,15 @@ public class LambdaException extends RuntimeException {
 	private List<String> messageChain;
 
 	//抛出异常
-	public LambdaException(LambdaExceptionEnum exceptionEnum, String message) {
-		this(exceptionEnum, message, exceptionEnum.getHint());
-	}
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message) {
+        this(exceptionEnum, message, exceptionEnum.getHint());
+    }
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, LambdaRootModel m1) {
+        this(exceptionEnum, DataUtil.format(message, m1));
+    }
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, LambdaRootModel m1, LambdaRootModel m2) {
+        this(exceptionEnum, DataUtil.format(message, m1, m2));
+    }
 
 	//抛出异常，自定义错误提示
     public LambdaException(LambdaExceptionEnum exceptionEnum, String message, String hint) {
@@ -41,11 +49,23 @@ public class LambdaException extends RuntimeException {
 		this.messageChain = new ArrayList<String>();
         messageChain.add(this.message);
 	}
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, String hint, LambdaRootModel m1) {
+        this(exceptionEnum, DataUtil.format(message, m1), hint);
+    }
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, String hint, LambdaRootModel m1, LambdaRootModel m2) {
+        this(exceptionEnum, DataUtil.format(message, m1, m2), hint);
+    }
 
 	//捕获到一般异常
 	public LambdaException(LambdaExceptionEnum exceptionEnum, String message, Throwable e) {
 		this(exceptionEnum, message, exceptionEnum.getHint(), e);
 	}
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, Throwable e, LambdaRootModel m1) {
+        this(exceptionEnum, DataUtil.format(message, m1), e);
+    }
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, Throwable e, LambdaRootModel m1, LambdaRootModel m2) {
+        this(exceptionEnum, DataUtil.format(message, m1, m2), e);
+    }
 
 	//捕获到一般异常，自定义错误提示
     public LambdaException(LambdaExceptionEnum exceptionEnum, String message, String hint, Throwable e) {
@@ -56,10 +76,22 @@ public class LambdaException extends RuntimeException {
         this.messageChain = new ArrayList<String>();
         messageChain.add(this.message);
 	}
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, String hint, Throwable e, LambdaRootModel m1) {
+        this(exceptionEnum, DataUtil.format(message, m1), hint, e);
+    }
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, String hint, Throwable e, LambdaRootModel m1, LambdaRootModel m2) {
+        this(exceptionEnum, DataUtil.format(message, m1, m2), hint, e);
+    }
 
 	//捕获到业务异常
     public LambdaException(LambdaExceptionEnum exceptionEnum, String message, LambdaException e) {
         this(exceptionEnum, message, exceptionEnum.getHint(), e);
+    }
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, LambdaException e, LambdaRootModel m1) {
+        this(exceptionEnum, DataUtil.format(message, m1), e);
+    }
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, LambdaException e, LambdaRootModel m1, LambdaRootModel m2) {
+        this(exceptionEnum, DataUtil.format(message, m1, m2), e);
     }
 
     //捕获到业务异常，自定义错误提示
@@ -71,6 +103,12 @@ public class LambdaException extends RuntimeException {
 		this.messageChain = e.getMessageChain();
         messageChain.add(this.message);
 	}
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, String hint, LambdaException e, LambdaRootModel m1) {
+        this(exceptionEnum, DataUtil.format(message, m1), hint, e);
+    }
+    public LambdaException(LambdaExceptionEnum exceptionEnum, String message, String hint, LambdaException e, LambdaRootModel m1, LambdaRootModel m2) {
+        this(exceptionEnum, DataUtil.format(message, m1, m2), hint, e);
+    }
 
     private static String buildDetailMessage(String code, String message, String hint) {
         StringBuilder sb = new StringBuilder();

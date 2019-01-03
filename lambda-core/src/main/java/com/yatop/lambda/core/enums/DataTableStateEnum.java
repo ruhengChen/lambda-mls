@@ -40,4 +40,13 @@ public enum DataTableStateEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static DataTableStateEnum valueOf(int state) {
+        switch (state) {
+            case 0: return EMPTY;
+            case 1: return NORMAL;
+            case 2: return ONLY_SUMMARY;
+            default: return null;
+        }
+    }
 }

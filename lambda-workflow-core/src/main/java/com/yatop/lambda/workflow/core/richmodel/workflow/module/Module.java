@@ -1,36 +1,43 @@
 package com.yatop.lambda.workflow.core.richmodel.workflow.module;
 
 import com.yatop.lambda.base.model.WfModule;
+import com.yatop.lambda.core.utils.DataUtil;
 import com.yatop.lambda.workflow.core.richmodel.IRichModel;
 import com.yatop.lambda.workflow.core.richmodel.component.Component;
 import com.yatop.lambda.workflow.core.utils.CollectionUtil;
 
+import java.util.List;
 import java.util.TreeMap;
 
 public class Module extends WfModule implements Comparable<Module>, IRichModel {
 
-    private ModuleCatalog catalog;
-    private Component component;
-    private TreeMap<Long, ModulePort> inputPorts = new TreeMap<Long, ModulePort>();
-    private TreeMap<Long, ModulePort> outputPorts = new TreeMap<Long, ModulePort>();
+    private Component component;    //关联计算组件
+    private TreeMap<Long, ModulePort> inputPorts = new TreeMap<Long, ModulePort>();     //工作流组件输入端口
+    private TreeMap<String, ModulePort> inputPortsOrderByCharId = new TreeMap<String, ModulePort>();     //工作流组件输入端口
+    private TreeMap<Integer, ModulePort> inputPortsOrderBySequence = new TreeMap<Integer, ModulePort>();    //工作流组件输入端口按序号排序
+    private TreeMap<Long, ModulePort> outputPorts = new TreeMap<Long, ModulePort>();    //工作流组件输出端口
+    private TreeMap<String, ModulePort> outputPortsOrderByCharId = new TreeMap<String, ModulePort>();     //工作流组件输出端口
+    private TreeMap<Integer, ModulePort> outputPortsOrderBySequence = new TreeMap<Integer, ModulePort>();   //工作流组件输出端口按序号排序
 
-    public Module() {}
-
-    public Module(WfModule data) {super.copyProperties(data);}
+    public Module(WfModule data, Component component) {
+        super.copyProperties(data);
+        this.component = component;
+        this.clearColoured();
+    }
 
     @Override
     public int compareTo(Module o) {
-        return this.getModuleId() < o.getModuleId() ?  -1 : (this.getModuleId() == o.getModuleId() ? 0 : 1);
+        return this.getModuleId().compareTo(o.getModuleId());
     }
 
     @Override
     public void clear() {
-        catalog = null;
-        component = null;
         inputPorts.clear();
-        inputPorts = null;
+        inputPortsOrderByCharId.clear();
+        inputPortsOrderBySequence.clear();
         outputPorts.clear();
-        outputPorts = null;
+        outputPortsOrderByCharId.clear();
+        outputPortsOrderBySequence.clear();
         super.clear();
     }
 
@@ -38,31 +45,49 @@ public class Module extends WfModule implements Comparable<Module>, IRichModel {
         return component;
     }
 
-    public void setComponent(Component component) {
-        this.component = component;
-    }
-
-    public ModuleCatalog getCatalog() {
-        return catalog;
-    }
-
-    public void setCatalog(ModuleCatalog catalog) {
-        this.catalog = catalog;
+    public int inputPortCount() {
+        return inputPorts.size();
     }
 
     public ModulePort getInputPort(Long inputPortId) {
         return CollectionUtil.get(inputPorts, inputPortId);
     }
 
-    public void setInputPort(ModulePort inputPort) {
+    public ModulePort getInputPort(String inputCharId) {
+        return CollectionUtil.get(inputPortsOrderByCharId, inputCharId);
+    }
+
+    public List<ModulePort> getInputPorts() {
+        return CollectionUtil.toList(inputPortsOrderBySequence);
+    }
+
+    public void putInputPort(ModulePort inputPort) {
         CollectionUtil.put(inputPorts, inputPort.getPortId(), inputPort);
+        CollectionUtil.put(inputPortsOrderBySequence, inputPort.getSequence(), inputPort);
+    }
+
+    public int outputPortCount() {
+        return outputPorts.size();
     }
 
     public ModulePort getOutputPort(Long outputPortId) {
         return CollectionUtil.get(outputPorts, outputPortId);
     }
 
-    public void setOutputPort(ModulePort outputPort) {
+    public ModulePort getOutputPort(String outputCharId) {
+        return CollectionUtil.get(outputPortsOrderByCharId, outputCharId);
+    }
+
+    public List<ModulePort> getOutputPorts() {
+        return CollectionUtil.toList(outputPortsOrderBySequence);
+    }
+
+    public void putOutputPort(ModulePort outputPort) {
         CollectionUtil.put(outputPorts, outputPort.getPortId(), outputPort);
+        CollectionUtil.put(outputPortsOrderBySequence, outputPort.getSequence(), outputPort);
+    }
+
+    public boolean existsModulePort(ModulePort modulePort) {
+        return DataUtil.isNotNull(this.getInputPort(modulePort.getPortId())) || DataUtil.isNotNull(this.getOutputPort(modulePort.getPortId()));
     }
 }

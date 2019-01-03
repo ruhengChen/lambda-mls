@@ -35,4 +35,12 @@ public enum ModelWarehouseTypeEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static ModelWarehouseTypeEnum valueOf(int type) {
+        switch (type) {
+            case 0: return PUBLIC;
+            case 1: return PROJECT;
+            default: return null;
+        }
+    }
 }

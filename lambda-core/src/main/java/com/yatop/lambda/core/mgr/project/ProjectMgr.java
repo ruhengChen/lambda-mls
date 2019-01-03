@@ -69,14 +69,14 @@ public class ProjectMgr extends BaseMgr {
      *   返回删除数量
      *
      * */
-    public int deleteProject(PrProject project, String operId) {
-        if(DataUtil.isNull(project) || project.isProjectIdNotColoured() || DataUtil.isEmpty(operId)){
+    public int deleteProject(Long projectId, String operId) {
+        if(DataUtil.isNull(projectId) || DataUtil.isEmpty(operId)){
             throw new LambdaException(LambdaExceptionEnum.B_PROJECT_DEFAULT_ERROR, "Delete project info failed -- invalid delete condition.", "无效删除条件");
         }
 
         try {
             PrProject deleteProject = new PrProject();
-            deleteProject.setProjectId(project.getProjectId());
+            deleteProject.setProjectId(projectId);
             deleteProject.setStatus(DataStatusEnum.INVALID.getStatus());
             deleteProject.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             deleteProject.setLastUpdateOper(operId);
@@ -93,7 +93,7 @@ public class ProjectMgr extends BaseMgr {
      *
      * */
     public int updateProject(PrProject project, String operId) {
-        if( DataUtil.isNull(project) || project.isProjectIdNotColoured() || DataUtil.isEmpty(operId)) {
+        if( DataUtil.isNull(project) || DataUtil.isNull(project.getProjectId()) || DataUtil.isEmpty(operId)) {
             throw new LambdaException(LambdaExceptionEnum.B_PROJECT_DEFAULT_ERROR, "Update project info failed -- invalid update condition.", "无效更新条件");
         }
 

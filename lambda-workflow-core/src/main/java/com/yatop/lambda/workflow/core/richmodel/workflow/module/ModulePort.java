@@ -5,33 +5,22 @@ import com.yatop.lambda.workflow.core.richmodel.IRichModel;
 import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptChar;
 
 public class ModulePort extends WfModulePort implements IRichModel {
-    private Module module;
-    private CmptChar cmptChar;
 
-    public ModulePort() {}
+    private CmptChar cmptChar;  //关联计算组件特征
 
-    public ModulePort(WfModulePort data) {super.copyProperties(data);}
+    public ModulePort(WfModulePort data, CmptChar cmptChar) {
+        super.copyProperties(data);
+        this.cmptChar = cmptChar;
+        this.clearColoured();
+    }
 
     @Override
     public void clear() {
-        module = null;
         cmptChar = null;
         super.clear();
     }
 
-    public Module getModule() {
-        return module;
-    }
-
-    public void setModule(Module module) {
-        this.module = module;
-    }
-
     public CmptChar getCmptChar() {
         return cmptChar;
-    }
-
-    public void setCmptChar(CmptChar cmptChar) {
-        this.cmptChar = cmptChar;
     }
 }

@@ -30,6 +30,13 @@ public class CollectionUtil {
         map.put(key, value);
     }
 
+    public static <M extends Map<K, V>, K, V> V remove(M map, K key) {
+        if(DataUtil.isNull(map) || DataUtil.isNull(key))
+            return null;
+
+        return map.remove(key);
+    }
+
     public static <M extends Map<K, V>, K, V> List<V> toList(M map) {
         if(DataUtil.isNull(map) || map.isEmpty())
             return null;
@@ -65,7 +72,7 @@ public class CollectionUtil {
         return vlist;
     }
 
-    public static <L extends List<IRichModel>> void clear(L list) {
+    public static <L extends List<V>, V extends IRichModel> void clear(L list) {
         if(DataUtil.isNull(list))
             return;
 
@@ -90,6 +97,20 @@ public class CollectionUtil {
         set.add(key);
     }
 
+    public static <S extends Set<K>, K> void remove(S set, K key) {
+        if(DataUtil.isNull(set) || DataUtil.isNull(key))
+            return;
+
+        set.remove(key);
+    }
+
+    public static <L extends List<V>, V> void add(L list, V value) {
+        if(DataUtil.isNull(list) || DataUtil.isNull(value))
+            return;
+
+        list.add(value);
+    }
+
     public static <S extends Set<K>, K> List<K> toList(S set) {
         if(DataUtil.isNull(set) || set.isEmpty())
             return null;
@@ -100,5 +121,12 @@ public class CollectionUtil {
         }
 
         return vlist;
+    }
+
+    public static <L extends List<V>, V extends Object> boolean equals(L lhs, L rhs) {
+        if(DataUtil.isNull(lhs) || DataUtil.isNull(rhs))
+            return false;
+
+        return lhs.equals(rhs);
     }
 }

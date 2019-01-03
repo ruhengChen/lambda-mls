@@ -4,6 +4,7 @@ import com.yatop.lambda.base.model.SysParameter;
 import com.yatop.lambda.core.enums.DataStatusEnum;
 import com.yatop.lambda.core.enums.SystemParameterEnum;
 import com.yatop.lambda.core.mgr.system.SystemParameterMgr;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,36 +12,46 @@ import java.util.HashMap;
 import java.util.List;
 
 @Component
-public class SystemParameterUtil {
-
-    private static HashMap<String, SysParameter> systemParameterBoard;
+public class SystemParameterUtil implements InitializingBean {
 
     @Autowired
-    public void setSystemParameterBoard(SystemParameterMgr systemParameterMgr) {
-        systemParameterBoard = new HashMap<String, SysParameter>();
+    SystemParameterMgr systemParameterMgr;
+
+    private static HashMap<String, SysParameter> ALL_SYSTEM_PARAMETERS = new HashMap<String, SysParameter>();
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        loadSystemParameter();
+    }
+
+    private void loadSystemParameter() {
+        ALL_SYSTEM_PARAMETERS.clear();
         List<SysParameter> sysParameters = systemParameterMgr.querySystemParameter();
         if(DataUtil.isNotEmpty(sysParameters)) {
             for (SysParameter sysParameter : sysParameters) {
                 if(DataUtil.isBlank(sysParameter.getParamValue()) || sysParameter.getStatus() == DataStatusEnum.INVALID.getStatus())
                     continue;
 
-                systemParameterBoard.put(sysParameter.getParamCode(), sysParameter);
+                ALL_SYSTEM_PARAMETERS.put(sysParameter.getParamCode(), sysParameter);
             }
         }
+    }
+
+    public static String find(String paramCode) {
+        if(DataUtil.isNotBlank(paramCode)) {
+            SysParameter param = ALL_SYSTEM_PARAMETERS.get(paramCode);
+            if(DataUtil.isNotNull(param))
+                return DataUtil.trim(param.getParamValue());
+        }
+        return null;
     }
 
     private static String find(SystemParameterEnum paramEnum) {
         if(DataUtil.isNull(paramEnum))
             return null;
 
-        if(DataUtil.isBlank(paramEnum.getParamCode()))
-            return DataUtil.trim(paramEnum.getParamDefaultValue());
-
-        SysParameter param = systemParameterBoard.get(paramEnum.getParamCode());
-        if(DataUtil.isNull(param))
-            return DataUtil.trim(paramEnum.getParamDefaultValue());
-
-        return DataUtil.trim(param.getParamValue());
+        String paramValue = find(paramEnum.getParamCode());
+        return DataUtil.isNotEmpty(paramValue) ? paramValue : DataUtil.trim(paramEnum.getParamDefaultValue());
     }
 
     public static String find4String(SystemParameterEnum paramEnum) {
@@ -83,6 +94,20 @@ public class SystemParameterUtil {
 
     public static Integer find4Integer(SystemParameterEnum paramEnum, Integer isNullDefaultValue) {
         Integer value = SystemParameterUtil.find4Integer(paramEnum);
+        return DataUtil.isNotNull(value) ? value : isNullDefaultValue;
+    }
+
+    public static Long find4Long(SystemParameterEnum paramEnum) {
+        String value = SystemParameterUtil.find(paramEnum);
+
+        if(DataUtil.isNotDigits(value))
+            return null;
+
+        return Long.parseLong(value);
+    }
+
+    public static Long find4Long(SystemParameterEnum paramEnum, Long isNullDefaultValue) {
+        Long value = SystemParameterUtil.find4Long(paramEnum);
         return DataUtil.isNotNull(value) ? value : isNullDefaultValue;
     }
 

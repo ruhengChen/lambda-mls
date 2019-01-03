@@ -10,13 +10,17 @@ import java.util.List;
 
 public class ModuleCatalog extends WfModuleCatalog implements Comparable<ModuleCatalog>, IRichModel {
 
-    private ModuleCatalog parentCatalog;
-    private TreeMultimap<Integer, ModuleCatalog> childCatalogs = TreeMultimap.create();
-    private TreeMultimap<Integer, Module> childModules = TreeMultimap.create();
+    private TreeMultimap<Integer, ModuleCatalog> childCatalogs = TreeMultimap.create();     //下级目录按序号排序
+    private TreeMultimap<Integer, Module> childModules = TreeMultimap.create();     //工作流组件按序号排序
 
-    public ModuleCatalog() {}
+    public ModuleCatalog(WfModuleCatalog data) {
+        super.copyProperties(data);
+        this.clearColoured();
+    }
 
-    public ModuleCatalog(WfModuleCatalog data) {super.copyProperties(data);}
+    public int childCatalogCount() {
+        return childCatalogs.size();
+    }
 
     public List<ModuleCatalog> getChildCatalogs() {
         return CollectionUtil.toList(childCatalogs);
@@ -26,6 +30,10 @@ public class ModuleCatalog extends WfModuleCatalog implements Comparable<ModuleC
         if(DataUtil.isNull(catalog))
             return;
         this.childCatalogs.put(catalog.getSequence(), catalog);
+    }
+
+    public int childModuleCount() {
+        return childModules.size();
     }
 
     public List<Module> getChildModules() {
@@ -40,23 +48,13 @@ public class ModuleCatalog extends WfModuleCatalog implements Comparable<ModuleC
 
     @Override
     public int compareTo(ModuleCatalog o) {
-        return this.getCatalogId() < o.getCatalogId() ?  -1 : (this.getCatalogId() == o.getCatalogId() ? 0 : 1);
+        return this.getCatalogId().compareTo(o.getCatalogId());
     }
 
     @Override
     public void clear() {
         childCatalogs.clear();
-        childCatalogs = null;
         childModules.clear();
-        childModules = null;
         super.clear();
-    }
-
-    public ModuleCatalog getParentCatalog() {
-        return parentCatalog;
-    }
-
-    public void setParentCatalog(ModuleCatalog parentCatalog) {
-        this.parentCatalog = parentCatalog;
     }
 }

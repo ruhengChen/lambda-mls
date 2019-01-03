@@ -35,4 +35,12 @@ public enum SnapshotStateEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static SnapshotStateEnum valueOf(int state) {
+        switch (state) {
+            case 0: return GENERATING;
+            case 1: return FINISHED;
+            default: return null;
+        }
+    }
 }

@@ -145,7 +145,8 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.addBodyLine("return false;"); //$NON-NLS-1$
         method.addBodyLine("}"); //$NON-NLS-1$
 
-        method.addBodyLine("if (getClass() != that.getClass()) {"); //$NON-NLS-1$
+        //method.addBodyLine("if (getClass() != that.getClass()) {"); //$NON-NLS-1$
+        method.addBodyLine("if(!(that instanceof " + topLevelClass.getType().getShortName() + ")) {");
         method.addBodyLine("return false;"); //$NON-NLS-1$
         method.addBodyLine("}"); //$NON-NLS-1$
 

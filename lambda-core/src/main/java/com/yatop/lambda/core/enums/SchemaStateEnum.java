@@ -45,4 +45,14 @@ public enum SchemaStateEnum {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static SchemaStateEnum valueOf(int state) {
+        switch (state) {
+            case 0: return EMPTY;
+            case 1: return NORMAL;
+            case 2: return NOT_SUPPORT;
+            case 3: return OVERLOAD_INTERRUPT;
+            default: return null;
+        }
+    }
 }

@@ -30,7 +30,7 @@ public enum IsLimitedEnum {
     /**
      * 枚举方式限定
      */
-    ENUMERATION(4, "Enumeration Limited");
+    ENUMERATION(5, "Enumeration Limited");
 
     private int mark;
     private String name;
@@ -54,5 +54,17 @@ public enum IsLimitedEnum {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static IsLimitedEnum valueOf(int mark) {
+        switch (mark) {
+            case 0: return NO;
+            case 1: return OPEN_INTERVAL;
+            case 2: return CLOSE_INTERVAL;
+            case 3: return LOPEN_RCLOSE;
+            case 4: return LCOSE_ROPEN;
+            case 5: return ENUMERATION;
+            default: return null;
+        }
     }
 }
