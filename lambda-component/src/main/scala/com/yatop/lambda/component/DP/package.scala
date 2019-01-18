@@ -1,15 +1,13 @@
-package cn.crh.lambda.scala
+package com.yatop.lambda.component
 
-import cn.crh.lambda.scala.DP.colCountNull
-import com.alibaba.fastjson.JSON
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.IntegerType
 import org.apache.spark.sql.{Column, DataFrame}
+import org.json4s._
+import org.json4s.jackson.Serialization
+import org.json4s.jackson.Serialization._
 
 import scala.collection.mutable.ArrayBuffer
-import org.json4s._
-import org.json4s.jackson.Serialization._
-import org.json4s.jackson.Serialization
 
 
 package object DP {
@@ -52,60 +50,60 @@ package object DP {
     * }
     * }
     */
-  def colCountNull(col: Column) ={
-    val pred = col.isNull or col.isNaN
-    sum(pred.cast(IntegerType))
-  }
-
-  def getTableVisualization(dataFrame: DataFrame) ={
-    val schema = dataFrame.schema.map(x=>Map(x.name -> x.dataType)).toList
-    val rows = dataFrame.count()
-    val columns = dataFrame.columns
-    val cols = dataFrame.columns.length
-
-    val countNullDf = dataFrame.select(dataFrame.columns.map(c => colCountNull(col(c)).alias(c)): _*)
-    val isNullColArrayBuffter = ArrayBuffer[String]()
-    for (colName <- countNullDf.columns) {
-      if (countNullDf.select(colName).first().getLong(0) == 0) {
-        isNullColArrayBuffter += colName
-      }
-    }
-    val hasNullCols = isNullColArrayBuffter.toList
-    val rowArrayBuffer = ArrayBuffer[Array[Any]]()
-    for(row <- dataFrame.rdd.collect()){
-      rowArrayBuffer.append(row.toSeq.toArray)
-    }
-    val records = rowArrayBuffer.toList
-    Map("TableVisualization" -> Map("schema" -> schema, "columns" -> columns, "rows" -> rows, "cols" -> cols,
-      "hasNullCols" -> hasNullCols, "records" -> records))
-
-  }
-
-  def getDataSummary(dataFrame: DataFrame) = {
-    implicit val formats = Serialization.formats(NoTypeHints)
-    val rows = dataFrame.count()
-    val cols = dataFrame.columns.length
-    val countNulldf = dataFrame.select(dataFrame.columns.map(c => colCountNull(col(c)).alias(c)): _*)
-    var isNullColArrayBuffter = ArrayBuffer[String]()
-    for (col <- dataFrame.columns){
-      if(countNulldf.select(col).first().getBoolean(0)){
-        isNullColArrayBuffter += col
-      }
-    }
-//    val dataMap = Map("datas" -> dataFrame.limit(100).toJSON.collectAsList())
-    val dataMap = dataFrame.limit(2)
-      .withColumn("json", to_json(struct(dataFrame.columns.map(c=>dataFrame.col(c)).toSeq:_*)))
-      .agg(collect_list("json") as "json").first()
-
-    val TableVisualization = Map("TableVisualization" -> Map("rows" -> rows, "cols" -> cols, "datas" -> dataMap,
-    "hasNullCols" -> isNullColArrayBuffter.toArray))
-    println(TableVisualization)
-    write(TableVisualization)
+//  def colCountNull(col: Column) ={
+//    val pred = col.isNull or col.isNaN
+//    sum(pred.cast(IntegerType))
+//  }
+//
+//  def getTableVisualization(dataFrame: DataFrame) ={
+//    val schema = dataFrame.schema.map(x=>Map(x.name -> x.dataType)).toList
+//    val rows = dataFrame.count()
+//    val columns = dataFrame.columns
+//    val cols = dataFrame.columns.length
+//
+//    val countNullDf = dataFrame.select(dataFrame.columns.map(c => colCountNull(col(c)).alias(c)): _*)
+//    val isNullColArrayBuffter = ArrayBuffer[String]()
+//    for (colName <- countNullDf.columns) {
+//      if (countNullDf.select(colName).first().getLong(0) == 0) {
+//        isNullColArrayBuffter += colName
+//      }
+//    }
+//    val hasNullCols = isNullColArrayBuffter.toList
+//    val rowArrayBuffer = ArrayBuffer[Array[Any]]()
+//    for(row <- dataFrame.rdd.collect()){
+//      rowArrayBuffer.append(row.toSeq.toArray)
+//    }
+//    val records = rowArrayBuffer.toList
+//    Map("TableVisualization" -> Map("schema" -> schema, "columns" -> columns, "rows" -> rows, "cols" -> cols,
+//      "hasNullCols" -> hasNullCols, "records" -> records))
+//
+//  }
+//
+//  def getDataSummary(dataFrame: DataFrame) = {
+//    implicit val formats = Serialization.formats(NoTypeHints)
+//    val rows = dataFrame.count()
+//    val cols = dataFrame.columns.length
+//    val countNulldf = dataFrame.select(dataFrame.columns.map(c => colCountNull(col(c)).alias(c)): _*)
+//    var isNullColArrayBuffter = ArrayBuffer[String]()
+//    for (col <- dataFrame.columns){
+//      if(countNulldf.select(col).first().getBoolean(0)){
+//        isNullColArrayBuffter += col
+//      }
+//    }
+////    val dataMap = Map("datas" -> dataFrame.limit(100).toJSON.collectAsList())
+//    val dataMap = dataFrame.limit(2)
+//      .withColumn("json", to_json(struct(dataFrame.columns.map(c=>dataFrame.col(c)).toSeq:_*)))
+//      .agg(collect_list("json") as "json").first()
+//
+//    val TableVisualization = Map("TableVisualization" -> Map("rows" -> rows, "cols" -> cols, "datas" -> dataMap,
+//    "hasNullCols" -> isNullColArrayBuffter.toArray))
+//    println(TableVisualization)
+//    write(TableVisualization)
 
 
 //    val _summary = dataFrame.summary("distinct").na.fill("null")
 //    _summary.toJSON.collectAsList()
-  }
+//  }
 //
 //  def getDataSummary(dataFrame: DataFrame, cols: String*) = {
 //    val _summary = dataFrame.select(cols.head, cols.tail:_*).summary().na.fill("null")

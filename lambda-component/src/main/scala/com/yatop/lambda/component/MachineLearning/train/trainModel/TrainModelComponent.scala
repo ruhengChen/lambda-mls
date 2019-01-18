@@ -1,18 +1,23 @@
-package com.yatop.lambda.component.test.MachineLearning.train.trainModel
+package com.yatop.lambda.component.MachineLearning.train.trainModel
 
 import com.alibaba.fastjson.{JSON, JSONObject}
-import com.yatop.lambda.component.test.MachineLearning.alogrithm.classifier.gbtc.classifier_GradientBoostingTree
-import com.yatop.lambda.component.test.MachineLearning.alogrithm.classifier.randomForest.classifier_RandomForest
-import com.yatop.lambda.component.test.MachineLearning.alogrithm.regression.gbt.regressor_GradientBoostingTree
-import com.yatop.lambda.component.test.MachineLearning.alogrithm.regression.randomForest.regressor_RandomForest
+import com.yatop.lambda.component.MachineLearning.alogrithm.classifier.gbtc.classifier_GradientBoostingTree
+import com.yatop.lambda.component.MachineLearning.alogrithm.classifier.randomForest.classifier_RandomForest
+import com.yatop.lambda.component.MachineLearning.alogrithm.regression.gbt.regressor_GradientBoostingTree
+import com.yatop.lambda.component.MachineLearning.alogrithm.regression.randomForest.regressor_RandomForest
 import org.dmg.pmml.PMML
 import org.jpmml.model.JAXBUtil
 import org.jpmml.sparkml.PMMLBuilder
 import javax.xml.transform.stream.StreamResult
 import java.io.FileOutputStream
 
-import com.yatop.lambda.component.test.MachineLearning.alogrithm.classifier.logistic.classifier_logisticregression
-import com.yatop.lambda.component.test.MachineLearning.alogrithm.regression.linearRegression.regressor_LinearRegression
+import com.yatop.lambda.component.MachineLearning.alogrithm.classifier.gbtc.classifier_GradientBoostingTree
+import com.yatop.lambda.component.MachineLearning.alogrithm.classifier.logistic.classifier_logisticregression
+import com.yatop.lambda.component.MachineLearning.alogrithm.classifier.randomForest.classifier_RandomForest
+import com.yatop.lambda.component.MachineLearning.alogrithm.regression.gbt.regressor_GradientBoostingTree
+import com.yatop.lambda.component.MachineLearning.alogrithm.regression.linearRegression.regressor_LinearRegression
+import com.yatop.lambda.component.MachineLearning.alogrithm.regression.randomForest.regressor_RandomForest
+import com.yatop.lambda.component.MachineLearning.alogrithm.classifier.logistic.classifier_logisticregression
 
 import scala.io.Source
 

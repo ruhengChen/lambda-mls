@@ -1,7 +1,7 @@
-package com.yatop.lambda.component.test.MachineLearning.train.trainModel
-import com.alibaba.fastjson.JSON
-import com.yatop.lambda.component.test.MachineLearning.alogrithm.classifier.logistic.classifier_logisticregression
+package com.yatop.lambda.component.MachineLearning.train.trainModel
 
+import com.alibaba.fastjson.JSON
+import com.yatop.lambda.component.MachineLearning.alogrithm.classifier.logistic.classifier_logisticregression
 import org.jpmml.sparkml.PMMLBuilder
 import org.jpmml.model.JAXBUtil
 import javax.xml.transform.stream.StreamResult

@@ -1,6 +1,4 @@
-package cn.crh.lambda.scala.DP
-
-import java.util.Random
+package com.yatop.lambda.component.DP
 
 import com.alibaba.fastjson.JSON
 import org.apache.spark.sql.SparkSession

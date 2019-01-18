@@ -1,6 +1,6 @@
-package com.yatop.lambda.component.test.MachineLearning.alogrithm.classifier.randomForest
+package com.yatop.lambda.component.MachineLearning.alogrithm.classifier.randomForest
 
-import com.yatop.lambda.component.test.MachineLearning.featureEngine.FeaturesEngine.OneHotFeaturesEngineering
+import com.yatop.lambda.component.MachineLearning.featureEngine.OneHotFeaturesEngineering
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.{GBTClassificationModel, GBTClassifier, RandomForestClassificationModel, RandomForestClassifier}
 import org.apache.spark.ml.feature.VectorAssembler

@@ -1,7 +1,6 @@
-package cn.crh.lambda.scala.DP
+package com.yatop.lambda.component.DP
+
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.functions.max
-import com.alibaba.fastjson.{JSON, JSONObject}
 
 class DataSummary(df: DataFrame) {
 

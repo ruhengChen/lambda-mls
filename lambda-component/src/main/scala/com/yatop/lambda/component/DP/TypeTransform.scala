@@ -1,4 +1,4 @@
-package cn.crh.lambda.scala.DP
+package com.yatop.lambda.component.DP
 
 import com.alibaba.fastjson.JSON
 import org.apache.spark.sql.SparkSession

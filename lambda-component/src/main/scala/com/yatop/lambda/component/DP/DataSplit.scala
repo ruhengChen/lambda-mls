@@ -1,10 +1,9 @@
-package cn.crh.lambda.scala.DP
+package com.yatop.lambda.component.DP
 
-import org.apache.spark.sql.functions.{col, sum}
-import cn.crh.lambda.scala.DP
 import com.alibaba.fastjson.JSON
+import org.apache.spark.sql.functions.{col, sum}
 import org.apache.spark.sql.types.IntegerType
-import org.apache.spark.sql.{Column, Dataset, SparkSession}
+import org.apache.spark.sql.{Column, SparkSession}
 
 import scala.collection.mutable.ArrayBuffer
 //import org.json4s._
@@ -92,8 +91,7 @@ object DataSplit {
       isNullColArrayBuffter.toArray.foreach(println)
       dfSplit1.describe().show()
 
-      getDataSummary(dfSplit1)
-      import org.apache.spark.sql.functions.lit
+//      getDataSummary(dfSplit1)
 
       //      val isNullJson = dfSplit1.select(dfSplit1.columns.map(c => colIsNull(col(c)).alias(c)): _*).toJSON.first().head
       //      println(isNullJson)
