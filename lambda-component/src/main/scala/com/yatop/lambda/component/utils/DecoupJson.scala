@@ -11,6 +11,7 @@ import org.apache.spark.sql.{Column, DataFrame, SparkSession}
 import org.json4s.jackson.Serialization.write
 import org.json4s._
 import org.json4s.native.JsonMethods._
+import org.json4s.native.Serialization
 
 import scala.collection.mutable.ArrayBuffer
 //import org.junit.Test
@@ -20,8 +21,11 @@ import scala.io.Source
 
 
 //@Test
+object DecoupJson {
+  def apply(jsonFilePath: String): DecoupJson = new DecoupJson(jsonFilePath)
+}
 
-class DecoupJson(jsonFilePath: String) {
+class DecoupJson(jsonFilePath: String) extends MyLogging {
   private val jsonFileData = Source.fromFile(jsonFilePath).mkString
   private var taskSubmit = parse(jsonFileData)
   implicit val formats = org.json4s.DefaultFormats
@@ -55,10 +59,15 @@ class DecoupJson(jsonFilePath: String) {
     */
   def getInputDataTable(sparkSession: SparkSession, charCode: String) = {
     val characteristicMap = getInputCharacteristicMap
-    val dataFile = (characteristicMap \ s"$charCode" \ "char_value" \ "data_file").values.toString
-    println(dataFile)
-    sparkSession.read.parquet(dataFile)
 
+    val inputFilePath = characteristicMap \ s"$charCode" \ "char_value" \ "data_file" match {
+      case JString(s) =>
+        myLog.info(s"inputFilePath: $s")
+        sparkSession.read.parquet(s)
+
+      case _ => null
+    }
+    inputFilePath
   }
 
   def colCountNull(col: Column) = {
@@ -98,7 +107,7 @@ class DecoupJson(jsonFilePath: String) {
   }
 
   def getColumnAnalyticalStatistics(dataFrame: DataFrame, outputCols: String*) = {
-    val selectedStatistics = Seq("mean") //, "stddev", "min", "25%", "50%", "75%", "max", "uniqueValues",
+    val selectedStatistics = Seq("mean", "stddev", "min", "25%", "50%", "75%", "max", "uniqueValues") //
     val percentiles = selectedStatistics.filter(a => a.endsWith("%")).map { p =>
       try {
         p.stripSuffix("%").toDouble / 100.0
@@ -108,7 +117,6 @@ class DecoupJson(jsonFilePath: String) {
       }
     }
     require(percentiles.forall(p => p >= 0 && p <= 1), "Percentiles must be in the range [0, 1]")
-    dataFrame.describe()
     var percentileIndex = 0
     val statistics = selectedStatistics.map { stats =>
       if (stats.endsWith("%")) {
@@ -135,11 +143,9 @@ class DecoupJson(jsonFilePath: String) {
     }
     val row = dataFrame.groupBy().agg(aggExprs.head, aggExprs.tail: _*).head().toSeq
 
-    //    dataFrame.describe()
     val res = row.grouped(outputCols.size).toSeq.zip(statistics).map { case (aggregation, (statistic, _)) =>
       statistic -> aggregation.toArray
     }
-    //    res.toBuffer
 
     val resBuffer = res.toBuffer
     val missingValues = "missingValues" -> dataFrame.select(dataFrame.columns.map(c => colCountNull(col(c)).alias(c)): _*).rdd.map(_.toSeq.toArray).first()
@@ -147,77 +153,33 @@ class DecoupJson(jsonFilePath: String) {
     resBuffer += missingValues
     resBuffer.toList
 
-
-    //
-    //    val addStatics = "25%" -> ((child: Expression) => GetArrayItem(
-    //      new ApproximatePercentile(child, MyLLiteral.create(percentiles.head)).toAggregateExpression(),
-    //      Literal(0)))
-    //    val v1 = MyLLiteral.create(percentiles)
-    //    addStatics
-    //    var percentileIndex = 0
-    //    val statisticFns = List[(String, Expression => Expression)]
-    //    selectedStatistics.map { stats =>
-    //      if (stats.endsWith("%")) {
-    //        val index = percentileIndex
-    //        percentileIndex += 1
-    //        (child: Expression) =>
-    //          GetArrayItem(
-    //            new ApproximatePercentile(child, MyLLiteral.create(percentiles)).toAggregateExpression(),
-    //            Literal(index))
-    //      } else {
-    //        stats.toLowerCase() match {
-    ////          case "count" => (child: Expression) => Count(child).toAggregateExpression()
-    //          case "mean" => ("mean" -> (child: Expression) => Average(child).toAggregateExpression())
-    //          case "stddev" => (child: Expression) => StddevSamp(child).toAggregateExpression()
-    //          case "min" => (child: Expression) => Min(child).toAggregateExpression()
-    //          case "max" => (child: Expression) => Max(child).toAggregateExpression()
-    //          case _ => throw new IllegalArgumentException(s"$stats is not a recognised statistic")
-    //        }
-    //      }
-    //    }
-    //
-    //      val statistics = List[(String, Expression => Expression)](
-    //
-    //        "mean" -> ((child: Expression) => Average(child).toAggregateExpression()),
-    //        "stddev" -> ((child: Expression) => StddevSamp(child).toAggregateExpression()),
-    //        "min" -> ((child: Expression) => Min(child).toAggregateExpression()),
-    //        "max" -> ((child: Expression) => Max(child).toAggregateExpression()),
-    //        "median" -> ((child: Expression) => (child).toAggregateExpression()),
-    //      )
-    //      val aggResult = dataFrame.select(statisticFns: _*).queryExecution.toRdd.collect()
-    //      aggResult
-    //      val aggExprs = statistics.flatMap { case (_, colToAgg) =>
-    //        outputCols.map(c => new Column(Cast(colToAgg(new Column(c).expr), StringType)).as(c))
-    //      }
-    //
-    //      val row = dataFrame.groupBy().agg(statisticFns.head, statisticFns.tail: _*).head().toSeq
-    //      //    dataFrame.describe()
-    //      val res = row.grouped(outputCols.size).toSeq.zip(statistics).map { case (aggregation, (statistic, _)) =>
-    //        Map(statistic -> aggregation.toList)
-    //      }
-    //      res.toList
-
   }
 
   def getSummaryFile(dataFrame: DataFrame): String = {
-    val columnAnalyticalStatistics= getColumnAnalyticalStatistics(dataFrame, dataFrame.columns: _*)
-    val tableVisualization =  getTableAnalyticalStatistics(dataFrame)
-    println(write(Map(
-      "ColumnAnalyticalStatistics" ->columnAnalyticalStatistics, "TableVisualization" -> tableVisualization)))
-    write(Map(
-      "ColumnAnalyticalStatistics" ->columnAnalyticalStatistics, "TableVisualization" -> tableVisualization))
+    val columnAnalyticalStatistics = getColumnAnalyticalStatistics(dataFrame, dataFrame.columns: _*)
+    val tableVisualization = getTableAnalyticalStatistics(dataFrame)
+    Serialization.writePretty(Map(
+      "ColumnAnalyticalStatistics" -> columnAnalyticalStatistics, "TableVisualization" -> tableVisualization))
   }
 
   def setOutputDataTable(dataFrame: DataFrame, charCode: String) = {
     val summaryFile = getSummaryFile(dataFrame)
     val characteristicMap = getOutputCharacteristicMap
     val outputPath = (characteristicMap \ s"$charCode" \ "char_value" \ "data_file").values.toString
+    myLog.info(s"outputPath: $outputPath")
+
     dataFrame.write.format("parquet").mode("overwrite").save(outputPath)
+
     val summaryFilePath = (characteristicMap \ s"$charCode" \ "char_value" \ "data_summary_file").values.toString
-    println(summaryFilePath)
+
+    myLog.info(s"summaryFilePath: $summaryFilePath")
+
     val out = new FileWriter(summaryFilePath, false)
     out.write(summaryFile)
     out.close()
+
+
+
     // todo: 重载json    "table_columns": 12,
     //            "table_rows": 32,
     //            data_file_size": "20M",
@@ -348,9 +310,66 @@ class DecoupJson(jsonFilePath: String) {
     *
     * @param charCode
     */
-  def getParameter(charCode: String) = {
+
+  def getScriptParameter(charCode: String) = {
     val characteristicMap = getParameterCharacteristicMap
-    (characteristicMap \ s"$charCode" \ "char_value").values.toString
+    val charValue = (characteristicMap \ s"$charCode" \ "char_value" \ "script_typescript_content").values
+    charValue.toString
+  }
+
+  def getStringParameter(charCode: String) = {
+    val characteristicMap = getParameterCharacteristicMap
+    val charValue = characteristicMap \ s"$charCode" \ "char_value" match {
+      case JString(s) => s
+      case _ => null
+    }
+    charValue
+  }
+
+  def getIntParameter(charCode: String) = {
+    val characteristicMap = getParameterCharacteristicMap
+    val charValue = characteristicMap \ s"$charCode" \ "char_value" match {
+      case JInt(s) => s
+      case _ => null
+    }
+    charValue
+  }
+
+  def getLongParameter(charCode: String) = {
+    val characteristicMap = getParameterCharacteristicMap
+    val charValue = characteristicMap \ s"$charCode" \ "char_value" match {
+      case JLong(s) => s
+      case _ => null
+    }
+    charValue
+  }
+
+  def getBooleanParameter(charCode: String) = {
+    val characteristicMap = getParameterCharacteristicMap
+    val charValue = characteristicMap \ s"$charCode" \ "char_value" match {
+      case JBool(value) => value
+      case _ => null
+    }
+    charValue
+  }
+
+
+  def getDoubleParameter(charCode: String) = {
+    val characteristicMap = getParameterCharacteristicMap
+    val charValue = characteristicMap \ s"$charCode" \ "char_value" match {
+      case JDouble(value) => value
+      case _ => null
+    }
+    charValue
+  }
+
+  def getArrayParameter(charCode: String) = {
+    val characteristicMap = getParameterCharacteristicMap
+    val charValue = characteristicMap \ s"$charCode" \ "char_value" match {
+      case JArray(arr) => arr
+      case _ => null
+    }
+    charValue
   }
 
 
@@ -475,3 +494,52 @@ class DecoupJson(jsonFilePath: String) {
 //case class PredictionParameter(featuresCol: String, labelCol: String)
 //
 //case class BinaryClassificationEvaluationParameter(numBins: Int)
+//
+//    val addStatics = "25%" -> ((child: Expression) => GetArrayItem(
+//      new ApproximatePercentile(child, MyLLiteral.create(percentiles.head)).toAggregateExpression(),
+//      Literal(0)))
+//    val v1 = MyLLiteral.create(percentiles)
+//    addStatics
+//    var percentileIndex = 0
+//    val statisticFns = List[(String, Expression => Expression)]
+//    selectedStatistics.map { stats =>
+//      if (stats.endsWith("%")) {
+//        val index = percentileIndex
+//        percentileIndex += 1
+//        (child: Expression) =>
+//          GetArrayItem(
+//            new ApproximatePercentile(child, MyLLiteral.create(percentiles)).toAggregateExpression(),
+//            Literal(index))
+//      } else {
+//        stats.toLowerCase() match {
+////          case "count" => (child: Expression) => Count(child).toAggregateExpression()
+//          case "mean" => ("mean" -> (child: Expression) => Average(child).toAggregateExpression())
+//          case "stddev" => (child: Expression) => StddevSamp(child).toAggregateExpression()
+//          case "min" => (child: Expression) => Min(child).toAggregateExpression()
+//          case "max" => (child: Expression) => Max(child).toAggregateExpression()
+//          case _ => throw new IllegalArgumentException(s"$stats is not a recognised statistic")
+//        }
+//      }
+//    }
+//
+//      val statistics = List[(String, Expression => Expression)](
+//
+//        "mean" -> ((child: Expression) => Average(child).toAggregateExpression()),
+//        "stddev" -> ((child: Expression) => StddevSamp(child).toAggregateExpression()),
+//        "min" -> ((child: Expression) => Min(child).toAggregateExpression()),
+//        "max" -> ((child: Expression) => Max(child).toAggregateExpression()),
+//        "median" -> ((child: Expression) => (child).toAggregateExpression()),
+//      )
+//      val aggResult = dataFrame.select(statisticFns: _*).queryExecution.toRdd.collect()
+//      aggResult
+//      val aggExprs = statistics.flatMap { case (_, colToAgg) =>
+//        outputCols.map(c => new Column(Cast(colToAgg(new Column(c).expr), StringType)).as(c))
+//      }
+//
+//      val row = dataFrame.groupBy().agg(statisticFns.head, statisticFns.tail: _*).head().toSeq
+//      //    dataFrame.describe()
+//      val res = row.grouped(outputCols.size).toSeq.zip(statistics).map { case (aggregation, (statistic, _)) =>
+//        Map(statistic -> aggregation.toList)
+//      }
+//      res.toList
+

@@ -1,6 +1,7 @@
 package com.yatop.lambda.component.DP
 
 import com.alibaba.fastjson.JSON
+import com.yatop.lambda.component.utils.{DecoupJson, MyLogging}
 import org.apache.spark.sql.SparkSession
 
 /**
@@ -26,50 +27,32 @@ import org.apache.spark.sql.SparkSession
   * ??
   *
   */
-object SQL {
+object SQL extends MyLogging {
   def main(args: Array[String]): Unit = {
-    val inputJson =
-      """
-        |{
-        |"outputPath": "lambda-component-scala/src/main/datasets/yatop_train_out",
-        |"t1": "lambda-component-scala/src/main/datasets/yatop_train",
-        |"t2": null,
-        |"t3": null,
-        |"t4": null,
-        |"script": "select count(1) as c1 from t1",
-        |	"engine": "Spark"
-        |	}
-      """.stripMargin
+    myLog.info("SQL start")
+    val jsonPath = "F:\\雅拓\\算法平台\\gitlab\\lambda-mls\\lambda-component\\src\\test\\task_submit.json"
+    val decoupJson = DecoupJson(jsonPath)
+    val sparkSession = SparkSession
+      .builder()
+      .master("local[2]")
+      .getOrCreate()
 
-    val json = JSON.parseObject(inputJson)
-    val outputPath = json.get("outputPath").toString
-    val t1 = json.get("t1").toString
-    val t2 = json.get("t2")
-    val t3 = json.get("t3")
-    val t4 = json.get("t4")
-    val script = json.get("script").toString
-    val engine = json.get("engine").toString
+    val script = decoupJson.getScriptParameter("SCP@Sql-Script@sqlScript")
+    val dfT1 = decoupJson.getInputDataTable(sparkSession, "IN@DataTable-t1<M>")
+    val dfT2 = decoupJson.getInputDataTable(sparkSession, "IN@DataTable-t2<C>")
+    val dfT3 = decoupJson.getInputDataTable(sparkSession, "IN@DataTable-t3<C>")
+    val dfT4 = decoupJson.getInputDataTable(sparkSession, "IN@DataTable-t4<C>")
 
-    if (engine.equals("Spark")) {
-      val sparkSession = SparkSession
-        .builder()
-        .master("local[2]")
-        .getOrCreate()
-      sparkSession.read.parquet(t1).createOrReplaceTempView("t1")
-      if(t2 != null){
-        sparkSession.read.parquet(t2.toString).createOrReplaceTempView("t2")
-      }
-      if(t3 != null){
-        sparkSession.read.parquet(t3.toString).createOrReplaceTempView("t3")
-      }
-      if(t4 != null){
-        sparkSession.read.parquet(t4.toString).createOrReplaceTempView("t4")
-      }
-      val df = sparkSession.sql(script)
-      df.write.format("parquet").mode("overwrite").save(outputPath)
+    dfT1.createOrReplaceTempView("t1")
+    if (dfT2 != null) dfT2.createOrReplaceTempView("t2")
+    if (dfT3 != null) dfT3.createOrReplaceTempView("t3")
+    if (dfT4 != null) dfT4.createOrReplaceTempView("t4")
 
-    }else {
-      throw new Exception("unsupported engine")
-    }
+
+    val df = sparkSession.sql(script)
+
+    decoupJson.setOutputDataTable(df, "OUT@DataTable-t1")
+    myLog.info("SQL end")
+
   }
 }

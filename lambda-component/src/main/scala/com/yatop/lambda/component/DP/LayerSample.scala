@@ -4,6 +4,8 @@ import java.util.Random
 
 import com.alibaba.fastjson.JSON
 import com.yatop.lambda.component.DP
+import com.yatop.lambda.component.DP.AlignedSample.myLog
+import com.yatop.lambda.component.utils.{DecoupJson, MyLogging}
 import org.apache.spark.sql.{Row, SparkSession}
 
 /**
@@ -16,90 +18,47 @@ import org.apache.spark.sql.{Row, SparkSession}
   * 数据集输入路径:  inputPath
   * 数据集输出路径:  outputPath
   *
-  * Output:
-  * Spark DataFrame
-  * CommonPrams:
-  * 调用执行 | Spark，计算引擎
-  * 调用执行 | Spark，spark组件jar库目录
-  * 调用执行 | Spark，spark组件jar包文件名
-  * 调用执行 | Spark，spark组件class路径
-  * 执行调优 | Spark优化配置，spark.executor.number
-  * 执行调优 | Spark优化配置，spark.executor.cores
-  * 执行调优 | Spark优化配置，spark.executor.memory
-  * 执行调优 | Spark优化配置，spark.driver.cores
-  * 执行调优 | Spark优化配置，spark.driver.memory
-  * 执行调优 | Spark优化配置，spark.extra.configuration
-  * LOG:
-  * ??
-  *
   */
-object LayerSample {
+object LayerSample extends MyLogging {
   def main(args: Array[String]): Unit = {
-    val inputJson =
-      """
-        |{
-        |"inputPath": "lambda-component-scala/src/main/datasets/yatop_train",
-        |"outputPath": "lambda-component-scala/src/main/datasets/yatop_train_out",
-        |	"sampleCount": 2000,
-        |	"sampleRate": 0.1,
-        |	"layerCol": "samp_flag",
-        |	"randomSeed": 0,
-        |"isReturnSample": "true",
-        |	"engine": "Spark"
-        |	}
-      """.stripMargin
+    myLog.info("LayerSample start")
+    val jsonPath = "F:\\雅拓\\算法平台\\gitlab\\lambda-mls\\lambda-component\\src\\test\\task_submit.json"
+    val decoupJson = DecoupJson(jsonPath)
+    val sparkSession = SparkSession
+      .builder()
+      .master("local[2]")
+      .getOrCreate()
 
-    val json = JSON.parseObject(inputJson)
-    val inputPath = json.get("inputPath").toString
-    val outputPath = json.get("outputPath").toString
-    val sampleCount = json.get("sampleCount")
-    val sampleRate = json.get("sampleRate")
-    val layerCol = json.get("layerCol").toString
-    val randomSeed = json.get("randomSeed")
-    val isReturnSample = json.get("isReturnSample").toString.toBoolean
+    val df = decoupJson.getInputDataTable(sparkSession, "IN@DataTable-t1<M>")
+    val targetCol = decoupJson.getStringParameter("SCP@Sample@targetCol")
+    val sampleCount = decoupJson.getIntParameter("SCP@Sample@sampleCount")
+    val sampleRate = decoupJson.getDoubleParameter("SCP@Sample@sampleRate")
+    val randomSeed = decoupJson.getLongParameter("SCP@Sample@randomSeed")
+    val isReturnSample = decoupJson.getBooleanParameter("SCP@Sample@isReturnSample")
 
-    val engine = json.get("engine").toString
     val random = new Random()
 
-    if (engine.equals("Spark")) {
 
-      val sparkSession = SparkSession
-        .builder()
-        .master("local[2]")
-        .getOrCreate()
+    val randomSeedRel = if (randomSeed != null) {
+      randomSeed.toString.toLong
+    } else {
+      random.nextLong()
+    }
 
-      val df = sparkSession.read.parquet(inputPath)
-      val randomSeedTrue = if (randomSeed != null) {
-        randomSeed.toString.toLong
+    var dfReturn = sparkSession.createDataFrame(sparkSession.sparkContext.emptyRDD[Row], schema = df.schema)
+    for (distinctVal <- df.select(targetCol).distinct().rdd.map { case Row(r) => r.toString }.collect()) {
+
+
+      val dfTmp = df.where(targetCol + "==" + distinctVal)
+      val dfSample = if (sampleCount != null) {
+        DP.getSampleByCount(dfTmp, sampleCount.toString.toInt, randomSeedRel, isReturnSample, dfTmp.count())
       } else {
-        random.nextLong()
+        dfTmp.sample(isReturnSample, sampleRate.toString.toDouble, randomSeedRel)
       }
-      //      for(distinctVal <- df.select(layerCol).distinct().collect()){
-      //        println(distinctVal.getInt(0))
-      //      }
-
-      var dfReturn = sparkSession.createDataFrame(sparkSession.sparkContext.emptyRDD[Row], schema = df.schema)
-      for (distinctVal <- df.select(layerCol).distinct().rdd.map { case Row(r) => r.toString }.collect()) {
-
-        println(distinctVal)
-
-        val dfTmp = df.where(layerCol + "==" + distinctVal)
-        val dfSample = if(sampleCount != null){
-          DP.getSampleByCount(dfTmp, sampleCount.toString.toInt, randomSeedTrue, isReturnSample)
-        }else{
-          dfTmp.sample(isReturnSample, sampleRate.toString.toDouble, randomSeedTrue)
-        }
-        dfReturn = dfReturn.union(dfSample)
-      }
-
-
-      dfReturn.write.format("parquet").mode("overwrite").save(outputPath)
-      //      df.show()
-      //      println(df.count)
+      dfReturn = dfReturn.union(dfSample)
     }
+    decoupJson.setOutputDataTable(dfReturn, "OUT@DataTable-t1")
+    myLog.info("LayerSample end")
 
-    else {
-      throw new Exception("unsupported engine")
-    }
   }
 }
