@@ -2,22 +2,22 @@ package com.yatop.lambda.workflow.core.richmodel.workflow.node;
 
 import com.yatop.lambda.base.model.WfFlowNodePort;
 import com.yatop.lambda.core.utils.DataUtil;
-import com.yatop.lambda.workflow.core.framework.chartype.clazz.data.CharTypeDataGeneric;
-import com.yatop.lambda.workflow.core.richmodel.IRichModel;
+import com.yatop.lambda.workflow.core.framework.chartype.ICharTypeClazz;
+import com.yatop.lambda.workflow.core.richmodel.RichModel;
+import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptChar;
+import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptCharType;
 import com.yatop.lambda.workflow.core.richmodel.workflow.module.ModulePort;
-import com.yatop.lambda.workflow.core.utils.ClazzHelperUtil;
 
-public class NodePortOutput extends WfFlowNodePort implements IRichModel {
+public class NodePortOutput extends RichModel<WfFlowNodePort> {
 
     private ModulePort modulePort;
     private NodeSchema schema;
-    private boolean deleted;
+    private boolean analyzed;
 
     public NodePortOutput(WfFlowNodePort data, ModulePort modulePort) {
-        super.copyProperties(data);
+        super(data);
         this.modulePort = modulePort;
-        this.deleted = false;
-        this.clearColoured();
+        this.analyzed = false;
     }
 
     @Override
@@ -28,11 +28,9 @@ public class NodePortOutput extends WfFlowNodePort implements IRichModel {
         super.clear();
     }
 
-    public void flush(String operId) {
-        if(!this.isDeleted()) {
-            if (this.isDataPort() && DataUtil.isNotNull(schema)) {
-                schema.flush(operId);
-            }
+    protected void flush(String operId) {
+        if (this.isDataTablePort() && DataUtil.isNotNull(schema)) {
+            schema.flush(operId);
         }
     }
 
@@ -40,8 +38,12 @@ public class NodePortOutput extends WfFlowNodePort implements IRichModel {
         return modulePort;
     }
 
-    public boolean isDataPort() {
-        return ClazzHelperUtil.getCharTypeClazzBean(modulePort.getCmptChar().getType()) instanceof CharTypeDataGeneric;
+    public CmptChar getCmptChar() {
+        return modulePort.getCmptChar();
+    }
+
+    public boolean isDataTablePort() {
+        return modulePort.isDataTablePort();
     }
 
     public NodeSchema getSchema() {
@@ -52,11 +54,27 @@ public class NodePortOutput extends WfFlowNodePort implements IRichModel {
         this.schema = schema;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    public boolean isAnalyzed() {
+        return analyzed;
     }
 
-    public void markDeleted() {
-        this.deleted = true;
+    protected void markAnalyzed() {
+        this.analyzed = true;
+    }
+
+    public CmptCharType getType() {
+        return this.getCmptChar().getType();
+    }
+
+    public boolean matchTargetInputPort(NodePortInput dstNodePort) {
+        return this.getType().matchTargetType(dstNodePort.getType());
+    }
+
+    public boolean isSchemaChanged() {
+        return isDataTablePort() && getSchema().isSchemaChanged();
+    }
+
+    public ICharTypeClazz getCharTypeClazzBean() {
+        return this.getCmptChar().getCharTypeClazzBean();
     }
 }

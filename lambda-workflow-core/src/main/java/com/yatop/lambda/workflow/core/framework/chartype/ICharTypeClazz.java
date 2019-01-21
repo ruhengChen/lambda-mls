@@ -6,9 +6,6 @@ import org.springframework.beans.factory.InitializingBean;
 public interface ICharTypeClazz extends InitializingBean {
     //方法失败或异常抛出Exception，CharType类实现该接口，适当封装一些中间abstract组件类以便复用
 
-    //是否需要标记被复制
-    boolean needMarkDuplicated();
-
     //是否捕获特征值新增事件
     //返回false，否
     //返回true，是
@@ -38,7 +35,7 @@ public interface ICharTypeClazz extends InitializingBean {
     //返回true，是
     boolean catchQueryValue();
 
-    //发生特征值查询时（展开对象，设置对象内容）
+    //发生特征值查询时（展开对象，返回设置对象内容）
     void onQueryValue(CharValueContext context);
 
     //是否捕获特征值更改事件
@@ -46,8 +43,16 @@ public interface ICharTypeClazz extends InitializingBean {
     //返回true，是
     boolean catchUpdateValue();
 
-    //发生特征值更改时（更新对象，设置对象内容，updateCharValue传入对象修改内容）
+    //发生特征值更改时（用于组件参数、执行调优参数，返回设置对象内容）
     void onUpdateValue(CharValueContext context);
+
+    //是否捕获特征值完成事件
+    //返回false，否
+    //返回true，是
+    boolean catchCompleteValue();
+
+    //发生特征值完成时（用于输出特征，返回设置对象内容）
+    void onCompleteValue(CharValueContext context);
 
     //是否捕获特征值校验事件
     //返回false，否

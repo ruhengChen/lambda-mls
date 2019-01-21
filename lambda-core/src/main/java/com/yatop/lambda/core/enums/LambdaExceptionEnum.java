@@ -20,9 +20,9 @@ public enum LambdaExceptionEnum {
     C_EXPERMNT_DEFAULT_ERROR(           "C9999",    "Experiment Error",         "实验业务发生错误"),
     D_DATA_DEFAULT_ERROR(               "D9999",    "Data Error",               "数据业务发生错误"),
     E_MODEL_DEFAULT_ERROR(              "E9999",    "Model Error",              "模型业务发生错误"),
-    F_WORKFLOW_VERSION_EXPIRE_ERROR(    "F0000",    "Workflow Error",           "工作流版本号过期"),
+    F_WORKFLOW_VERSION_EXPIRE_ERROR(    "F0000",    "Workflow Version Expire",  "工作流版本过期"),
     F_WORKFLOW_DEFAULT_ERROR(           "F9999",    "Workflow Error",           "工作流业务发生错误"),
-    G_COMPUTE_DEFAULT_ERROR(            "G9999",    "Compute Framework Error",  "计算框架业务发生错误"),
+    G_COMPUTE_DEFAULT_ERROR(            "G9999",    "Compute Framework Error",  "计算框架发生错误"),
     Y_INTERNAL_DEFAULT_ERROR(           "Y9999",    "System Internal Error",    "系统内部发生错误"),
     Z_SERVICE_DEFAULT_ERROR(            "Z9999",    "Service Request Error",    "服务请求发生错误");
 

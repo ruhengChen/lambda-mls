@@ -32,6 +32,10 @@ public class ExecutionTaskOutputMgr extends BaseMgr {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Insert task output failed -- invalid insert data.", "无效插入数据");
         }
 
+        if(existsTaskOutput(taskOutput.getTaskId(), taskOutput.getCharId())) {
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Insert task output failed -- output characteristics conflict.", "输出特征冲突");
+        }
+
         WfExecutionTaskOutput insertTaskOutput = new WfExecutionTaskOutput();
         try {
             Date dtCurrentTime = SystemTimeUtil.getCurrentTime();
@@ -114,23 +118,41 @@ public class ExecutionTaskOutputMgr extends BaseMgr {
 
     /*
      *
-     *   查询任务输出（按任务ID + [特征ID]）
+     *   查询任务输出（按任务ID）
      *   返回结果
      *
      * */
-    public List<WfExecutionTaskOutput> queryTaskOutput(Long taskId, String charId) {
+    public List<WfExecutionTaskOutput> queryTaskOutput(Long taskId) {
         if(DataUtil.isNull(taskId)){
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query task output failed -- invalid query condition.", "无效查询条件");
         }
 
         try {
             WfExecutionTaskOutputExample example = new WfExecutionTaskOutputExample();
-            WfExecutionTaskOutputExample.Criteria cond = example.createCriteria().andTaskIdEqualTo(taskId);
-            if(DataUtil.isEmpty(charId))
-                cond.andCharIdEqualTo(charId);
-            cond.andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
+            example.createCriteria().andTaskIdEqualTo(taskId).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
             example.setOrderByClause("CREATE_TIME ASC");
             return wfExecutionTaskOutputMapper.selectByExample(example);
+        } catch (Throwable e) {
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query task output failed.", "查询任务输出失败", e);
+        }
+    }
+
+    /*
+     *
+     *   查询任务输出（按任务ID + 特征ID）
+     *   返回结果
+     *
+     * */
+    public WfExecutionTaskOutput queryTaskOutput(Long taskId, String charId) {
+        if(DataUtil.isNull(taskId) || DataUtil.isEmpty(charId)){
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query task output failed -- invalid query condition.", "无效查询条件");
+        }
+
+        try {
+            WfExecutionTaskOutputExample example = new WfExecutionTaskOutputExample();
+            example.createCriteria().andTaskIdEqualTo(taskId).andCharIdEqualTo(charId).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
+            List<WfExecutionTaskOutput> resultList = wfExecutionTaskOutputMapper.selectByExample(example);
+            return DataUtil.isNotEmpty(resultList) ? resultList.get(0) : null;
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query task output failed.", "查询任务输出失败", e);
         }

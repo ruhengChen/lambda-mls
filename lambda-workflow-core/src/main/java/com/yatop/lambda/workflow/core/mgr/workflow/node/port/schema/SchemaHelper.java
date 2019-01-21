@@ -1,6 +1,7 @@
 package com.yatop.lambda.workflow.core.mgr.workflow.node.port.schema;
 
 import com.yatop.lambda.base.model.WfJsonObject;
+import com.yatop.lambda.core.enums.JsonObjectStateEnum;
 import com.yatop.lambda.core.enums.LambdaExceptionEnum;
 import com.yatop.lambda.core.exception.LambdaException;
 import com.yatop.lambda.core.mgr.workflow.unstructured.JsonObjectMgr;
@@ -11,7 +12,6 @@ import com.yatop.lambda.workflow.core.richmodel.workflow.node.NodeSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class SchemaHelper {
 
@@ -21,15 +21,15 @@ public class SchemaHelper {
 
     @Autowired
     public void setJsonObjectMgr(JsonObjectMgr josnObjectMgr) {
-        JSON_OBJECT_MGR = josnObjectMgr;
+        SchemaHelper.JSON_OBJECT_MGR = josnObjectMgr;
     }
 
     @Autowired
     public void setNodeSchemaMgr(NodeSchemaMgr nodeSchemaMgr) {
-        NODE_SCHEMA_MGR = nodeSchemaMgr;
+        SchemaHelper.NODE_SCHEMA_MGR = nodeSchemaMgr;
     }
 
-    static public JsonObject queryFieldAttributes(Long objectId) {
+    public static JsonObject queryFieldAttributes(Long objectId) {
         WfJsonObject jsonObject = JSON_OBJECT_MGR.queryJsonObject(objectId);
         if(DataUtil.isNull(jsonObject)) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query data output port schema info failed -- json object data missing.", "节点数据输出端口schema信息丢失，请联系管理员");
@@ -37,21 +37,26 @@ public class SchemaHelper {
         return new JsonObject(jsonObject);
     }
 
-    static public void updateFieldAttributes(JsonObject jsonObject, String operId) {
-        JSON_OBJECT_MGR.updateJsonObject(jsonObject, operId);
+    public static void updateFieldAttributes(JsonObject jsonObject, String operId) {
+        if(DataUtil.isNotEmpty(jsonObject.data().getObjectContent())) {
+            jsonObject.data().setObjectState(JsonObjectStateEnum.NORMAL.getState());
+        } else {
+            jsonObject.data().setObjectState(JsonObjectStateEnum.EMPTY.getState());
+        }
+        JSON_OBJECT_MGR.updateJsonObject(jsonObject.data(), operId);
         jsonObject.clearColoured();
     }
 
-    static public void deleteFieldAttributes(Long jsonObjectId, String operId) {
+    public static void deleteFieldAttributes(Long jsonObjectId, String operId) {
         JSON_OBJECT_MGR.deleteJsonObject(jsonObjectId, true, operId);
     }
 
-    static public void recoverFieldAttributes(Long jsonObjectId, String operId) {
+    public static void recoverFieldAttributes(Long jsonObjectId, String operId) {
         JSON_OBJECT_MGR.recoverJsonObject(jsonObjectId, operId);
     }
 
-    static public void updateNodeSchema(NodeSchema schema, String operId) {
-        NODE_SCHEMA_MGR.updateSchema(schema, operId);
+    public static void updateNodeSchema(NodeSchema schema, String operId) {
+        NODE_SCHEMA_MGR.updateSchema(schema.data(), operId);
         schema.clearColoured();
     }
 }

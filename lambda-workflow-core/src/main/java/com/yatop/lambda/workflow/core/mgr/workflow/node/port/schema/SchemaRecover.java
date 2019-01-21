@@ -22,17 +22,17 @@ public class SchemaRecover {
 
     public void recoverSchemas(WorkflowContext workflowContext, Node node) {
 
-        if(node.outputNodePortCount() > 0) {
+        if(node.outputPortCount() > 0) {
             int counter = 0;
             for (NodePortOutput port : node.getOutputNodePorts()) {
-                if (port.isDataPort()) {
+                if (port.isDataTablePort()) {
                     counter++;
                 }
             }
 
             if (counter > 0) {
-                nodeSchemaMgr.recoverSchema(node.getNodeId(), workflowContext.getOperId());
-                List<WfFlowNodeSchema> schemaList = nodeSchemaMgr.querySchemaByNodeId(node.getNodeId());
+                nodeSchemaMgr.recoverSchema(node.data().getNodeId(), workflowContext.getOperId());
+                List<WfFlowNodeSchema> schemaList = nodeSchemaMgr.querySchemaByNodeId(node.data().getNodeId());
 
                 if (DataUtil.isEmpty(schemaList) || counter != schemaList.size()) {
                     throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Recover data node output port schema failed -- schema list size inconsistent.", "节点数据输出端口schema缺失", node);
@@ -43,7 +43,7 @@ public class SchemaRecover {
                     if (DataUtil.isNull(outputNodePort)) {
                         throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query data node output port schema failed -- output node port not found.", "节点数据输出端口信息缺失", schema);
                     }
-                    outputNodePort.setSchema(new NodeSchema(schema));
+                    outputNodePort.setSchema(new NodeSchema(schema, outputNodePort.getCmptChar()));
                     outputNodePort.getSchema().recoverFieldAttributes(workflowContext.getOperId());
                 }
             }

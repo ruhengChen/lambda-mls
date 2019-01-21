@@ -10,7 +10,7 @@ public enum JsonObjectSourceEnum {
     /**
      * 实验编辑
      */
-    EDITOR(1, "Edit");
+    EDITOR(1, "Editor");
 
     private int source;
     private String name;

@@ -2,15 +2,15 @@ package com.yatop.lambda.workflow.core.richmodel.workflow.node;
 
 import com.yatop.lambda.base.model.WfFlowNodeLink;
 import com.yatop.lambda.core.enums.IsWebLinkEnum;
-import com.yatop.lambda.workflow.core.richmodel.IRichModel;
+import com.yatop.lambda.workflow.core.richmodel.RichModel;
 
-public class NodeLink extends WfFlowNodeLink implements IRichModel, Comparable<NodeLink> {
+public class NodeLink extends RichModel<WfFlowNodeLink> implements Comparable<NodeLink> {
 
     private boolean override;       //用于作业执行时辅助解析工作流有效的任务内容
     private boolean deleted;
 
     public NodeLink(WfFlowNodeLink data) {
-        super.copyProperties(data);
+        super(data);
         this.override = false;
         this.deleted = false;
         this.clearColoured();
@@ -23,7 +23,11 @@ public class NodeLink extends WfFlowNodeLink implements IRichModel, Comparable<N
 
     @Override
     public int compareTo(NodeLink o) {
-        return this.getLinkId().compareTo(o.getLinkId());
+        return this.data().getLinkId().compareTo(o.data().getLinkId());
+    }
+
+    public boolean isWebLink() {
+        return this.data().getIsWebLink() == IsWebLinkEnum.YES.getMark();
     }
 
     public boolean isOverride() {
@@ -40,9 +44,5 @@ public class NodeLink extends WfFlowNodeLink implements IRichModel, Comparable<N
 
     public void markDeleted() {
         this.deleted = true;
-    }
-
-    public boolean isWebLink() {
-        return this.getIsWebLink() == IsWebLinkEnum.YES.getMark();
     }
 }

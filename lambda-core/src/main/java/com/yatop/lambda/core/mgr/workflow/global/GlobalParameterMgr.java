@@ -45,7 +45,7 @@ public class GlobalParameterMgr extends BaseMgr {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Insert global parameter failed -- global parameter existed.", "全局参数已存在");
         }
 
-        try {
+/*        try {
             WfFlowNodeParameter refNodeParameter = new WfFlowNodeParameter();
             refNodeParameter.setNodeId(globalParameter.getRelNodeId());
             refNodeParameter.setCharId(globalParameter.getRelCharId());
@@ -53,7 +53,7 @@ public class GlobalParameterMgr extends BaseMgr {
             nodeParameterMgr.updateNodeParameter(refNodeParameter, operId);
         } catch (LambdaException e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Insert global parameter failed -- synchronize node parameter failed.", "同步节点参数失败", e);
-        }
+        }*/
 
 
         WfFlowGlobalParameter insertGlobalParameter = new WfFlowGlobalParameter();

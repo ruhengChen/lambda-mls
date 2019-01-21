@@ -12,6 +12,6 @@
      public static void main(String[] args) {
 
          ApplicationListener<ApplicationPreparedEvent> listener = new LambdaApplicationListener();
-         (new SpringApplicationBuilder(new Object[0])).sources(new Class[]{LambdaApplication.class}).listeners(new ApplicationListener[]{listener}).run(args);
+         (new SpringApplicationBuilder()).sources(new Class[]{LambdaApplication.class}).listeners(new ApplicationListener[]{listener}).run(args);
      }
  }

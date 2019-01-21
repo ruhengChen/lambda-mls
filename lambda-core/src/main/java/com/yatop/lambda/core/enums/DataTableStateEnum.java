@@ -10,12 +10,7 @@ public enum DataTableStateEnum {
     /**
      * 正常
      */
-    NORMAL(1, "Normal"),
-
-    /**
-     * 仅概要文件
-     */
-    ONLY_SUMMARY(2, "Only Summary");
+    NORMAL(1, "Normal");
 
     private int state;
     private String name;
@@ -45,7 +40,6 @@ public enum DataTableStateEnum {
         switch (state) {
             case 0: return EMPTY;
             case 1: return NORMAL;
-            case 2: return ONLY_SUMMARY;
             default: return null;
         }
     }

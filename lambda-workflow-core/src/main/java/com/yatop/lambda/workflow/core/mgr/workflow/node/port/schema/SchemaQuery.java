@@ -22,16 +22,16 @@ public class SchemaQuery {
 
     public void querySchemas(WorkflowContext workflowContext, Node node) {
 
-        if(node.outputNodePortCount() > 0) {
+        if(node.outputPortCount() > 0) {
             int counter = 0;
             for (NodePortOutput port : node.getOutputNodePorts()) {
-                if (port.isDataPort()) {
+                if (port.isDataTablePort()) {
                     counter++;
                 }
             }
 
             if (counter > 0) {
-                List<WfFlowNodeSchema> schemaList = nodeSchemaMgr.querySchemaByNodeId(node.getNodeId());
+                List<WfFlowNodeSchema> schemaList = nodeSchemaMgr.querySchemaByNodeId(node.data().getNodeId());
 
                 if (DataUtil.isEmpty(schemaList) || counter != schemaList.size()) {
                     throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query data node output port schema failed -- schema list size inconsistent.", "节点数据输出端口schema缺失", node);
@@ -44,19 +44,19 @@ public class SchemaQuery {
                         throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query data node output port schema failed -- output node port not found.", "节点数据输出端口信息缺失", schema);
                     }
 
-                    outputNodePort.setSchema(new NodeSchema(schema));
+                    outputNodePort.setSchema(new NodeSchema(schema, outputNodePort.getCmptChar()));
                 }
             }
         }
     }
 
-    public void querySchema(WorkflowContext workflowContext, NodePortOutput nodePortOutput) {
+    public void querySchema(WorkflowContext workflowContext, NodePortOutput outputNodePort) {
 
-        if(nodePortOutput.isDataPort()) {
-            WfFlowNodeSchema schema = nodeSchemaMgr.querySchema(nodePortOutput.getNodePortId());
-            nodePortOutput.setSchema(new NodeSchema(schema));
+        if(outputNodePort.isDataTablePort()) {
+            WfFlowNodeSchema schema = nodeSchemaMgr.querySchema(outputNodePort.data().getNodePortId());
+            outputNodePort.setSchema(new NodeSchema(schema, outputNodePort.getCmptChar()));
         } else {
-            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query data node output port schema failed -- non data port.", "非节点数据端口", nodePortOutput);
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query data node output port schema failed -- non data port.", "非节点数据端口", outputNodePort);
         }
     }
 }

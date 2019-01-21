@@ -1,5 +1,7 @@
 package com.yatop.lambda.workflow.core.framework.chartype;
 
+import com.yatop.lambda.workflow.core.utils.CollectionUtil;
+
 import java.util.HashMap;
 
 public abstract class CharTyeClazzBaseClazz implements ICharTypeClazz {
@@ -8,11 +10,11 @@ public abstract class CharTyeClazzBaseClazz implements ICharTypeClazz {
     private static final HashMap<String, ICharTypeClazz> CLAZZ_BEANS = new HashMap<String, ICharTypeClazz>();
 
     public static ICharTypeClazz getClazzBean(String clazzPath) {
-        return CLAZZ_BEANS.get(clazzPath);
+        return CollectionUtil.get(CLAZZ_BEANS, clazzPath);
     }
 
     private static void putClazzBean(String clazzPath, ICharTypeClazz charTypeBean) {
-        CLAZZ_BEANS.put(clazzPath, charTypeBean);
+        CollectionUtil.put(CLAZZ_BEANS, clazzPath, charTypeBean);
     }
 
     public CharTyeClazzBaseClazz() {

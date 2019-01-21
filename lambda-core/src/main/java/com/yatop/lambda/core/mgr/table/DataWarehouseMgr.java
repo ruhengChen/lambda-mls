@@ -160,6 +160,27 @@ public class DataWarehouseMgr extends BaseMgr {
 
     /*
      *
+     *   查询数据仓库信息（按代码）
+     *   返回结果
+     *
+     * */
+    public DwDataWarehouse queryDataWarehouse(String dwCode) {
+        if(DataUtil.isEmpty(dwCode)){
+            throw new LambdaException(LambdaExceptionEnum.D_DATA_DEFAULT_ERROR, "Query data warehouse info failed -- invalid query condition.", "无效查询条件");
+        }
+
+        try {
+            DwDataWarehouseExample example = new DwDataWarehouseExample();
+            example.createCriteria().andDwCodeEqualTo(dwCode).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
+            List<DwDataWarehouse> resultList = dwDataWarehouseMapper.selectByExample(example);
+            return DataUtil.isNotEmpty(resultList) ? resultList.get(0) : null;
+        } catch (Throwable e) {
+            throw new LambdaException(LambdaExceptionEnum.D_DATA_DEFAULT_ERROR, "Query data warehouse info failed.", "查询数据库信息失败", e);
+        }
+    }
+
+    /*
+     *
      *   查询数据仓库信息（所有）
      *   返回结果集
      *

@@ -18,8 +18,10 @@ public class NodePortDelete {
 
     public void deleteNodePorts(WorkflowContext workflowContext, Node node) {
 
-        if(node.inputNodePortCount() > 0 || node.outputNodePortCount() > 0)
-            schemaDelete.deleteSchemas(workflowContext, node);
-            nodePortMgr.deleteNodePort(node.getNodeId(), workflowContext.getOperId());
+        if(!node.isHeadNode() || !node.isTailNode())
+            if(node.haveOutputDataTablePort()) {
+                schemaDelete.deleteSchemas(workflowContext, node);
+            }
+            nodePortMgr.deleteNodePort(node.data().getNodeId(), workflowContext.getOperId());
     }
 }

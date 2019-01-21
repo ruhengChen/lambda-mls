@@ -8,6 +8,7 @@ import com.yatop.lambda.core.mgr.workflow.node.NodeMgr;
 import com.yatop.lambda.core.utils.DataUtil;
 import com.yatop.lambda.core.utils.SystemParameterUtil;
 import com.yatop.lambda.workflow.core.context.WorkflowContext;
+import com.yatop.lambda.workflow.core.mgr.workflow.module.ParameterCheckHelper;
 import com.yatop.lambda.workflow.core.mgr.workflow.node.parameter.ParameterCreate;
 import com.yatop.lambda.workflow.core.mgr.workflow.node.port.NodePortCreate;
 import com.yatop.lambda.workflow.core.richmodel.workflow.Workflow;
@@ -28,38 +29,35 @@ public class NodeCreate {
     @Autowired
     private NodePortCreate nodePortCreate;
 
-    @Autowired
-    private NodeParameterCheck nodeParameterCheck;
-
     private Node createNode(WorkflowContext workflowContext, Module module, Node otherNode, Long x, Long y, boolean copyOtherName) {
 
         Workflow workflow = workflowContext.getWorkflow();
         Long flowMaxNodes = SystemParameterUtil.find4Long(SystemParameterEnum.WK_FLOW_MAX_NODES);
-        if(workflow.getNodeCount() + 1 > flowMaxNodes) {
+        if(workflow.data().getNodeCount() + 1 > flowMaxNodes) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Create node failed -- number of nodes can't exceed more then WK_FLOW_MAX_NODES.", "画布节点数量不能超过" + flowMaxNodes, workflow);
         }
 
         WfFlowNode node = new WfFlowNode();
-        node.setOwnerProjectId(workflow.getOwnerProjectId());
-        node.setOwnerFlowId(workflow.getFlowId());
-        node.setRefModuleId(module.getModuleId());
+        node.setOwnerProjectId(workflow.data().getOwnerProjectId());
+        node.setOwnerFlowId(workflow.data().getFlowId());
+        node.setRefModuleId(module.data().getModuleId());
         node.setPositionX(x);
         node.setPositionY(y);
         if(!copyOtherName) {
             Long sequence = workflow.nextModuleSequence(module, workflowContext.getOperId());
-            node.setNodeName(String.format("%s-%d", module.getModuleName(), sequence));
+            node.setNodeName(String.format("%s-%d", module.data().getModuleName(), sequence));
             node.setSequence(sequence);
         } else {
-            workflow.setModuleSequence(module, otherNode.getSequence(), workflowContext.getOperId());
-            node.setNodeName(otherNode.getNodeName());
-            node.setSequence(otherNode.getSequence());
+            workflow.setModuleSequence(module, otherNode.data().getSequence(), workflowContext.getOperId());
+            node.setNodeName(otherNode.data().getNodeName());
+            node.setSequence(otherNode.data().getSequence());
         }
 
         node = nodeMgr.insertNode(node, workflowContext.getOperId());
         //node.copyProperties(nodeMgr.queryNode(node.getNodeId()));
 
         Node richNode = new Node(node, module);
-        workflowContext.putNode(richNode);
+        //workflowContext.putNode(richNode);
         workflow.increaseNodeCount();
 
         if(DataUtil.isNull(otherNode)) {
@@ -68,9 +66,8 @@ public class NodeCreate {
             parameterCreate.createParameters(workflowContext, richNode, otherNode);
         }
         nodePortCreate.createNodePorts(workflowContext, richNode);
-        nodeParameterCheck.checkParameter(workflowContext, richNode);
-        workflowContext.getWorkflow().changeWorkflowState2Draft();
-        richNode.downgradeNodeState2Ready();
+        ParameterCheckHelper.checkParameter(workflowContext, richNode);
+        workflowContext.doneCreateNode(richNode);
         return richNode;
     }
 
@@ -82,7 +79,7 @@ public class NodeCreate {
         return createNode(workflowContext, otherNode.getModule(), otherNode, x, y, false);
     }
 
-    public Node copyNode4DiffWorkflow(WorkflowContext workflowContext, Node otherNode, Long x, Long y) {
-        return createNode(workflowContext, otherNode.getModule(), otherNode, x, y, true);
+    public Node copyNode4DiffWorkflow(WorkflowContext workflowContext, Node otherNode) {
+        return createNode(workflowContext, otherNode.getModule(), otherNode, otherNode.data().getPositionX(), otherNode.data().getPositionY(), true);
     }
 }

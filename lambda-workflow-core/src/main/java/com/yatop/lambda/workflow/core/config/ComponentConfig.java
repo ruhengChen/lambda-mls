@@ -153,7 +153,7 @@ public class ComponentConfig implements InitializingBean {
         for(CfCmptCharType type : typeList) {
             CmptCharType richType = new CmptCharType(type);
 
-            IsWildTypeEnum wildTypeEnum = IsWildTypeEnum.valueOf(richType.getIsWildtype());
+            IsWildTypeEnum wildTypeEnum = IsWildTypeEnum.valueOf(richType.data().getIsWildtype());
             if(DataUtil.isNull(wildTypeEnum)) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Error Is-WildType:\n%s.", DataUtil.prettyFormat(type)));
                 System.exit(-1);
@@ -161,12 +161,12 @@ public class ComponentConfig implements InitializingBean {
             if(wildTypeEnum.getMark() == IsWildTypeEnum.YES.getMark()) {
                 wildTypeCounter++;
             }
-            if(!SpecMaskEnum.isCorrectMask(richType.getSpecMask())) {
+            if(!SpecMaskEnum.isCorrectMask(richType.data().getSpecMask())) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Error Spec-Mask:\n%s.", DataUtil.prettyFormat(type)));
                 System.exit(-1);
             }
 
-            ALL_CHARACTERISTIC_TYPES.put(richType.getCharTypeId(), richType);
+            ALL_CHARACTERISTIC_TYPES.put(richType.data().getCharTypeId(), richType);
         }
         typeList.clear();
 
@@ -183,11 +183,11 @@ public class ComponentConfig implements InitializingBean {
                     logger.error(String.format("Loading component configuration occurs fatal error -- Destination port characteristic type not found:\n%s.", DataUtil.prettyFormat(match)));
                     System.exit(-1);
                 }
-                if (targetCharType.getIsWildtype() != IsWildTypeEnum.YES.getMark()) {
+                if (targetCharType.data().getIsWildtype() != IsWildTypeEnum.YES.getMark()) {
                     logger.error(String.format("Loading component configuration occurs fatal error -- Destination port characteristic type info error:\n%s.", DataUtil.prettyFormat(match)));
                     System.exit(-1);
                 }
-                if (!SpecMaskEnum.matchInputAndOutput(targetCharType.getSpecMask())) {
+                if (!SpecMaskEnum.matchInputAndOutput(targetCharType.data().getSpecMask())) {
                     logger.error(String.format("Loading component configuration occurs fatal error -- Destination port characteristic type must be also support input & output:\n%s.", DataUtil.prettyFormat(match)));
                     System.exit(-1);
                 }
@@ -196,7 +196,7 @@ public class ComponentConfig implements InitializingBean {
                     logger.error(String.format("Loading component configuration occurs fatal error -- Source port characteristic type not found:\n%s.", DataUtil.prettyFormat(match)));
                     System.exit(-1);
                 }
-                if (!SpecMaskEnum.matchInputAndOutput(sourceCharType.getSpecMask())) {
+                if (!SpecMaskEnum.matchInputAndOutput(sourceCharType.data().getSpecMask())) {
                     logger.error(String.format("Loading component configuration occurs fatal error -- Source port characteristic type must be also support input & output:\n%s.", DataUtil.prettyFormat(match)));
                     System.exit(-1);
                 }
@@ -210,12 +210,12 @@ public class ComponentConfig implements InitializingBean {
         HashMap<Integer, TreeMap<Integer, CmptCharType>> expandedTargetCharTypesCache = new HashMap<Integer, TreeMap<Integer, CmptCharType>>();
         for(Map.Entry<Integer, CmptCharType> entry: ALL_CHARACTERISTIC_TYPES.entrySet()) {
             CmptCharType sourceCharType = entry.getValue();
-            if(!SpecMaskEnum.matchInputAndOutput(sourceCharType.getSpecMask())) {
-                ALL_PORT_CHARACTERISTIC_TYPES.put(sourceCharType.getCharTypeId(), sourceCharType);
+            if(!SpecMaskEnum.matchInputAndOutput(sourceCharType.data().getSpecMask())) {
+                ALL_PORT_CHARACTERISTIC_TYPES.put(sourceCharType.data().getCharTypeId(), sourceCharType);
 
                 TreeMap<Integer, CmptCharType> expandedTargetCharTypes = new TreeMap<Integer, CmptCharType>();
-                expandedTargetCharTypes.put(sourceCharType.getCharTypeId(), sourceCharType);
-                expandedTargetCharTypesCache.put(sourceCharType.getCharTypeId(), expandedTargetCharTypes);
+                expandedTargetCharTypes.put(sourceCharType.data().getCharTypeId(), sourceCharType);
+                expandedTargetCharTypesCache.put(sourceCharType.data().getCharTypeId(), expandedTargetCharTypes);
 
                 expandSourcePortTargetCharType(sourceCharType.getMatchTargetTypes(), expandedTargetCharTypes);
             }
@@ -233,7 +233,7 @@ public class ComponentConfig implements InitializingBean {
             return;
         for(CmptCharType targetCharType : targetCharTypes) {
             expandSourcePortTargetCharType(targetCharType.getMatchTargetTypes(), expandedTargetCharTypes);
-            expandedTargetCharTypes.put(targetCharType.getCharTypeId(), targetCharType);
+            expandedTargetCharTypes.put(targetCharType.data().getCharTypeId(), targetCharType);
         }
     }
 
@@ -255,46 +255,46 @@ public class ComponentConfig implements InitializingBean {
             }
 
             CmptChar richChar = new CmptChar(cmptChar, charType);
-            ALL_CHARACTERISTICS.put(richChar.getCharId(), richChar);
+            ALL_CHARACTERISTICS.put(richChar.data().getCharId(), richChar);
 
-            SpecTypeEnum typeEnum = SpecTypeEnum.valueOf(richChar.getSpecType());
+            SpecTypeEnum typeEnum = SpecTypeEnum.valueOf(richChar.data().getSpecType());
             if(DataUtil.isNull(typeEnum)) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Unknown Spec-Type:\n%s.", DataUtil.prettyFormat(cmptChar)));
                 System.exit(-1);
             }
 
-            if(!SpecMaskEnum.isCorrectFitSpecType(charType.getSpecMask(), typeEnum)) {
+            if(!SpecMaskEnum.isCorrectFitSpecType(charType.data().getSpecMask(), typeEnum)) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Incorrect Spec-Type:\n%s.", DataUtil.prettyFormat(cmptChar)));
                 System.exit(-1);
             }
 
-            if(DataUtil.isNull(SourceLevelEnum.valueOf(richChar.getSrcLevel()))) {
+            if(DataUtil.isNull(SourceLevelEnum.valueOf(richChar.data().getSrcLevel()))) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Unknown Src-Level:\n%s.", DataUtil.prettyFormat(cmptChar)));
                 System.exit(-1);
             }
 
             if((typeEnum.getType() == SpecTypeEnum.INPUT.getType() || typeEnum.getType() == SpecTypeEnum.OUTPUT.getType())
-                    && richChar.getSrcLevel() != SourceLevelEnum.WORKFLOW.getSource()) {
+                    && richChar.data().getSrcLevel() != SourceLevelEnum.WORKFLOW.getSource()) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Error Src-Level(input & output must be workflow-source-level):\n%s.", DataUtil.prettyFormat(cmptChar)));
                 System.exit(-1);
             }
 
-            if(typeEnum.getType() == SpecTypeEnum.EXECUTION.getType() && richChar.getSrcLevel() == SourceLevelEnum.WORKFLOW.getSource()) {
+            if(typeEnum.getType() == SpecTypeEnum.EXECUTION.getType() && richChar.data().getSrcLevel() == SourceLevelEnum.WORKFLOW.getSource()) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Error Src-Level(forbid execution to be workflow-source-level):\n%s.", DataUtil.prettyFormat(cmptChar)));
                 System.exit(-1);
             }
 
-            if(DataUtil.isNull(IsAllowGlobalEnum.valueOf(richChar.getIsAllowGlobal()))) {
+            if(DataUtil.isNull(IsAllowGlobalEnum.valueOf(richChar.data().getIsAllowGlobal()))) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Unknown Is-Allow-Global:\n%s.", DataUtil.prettyFormat(cmptChar)));
                 System.exit(-1);
             }
 
-            if(DataUtil.isNull(IsRequiredEnum.valueOf(richChar.getIsRequired()))) {
+            if(DataUtil.isNull(IsRequiredEnum.valueOf(richChar.data().getIsRequired()))) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Unknown Is-Required:\n%s.", DataUtil.prettyFormat(cmptChar)));
                 System.exit(-1);
             }
 
-            if(DataUtil.isNull(IsLimitedEnum.valueOf(richChar.getIsLimited()))) {
+            if(DataUtil.isNull(IsLimitedEnum.valueOf(richChar.data().getIsLimited()))) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Unknown Is-Limited:\n%s.", DataUtil.prettyFormat(cmptChar)));
                 System.exit(-1);
             }
@@ -313,7 +313,7 @@ public class ComponentConfig implements InitializingBean {
 
             for(CfCmptCharEnum charEnum : enumList) {
                 CmptCharEnum richCharEnum = new CmptCharEnum(charEnum);
-                CmptChar cmptChar = ALL_CHARACTERISTICS.get(richCharEnum.getCharId());
+                CmptChar cmptChar = ALL_CHARACTERISTICS.get(richCharEnum.data().getCharId());
                 if(DataUtil.isNotNull(cmptChar)) {
                     cmptChar.putEnum(richCharEnum);
                 } else {
@@ -334,12 +334,12 @@ public class ComponentConfig implements InitializingBean {
 
         for(CfCmptSpec cmptSpec : specList) {
             CmptSpec richSpec = new CmptSpec(cmptSpec);
-            if(DataUtil.isNull(SpecTypeEnum.valueOf(richSpec.getSpecType()))) {
+            if(DataUtil.isNull(SpecTypeEnum.valueOf(richSpec.data().getSpecType()))) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Unknown Spec-Type:\n%s.", DataUtil.prettyFormat(cmptSpec)));
                 System.exit(-1);
             }
 
-            ALL_SPECIFICATIONS.put(richSpec.getSpecId(), richSpec);
+            ALL_SPECIFICATIONS.put(richSpec.data().getSpecId(), richSpec);
         }
         specList.clear();
 
@@ -360,7 +360,7 @@ public class ComponentConfig implements InitializingBean {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Characteristic not found:\n%s.", DataUtil.prettyFormat(rel)));
                 System.exit(-1);
             }
-            if(cmptChar.getSpecType() != cmptChar.getSpecType()) {
+            if(cmptChar.data().getSpecType() != cmptChar.data().getSpecType()) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Error Spec-Char-Rel:\n%s.", DataUtil.prettyFormat(rel)));
                 System.exit(-1);
             }
@@ -379,7 +379,7 @@ public class ComponentConfig implements InitializingBean {
                     System.exit(-1);
                 }
 
-                if(cmptSpec.getSpecType() == SpecTypeEnum.INPUT.getType() || cmptSpec.getSpecType() == SpecTypeEnum.OUTPUT.getType()) {
+                if(cmptSpec.data().getSpecType() == SpecTypeEnum.INPUT.getType() || cmptSpec.data().getSpecType() == SpecTypeEnum.OUTPUT.getType()) {
                     logger.error(String.format("Loading component configuration occurs fatal error -- Spec-Char-Value error(forbid input & output value):\n%s.", DataUtil.prettyFormat(value)));
                     System.exit(-1);
                 }
@@ -408,15 +408,15 @@ public class ComponentConfig implements InitializingBean {
 
         for(CfCmptAlgorithm algorithm : algorithmList) {
             CmptAlgorithm richAlgorithm = new CmptAlgorithm(algorithm);
-            if (DataUtil.isNull(AlgorithmTypeEnum.valueOf(richAlgorithm.getAlgorithmType()))) {
+            if (DataUtil.isNull(AlgorithmTypeEnum.valueOf(richAlgorithm.data().getAlgorithmType()))) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Unknown Algorithm-Type:\n%s.", DataUtil.prettyFormat(algorithm)));
                 System.exit(-1);
             }
-            if (DataUtil.isNull(IsTunableEnum.valueOf(richAlgorithm.getIsTunable()))) {
+            if (DataUtil.isNull(IsTunableEnum.valueOf(richAlgorithm.data().getIsTunable()))) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Unknown Is-Tunable:\n%s.", DataUtil.prettyFormat(algorithm)));
                 System.exit(-1);
             }
-            ALL_ALGORITHMS.put(richAlgorithm.getAlgorithmId(), richAlgorithm);
+            ALL_ALGORITHMS.put(richAlgorithm.data().getAlgorithmId(), richAlgorithm);
         }
         algorithmList.clear();
 
@@ -428,20 +428,20 @@ public class ComponentConfig implements InitializingBean {
 
         for(CfComponent component : componentList) {
             Component richComponent = new Component(component);
-            if (DataUtil.isNull(CmptTypeEnum.valueOf(richComponent.getCmptType()))) {
+            if (DataUtil.isNull(CmptTypeEnum.valueOf(richComponent.data().getCmptType()))) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Unknown Cmpt-Type:\n%s.", DataUtil.prettyFormat(component)));
                 System.exit(-1);
             }
 
-            if(richComponent.getRelAlgorithmId() > 0) {
-                CmptAlgorithm algorithm = ALL_ALGORITHMS.get(richComponent.getRelAlgorithmId());
+            if(richComponent.data().getRelAlgorithmId() > 0) {
+                CmptAlgorithm algorithm = ALL_ALGORITHMS.get(richComponent.data().getRelAlgorithmId());
                 if (DataUtil.isNull(algorithm)) {
                     logger.error(String.format("Loading component configuration occurs fatal error -- Algorithm not found:\n%s.", DataUtil.prettyFormat(component)));
                     System.exit(-1);
                 }
                 richComponent.setAlgorithm(algorithm);
             }
-            ALL_COMPONENTS.put(richComponent.getCmptId(), richComponent);
+            ALL_COMPONENTS.put(richComponent.data().getCmptId(), richComponent);
         }
         componentList.clear();
 
@@ -468,7 +468,7 @@ public class ComponentConfig implements InitializingBean {
                 System.exit(-1);
             }
 
-            if(rel.getSpecType() != cmptSpec.getSpecType()) {
+            if(rel.getSpecType() != cmptSpec.data().getSpecType()) {
                 logger.error(String.format("Loading component configuration occurs fatal error -- Error Spec-Type:\n%s.", DataUtil.prettyFormat(rel)));
                 System.exit(-1);
             }
@@ -491,13 +491,13 @@ public class ComponentConfig implements InitializingBean {
                     logger.error(String.format("Loading component configuration occurs fatal error -- Characteristic not found:\n%s.", DataUtil.prettyFormat(value)));
                     System.exit(-1);
                 }
-                CmptSpec cmptSpec = component.getCmptSpec(SpecTypeEnum.valueOf(cmptChar.getSpecType()));
+                CmptSpec cmptSpec = component.getCmptSpec(SpecTypeEnum.valueOf(cmptChar.data().getSpecType()));
                 if (DataUtil.isNull(cmptSpec)) {
                     logger.error(String.format("Loading component configuration occurs fatal error -- Spec-Char-Rel not found:\n%s.", DataUtil.prettyFormat(value)));
                     System.exit(-1);
                 }
 
-                if(cmptSpec.getSpecType() == SpecTypeEnum.INPUT.getType() || cmptSpec.getSpecType() == SpecTypeEnum.OUTPUT.getType()) {
+                if(cmptSpec.data().getSpecType() == SpecTypeEnum.INPUT.getType() || cmptSpec.data().getSpecType() == SpecTypeEnum.OUTPUT.getType()) {
                     logger.error(String.format("Loading component configuration occurs fatal error -- Cmpt-Char-Value error(forbid input & output value):\n%s.", DataUtil.prettyFormat(value)));
                     System.exit(-1);
                 }

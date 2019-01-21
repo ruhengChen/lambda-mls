@@ -1,17 +1,11 @@
 package com.yatop.lambda.workflow.core.richmodel.component;
 
 import com.yatop.lambda.base.model.CfCmptAlgorithm;
-import com.yatop.lambda.workflow.core.richmodel.IRichModel;
+import com.yatop.lambda.workflow.core.richmodel.RichModel;
 
-public class CmptAlgorithm extends CfCmptAlgorithm implements IRichModel {
+public class CmptAlgorithm extends RichModel<CfCmptAlgorithm> {
 
     public CmptAlgorithm(CfCmptAlgorithm data) {
-        super.copyProperties(data);
-        this.clearColoured();
-    }
-
-    @Override
-    public void clear() {
-        super.clear();
+        super(data);
     }
 }

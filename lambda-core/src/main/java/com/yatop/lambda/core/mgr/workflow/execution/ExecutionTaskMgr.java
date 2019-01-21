@@ -21,13 +21,14 @@ public class ExecutionTaskMgr extends BaseMgr {
 
     /*
      *
-     *   插入新任务信息（名称、所属作业ID、任务序号、关联节点ID ...）
+     *   插入新任务信息（名称、所属项目ID、所属作业ID、任务序号、关联节点ID ...）
      *   返回插入记录
      *
      * */
     public WfExecutionTask insertTask(WfExecutionTask task, String operId) {
         if( DataUtil.isNull(task) ||
                 task.isTaskNameNotColoured() ||
+                task.isOwnerProjectIdNotColoured() ||
                 task.isOwnerJobIdNotColoured() ||
                 task.isSequenceNotColoured() ||
                 task.isRelNodeIdNotColoured() ||
@@ -90,7 +91,7 @@ public class ExecutionTaskMgr extends BaseMgr {
 
     /*
      *
-     *   更新任务信息（计算引擎、外部任务ID、任务上下文、提交文件、返回文件、日志文件、运行耗时、开始时间、结束时间、任务进度、警告消息、任务状态、描述）
+     *   更新任务信息（计算引擎、外部任务ID、任务内容、提交文件、返回文件、日志文件、运行耗时、开始时间、结束时间、任务进度、警告消息、任务状态、描述）
      *   返回更新数量
      *
      * */
@@ -201,19 +202,23 @@ public class ExecutionTaskMgr extends BaseMgr {
 
     /*
      *
-     *   查询任务信息（按作业ID + 任务状态）
+     *   查询任务信息（按作业ID + [任务状态]）
      *   返回结果集
      *
      * */
-    public List<WfExecutionTask> queryTask(Long jobId, TaskStateEnum stateEnum, PagerUtil pager) {
-        if(DataUtil.isNull(jobId) || DataUtil.isNull(stateEnum)){
+    public List<WfExecutionTask> queryTaskByJobId(Long jobId, TaskStateEnum stateEnum, PagerUtil pager) {
+        if(DataUtil.isNull(jobId)){
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query task info failed -- invalid query condition.", "无效查询条件");
         }
 
         try {
             PagerUtil.startPage(pager);
             WfExecutionTaskExample example = new WfExecutionTaskExample();
-            example.createCriteria().andOwnerJobIdEqualTo(jobId).andTaskStateEqualTo(stateEnum.getState()).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
+            WfExecutionTaskExample.Criteria cond = example.createCriteria().andOwnerJobIdEqualTo(jobId);
+            if(DataUtil.isNotNull(stateEnum)) {
+                cond.andTaskStateEqualTo(stateEnum.getState());
+            }
+            cond.andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
             example.setOrderByClause("CREATE_TIME ASC");
             return wfExecutionTaskMapper.selectByExample(example);
         } catch (Throwable e) {
@@ -224,19 +229,23 @@ public class ExecutionTaskMgr extends BaseMgr {
 
     /*
      *
-     *   查询任务信息（按作业ID）
+     *   查询任务信息（按项目ID + [任务状态]）
      *   返回结果集
      *
      * */
-    public List<WfExecutionTask> queryTaskByJobId(Long jobId, PagerUtil pager) {
-        if(DataUtil.isNull(jobId)){
+    public List<WfExecutionTask> queryTaskByProjectId(Long projectId, TaskStateEnum stateEnum, PagerUtil pager) {
+        if(DataUtil.isNull(projectId)){
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query task info failed -- invalid query condition.", "无效查询条件");
         }
 
         try {
             PagerUtil.startPage(pager);
             WfExecutionTaskExample example = new WfExecutionTaskExample();
-            example.createCriteria().andOwnerJobIdEqualTo(jobId).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
+            WfExecutionTaskExample.Criteria cond = example.createCriteria().andOwnerProjectIdEqualTo(projectId);
+            if(DataUtil.isNotNull(stateEnum)) {
+                cond.andTaskStateEqualTo(stateEnum.getState());
+            }
+            cond.andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
             example.setOrderByClause("CREATE_TIME ASC");
             return wfExecutionTaskMapper.selectByExample(example);
         } catch (Throwable e) {

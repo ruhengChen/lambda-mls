@@ -32,7 +32,6 @@ public class CodeScriptMgr extends BaseMgr {
                 codeScript.isScriptSrcNotColoured() ||
                 codeScript.isOwnerProjectIdNotColoured() ||
                 codeScript.isRelFlowIdNotColoured() ||
-                codeScript.isRelSnapshotVersionNotColoured() ||
                 codeScript.isRelNodeIdNotColoured() ||
                 codeScript.isRelCharIdNotColoured() ||
                 codeScript.isRelTaskIdNotColoured() ||

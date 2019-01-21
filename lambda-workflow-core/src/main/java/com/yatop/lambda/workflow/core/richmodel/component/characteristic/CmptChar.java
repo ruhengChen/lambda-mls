@@ -1,30 +1,30 @@
 package com.yatop.lambda.workflow.core.richmodel.component.characteristic;
 
 import com.yatop.lambda.base.model.CfCmptChar;
-import com.yatop.lambda.workflow.core.richmodel.IRichModel;
+import com.yatop.lambda.workflow.core.framework.chartype.ICharTypeClazz;
+import com.yatop.lambda.workflow.core.richmodel.RichModel;
 import com.yatop.lambda.workflow.core.utils.CollectionUtil;
 
 import java.util.List;
 import java.util.TreeMap;
 
-public class CmptChar extends CfCmptChar implements IRichModel {
+public class CmptChar extends RichModel<CfCmptChar> {
 
     private CmptCharType type;      //特征类型
     private TreeMap<String, CmptCharEnum> enums = new TreeMap<String, CmptCharEnum>();  //特征枚举值
     private TreeMap<Integer, CmptCharEnum> enumsOrderbySequence = new TreeMap<Integer, CmptCharEnum>();     //特征枚举值按序号排序
 
     public CmptChar(CfCmptChar data, CmptCharType type) {
-        super.copyProperties(data);
+        super(data);
         this.type = type;
-        this.clearColoured();
     }
 
     @Override
     public void clear() {
         type = null;
-        enums.clear();
+        CollectionUtil.enhancedClear(enums);
         enums = null;
-        CollectionUtil.clear(enumsOrderbySequence);
+        CollectionUtil.enhancedClear(enumsOrderbySequence);
         enumsOrderbySequence = null;
         super.clear();
     }
@@ -46,7 +46,11 @@ public class CmptChar extends CfCmptChar implements IRichModel {
     }
 
     public void putEnum(CmptCharEnum charEnum) {
-        CollectionUtil.put(enums, charEnum.getEnumValue(), charEnum);
-        CollectionUtil.put(enumsOrderbySequence, charEnum.getSequence(), charEnum);
+        CollectionUtil.put(enums, charEnum.data().getEnumValue(), charEnum);
+        CollectionUtil.put(enumsOrderbySequence, charEnum.data().getSequence(), charEnum);
+    }
+
+    public ICharTypeClazz getCharTypeClazzBean() {
+        return this.getType().getCharTypeClazzBean();
     }
 }

@@ -18,7 +18,7 @@ public class WorkflowNamedLockService extends BaseNamedLockService implements IN
     }
 
     @Override
-    public boolean requestResource(Long resourceId) {
+    public boolean requestResource(Long resourceId /*flow id*/) {
         return namedLockDaemon.requestLock(super.prepareDoLock(resourceId));
     }
 

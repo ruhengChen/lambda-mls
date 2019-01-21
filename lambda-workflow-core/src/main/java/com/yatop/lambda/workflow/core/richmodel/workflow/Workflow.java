@@ -5,24 +5,37 @@ import com.yatop.lambda.core.enums.ShareLockStateEnum;
 import com.yatop.lambda.core.enums.WorkflowStateEnum;
 import com.yatop.lambda.core.utils.DataUtil;
 import com.yatop.lambda.workflow.core.mgr.workflow.WorkflowHelper;
-import com.yatop.lambda.workflow.core.richmodel.IRichModel;
+import com.yatop.lambda.workflow.core.richmodel.RichModel;
+import com.yatop.lambda.workflow.core.richmodel.experiment.Experiment;
+import com.yatop.lambda.workflow.core.richmodel.project.Project;
 import com.yatop.lambda.workflow.core.richmodel.workflow.module.Module;
 import com.yatop.lambda.workflow.core.utils.CollectionUtil;
 
 import java.util.List;
 import java.util.TreeMap;
 
-public class Workflow extends WfFlow implements IRichModel {
+public class Workflow extends RichModel<WfFlow> {
 
     private static long NODE_DELETE_MAX_SEQUENCE = 0x20;
 
-    private boolean deleted;
+    private Project project;
+    private Experiment experiment;
     private TreeMap<Long, WorkflowAccumulate> accumulates = new TreeMap<Long, WorkflowAccumulate>();
+    private boolean deleted;
 
-    public Workflow(WfFlow data) {
-        super.copyProperties(data);
+    public Workflow(WfFlow data, Project project, Experiment experiment) {
+        super(data);
+        this.project = project;
+        this.experiment = experiment;
         this.deleted = false;
-        this.clearColoured();
+    }
+
+    @Override
+    public void clear() {
+        project = null;
+        experiment = null;
+        CollectionUtil.enhancedClear(accumulates);
+        super.clear();
     }
 
     public void flush(String operId) {
@@ -33,39 +46,63 @@ public class Workflow extends WfFlow implements IRichModel {
                 }
             }
 
-            if (this.isColoured() && this.getFlowId() > 0) {
+            if (this.isColoured()) {
                 WorkflowHelper.updateWorkflow(this, operId);
             }
         }
     }
 
-    public void changeWorkflowState2Draft() {
+    public Project getProject() {
+        return project;
+    }
+
+    public Experiment getExperiment() {
+        return experiment;
+    }
+
+    public boolean isStateDraft() {
+        return this.data().getFlowState() == WorkflowStateEnum.DRAFT.getState();
+    }
+
+    public boolean isStatePreparing() {
+        return this.data().getFlowState() == WorkflowStateEnum.PREPARING.getState();
+    }
+
+    public boolean isStateRunning() {
+        return this.data().getFlowState() == WorkflowStateEnum.RUNNING.getState();
+    }
+
+    public boolean isStateFinished() {
+        return this.data().getFlowState() == WorkflowStateEnum.FINISHED.getState();
+    }
+
+    public void changeState2Draft() {
         this.changeWorkflowState(WorkflowStateEnum.DRAFT);
     }
 
-    public void changeWorkflowState2Preparing() {
+    public void changeState2Preparing() {
         this.changeWorkflowState(WorkflowStateEnum.PREPARING);
     }
 
-    public void changeWorkflowState2Running() {
+    public void changeState2Running() {
         this.changeWorkflowState(WorkflowStateEnum.RUNNING);
     }
 
-    public void changeWorkflowState2FinishedRunning() {
-        this.changeWorkflowState(WorkflowStateEnum.FINISHED_RUNNING);
+    public void changeState2Finished() {
+        this.changeWorkflowState(WorkflowStateEnum.FINISHED);
     }
 
     private void changeWorkflowState(WorkflowStateEnum stateEnum) {
-        if(this.getFlowState() == stateEnum.getState())
+        if(this.data().getFlowState() == stateEnum.getState())
             return;
 
-        this.setFlowState(stateEnum.getState());
+        this.data().setFlowState(stateEnum.getState());
     }
 
     public void setModuleSequence(Module module, Long thatSequence, String operId) {
         WorkflowAccumulate accumulate = this.getAccumulate(module, operId);
-        if(accumulate.getUsageCount() < thatSequence) {
-            accumulate.setUsageCount(thatSequence);
+        if(accumulate.data().getUsageCount() < thatSequence) {
+            accumulate.data().setUsageCount(thatSequence);
         }
     }
 
@@ -79,7 +116,7 @@ public class Workflow extends WfFlow implements IRichModel {
 
     private WorkflowAccumulate getAccumulate(Module module, String operId) {
 
-        WorkflowAccumulate accumulate = CollectionUtil.get(accumulates, module.getModuleId());
+        WorkflowAccumulate accumulate = CollectionUtil.get(accumulates, module.data().getModuleId());
         if(DataUtil.isNull(accumulate)) {
             accumulate = WorkflowHelper.queryAccumulate(this, module, operId);
             this.putAccumulate(accumulate);
@@ -92,63 +129,57 @@ public class Workflow extends WfFlow implements IRichModel {
     }
 
     private void putAccumulate(WorkflowAccumulate accumulate) {
-        CollectionUtil.put(accumulates, accumulate.getModuleId(), accumulate);
+        CollectionUtil.put(accumulates, accumulate.data().getModuleId(), accumulate);
     }
 
     public Long previousDeleteSequence() {
-        return Math.abs( (this.getNextDeleteSequence() - 1) % NODE_DELETE_MAX_SEQUENCE );
+        return Math.abs( (this.data().getNextDeleteSequence() - 1) % NODE_DELETE_MAX_SEQUENCE );
     }
 
     public Long generateNextDeleteSequence() {
-        return Math.abs( (this.getNextDeleteSequence() + 1) % NODE_DELETE_MAX_SEQUENCE );
+        return Math.abs( (this.data().getNextDeleteSequence() + 1) % NODE_DELETE_MAX_SEQUENCE );
     }
 
     public void increaseNodeCount() {
-        this.setNodeCount(this.getNodeCount() + 1);
+        this.data().setNodeCount(this.data().getNodeCount() + 1);
     }
 
     public void increaseNextSnapshotVersion() {
-        this.setNextSnapshotVersion(this.getNextSnapshotVersion() + 1);
+        this.data().setNextSnapshotVersion(this.data().getNextSnapshotVersion() + 1);
     }
 
     public void increaseVersion() {
-        this.setVersion(this.getVersion() + 1);
+        this.data().setVersion(this.data().getVersion() + 1);
     }
 
     public boolean isWorkflowLocked() {
-        return this.getShareLockState() == ShareLockStateEnum.LOCKED.getState();
+        return this.data().getShareLockState() == ShareLockStateEnum.LOCKED.getState();
     }
 
     public boolean lockWorkflow() {
-        if(this.getShareLockState() == ShareLockStateEnum.LOCKED.getState())
+        if(this.data().getShareLockState() == ShareLockStateEnum.LOCKED.getState())
             return false;
 
-        this.setShareLockState(ShareLockStateEnum.LOCKED.getState());
+        this.data().setShareLockState(ShareLockStateEnum.LOCKED.getState());
         return true;
     }
 
     public boolean unlockWorkflow() {
-        if(this.getShareLockState() == ShareLockStateEnum.UNLOCKED.getState())
+        if(this.data().getShareLockState() == ShareLockStateEnum.UNLOCKED.getState())
             return false;
 
-        this.setShareLockState(ShareLockStateEnum.UNLOCKED.getState());
+        this.data().setShareLockState(ShareLockStateEnum.UNLOCKED.getState());
         return true;
     }
 
     public void doneDeleteNodes(Long nodeCount) {
-        this.setNodeCount(this.getNodeCount() - nodeCount);
-        this.setNextDeleteSequence(generateNextDeleteSequence());
+        this.data().setNodeCount(this.data().getNodeCount() - nodeCount);
+        this.data().setNextDeleteSequence(generateNextDeleteSequence());
     }
 
     public void doneRecoverNodes(Long nodeCount) {
-        this.setNodeCount(this.getNodeCount() + nodeCount);
-        this.setNextDeleteSequence(previousDeleteSequence());
-    }
-
-    @Override
-    public void clear() {
-        CollectionUtil.clear(accumulates);
-        super.clear();
+        this.data().setNodeCount(this.data().getNodeCount() + nodeCount);
+        this.data().setNextDeleteSequence(previousDeleteSequence());
     }
 
     public boolean isDeleted() {

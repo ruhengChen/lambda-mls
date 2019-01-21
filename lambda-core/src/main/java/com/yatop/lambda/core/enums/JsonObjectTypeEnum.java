@@ -5,12 +5,12 @@ public enum JsonObjectTypeEnum {
     /**
      * 一般Json数据
      */
-    GERNERAL(0, "Json Object | Json Array"),
+    GENERAL(0, "Json Object | Json Array"),
 
     /**
      * 算法参数
      */
-    ALGORITHM_PARAMTERS(1, "Algorithm Parameters"),
+    ALGORITHM_PARAMETERS(1, "Algorithm Parameters"),
 
     /**
      * 模型评估报告
@@ -68,8 +68,8 @@ public enum JsonObjectTypeEnum {
 
     public static JsonObjectTypeEnum valueOf(int type) {
         switch (type) {
-            case 0: return GERNERAL;
-            case 1: return ALGORITHM_PARAMTERS;
+            case 0: return GENERAL;
+            case 1: return ALGORITHM_PARAMETERS;
             case 2: return MODEL_EVALUATION_REPORT;
             case 3: return CROSS_VALIDATION_REPORT;
             case 4: return STATISTICAL_ANALYSIS_REPORT;

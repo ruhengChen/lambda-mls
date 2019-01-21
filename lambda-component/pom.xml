@@ -70,10 +70,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.3.2</version>
@@ -165,7 +161,7 @@
 						<id>scala-compile-first</id>
 						<phase>process-resources</phase>
 						<goals>
-							<goal>add-state</goal>
+							<goal>add-source</goal>
 							<goal>compile</goal>
 						</goals>
 					</execution>

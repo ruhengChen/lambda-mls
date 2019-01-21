@@ -26,10 +26,10 @@ public class NodePortCreate {
     private NodePortInput createInputPort(WorkflowContext workflowContext, Node node, ModulePort inputPort) {
 
         WfFlowNodePort nodePort = new WfFlowNodePort();
-        nodePort.setNodePortName(inputPort.getPortName());
-        nodePort.setOwnerNodeId(node.getNodeId());
-        nodePort.setRefPortId(inputPort.getPortId());
-        nodePort.setRefCharId(inputPort.getCmptChar().getCharId());
+        nodePort.setNodePortName(inputPort.data().getPortName());
+        nodePort.setOwnerNodeId(node.data().getNodeId());
+        nodePort.setRefPortId(inputPort.data().getPortId());
+        nodePort.setRefCharId(inputPort.getCmptChar().data().getCharId());
         nodePortMgr.insertNodePort(nodePort, workflowContext.getOperId());
         //nodePort.copyProperties(nodePortMgr.queryNodePort(nodePort.getNodePortId()));
         NodePortInput richNodePort = new NodePortInput(nodePort, inputPort);
@@ -39,15 +39,15 @@ public class NodePortCreate {
     private NodePortOutput createOutputPort(WorkflowContext workflowContext, Node node, ModulePort outputPort) {
 
         WfFlowNodePort nodePort = new WfFlowNodePort();
-        nodePort.setNodePortName(outputPort.getPortName());
-        nodePort.setOwnerNodeId(node.getNodeId());
-        nodePort.setRefPortId(outputPort.getPortId());
-        nodePort.setRefCharId(outputPort.getCmptChar().getCharId());
+        nodePort.setNodePortName(outputPort.data().getPortName());
+        nodePort.setOwnerNodeId(node.data().getNodeId());
+        nodePort.setRefPortId(outputPort.data().getPortId());
+        nodePort.setRefCharId(outputPort.getCmptChar().data().getCharId());
         nodePortMgr.insertNodePort(nodePort, workflowContext.getOperId());
         //nodePort.copyProperties(nodePortMgr.queryNodePort(nodePort.getNodePortId()));
         NodePortOutput richNodePort = new NodePortOutput(nodePort, outputPort);
 
-        if(richNodePort.isDataPort()) {
+        if(richNodePort.isDataTablePort()) {
             schemaCreate.createSchema(workflowContext, node, richNodePort);
         }
 

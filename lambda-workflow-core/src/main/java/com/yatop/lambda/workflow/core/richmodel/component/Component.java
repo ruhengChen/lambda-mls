@@ -4,7 +4,7 @@ import com.yatop.lambda.base.model.CfComponent;
 import com.yatop.lambda.core.enums.*;
 import com.yatop.lambda.core.utils.DataUtil;
 import com.yatop.lambda.core.utils.SystemParameterUtil;
-import com.yatop.lambda.workflow.core.richmodel.IRichModel;
+import com.yatop.lambda.workflow.core.richmodel.RichModel;
 import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptChar;
 import com.yatop.lambda.workflow.core.richmodel.component.specification.CmptSpec;
 import com.yatop.lambda.workflow.core.richmodel.component.specification.CmptSpecCharValue;
@@ -12,7 +12,7 @@ import com.yatop.lambda.workflow.core.utils.CollectionUtil;
 
 import java.util.TreeMap;
 
-public class Component extends CfComponent implements IRichModel {
+public class Component extends RichModel<CfComponent> {
 
     private CmptAlgorithm algorithm;    //组件关联算法
     private CmptSpec input;             //组件输入内容规格
@@ -23,8 +23,7 @@ public class Component extends CfComponent implements IRichModel {
     private TreeMap<String, CmptCharValue> charValues = new TreeMap<String, CmptCharValue>();   //组件配置特征值
 
     public Component(CfComponent data) {
-        super.copyProperties(data);
-        this.clearColoured();
+        super(data);
     }
 
     @Override
@@ -35,13 +34,13 @@ public class Component extends CfComponent implements IRichModel {
         execution = null;
         optimizeExecution = null;
         parameter = null;
-        CollectionUtil.clear(charValues);
+        CollectionUtil.enhancedClear(charValues);
         charValues = null;
         super.clear();
     }
 
     public boolean isWebComponent() {
-        return this.getCmptType() == CmptTypeEnum.WEB_CMPT.getType();
+        return this.data().getCmptType() == CmptTypeEnum.WEB_CMPT.getType();
     }
 
     public CmptAlgorithm getAlgorithm() {
@@ -70,6 +69,10 @@ public class Component extends CfComponent implements IRichModel {
 
     public CmptSpec getExecution() {
         return execution;
+    }
+
+    public boolean isNoExecuionRequired() {
+        return DataUtil.isNull(getExecution());
     }
 
     private void setExecution(CmptSpec execution) {
@@ -102,59 +105,59 @@ public class Component extends CfComponent implements IRichModel {
 
     public String getConfigCharValue(CmptChar cmptChar) {
 
-        if(cmptChar.getSrcLevel() != SourceLevelEnum.SPECIFICATION.getSource()) {
-            CmptCharValue cmptCharValue = this.getCharValue(cmptChar.getCharId());
+        if(cmptChar.data().getSrcLevel() != SourceLevelEnum.SPECIFICATION.getSource()) {
+            CmptCharValue cmptCharValue = this.getCharValue(cmptChar.data().getCharId());
             if (DataUtil.isNotNull(cmptCharValue)) {
-                if (cmptCharValue.getIsSystemParam() == IsSystemParamEnum.YES.getMark())
-                    return DataUtil.trimToNull(SystemParameterUtil.find(cmptCharValue.getCharValue()));
+                if (cmptCharValue.data().getIsSystemParam() == IsSystemParamEnum.YES.getMark())
+                    return DataUtil.trimToNull(SystemParameterUtil.find(cmptCharValue.data().getCharValue()));
                 else
-                    return DataUtil.trimToNull(cmptCharValue.getCharValue());
+                    return DataUtil.trimToNull(cmptCharValue.data().getCharValue());
             }
         }
 
         CmptSpecCharValue specCharValue = null;
-        switch (SpecTypeEnum.valueOf(cmptChar.getSpecType())) {
+        switch (SpecTypeEnum.valueOf(cmptChar.data().getSpecType())) {
             case INPUT:
                 if(DataUtil.isNotNull(input)) {
-                    specCharValue = this.input.getCharValue(cmptChar.getCharId());
+                    specCharValue = this.input.getCharValue(cmptChar.data().getCharId());
                 }
                 break;
             case OUTPUT:
                 if(DataUtil.isNotNull(output)) {
-                    specCharValue = this.output.getCharValue(cmptChar.getCharId());
+                    specCharValue = this.output.getCharValue(cmptChar.data().getCharId());
                 }
                 break;
             case EXECUTION:
                 if(DataUtil.isNotNull(execution)) {
-                    specCharValue = this.execution.getCharValue(cmptChar.getCharId());
+                    specCharValue = this.execution.getCharValue(cmptChar.data().getCharId());
                 }
                 break;
             case OPTIMIZE_EXECUTION:
                 if(DataUtil.isNotNull(optimizeExecution)) {
-                    specCharValue = this.optimizeExecution.getCharValue(cmptChar.getCharId());
+                    specCharValue = this.optimizeExecution.getCharValue(cmptChar.data().getCharId());
                 }
                 break;
             case PARAMETER:
                 if(DataUtil.isNotNull(parameter)) {
-                    specCharValue = this.parameter.getCharValue(cmptChar.getCharId());
+                    specCharValue = this.parameter.getCharValue(cmptChar.data().getCharId());
                 }
                 break;
         }
         if(DataUtil.isNotNull(specCharValue)) {
-            if(specCharValue.getIsSystemParam() == IsSystemParamEnum.YES.getMark())
-                return DataUtil.trimToNull(SystemParameterUtil.find(specCharValue.getCharValue()));
+            if(specCharValue.data().getIsSystemParam() == IsSystemParamEnum.YES.getMark())
+                return DataUtil.trimToNull(SystemParameterUtil.find(specCharValue.data().getCharValue()));
             else
-                return DataUtil.trimToNull(specCharValue.getCharValue());
+                return DataUtil.trimToNull(specCharValue.data().getCharValue());
         }
-        return DataUtil.trimToNull(cmptChar.getDefaultValue());
+        return DataUtil.trimToNull(cmptChar.data().getDefaultValue());
     }
 
     public void putCharValue(CmptCharValue charValue) {
-        CollectionUtil.put(charValues, charValue.getCharId(), charValue);
+        CollectionUtil.put(charValues, charValue.data().getCharId(), charValue);
     }
 
     public void setCmptSpec(CmptSpec cmptSpec) {
-        switch (SpecTypeEnum.valueOf(cmptSpec.getSpecType())) {
+        switch (SpecTypeEnum.valueOf(cmptSpec.data().getSpecType())) {
             case INPUT:
                 this.setInput(cmptSpec);
                 break;
@@ -190,26 +193,26 @@ public class Component extends CfComponent implements IRichModel {
     }
 
     public boolean existsCmptChar(CmptChar cmptChar) {
-        switch (SpecTypeEnum.valueOf(cmptChar.getSpecType())) {
+        switch (SpecTypeEnum.valueOf(cmptChar.data().getSpecType())) {
             case INPUT:
-                return DataUtil.isNotNull(this.getInput().getCmptChar(cmptChar.getCharId()));
+                return DataUtil.isNotNull(this.getInput().getCmptChar(cmptChar.data().getCharId()));
             case OUTPUT:
-                return DataUtil.isNotNull(this.getOutput().getCmptChar(cmptChar.getCharId()));
+                return DataUtil.isNotNull(this.getOutput().getCmptChar(cmptChar.data().getCharId()));
             case EXECUTION:
-                return DataUtil.isNotNull(this.getExecution().getCmptChar(cmptChar.getCharId()));
+                return DataUtil.isNotNull(this.getExecution().getCmptChar(cmptChar.data().getCharId()));
             case OPTIMIZE_EXECUTION:
-                return DataUtil.isNotNull(this.getOptimizeExecution().getCmptChar(cmptChar.getCharId()));
+                return DataUtil.isNotNull(this.getOptimizeExecution().getCmptChar(cmptChar.data().getCharId()));
             case PARAMETER:
-                return DataUtil.isNotNull(this.getParameter().getCmptChar(cmptChar.getCharId()));
+                return DataUtil.isNotNull(this.getParameter().getCmptChar(cmptChar.data().getCharId()));
         }
         return false;
     }
 
     public boolean missingConfigCharValue(CmptChar cmptChar) {
-        switch (SourceLevelEnum.valueOf(cmptChar.getSrcLevel())) {
+        switch (SourceLevelEnum.valueOf(cmptChar.data().getSrcLevel())) {
             case SPECIFICATION:
             case COMPONENT:
-                if(cmptChar.getIsRequired() == IsRequiredEnum.YES.getMark() && DataUtil.isEmpty(this.getConfigCharValue(cmptChar)))
+                if(cmptChar.data().getIsRequired() == IsRequiredEnum.YES.getMark() && DataUtil.isEmpty(this.getConfigCharValue(cmptChar)))
                     return true;
           //case WORKFLOW:
         }

@@ -2,14 +2,13 @@ package com.yatop.lambda.workflow.core.mgr.workflow.node.parameter;
 
 import com.yatop.lambda.core.enums.SourceLevelEnum;
 import com.yatop.lambda.core.enums.SpecTypeEnum;
-import com.yatop.lambda.core.enums.WorkflowStateEnum;
 import com.yatop.lambda.core.utils.DataUtil;
 import com.yatop.lambda.workflow.core.context.WorkflowContext;
-import com.yatop.lambda.workflow.core.mgr.workflow.node.NodeParameterCheck;
+import com.yatop.lambda.workflow.core.mgr.workflow.module.ParameterCheckHelper;
+import com.yatop.lambda.workflow.core.mgr.workflow.value.CharValueHelper;
 import com.yatop.lambda.workflow.core.richmodel.workflow.value.CharValue;
 import com.yatop.lambda.workflow.core.richmodel.workflow.node.Node;
 import com.yatop.lambda.workflow.core.richmodel.workflow.node.NodeParameter;
-import com.yatop.lambda.workflow.core.mgr.workflow.value.CharValueUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,26 +16,20 @@ import org.springframework.stereotype.Service;
 public class ParameterCharValueUpdate {
 
     @Autowired
-    private CharValueUpdate charValueUpdate;
-
-    @Autowired
     private ParameterCreate parameterCreate;
-
-    @Autowired
-    private NodeParameterCheck nodeParameterCheck;
 
     private NodeParameter updateParameter(WorkflowContext workflowContext, Node node, NodeParameter targetParameter, String charValueText, Class<ParameterCharValueUpdate> none) {
 
-        if(targetParameter.getCmptChar().getSrcLevel() == SourceLevelEnum.WORKFLOW.getSource()) {
+        if(targetParameter.getCmptChar().data().getSrcLevel() == SourceLevelEnum.WORKFLOW.getSource()) {
             if(!targetParameter.isSimulateParameter()) {
-                if(DataUtil.isEmpty(targetParameter.getCharValue()) && DataUtil.isEmpty(charValueText))
+                if(DataUtil.isEmpty(targetParameter.data().getCharValue()) && DataUtil.isEmpty(charValueText))
                     return targetParameter;
 
-                CharValue charValue = targetParameter.getValue();
+                CharValue charValue = targetParameter.getCharValue();
                 charValue.setInText(charValueText);
-                charValueUpdate.updateCharValue(workflowContext, node, charValue);
+                CharValueHelper.updateCharValue(workflowContext, node, charValue);
 
-                targetParameter.setCharValue(DataUtil.isNotEmpty(charValue.getCharValue()) ? charValue.getCharValue() : null);
+                targetParameter.data().setCharValue(DataUtil.isNotEmpty(charValue.getCharValue()) ? charValue.getCharValue() : null);
                 return targetParameter;
             } else {
                 return parameterCreate.createParameter(workflowContext, node, targetParameter.getCmptChar(), charValueText);
@@ -49,10 +42,11 @@ public class ParameterCharValueUpdate {
 
     public void updateParameter(WorkflowContext workflowContext, Node node, NodeParameter targetParameter, String charValueText) {
 
-        switch (SpecTypeEnum.valueOf(targetParameter.getSpecType())) {
+        switch (SpecTypeEnum.valueOf(targetParameter.data().getSpecType())) {
             case PARAMETER: {
                 NodeParameter parameter = updateParameter(workflowContext, node, targetParameter, charValueText, ParameterCharValueUpdate.class);
                 node.putParameter(parameter);
+                ParameterCheckHelper.checkParameter(workflowContext, node);
                 break;
             }
             case OPTIMIZE_EXECUTION: {
@@ -63,9 +57,6 @@ public class ParameterCharValueUpdate {
             default:
                 //TODO throw exception ???
         }
-
-        nodeParameterCheck.checkParameter(workflowContext, node);
-        node.downgradeNodeState2Ready();
-        workflowContext.getWorkflow().changeWorkflowState2Draft();
+        workflowContext.doneUpdateNodeParameter(node, targetParameter);
     }
 }

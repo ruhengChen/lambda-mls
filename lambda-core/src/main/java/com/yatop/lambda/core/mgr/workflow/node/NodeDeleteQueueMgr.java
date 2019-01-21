@@ -70,6 +70,26 @@ public class NodeDeleteQueueMgr extends BaseMgr {
 
     /*
      *
+     *   清理节点删除（按工作流ID + 删除批次序号）
+     *   返回删除数量
+     *
+     * */
+    public int clearNodeDelete(Long flowId) {
+        if(DataUtil.isNull(flowId)){
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Clear node delete -- invalid clear condition.", "无效清理条件");
+        }
+
+        try {
+            WfFlowNodeDeleteQueueExample example = new WfFlowNodeDeleteQueueExample();
+            example.createCriteria().andFlowIdEqualTo(flowId);
+            return wfFlowNodeDeleteQueueMapper.deleteByExample(example);
+        } catch (Throwable e) {
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Clear node delete failed.", "清理节点删除失败", e);
+        }
+    }
+
+    /*
+     *
      *   查询节点删除（按工作流ID + 删除序号）
      *   返回结果
      *

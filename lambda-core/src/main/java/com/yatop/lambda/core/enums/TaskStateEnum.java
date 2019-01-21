@@ -18,9 +18,9 @@ public enum TaskStateEnum {
     RUNNING(2, "Running"),
 
     /**
-     * 运行完成
+     * 运行成功
      */
-    FINISHED(3, "Finished"),
+    SUCCESS(3, "Success"),
 
     /**
      * 出错终止
@@ -61,7 +61,7 @@ public enum TaskStateEnum {
             case 0: return PREPARING;
             case 1: return READY;
             case 2: return RUNNING;
-            case 3: return FINISHED;
+            case 3: return SUCCESS;
             case 4: return ERROR_TERMINATED;
             case 5: return USER_TERMINATED;
             default: return null;

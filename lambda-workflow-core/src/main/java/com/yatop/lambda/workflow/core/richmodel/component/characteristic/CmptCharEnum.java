@@ -1,17 +1,11 @@
 package com.yatop.lambda.workflow.core.richmodel.component.characteristic;
 
 import com.yatop.lambda.base.model.CfCmptCharEnum;
-import com.yatop.lambda.workflow.core.richmodel.IRichModel;
+import com.yatop.lambda.workflow.core.richmodel.RichModel;
 
-public class CmptCharEnum extends CfCmptCharEnum implements IRichModel {
+public class CmptCharEnum extends RichModel<CfCmptCharEnum> {
 
     public CmptCharEnum(CfCmptCharEnum data) {
-        super.copyProperties(data);
-        this.clearColoured();
-    }
-
-    @Override
-    public void clear() {
-        super.clear();
+        super(data);
     }
 }

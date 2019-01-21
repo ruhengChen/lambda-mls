@@ -88,7 +88,7 @@ public class DataTableMgr extends BaseMgr {
 
     /*
      *
-     *   更新数据表信息（表名、列数、行数、数据文件大小、数据文件名、数据概要文件名、数据表状态、描述）
+     *   更新数据表信息（表名、列数、行数、数据文件大小、数据文件名、DFS概要文件名、本地概要文件名、数据表状态、描述）
      *   返回更新数量
      *
      * */
@@ -102,7 +102,8 @@ public class DataTableMgr extends BaseMgr {
                 table.isTableRowsNotColoured() &&
                 table.isDataFileSizeNotColoured() &&
                 table.isDataFileNotColoured() &&
-                table.isDataSummaryFileNotColoured() &&
+                table.isSummaryDfsFileNotColoured() &&
+                table.isSummaryLocalFileNotColoured() &&
                 table.isTableStateNotColoured() &&
                 table.isDescriptionNotColoured()) {
             throw new LambdaException(LambdaExceptionEnum.D_DATA_DEFAULT_ERROR, "Update data table info failed -- invalid update data.", "无效更新内容");
@@ -125,8 +126,10 @@ public class DataTableMgr extends BaseMgr {
                 updateTable.setDataFileSize(table.getDataFileSize());
             if(table.isDataFileColoured())
                 updateTable.setDataFile(table.getDataFile());
-            if(table.isDataSummaryFileColoured())
-                updateTable.setDataSummaryFile(table.getDataSummaryFile());
+            if(table.isSummaryDfsFileColoured())
+                updateTable.setSummaryDfsFile(table.getSummaryDfsFile());
+            if(table.isSummaryLocalFileColoured())
+                updateTable.setSummaryLocalFile(table.getSummaryLocalFile());
             if(table.isTableStateColoured())
                 updateTable.setTableState(table.getTableState());
             if(table.isDescriptionColoured())

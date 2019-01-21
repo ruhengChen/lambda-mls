@@ -1,13 +1,11 @@
 package com.yatop.lambda.core.mgr.workflow.node;
 
-import com.yatop.lambda.base.model.WfFlowNode;
 import com.yatop.lambda.base.model.WfFlowNodeParameter;
 import com.yatop.lambda.base.model.WfFlowNodeParameterExample;
 import com.yatop.lambda.core.enums.IsGlobalParameterEnum;
 import com.yatop.lambda.core.enums.LambdaExceptionEnum;
 import com.yatop.lambda.core.mgr.base.BaseMgr;
 import com.yatop.lambda.core.enums.DataStatusEnum;
-import com.yatop.lambda.core.enums.IsDuplicatedEnum;
 import com.yatop.lambda.core.exception.LambdaException;
 import com.yatop.lambda.core.utils.DataUtil;
 import com.yatop.lambda.core.utils.SystemTimeUtil;
@@ -39,8 +37,6 @@ public class NodeParameterMgr extends BaseMgr {
             Date dtCurrentTime = SystemTimeUtil.getCurrentTime();
             insertNodeParameter.copyProperties(nodeParameter);
             insertNodeParameter.setIsGlobalParameter(IsGlobalParameterEnum.NO.getMark());
-            insertNodeParameter.setLastGlobalParameterId(null);
-            insertNodeParameter.setIsDuplicated(IsDuplicatedEnum.NO.getMark());
             insertNodeParameter.setStatus(DataStatusEnum.NORMAL.getStatus());
             insertNodeParameter.setLastUpdateTime(dtCurrentTime);
             insertNodeParameter.setLastUpdateOper(operId);
@@ -91,7 +87,6 @@ public class NodeParameterMgr extends BaseMgr {
         try {
             WfFlowNodeParameter recoverNodeParameter = new WfFlowNodeParameter();
             recoverNodeParameter.setIsGlobalParameter(IsGlobalParameterEnum.NO.getMark());
-            recoverNodeParameter.setLastGlobalParameterId(null);
             recoverNodeParameter.setStatus(DataStatusEnum.NORMAL.getStatus());
             recoverNodeParameter.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
             recoverNodeParameter.setLastUpdateOper(operId);
@@ -105,7 +100,7 @@ public class NodeParameterMgr extends BaseMgr {
 
     /*
      *
-     *   更新节点参数（特征值、是否为全局参数、最后全局参数ID、是否被复制、警告消息、描述）
+     *   更新节点参数（特征值、是否为全局参数、警告消息、描述）
      *   返回更新数量
      *
      * */
@@ -116,8 +111,6 @@ public class NodeParameterMgr extends BaseMgr {
 
         if(nodeParameter.isCharValueNotColoured() &&
                 nodeParameter.isIsGlobalParameterNotColoured() &&
-                nodeParameter.isLastGlobalParameterIdNotColoured() &&
-                nodeParameter.isIsDuplicatedNotColoured() &&
                 nodeParameter.isWarningMsgNotColoured() &&
                 nodeParameter.isDescriptionNotColoured()) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Update node parameter failed -- invalid update data.", "无效更新内容");
@@ -129,10 +122,6 @@ public class NodeParameterMgr extends BaseMgr {
                 updateNodeParameter.setCharValue(nodeParameter.getCharValue());
             if(nodeParameter.isIsGlobalParameterColoured())
                 updateNodeParameter.setIsGlobalParameter(nodeParameter.getIsGlobalParameter());
-            if(nodeParameter.isLastGlobalParameterIdColoured())
-                updateNodeParameter.setLastGlobalParameterId(nodeParameter.getLastGlobalParameterId());
-            if(nodeParameter.isIsDuplicatedColoured())
-                updateNodeParameter.setIsDuplicated(nodeParameter.getIsDuplicated());
             if(nodeParameter.isWarningMsgColoured())
                 updateNodeParameter.setWarningMsg(nodeParameter.getWarningMsg());
             if(nodeParameter.isDescriptionColoured())

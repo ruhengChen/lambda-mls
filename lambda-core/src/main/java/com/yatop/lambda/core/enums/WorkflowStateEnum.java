@@ -20,7 +20,7 @@ public enum WorkflowStateEnum {
     /**
      * 运行结束
      */
-    FINISHED_RUNNING(3, "Finished Running");
+    FINISHED(3, "Finished Running");
 
     private int state;
     private String name;
@@ -51,7 +51,7 @@ public enum WorkflowStateEnum {
             case 0: return DRAFT;
             case 1: return PREPARING;
             case 2: return RUNNING;
-            case 3: return FINISHED_RUNNING;
+            case 3: return FINISHED;
             default: return null;
         }
     }

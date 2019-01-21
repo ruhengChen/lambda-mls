@@ -8,8 +8,8 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -29,23 +29,28 @@ import java.util.Properties;
 public class MybatisConfig {
 
     @Bean("frameworkDataSource")
+    @Qualifier("frameworkDataSource")
     @Primary
     public DataSource frameworkDataSource(@Qualifier("orignalFrameworkDataSource") DataSource orignalFrameworkDataSource) {
         return new DataSourceSpy(orignalFrameworkDataSource);
     }
 
     @Bean("orignalFrameworkDataSource")
+    @Qualifier("orignalFrameworkDataSource")
     @ConfigurationProperties(prefix = "lambda.mls.datasource")
     public DataSource orignalFrameworkDataSource(){
         return DataSourceBuilder.create().type(DruidDataSource.class).build();
     }
 
     @Bean("frameworkJdbcTemplate")
+    @Qualifier("frameworkJdbcTemplate")
     public JdbcTemplate frameworkJdbcTemplate(@Qualifier("frameworkDataSource") DataSource frameworkDataSource) {
         return new JdbcTemplate(frameworkDataSource);
     }
 
-/*    @Bean(name = "frameworkSqlSessionFactory")
+/*
+    @Bean("frameworkSqlSessionFactory")
+    @Qualifier("frameworkSqlSessionFactory")
     public SqlSessionFactory frameworkSqlSessionFactory(@Qualifier("frameworkDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
@@ -53,12 +58,14 @@ public class MybatisConfig {
         return bean.getObject();
     }
 
-    @Bean
+    @Bean("frameworkSqlSessionTemplate")
+    @Qualifier("frameworkSqlSessionTemplate")
     public SqlSessionTemplate frameworkSqlSessionTemplate(@Qualifier("frameworkSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
-    }*/
+    }
+*/
 
-    @Bean
+    @Bean("platformTransactionManager")
     public PlatformTransactionManager platformTransactionManager(@Qualifier("frameworkDataSource") DataSource frameworkDataSource) {
         return new DataSourceTransactionManager(frameworkDataSource);
     }

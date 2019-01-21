@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.Collection;
+import java.util.Map;
 
 public class DataUtil {
 
@@ -102,6 +103,14 @@ public class DataUtil {
 
     public static boolean isNotEmpty(Collection<? extends Object> list) {
         return !DataUtil.isEmpty(list);
+    }
+
+    public static boolean isEmpty(Map map) {
+        return (DataUtil.isNotNull(map)  ? map.isEmpty() : true);
+    }
+
+    public static boolean isNotEmpty(Map map) {
+        return !DataUtil.isEmpty(map);
     }
 
     public static <D extends LambdaRootModel> void clear(D data) {

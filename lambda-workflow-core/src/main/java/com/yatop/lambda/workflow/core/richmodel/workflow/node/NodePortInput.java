@@ -1,19 +1,21 @@
 package com.yatop.lambda.workflow.core.richmodel.workflow.node;
 
 import com.yatop.lambda.base.model.WfFlowNodePort;
-import com.yatop.lambda.workflow.core.richmodel.IRichModel;
+import com.yatop.lambda.workflow.core.framework.chartype.ICharTypeClazz;
+import com.yatop.lambda.workflow.core.richmodel.RichModel;
+import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptChar;
+import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptCharType;
 import com.yatop.lambda.workflow.core.richmodel.workflow.module.ModulePort;
 
-public class NodePortInput extends WfFlowNodePort implements IRichModel {
+public class NodePortInput extends RichModel<WfFlowNodePort> {
 
     private ModulePort modulePort;
-    private boolean deleted;
+    private boolean analyzed;
 
     public NodePortInput(WfFlowNodePort data, ModulePort modulePort) {
-        super.copyProperties(data);
+        super(data);
         this.modulePort = modulePort;
-        this.deleted = false;
-        this.clearColoured();
+        this.analyzed = false;
     }
 
     @Override
@@ -26,11 +28,27 @@ public class NodePortInput extends WfFlowNodePort implements IRichModel {
         return modulePort;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    public CmptChar getCmptChar() {
+        return modulePort.getCmptChar();
     }
 
-    public void markDeleted() {
-        this.deleted = true;
+    public boolean isDataTablePort() {
+        return modulePort.isDataTablePort();
+    }
+
+    public boolean isAnalyzed() {
+        return analyzed;
+    }
+
+    protected void markAnalyzed() {
+        this.analyzed = true;
+    }
+
+    public CmptCharType getType() {
+        return this.getCmptChar().getType();
+    }
+
+    public ICharTypeClazz getCharTypeClazzBean() {
+        return this.getCmptChar().getCharTypeClazzBean();
     }
 }

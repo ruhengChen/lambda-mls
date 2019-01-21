@@ -3,11 +3,11 @@ package com.yatop.lambda.workflow.core.mgr.workflow.node.link;
 import com.yatop.lambda.base.model.WfFlowNodeLink;
 import com.yatop.lambda.core.enums.IsWebLinkEnum;
 import com.yatop.lambda.core.enums.LambdaExceptionEnum;
-import com.yatop.lambda.core.enums.WorkflowStateEnum;
 import com.yatop.lambda.core.exception.LambdaException;
 import com.yatop.lambda.core.mgr.workflow.node.NodeLinkMgr;
 import com.yatop.lambda.core.utils.DataUtil;
 import com.yatop.lambda.workflow.core.context.WorkflowContext;
+import com.yatop.lambda.workflow.core.context.WorkflowContextHelper;
 import com.yatop.lambda.workflow.core.mgr.workflow.node.NodeQuery;
 import com.yatop.lambda.workflow.core.richmodel.workflow.node.Node;
 import com.yatop.lambda.workflow.core.richmodel.workflow.node.NodeLink;
@@ -25,35 +25,37 @@ public class LinkCreate {
     @Autowired
     LinkValidate linkValidate;
 
-    @Autowired
-    NodeQuery nodeQuery;
-
     public NodeLink createLink(WorkflowContext workflowContext, Node srcNode, Node dstNode, NodePortOutput srcNodePort, NodePortInput dstNodePort) {
 
         if(!linkValidate.validateLink(workflowContext, srcNode, dstNode, srcNodePort, dstNodePort)) {
-            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Create node link failed -- validation failed for establishing link.", "输出端口和输入端口的建立链接验证失败", srcNodePort, dstNodePort);
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Create node link failed -- validation failed for establishing link.", "输出端口和输入端口间链接建立验证失败", srcNodePort, dstNodePort);
         }
 
         WfFlowNodeLink nodeLink = new WfFlowNodeLink();
-        nodeLink.setLinkName(String.format("%d.%d -->> %d.%d", srcNode.getNodeId(), srcNodePort.getNodePortId(), dstNode.getNodeId(), dstNodePort.getNodePortId()));
-        nodeLink.setOwnerFlowId(workflowContext.getWorkflow().getFlowId());
-        nodeLink.setIsWebLink(srcNode.getComponent().isWebComponent() ? IsWebLinkEnum.YES.getMark() : IsWebLinkEnum.NO.getMark());
-        nodeLink.setSrcNodeId(srcNode.getNodeId());
-        nodeLink.setSrcPortId(srcNodePort.getNodePortId());
-        nodeLink.setDstNodeId(dstNode.getNodeId());
-        nodeLink.setDstPortId(dstNodePort.getNodePortId());
+        nodeLink.setLinkName(String.format("From %d.%d to %d.%d", srcNode.data().getNodeId(),
+                                                                  srcNodePort.data().getNodePortId(),
+                                                                  dstNode.data().getNodeId(),
+                                                                  dstNodePort.data().getNodePortId()));
+        nodeLink.setOwnerFlowId(workflowContext.getWorkflow().data().getFlowId());
+        nodeLink.setIsWebLink(srcNode.isWebNode() ? IsWebLinkEnum.YES.getMark() : IsWebLinkEnum.NO.getMark());
+        nodeLink.setSrcNodeId(srcNode.data().getNodeId());
+        nodeLink.setSrcPortId(srcNodePort.data().getNodePortId());
+        nodeLink.setDstNodeId(dstNode.data().getNodeId());
+        nodeLink.setDstPortId(dstNodePort.data().getNodePortId());
         nodeLink = nodeLinkMgr.insertLink(nodeLink, workflowContext.getOperId());
         //nodeLink.copyProperties(nodeLinkMgr.queryLink(nodeLink.getLinkId()));
         NodeLink richNodeLink = new NodeLink(nodeLink);
-        workflowContext.putLink(richNodeLink);
+        workflowContext.doneCreateLink(richNodeLink);
 
-        workflowContext.getWorkflow().changeWorkflowState2Draft();
+        if(WorkflowContextHelper.existDirectedCyclicGraph(workflowContext)) {
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Create node link failed -- Create link will make workflow exists directed cyclic graph..", "新建链接将导致工作流产生有向循环图", srcNodePort, dstNodePort);
+        }
         return richNodeLink;
     }
 
     public NodeLink createLink(WorkflowContext workflowContext, Long srcNodeId, Long dstNodeId, Long srcNodePortId, Long dstNodePortId) {
-        Node srcNode = nodeQuery.queryNode(workflowContext, srcNodeId);
-        Node dstNode = nodeQuery.queryNode(workflowContext, dstNodeId);
+        Node srcNode = workflowContext.fetchNode(srcNodeId);
+        Node dstNode = workflowContext.fetchNode(dstNodeId);
 
         NodePortOutput srcNodePort = srcNode.getOutputNodePort(srcNodePortId);
         if(DataUtil.isNull(srcNodePort)) {

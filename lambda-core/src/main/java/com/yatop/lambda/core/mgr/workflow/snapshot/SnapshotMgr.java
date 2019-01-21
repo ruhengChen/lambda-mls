@@ -32,6 +32,7 @@ public class SnapshotMgr extends BaseMgr {
                 snapshot.isOwnerProjectIdNotColoured() ||
                 snapshot.isOwnerFlowIdNotColoured() ||
                 snapshot.isSnapshotVersionNotColoured() ||
+                snapshot.isSnapshotStateNotColoured() ||
                 DataUtil.isEmpty(operId) ) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Insert snapshot info failed -- invalid insert data.", "无效插入数据");
         }
@@ -41,7 +42,6 @@ public class SnapshotMgr extends BaseMgr {
             Date dtCurrentTime = SystemTimeUtil.getCurrentTime();
             insertSnapshot.copyProperties(snapshot);
             insertSnapshot.setSnapshotIdColoured(false);
-            insertSnapshot.setSnapshotState(SnapshotStateEnum.FINISHED.getState());
             insertSnapshot.setStatus(DataStatusEnum.NORMAL.getStatus());
             insertSnapshot.setLastUpdateTime(dtCurrentTime);
             insertSnapshot.setLastUpdateOper(operId);
@@ -76,6 +76,31 @@ public class SnapshotMgr extends BaseMgr {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete snapshot info failed.", "删除快照信息失败", e);
         }
     }
+
+    /*
+     *
+     *   逻辑删除快照信息（按工作流ID）
+     *   返回删除数量
+     *
+     * */
+/*    public int deleteSnapshotByWorkflowId(Long workflowId, String operId) {
+        if(DataUtil.isNull(workflowId) || DataUtil.isEmpty(operId)){
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete snapshot info -- invalid delete condition.", "无效删除条件");
+        }
+
+        try {
+            WfSnapshot deleteSnapshot = new WfSnapshot();
+            deleteSnapshot.setStatus(DataStatusEnum.INVALID.getStatus());
+            deleteSnapshot.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
+            deleteSnapshot.setLastUpdateOper(operId);
+            WfSnapshotExample example = new WfSnapshotExample();
+            example.createCriteria().andOwnerFlowIdEqualTo(workflowId).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
+            return wfSnapshotMapper.updateByExampleSelective(deleteSnapshot, example);
+        } catch (Throwable e) {
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete snapshot info failed.", "删除快照信息失败", e);
+        }
+    }
+*/
 
     /*
      *

@@ -1,9 +1,7 @@
 package com.yatop.lambda.core.mgr.workflow.execution;
 
-import com.yatop.lambda.base.mapper.extend.WorkflowJobMapper;
 import com.yatop.lambda.base.model.WfExecutionJob;
 import com.yatop.lambda.base.model.WfExecutionJobExample;
-import com.yatop.lambda.base.model.WfFlow;
 import com.yatop.lambda.core.enums.LambdaExceptionEnum;
 import com.yatop.lambda.core.mgr.base.BaseMgr;
 import com.yatop.lambda.core.enums.DataStatusEnum;
@@ -21,9 +19,6 @@ import java.util.List;
 
 @Service
 public class ExecutionJobMgr extends BaseMgr {
-
-    @Autowired
-    WorkflowJobMapper workflowJobMapper;
 
     /*
      *
@@ -93,7 +88,7 @@ public class ExecutionJobMgr extends BaseMgr {
 
     /*
      *
-     *   更新作业信息（作业上下文、DFS作业目录、本地作业目录、作业提交时间、作业开始时间、作业结束时间、作业状态、描述）
+     *   更新作业信息（作业内容、DFS作业目录、本地作业目录、下一作业序号、作业提交时间、作业开始时间、作业结束时间、作业状态、描述）
      *   返回更新数量
      *
      * */
@@ -105,6 +100,7 @@ public class ExecutionJobMgr extends BaseMgr {
         if(job.isJobContentNotColoured() &&
                 job.isJobDfsDirNotColoured() &&
                 job.isJobLocalDirNotColoured() &&
+                job.isNextTaskSequenceNotColoured() &&
                 job.isJobSubmitTimeNotColoured() &&
                 job.isJobStartTimeNotColoured() &&
                 job.isJobEndTimeNotColoured() &&
@@ -122,6 +118,8 @@ public class ExecutionJobMgr extends BaseMgr {
                 updateJob.setJobDfsDir(job.getJobDfsDir());
             if(job.isJobLocalDirColoured())
                 updateJob.setJobLocalDir(job.getJobLocalDir());
+            if(job.isNextTaskSequenceColoured())
+                updateJob.setNextTaskSequence(job.getNextTaskSequence());
             if(job.isJobSubmitTimeColoured())
                 updateJob.setJobSubmitTime(job.getJobSubmitTime());
             if(job.isJobStartTimeColoured())
@@ -139,24 +137,6 @@ public class ExecutionJobMgr extends BaseMgr {
             job.setLastUpdateTime(updateJob.getLastUpdateTime());
             job.setLastUpdateOper(updateJob.getLastUpdateOper());
             return wfExecutionJobMapper.updateByPrimaryKeySelective(updateJob);
-        } catch (Throwable e) {
-            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Update job info failed.", "更新作业信息失败", e);
-        }
-    }
-
-    /*
-     *
-     *   作业任务序号增加
-     *   返回更新数量
-     *
-     * */
-    public int increaseTaskSequence(WfExecutionJob job, String operId) {
-        if( DataUtil.isNull(job) || job.isJobIdNotColoured() || DataUtil.isEmpty(operId)) {
-            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Update job info failed -- invalid update condition.", "无效更新条件");
-        }
-
-        try {
-            return workflowJobMapper.increaseTaskSequence(job.getJobId(), SystemTimeUtil.getCurrentTime(), operId);
         } catch (Throwable e) {
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Update job info failed.", "更新作业信息失败", e);
         }

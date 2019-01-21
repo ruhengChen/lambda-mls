@@ -2,7 +2,6 @@ package com.yatop.lambda.workflow.core.mgr.workflow.node.parameter;
 
 import com.yatop.lambda.base.model.WfFlowNodeParameter;
 import com.yatop.lambda.core.enums.DataStatusEnum;
-import com.yatop.lambda.core.enums.IsDuplicatedEnum;
 import com.yatop.lambda.core.enums.IsGlobalParameterEnum;
 import com.yatop.lambda.core.enums.SourceLevelEnum;
 import com.yatop.lambda.core.mgr.workflow.node.NodeParameterMgr;
@@ -34,24 +33,23 @@ public class ParameterHelper {
         //模拟生成非workflow来源级别的节点参数，和workflow来源级别缺失的节点参数
         Date curTime = new Date();
         WfFlowNodeParameter parameter = new WfFlowNodeParameter();
-        parameter.setNodeId(node.getNodeId());
+        parameter.setNodeId(node.data().getNodeId());
         parameter.setSpecType(charValue.getSpecType());
-        parameter.setCharId(cmptChar.getCharId());
+        parameter.setCharId(cmptChar.data().getCharId());
         if(DataUtil.isNotNull(charValue.getCharValue()))
             parameter.setCharValue(charValue.getCharValue());
         parameter.setIsGlobalParameter(IsGlobalParameterEnum.NO.getMark());
-        parameter.setIsDuplicated(IsDuplicatedEnum.NO.getMark());
         parameter.setStatus(DataStatusEnum.NORMAL.getStatus());
-        parameter.setDescription(SourceLevelEnum.valueOf(cmptChar.getSrcLevel()) + " Source Level -- Simulate Parameter");
+        parameter.setDescription(SourceLevelEnum.valueOf(cmptChar.data().getSrcLevel()) + " Source Level -- Simulate Parameter");
         parameter.setLastUpdateTime(curTime);
         parameter.setLastUpdateOper(workflowContext.getOperId());
         parameter.setCreateTime(curTime);
         parameter.setCreateOper(workflowContext.getOperId());
-        return new NodeParameter(parameter, cmptChar, charValue, true);
+        return new NodeParameter(parameter, charValue, true);
     }
 
     public static void updateNodeParameter(NodeParameter parameter, String operId) {
-        NODE_PARAMETER_MGR.updateNodeParameter(parameter, operId);
+        NODE_PARAMETER_MGR.updateNodeParameter(parameter.data(), operId);
         parameter.clearColoured();
     }
 }

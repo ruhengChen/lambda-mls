@@ -21,13 +21,16 @@ import javax.sql.DataSource;
 )
 public class MyBatisConfig {
 
-/*    @Bean("coreDataSource")
+/*
+    @Bean("coreDataSource")
+    @Qualifier("coreDataSource")
     @Primary
     public DataSource coreDataSource(@Qualifier("orignalCoreDataSource") DataSource orignalFrameworkDataSource) {
         return new DataSourceSpy(orignalFrameworkDataSource);
     }
 
     @Bean("orignalCoreDataSource")
+    @Qualifier("orignalCoreDataSource")
     @ConfigurationProperties(prefix = "lambda.mls.datasource")
     public DataSource orignalCoreDataSource(){
         return DataSourceBuilder.create().type(DruidDataSource.class).build();
@@ -35,16 +38,19 @@ public class MyBatisConfig {
 */
 
     @Bean("coreJdbcTemplate")
+    @Qualifier("coreJdbcTemplate")
     public JdbcTemplate coreJdbcTemplate(@Qualifier("frameworkDataSource") DataSource frameworkDataSource) {
         return new JdbcTemplate(frameworkDataSource);
     }
 
     @Bean("coreSqlSessionTemplate")
+    @Qualifier("coreSqlSessionTemplate")
     public SqlSessionTemplate coreSqlSessionTemplate(@Qualifier("coreSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
     @Bean("coreSqlSessionFactory")
+    @Qualifier("coreSqlSessionFactory")
     public SqlSessionFactory coreSqlSessionFactory(@Qualifier("frameworkDataSource") DataSource coreDataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(coreDataSource);
@@ -53,7 +59,8 @@ public class MyBatisConfig {
         return bean.getObject();
     }
 
-/*    @Bean("coreTransactionManager")
+/*
+    @Bean("coreTransactionManager")
     public PlatformTransactionManager coreTransactionManager(@Qualifier("coreDataSource") DataSource portalDataSource) {
         return new DataSourceTransactionManager(portalDataSource);
     }

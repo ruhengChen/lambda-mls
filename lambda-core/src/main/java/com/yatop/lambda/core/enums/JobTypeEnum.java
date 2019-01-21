@@ -109,4 +109,17 @@ public enum JobTypeEnum {
                 return false;
         }
     }
+
+    public static boolean enableFlushSnapshot(JobTypeEnum jobTypeEnum) {
+        switch (jobTypeEnum) {
+            case RUN_ALL:
+            case RUN_START_HERE:
+            case RUN_END_HERE:
+            case RUN_THIS_NODE:
+            case RUN_DATAFILE_IMPORT:
+                return true;
+            default:
+                return false;
+        }
+    }
 }

@@ -36,13 +36,16 @@ public class BaseMgr {
     protected WfExecutionJobMapper wfExecutionJobMapper;
 
     @Autowired
-    protected WfExecutionQueueMapper wfExecutionQueueMapper;
+    protected WfExecutionJobQueueMapper wfExecutionJobQueueMapper;
 
     @Autowired
     protected WfExecutionTaskMapper wfExecutionTaskMapper;
 
     @Autowired
     protected WfExecutionTaskOutputMapper wfExecutionTaskOutputMapper;
+
+    @Autowired
+    protected WfExecutionTaskQueueMapper wfExecutionTaskQueueMapper;
 
     @Autowired
     protected WfFlowGlobalParameterMapper wfFlowGlobalParameterMapper;

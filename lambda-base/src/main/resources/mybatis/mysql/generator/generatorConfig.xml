@@ -126,5 +126,6 @@
 			<property name="ignoreQualifiersAtRuntime" value="true" />
 			<generatedKey column="SNAPSHOT_ID" sqlStatement="Mysql" identity="true"/>
 		</table>
+
 	</context>
 </generatorConfiguration>

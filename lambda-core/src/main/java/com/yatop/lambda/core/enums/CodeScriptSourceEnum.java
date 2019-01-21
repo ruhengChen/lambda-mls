@@ -10,7 +10,7 @@ public enum CodeScriptSourceEnum {
     /**
      * 实验编辑
      */
-    EDIT(1, "Edit");
+    EDITOR(1, "Editor");
 
     private int source;
     private String name;
@@ -39,7 +39,7 @@ public enum CodeScriptSourceEnum {
     public static CodeScriptSourceEnum valueOf(int source) {
         switch (source) {
             case 0: return EXECUTION;
-            case 1: return EDIT;
+            case 1: return EDITOR;
             default: return null;
         }
     }
