@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yatop.lambda.portal.dao.MenuMapper" >
+  <resultMap id="menu" type="com.yatop.lambda.portal.model.Menu" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="MENU_ID" property="menuId" jdbcType="BIGINT" />
+    <result column="PARENT_ID" property="parentId" jdbcType="BIGINT" />
+    <result column="MENU_NAME" property="menuName" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="ICON" property="icon" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="CHAR" />
+    <result column="ORDER_NUM" property="orderNum" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="PERMS" property="perms" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <select id="findUserPermissions" resultMap="menu">
+  	select m.perms from t_role r
+        left join t_user_role ur on(r.role_id = ur.role_id)
+        left join t_user u on(u.user_id = ur.user_id)
+        left join t_role_menu rm on(rm.role_id = r.role_id)
+        left join t_menu m on(m.menu_id = rm.menu_id )
+        where u.username = #{userName} and m.perms is not null and m.perms &lt;&gt; ''
+
+    UNION ALL
+
+    select m.perms from t_user_menu um
+        left join t_user u on(u.user_id = um.user_id)
+        left join t_menu m on(m.menu_id = um.menu_id )
+        where u.username = #{userName} and m.perms is not null and m.perms &lt;&gt; ''
+  </select>
+
+  <select id="findUserMenus" resultMap="menu">
+  	select m.* from t_menu m
+    where m.type &lt;&gt; 1 and m.MENU_ID in
+        (select distinct rm.menu_id from t_role_menu rm
+		left join t_role r on(rm.role_id = r.role_id)
+        left join t_user_role ur on(ur.role_id = r.role_id)
+        left join t_user u on (u.user_id = ur.user_id)
+        where u.username = #{userName}
+        UNION
+        select distinct um.menu_id from t_user_menu um
+        left join t_user u on(u.user_id = um.user_id)
+        where u.username = #{userName}) order by m.create_time
+  </select>
+
+  <update id="changeToTop" parameterType="java.util.List">
+    update t_menu set parent_id = 0 where menu_id in ( select a.menu_id from (
+    (select menu_id from t_menu where parent_id in
+    <foreach collection="list" item="menuId" index="index" open="(" close=")" separator=",">
+      #{menuId}
+    </foreach>
+    ) ) a )
+  </update>
+</mapper>

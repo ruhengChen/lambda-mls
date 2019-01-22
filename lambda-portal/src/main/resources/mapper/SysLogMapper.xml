@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yatop.lambda.portal.dao.SysLogMapper" >
+  <resultMap id="BaseResultMap" type="com.yatop.lambda.portal.model.SysLog" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="TIME" property="time" jdbcType="DECIMAL" />
+    <result column="IP" property="ip" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="OPERATION" property="operation" jdbcType="LONGVARCHAR" />
+    <result column="METHOD" property="method" jdbcType="LONGVARCHAR" />
+    <result column="PARAMS" property="params" jdbcType="LONGVARCHAR" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+		PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+		"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<context id="oracle" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+			<!-- 该配置会使生产的Mapper自动继承MyMapper -->
+			<property name="mappers" value="com.yatop.lambda.portal.common.config.MyMapper" />
+			<!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+			<property name="caseSensitive" value="false"/>
+		</plugin>
+		<!-- 阻止生成自动注释 -->
+		<commentGenerator>
+			<property name="javaFileEncoding" value="UTF-8"/>
+			<property name="suppressDate" value="true"/>
+
+		</commentGenerator>
+		<!-- 数据库链接地址账号密码 -->
+		<jdbcConnection
+				driverClass="com.mysql.jdbc.Driver"
+				connectionURL="jdbc:mysql://localhost:3306/lambda-portal"
+				userId="root"
+				password="">
+		</jdbcConnection>
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false"/>
+		</javaTypeResolver>
+		<!-- 生成Model类存放位置 -->
+		<javaModelGenerator targetPackage="com.yatop.lambda.portal.model" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true"/>
+			<property name="trimStrings" value="true"/>
+		</javaModelGenerator>
+		<!-- 生成映射文件存放位置 -->
+		<sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+			<property name="enableSubPackages" value="true"/>
+		</sqlMapGenerator>
+		<!-- 生成Dao类存放位置 -->
+		<!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件的代码
+            type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+            type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口 -->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.yatop.lambda.portal.dao" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true"/>
+		</javaClientGenerator>
+		<!-- 配置需要生成的表 -->
+
+		<table tableName="dw_data_table" domainObjectName="DwDataTable">
+		<property name="ignoreQualifiersAtRuntime" value="true" />
+		<generatedKey column="table_id" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="pr_project" domainObjectName="PrProject">
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="PROJECT_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+		<table tableName="pr_project_member" domainObjectName="PrProjectMember">
+			<property name="ignoreQualifiersAtRuntime" value="true" />
+			<generatedKey column="PROJECT_ID" sqlStatement="Mysql" identity="true"/>
+		</table>
+
+		<!--<table tableName="T_LOG" domainObjectName="SysLog">-->
+		<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+		<!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+		<!--</table>-->
+
+		<!--<table tableName="t_menu" domainObjectName="Menu">-->
+		<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+		<!--<generatedKey column="menu_id" sqlStatement="Mysql" identity="true"/>-->
+		<!--</table>-->
+		<!--<table tableName="t_role" domainObjectName="Role">-->
+		<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+		<!--<generatedKey column="role_id" sqlStatement="Mysql" identity="true"/>-->
+		<!--</table>-->
+
+		<!--<table tableName="t_user" domainObjectName="User">-->
+		<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+		<!--<generatedKey column="user_id" sqlStatement="Mysql" identity="true"/>-->
+		<!--</table>-->
+
+		<!--<table tableName="t_role_menu" domainObjectName="RoleMenu">-->
+		<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+
+		<!--</table>-->
+		<!--<table tableName="t_user_menu" domainObjectName="UserMenu">-->
+		<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+
+		<!--</table>-->
+		<!--<table tableName="t_user_role" domainObjectName="UserRole">-->
+		<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+
+		<!--</table>-->
+	</context>
+</generatorConfiguration>
+
+<!--<generatorConfiguration>-->
+		<!--<properties resource="mybatis/mysql/generator/generator.properties" />-->
+		<!--<context id="lambda-mls" targetRuntime="MyBatis3" defaultModelType="flat">-->
+			<!--<property name="beginningDelimiter" value="`"/>-->
+			<!--<property name="endingDelimiter" value="`"/>-->
+			<!--<plugin type="tk.mybatis.mapper.generator.MapperPlugin">-->
+				<!--&lt;!&ndash; 该配置会使生产的Mapper自动继承MyMapper &ndash;&gt;-->
+				<!--<property name="mappers" value="com.yatop.lambda.portal.common.config.MyMapper" />-->
+				<!--&lt;!&ndash; caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true &ndash;&gt;-->
+				<!--<property name="caseSensitive" value="false"/>-->
+			<!--</plugin>-->
+			<!--&lt;!&ndash;<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />&ndash;&gt;-->
+			<!--&lt;!&ndash;<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />&ndash;&gt;-->
+			<!--&lt;!&ndash;<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />&ndash;&gt;-->
+			<!--&lt;!&ndash;<plugin type="org.mybatis.generator.plugins.LambdaEnhancedPlugin" />&ndash;&gt;-->
+			<!--&lt;!&ndash;-->
+                    <!--<plugin type="org.mybatis.generator.plugins.MapperConfigPlugin">-->
+                        <!--<property name="targetProject" value="./src/main/resources" />-->
+                        <!--<property name="targetPackage" value="mybatis/mysql" />-->
+                    <!--</plugin>-->
+            <!--&ndash;&gt;-->
+
+			<!--&lt;!&ndash;		<commentGenerator>-->
+                        <!--<property name="suppressDate" value="true" />-->
+                        <!--<property name="suppressAllComments" value="true" />-->
+                    <!--</commentGenerator>-->
+            <!--&ndash;&gt;-->
+
+			<!--<jdbcConnection driverClass="${jdbc.driverClassName}"-->
+							<!--connectionURL="${jdbc.jdbcUrl}" userId="${jdbc.username}" password="${jdbc.password}">-->
+			<!--</jdbcConnection>-->
+
+			<!--<javaModelGenerator targetPackage="com.yatop.lambda.portal.model"-->
+								<!--targetProject="./src/main/java">-->
+				<!--<property name="enableSubPackages" value="true" />-->
+				<!--<property name="trimStrings" value="true" />-->
+				<!--&lt;!&ndash;<property name="rootClass" value="com.yatop.lambda.portal.utils.LambdaRootModel" />&ndash;&gt;-->
+			<!--</javaModelGenerator>-->
+
+			<!--<sqlMapGenerator targetPackage="com/yatop/lambda/portal/sqlmapper"-->
+							 <!--targetProject="./src/main/resources">-->
+				<!--<property name="enableSubPackages" value="true" />-->
+			<!--</sqlMapGenerator>-->
+
+			<!--<javaClientGenerator targetPackage="com.yatop.lambda.portal.dao"-->
+								 <!--targetProject="./src/main/java"-->
+								 <!--type="XMLMAPPER">-->
+				<!--<property name="enableSubPackages" value="true" />-->
+			<!--</javaClientGenerator>-->
+
+			<!--&lt;!&ndash;<table tableName="%" >&ndash;&gt;-->
+			<!--&lt;!&ndash;<property name="ignoreQualifiersAtRuntime" value="true" />&ndash;&gt;-->
+			<!--&lt;!&ndash;</table>&ndash;&gt;-->
+			<!--<table tableName="T_LOG" domainObjectName="SysLog">-->
+				<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+				<!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+			<!--</table>-->
+			<!--<table tableName="t_menu" domainObjectName="Menu">-->
+				<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+				<!--<generatedKey column="menu_id" sqlStatement="Mysql" identity="true"/>-->
+			<!--</table>-->
+			<!--<table tableName="t_role" domainObjectName="Role">-->
+				<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+				<!--<generatedKey column="role_id" sqlStatement="Mysql" identity="true"/>-->
+			<!--</table>-->
+
+			<!--<table tableName="t_user" domainObjectName="User">-->
+				<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+				<!--<generatedKey column="user_id" sqlStatement="Mysql" identity="true"/>-->
+			<!--</table>-->
+
+			<!--<table tableName="t_role_menu" domainObjectName="RoleMenu">-->
+				<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+
+			<!--</table>-->
+			<!--<table tableName="t_user_menu" domainObjectName="UserMenu">-->
+				<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+
+			<!--</table>-->
+			<!--<table tableName="t_user_role" domainObjectName="UserRole">-->
+				<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+
+			<!--</table>-->
+
+	<!--</context>-->
+<!--</generatorConfiguration>-->
