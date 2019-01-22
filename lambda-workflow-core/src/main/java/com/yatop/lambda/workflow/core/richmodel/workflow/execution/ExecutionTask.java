@@ -84,20 +84,20 @@ public class ExecutionTask extends RichModel<WfExecutionTask> {
         this.changeTaskState(TaskStateEnum.USER_TERMINATED);
     }
 
-    private void changeTaskState(TaskStateEnum stateEnum) {
-        if(this.data().getTaskState() == stateEnum.getState())
+    private void changeTaskState(TaskStateEnum taskState) {
+        if(this.data().getTaskState() == taskState.getState())
             return;
 
-        this.data().setTaskState(stateEnum.getState());
-        this.syncTaskState2Node(stateEnum);
+        this.data().setTaskState(taskState.getState());
+        this.syncTaskState2Node(taskState);
     }
 
     public void syncTaskState2Node() {
         this.syncTaskState2Node(TaskStateEnum.valueOf(this.data().getTaskState()));
     }
 
-    private void syncTaskState2Node(TaskStateEnum stateEnum) {
-        switch (stateEnum) {
+    private void syncTaskState2Node(TaskStateEnum taskState) {
+        switch (taskState) {
             case PREPARING:
             case READY:
                 this.node.changeState2Preparing();

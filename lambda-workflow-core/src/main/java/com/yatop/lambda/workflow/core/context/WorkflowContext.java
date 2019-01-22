@@ -8,9 +8,11 @@ import com.yatop.lambda.workflow.core.mgr.warehouse.ModelWarehouseHelper;
 import com.yatop.lambda.workflow.core.mgr.workflow.analyzer.SchemaAnalyzer;
 import com.yatop.lambda.workflow.core.mgr.workflow.analyzer.SchemaAnalyzerHelper;
 import com.yatop.lambda.workflow.core.mgr.workflow.node.port.schema.SchemaHelper;
+import com.yatop.lambda.workflow.core.mgr.workflow.snapshot.SnapshotHelper;
 import com.yatop.lambda.workflow.core.richmodel.data.table.DataWarehouse;
 import com.yatop.lambda.workflow.core.richmodel.data.model.ModelWarehouse;
 import com.yatop.lambda.workflow.core.richmodel.experiment.Experiment;
+import com.yatop.lambda.workflow.core.richmodel.experiment.ExperimentTemplate;
 import com.yatop.lambda.workflow.core.richmodel.workflow.execution.ExecutionJob;
 import com.yatop.lambda.workflow.core.richmodel.workflow.execution.ExecutionTask;
 import com.yatop.lambda.workflow.core.richmodel.workflow.node.*;
@@ -24,7 +26,7 @@ import java.util.*;
 public class WorkflowContext implements IWorkContext {
 
     private boolean lazyLoadMode;           //标识是否为懒加载模式，否则视为节点和链接的相关信息都已经一次性读取到上下文中
-    private boolean executionWorkMode;      //标识是否为运行工作模式，否则视为编辑器模式（用于特征CharValue增删改查等事件内部判断用）
+    private boolean executionWorkMode;      //标识是否为运行工作模式
     private boolean enableFlushWorkflow;    //控制是否可执行flush更新工作流相关信息
     private boolean loadNodeParameter;      //控制是否查询带出节点参数信息
     private boolean loadDataPortSchema;     //控制是否查询带出数据输出端口schema信息
@@ -100,22 +102,25 @@ public class WorkflowContext implements IWorkContext {
         return context;
     }
 
-    //快照查看使用（反序列化时注入）
-    public static WorkflowContext BuildWorkflowContext4Snapshot(Snapshot snapshot, String operId) {
+    //实验模版查看使用
+    public static WorkflowContext BuildWorkflowContext4ViewTemplate(ExperimentTemplate template, String operId) {
+        return BuildWorkflowContext4Snapshot(SnapshotHelper.simulateSnapshot4Template(template), operId);
+    }
+
+    //快照查看使用
+    public static WorkflowContext BuildWorkflowContext4ViewSnapshot(Long snapshotId, String operId) {
+        return BuildWorkflowContext4Snapshot(SnapshotHelper.querySnapshot4View(snapshotId), operId);
+    }
+
+    private static WorkflowContext BuildWorkflowContext4Snapshot(Snapshot snapshot, String operId) {
         WorkflowContext context = new WorkflowContext(snapshot.getWorkflow(), operId);
-        context.enableFlushWorkflow = false;
-        context.loadNodeParameter = false;  //WorkflowContextCodec中填入
-        context.loadDataPortSchema = false;
         context.initialize(snapshot);
         return context;
     }
 
-    //作业运行使用
+    //作业查看使用（作业任务运行、作业运行查看）
     public static WorkflowContext BuildWorkflowContext4Execution(ExecutionJob currentJob, String operId) {
         WorkflowContext context = BuildWorkflowContext4Snapshot(currentJob.getSnapshot(), operId);
-        context.currentJob = currentJob;
-        context.putExecutionJob(currentJob);
-        context.enableFlushWorkflow = currentJob.enableFlushWorkflow();
         context.initialize(currentJob);
         return context;
     }
@@ -144,10 +149,18 @@ public class WorkflowContext implements IWorkContext {
     }
 
     private void initialize(Snapshot snapshot) {
-        //TODO decode
+        this.enableFlushWorkflow = false;
+        this.loadNodeParameter = false;
+        this.loadDataPortSchema = false;
+        snapshot.syncSnapshot2WorkflowContext(this);
     }
 
     private void initialize(ExecutionJob currentJob) {
+        this.executionWorkMode = !currentJob.isViewMode();
+        this.enableFlushWorkflow = currentJob.enableFlushWorkflow();
+        this.currentJob = currentJob;
+        this.putExecutionJob(currentJob);
+
         if(!currentJob.enableFlushSnapshot()) {
             //TODO Clear [workflow & Node]'s execution information by job type
 
@@ -184,15 +197,6 @@ public class WorkflowContext implements IWorkContext {
     }
 
     public void flush() {
-        if(this.isExecutionWorkMode()) {
-            this.getCurrentJob().flush(this.getOperId());
-
-            if(tasks.size() > 0) {
-                for(ExecutionTask task : CollectionUtil.toList(tasks)) {
-                    task.flush(this.getOperId());
-                }
-            }
-        }
 
         if(this.isEnableFlushWorkflow() && this.workflow.data().getFlowId() > 0) {
 
@@ -206,6 +210,15 @@ public class WorkflowContext implements IWorkContext {
                 }
             }
             this.workflow.flush(this.getOperId());
+        }
+
+        if(this.isExecutionWorkMode()) {
+            if(tasks.size() > 0) {
+                for(ExecutionTask task : CollectionUtil.toList(tasks)) {
+                    task.flush(this.getOperId());
+                }
+            }
+            this.getCurrentJob().flush(this);
         }
     }
 
@@ -427,11 +440,8 @@ public class WorkflowContext implements IWorkContext {
     }
 
     public ExecutionJob getCurrentJob() {
-        if(!isExecutionWorkMode()){
-            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Workflow context error -- Non execution work mode.", "系统内部发生错误，请联系管理员");
-        }
         if(DataUtil.isNull(currentJob)){
-            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Workflow context error -- Execution work mode missing job info.", "系统内部发生错误，请联系管理员");
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Workflow context error -- Missing current execution job.", "系统内部发生错误，请联系管理员");
         }
 
         return currentJob;
@@ -975,7 +985,7 @@ public class WorkflowContext implements IWorkContext {
         CollectionUtil.clear(analyzeLinks);
     }*/
 
-    public void eraseNode(Node node) {
+/*    public void eraseNode(Node node) {
 
         for(NodePortInput inputNodePort : node.getInputNodePorts()) {
             List<NodeLink> nodeLinks = this.getInLinks(inputNodePort.data().getNodePortId());
@@ -997,5 +1007,5 @@ public class WorkflowContext implements IWorkContext {
             CollectionUtil.remove(outputPorts, outputNodePort.data().getNodePortId());
         }
         CollectionUtil.remove(nodes, node.data().getNodeId());
-    }
+    }*/
 }

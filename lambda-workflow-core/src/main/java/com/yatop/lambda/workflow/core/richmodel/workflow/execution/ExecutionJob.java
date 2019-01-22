@@ -4,6 +4,7 @@ import com.yatop.lambda.base.model.WfExecutionJob;
 import com.yatop.lambda.core.enums.JobStateEnum;
 import com.yatop.lambda.core.enums.JobTypeEnum;
 import com.yatop.lambda.core.utils.DataUtil;
+import com.yatop.lambda.workflow.core.context.WorkflowContext;
 import com.yatop.lambda.workflow.core.mgr.workflow.snapshot.SnapshotHelper;
 import com.yatop.lambda.workflow.core.richmodel.RichModel;
 import com.yatop.lambda.workflow.core.richmodel.workflow.snapshot.Snapshot;
@@ -12,20 +13,30 @@ import java.util.TreeSet;
 
 public class ExecutionJob extends RichModel<WfExecutionJob> {
 
+    private boolean isViewMode;
     private Snapshot snapshot;
     private TreeSet<Long> jobContent = new TreeSet<Long>(); //作业内容，nodeId列表
 
     public ExecutionJob(WfExecutionJob data) {
-        super(data);
+        this(data, false);
     }
 
-    public void flush(String operId) {
+    public ExecutionJob(WfExecutionJob data, boolean isViewMode) {
+        super(data);
+        this.isViewMode = isViewMode;
+    }
 
-        //Update job, snapshot
-        if(this.enableFlushSnapshot())
-            this.getSnapshot().flush(operId);
+    public void flush(WorkflowContext workflowContext) {
+
+        if(this.isViewMode())
+            return;
+
+        if(this.enableFlushSnapshot() && DataUtil.isNotNull(snapshot)) {
+            this.getSnapshot().flush(workflowContext);
+        }
 
         if (this.isColoured())
+            //TODO update job
             ;
     }
 
@@ -34,6 +45,29 @@ public class ExecutionJob extends RichModel<WfExecutionJob> {
         super.clear();
         snapshot.clear();
         jobContent.clear();
+    }
+
+    public boolean isViewMode() {
+        return isViewMode;
+    }
+
+    public boolean enableFlushSnapshot() {
+        return JobTypeEnum.enableFlushSnapshot(JobTypeEnum.valueOf(this.data().getJobType()));
+    }
+
+    public Snapshot getSnapshot() {
+        if(DataUtil.isNull(snapshot)) {
+            if(this.isViewMode()) {
+                snapshot = SnapshotHelper.querySnapshot4View(this);
+            } else {
+                snapshot = SnapshotHelper.querySnapshot4Execution(this);
+            }
+        }
+        return snapshot;
+    }
+
+    public void increaseNextTaskSequence() {
+        this.data().setNextTaskSequence(this.data().getNextTaskSequence() + 1);
     }
 
     public boolean isStatePreparing() {
@@ -80,25 +114,59 @@ public class ExecutionJob extends RichModel<WfExecutionJob> {
         this.changeJobState(JobStateEnum.USER_TERMINATED);
     }
 
-    private void changeJobState(JobStateEnum stateEnum) {
-        if(this.data().getJobState() == stateEnum.getState())
+    private void changeJobState(JobStateEnum jobState) {
+        if(this.data().getJobState() == jobState.getState())
             return;
 
-        this.data().setJobState(stateEnum.getState());
+        this.data().setJobState(jobState.getState());
+        this.syncJobState2SnapshotAndWorkflow(jobState);
+    }
+
+    public void syncJobState2SnapshotAndWorkflow() {
+        this.syncJobState2SnapshotAndWorkflow(JobStateEnum.valueOf(this.data().getJobState()));
+    }
+
+    private void syncJobState2SnapshotAndWorkflow(JobStateEnum jobState) {
+        switch (jobState) {
+            case PREPARING:
+                this.snapshot.getWorkflow().changeState2Preparing();
+                this.syncJobId2Workflow();
+                break;
+            case QUEUEING:
+                this.snapshot.getWorkflow().changeState2Preparing();
+                this.syncJobId2Workflow();
+                break;
+            case RUNNING:
+                this.snapshot.getWorkflow().changeState2Running();
+                this.syncJobId2Workflow();
+                break;
+            case SUCCESS:
+                this.snapshot.changeState2Finished();
+                this.snapshot.getWorkflow().changeState2Finished();
+                this.syncJobId2Workflow();
+                break;
+            case ERROR_TERMINATED:
+                this.snapshot.changeState2Finished();
+                this.snapshot.getWorkflow().changeState2Finished();
+                this.syncJobId2Workflow();
+                break;
+            case USER_TERMINATED:
+                this.snapshot.changeState2Finished();
+                this.snapshot.getWorkflow().changeState2Finished();
+                this.syncJobId2Workflow();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void syncJobId2Workflow() {
+        Long lastJobId = this.snapshot.getWorkflow().data().getLastJobId();
+        if(DataUtil.isNull(lastJobId) || !lastJobId.equals(this.data().getJobId()))
+            this.snapshot.getWorkflow().data().setLastJobId(this.data().getJobId());
     }
 
     public boolean enableFlushWorkflow() {
         return JobTypeEnum.enableFlushWorkflow(JobTypeEnum.valueOf(this.data().getJobType()));
-    }
-
-    public boolean enableFlushSnapshot() {
-        return JobTypeEnum.enableFlushSnapshot(JobTypeEnum.valueOf(this.data().getJobType()));
-    }
-
-    public Snapshot getSnapshot() {
-        if(DataUtil.isNull(snapshot)) {
-            snapshot = SnapshotHelper.querySnapshot(this);
-        }
-        return snapshot;
     }
 }

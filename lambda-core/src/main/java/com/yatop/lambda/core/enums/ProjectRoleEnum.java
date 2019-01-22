@@ -3,19 +3,19 @@ package com.yatop.lambda.core.enums;
 public enum ProjectRoleEnum {
 
     /**
-     * 一般成员
+     * 所有者
      */
-    GENERAL_MEMBER(0, "General"),
+    PROJECT_OWNER(0, "Project Owner"),
 
     /**
-     * 项目所有者
+     * 维护者
      */
-    PROJECT_OWNER(1, "Owner");
+    PROJECT_MAINTAINER(1, "Project Maintainer"),
 
     /**
-     * 项目维护者
+     * 开发者
      */
-    //PROJECT_MAINTAINER(2, "Maintainer");
+    PROJECT_DEVELOPER(2, "Project Developer");
 
     private int role;
     private String name;
@@ -43,9 +43,9 @@ public enum ProjectRoleEnum {
 
     public static ProjectRoleEnum valueOf(int role) {
         switch (role) {
-            case 0: return GENERAL_MEMBER;
+            case 0: return PROJECT_DEVELOPER;
             case 1: return PROJECT_OWNER;
-            //case 2: return PROJECT_MAINTAINER;
+            case 2: return PROJECT_MAINTAINER;
             default: return null;
         }
     }

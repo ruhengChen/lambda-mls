@@ -18,21 +18,18 @@ public class Workflow extends RichModel<WfFlow> {
 
     private static long NODE_DELETE_MAX_SEQUENCE = 0x20;
 
-    private Project project;
     private Experiment experiment;
     private TreeMap<Long, WorkflowAccumulate> accumulates = new TreeMap<Long, WorkflowAccumulate>();
     private boolean deleted;
 
-    public Workflow(WfFlow data, Project project, Experiment experiment) {
+    public Workflow(WfFlow data, Experiment experiment) {
         super(data);
-        this.project = project;
         this.experiment = experiment;
         this.deleted = false;
     }
 
     @Override
     public void clear() {
-        project = null;
         experiment = null;
         CollectionUtil.enhancedClear(accumulates);
         super.clear();
@@ -53,7 +50,7 @@ public class Workflow extends RichModel<WfFlow> {
     }
 
     public Project getProject() {
-        return project;
+        return getExperiment().getProject();
     }
 
     public Experiment getExperiment() {

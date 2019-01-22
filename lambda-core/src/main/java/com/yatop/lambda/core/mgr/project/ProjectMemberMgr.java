@@ -116,11 +116,11 @@ public class ProjectMemberMgr extends BaseMgr {
             throw new LambdaException(LambdaExceptionEnum.B_PROJECT_DEFAULT_ERROR, "Change project member failed -- project member missing", "转出或转入成员记录缺失");
 
         PrProjectMember srcProjectMember;
-        int srcProjectIdex = 1;
-        if(resultList.get(0).getMemberUser() == srcOwner) {
-            srcProjectIdex = 0;
+        int srcProjectIndex = 1;
+        if(resultList.get(0).getMemberUser().equals(srcOwner)) {
+            srcProjectIndex = 0;
         }
-        srcProjectMember = resultList.get(srcProjectIdex);
+        srcProjectMember = resultList.get(srcProjectIndex);
         if(srcProjectMember.getProjectRole() != ProjectRoleEnum.PROJECT_OWNER.getRole())
             throw new LambdaException(LambdaExceptionEnum.B_PROJECT_DEFAULT_ERROR, "Change project member failed -- transfer party not project owner", "转出方不是项目所有者");
 
@@ -130,7 +130,7 @@ public class ProjectMemberMgr extends BaseMgr {
             PrProjectMemberExample example = new PrProjectMemberExample();
             Date dtCurrentTime = SystemTimeUtil.getCurrentTime();
 
-            updateMember.setProjectRole(ProjectRoleEnum.GENERAL_MEMBER.getRole());
+            updateMember.setProjectRole(ProjectRoleEnum.PROJECT_DEVELOPER.getRole());
             updateMember.setLastUpdateTime(dtCurrentTime);
             updateMember.setLastUpdateOper(operId);
             example.createCriteria().andProjectIdEqualTo(projectId).andMemberUserEqualTo(srcOwner);

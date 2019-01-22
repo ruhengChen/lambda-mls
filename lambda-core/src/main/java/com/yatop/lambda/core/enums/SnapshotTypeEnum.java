@@ -15,7 +15,12 @@ public enum SnapshotTypeEnum {
     /**
      * 删除快照
      */
-    DELETE(2, "Delete");
+    DELETE(2, "Delete"),
+
+    /**
+     * 模版快照
+     */
+    TEMPLATE(3, "Template");
 
     private int type;
     private String name;
@@ -46,6 +51,7 @@ public enum SnapshotTypeEnum {
             case 0: return EXECUTION;
             case 1: return COPY;
             case 2: return DELETE;
+            case 3: return TEMPLATE;
             default: return null;
         }
     }

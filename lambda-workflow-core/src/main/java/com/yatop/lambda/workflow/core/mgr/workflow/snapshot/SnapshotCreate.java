@@ -4,6 +4,7 @@ import com.yatop.lambda.base.model.WfSnapshot;
 import com.yatop.lambda.core.enums.SnapshotStateEnum;
 import com.yatop.lambda.core.enums.SnapshotTypeEnum;
 import com.yatop.lambda.core.mgr.workflow.snapshot.SnapshotMgr;
+import com.yatop.lambda.core.utils.DataUtil;
 import com.yatop.lambda.workflow.core.context.WorkflowContext;
 import com.yatop.lambda.workflow.core.richmodel.workflow.Workflow;
 import com.yatop.lambda.workflow.core.richmodel.workflow.snapshot.Snapshot;
@@ -16,31 +17,31 @@ public class SnapshotCreate {
     @Autowired
     SnapshotMgr snapshotMgr;
 
-    private Snapshot createSnapshot(WorkflowContext workflowContext, SnapshotTypeEnum snapshotType, SnapshotStateEnum snapshotState) {
+    private Snapshot createSnapshot(WorkflowContext workflowContext, String snapshotName, SnapshotTypeEnum snapshotType, SnapshotStateEnum snapshotState) {
         Workflow workflow = workflowContext.getWorkflow();
         WfSnapshot snapshot = new WfSnapshot();
-        snapshot.setSnapshotName(workflow.getExperiment().data().getExperimentName() + " - " + snapshotType.getName());
+        snapshot.setSnapshotName(DataUtil.isNotEmpty(snapshotName) ? snapshotName : workflow.getExperiment().data().getExperimentName() + " - " + snapshotType.getName());
         snapshot.setSnapshotType(snapshotType.getType());
         snapshot.setOwnerProjectId(workflow.data().getOwnerProjectId());
         snapshot.setOwnerFlowId(workflow.data().getFlowId());
-        //TODO encode, notes: parameter duplicate flag
-        //snapshot.setSnapshotContent();
         snapshot.setSnapshotVersion(workflow.data().getNextSnapshotVersion());
         snapshot.setSnapshotState(snapshotState.getState());
         snapshot = snapshotMgr.insertSnapshot(snapshot, workflowContext.getOperId());
+        Snapshot richSnapshot = Snapshot.BuildSnapshot4Create(snapshot, workflowContext);
+        snapshotMgr.updateSnapshot(richSnapshot.data(), workflowContext.getOperId());
         workflow.increaseNextSnapshotVersion();
-        return new Snapshot(snapshot);
+        return richSnapshot;
     }
 
     public Snapshot createSnapshot4Execution(WorkflowContext workflowContext) {
-        return createSnapshot(workflowContext, SnapshotTypeEnum.EXECUTION, SnapshotStateEnum.GENERATING);
+        return createSnapshot(workflowContext, null, SnapshotTypeEnum.EXECUTION, SnapshotStateEnum.GENERATING);
     }
 
-    public Snapshot createSnapshot4Copy(WorkflowContext workflowContext) {
-        return createSnapshot(workflowContext, SnapshotTypeEnum.COPY, SnapshotStateEnum.FINISHED);
+    public Snapshot createSnapshot4Copy(WorkflowContext workflowContext, String copyName) {
+        return createSnapshot(workflowContext, copyName, SnapshotTypeEnum.COPY, SnapshotStateEnum.FINISHED);
     }
 
     public Snapshot createSnapshot4Delete(WorkflowContext workflowContext) {
-        return createSnapshot(workflowContext, SnapshotTypeEnum.DELETE, SnapshotStateEnum.FINISHED);
+        return createSnapshot(workflowContext, null, SnapshotTypeEnum.DELETE, SnapshotStateEnum.FINISHED);
     }
 }

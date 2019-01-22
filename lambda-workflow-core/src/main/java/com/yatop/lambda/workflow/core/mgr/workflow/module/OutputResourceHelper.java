@@ -52,15 +52,17 @@ public class OutputResourceHelper {
         }
     }
 
-    public static void exploreOutputResource(WorkflowContext workflowContext, ExecutionTask task) {
+    public static boolean exploreOutputResource(WorkflowContext workflowContext, ExecutionTask task) {
 
         IModuleClazz moduleClazz = task.getNode().getModuleClazzBean();
         try {
             moduleClazz.exploreOutputResource(workflowContext, task);
+            return true;
         } catch (Throwable e) {
             e = new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Explore task execution output resource failed -- module-clazz occur error.", "探测输出资源时发生错误", e, task);
             logger.error("系统内部发生错误", e);
-            task.setOccuredWarning("探测输出资源时发生错误");
+            //task.setOccuredWarning("探测输出资源时发生错误");
+            return false;
         }
     }
 }

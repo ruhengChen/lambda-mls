@@ -40,10 +40,8 @@ public class CharValue extends LambdaRootModel implements IRichModel {
     public JSONObject toJSON() {
         JSONObject jsonObject = cmptChar.toJSON();
         jsonObject.put("charValue", charValue);
-        jsonObject.put("inText", inText);
-        jsonObject.put("inObject", inObject);
-        jsonObject.put("outText", outText);
-        jsonObject.put("outObject", outObject);
+        jsonObject.put("textValue", getTextValue());
+        jsonObject.put("objectValue", getObjectValue());
         return jsonObject;
     }
 
@@ -88,6 +86,7 @@ public class CharValue extends LambdaRootModel implements IRichModel {
     }
 
     public void setInText(String inText) {
+        this.setOutText(null);
         this.inText = inText;
     }
 
@@ -104,6 +103,7 @@ public class CharValue extends LambdaRootModel implements IRichModel {
     }
 
     public void setInObject(IRichModel inObject) {
+        this.setOutObject(null);
         this.inObject = inObject;
     }
 
@@ -115,19 +115,11 @@ public class CharValue extends LambdaRootModel implements IRichModel {
         this.outObject = outObject;
     }
 
-    public String getTextValue() {
-        return this.getOutText();
-    }
-
-    public IRichModel getObjectValue() {
-        return this.getOutObject();
-    }
-
     public ICharTypeClazz getCharTypeClazzBean() {
         return this.cmptChar.getCharTypeClazzBean();
     }
 
-/*    public boolean isBasicDataType() {
+    public boolean isBasicDataType() {
         return getCharTypeClazzBean() instanceof CharTypeBasicGeneric;
     }
 
@@ -159,35 +151,43 @@ public class CharValue extends LambdaRootModel implements IRichModel {
         return getCharTypeClazzBean() instanceof CharTypeModelGeneric;
     }
 
+    public String getTextValue() {
+        return DataUtil.isNotNull(getOutText()) ? getOutText() : getInText();
+    }
+
+    public IRichModel getObjectValue() {
+        return DataUtil.isNotNull(getOutObject()) ? getOutObject() : getInObject();
+    }
+
     public String getBasicValue() {
-        return isBasicDataType() ? (DataUtil.isNull(getOutText()) ? getInText() : null) : null;
+        return isBasicDataType() ? getTextValue() : null;
     }
 
     public String getTuneValue() {
-        return isTuneDataType() ? (DataUtil.isNull(getOutText()) ? getInText() : null) : null;
+        return isTuneDataType() ? getTextValue() : null;
     }
 
     public String getScriptValue() {
-        return isScriptDataType() ? (DataUtil.isNull(getOutText()) ? getInText() : null) : null;
+        return isScriptDataType() ? getTextValue() : null;
     }
 
     public String getJsonValue() {
-        return isJsonDataType() ? (DataUtil.isNull(getOutText()) ? getInText() : null) : null;
+        return isJsonDataType() ? getTextValue() : null;
     }
 
     public JsonObject getAlgorithmValue() {
-        return isAlgorithmDataType() ? (JsonObject) (DataUtil.isNull(getOutObject()) ? getInObject() : null) : null;
+        return isAlgorithmDataType() ? (JsonObject) getObjectValue() : null;
     }
 
     public JsonObject getReportValue() {
-        return isReportDataType() ? (JsonObject) (DataUtil.isNull(getOutObject()) ? getInObject() : null) : null;
+        return isReportDataType() ? (JsonObject) getObjectValue() : null;
     }
 
     public DataTable getTableValue() {
-        return isTableDataType() ? (DataTable) (DataUtil.isNull(getOutObject()) ? getInObject() : null) : null;
+        return isTableDataType() ? (DataTable) getObjectValue() : null;
     }
 
     public Model getModelValue() {
-        return isModelDataType() ? (Model) (DataUtil.isNull(getOutObject()) ? getInObject() : null) : null;
-    }*/
+        return isModelDataType() ? (Model) getObjectValue() : null;
+    }
 }

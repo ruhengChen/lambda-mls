@@ -41,7 +41,7 @@ public class WorkflowCreate {
         flow.setOwnerProjectId(experiment.data().getOwnerProjectId());
         flow = workflowMgr.insertWorkflow(flow, operId);
 
-        Workflow richWorkflow = new Workflow(flow, experiment.getProject(), experiment);
+        Workflow richWorkflow = new Workflow(flow, experiment);
         richWorkflow.data().setFlowDfsDir(WorkDirectoryUtil.getWorkFLowDfsDirectory(experiment.data().getOwnerProjectId(), richWorkflow.data().getFlowId()));
         richWorkflow.data().setFlowLocalDir(WorkDirectoryUtil.getWorkFLowLocalDirectory(experiment.data().getOwnerProjectId(), richWorkflow.data().getFlowId()));
         workflowMgr.updateWorkflow(richWorkflow.data(), operId);

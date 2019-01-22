@@ -32,7 +32,7 @@ public class WorkflowHelper {
 
     public static Workflow queryWorkflow(Experiment experiment) {
         WfFlow workflow = WORKFLOW_MGR.queryWorkflow(experiment.getWorkflowId());
-        return new Workflow(workflow, experiment.getProject(), experiment);
+        return new Workflow(workflow, experiment);
     }
 
     //名称、共享锁状态、共享锁消息、下一快照版本、节点数量、下一删除批次、最后作业ID、DFS工作流目录、本地工作流目录、工作流状态、描述、版本号
