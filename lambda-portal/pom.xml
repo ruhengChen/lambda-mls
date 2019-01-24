@@ -7,6 +7,7 @@
         <!--<groupId>com.yatop.lambda</groupId>-->
         <!--<version>1.0.0</version>-->
     <!--</parent>-->
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <artifactId>lambda-mls</artifactId>
@@ -15,12 +16,10 @@
     </parent>
 
     <artifactId>lambda-portal</artifactId>
-    <packaging>jar</packaging>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
     <name>lambda-portal</name>
     <url>http://maven.apache.org</url>
-
-    <modelVersion>4.0.0</modelVersion>
     <!--<properties>-->
         <!--<mysql.driver.version>5.1.30</mysql.driver.version>-->
     <!--</properties>-->
