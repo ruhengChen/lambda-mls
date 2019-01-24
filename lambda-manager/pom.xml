@@ -16,15 +16,18 @@
     <name>lambda-manager</name>
     <url>http://maven.apache.org</url>
 
-    <properties>
-        <shiro.version>1.4.0</shiro.version>
-    </properties>
+
 
     <dependencies>
         <dependency>
             <groupId>com.yatop.lambda</groupId>
             <artifactId>lambda-core</artifactId>
             <version>${yatop.lambda.core}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yatop.lambda</groupId>
+            <artifactId>lambda-portal</artifactId>
+            <version>${yatop.lambda.portal}</version>
         </dependency>
         <dependency>
             <groupId>com.yatop.lambda</groupId>
@@ -64,43 +67,7 @@
         </dependency>
 
         <!-- ========================= common  =============================== -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-csv</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.univocity</groupId>
-            <artifactId>univocity-parsers</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-web</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>jdk.tools</groupId>
-            <artifactId>jdk.tools</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
@@ -190,7 +157,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <state>1.7</state>
+                    <!--<state>1.7</state>-->
                     <target>1.7</target>
                     <encoding>UTF-8</encoding>
                 </configuration>

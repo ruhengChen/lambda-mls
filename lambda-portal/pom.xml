@@ -9,10 +9,9 @@
     <!--</parent>-->
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.4.RELEASE</version>
-        <relativePath/>
+        <artifactId>lambda-mls</artifactId>
+        <groupId>com.yatop.lambda</groupId>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>lambda-portal</artifactId>
@@ -32,10 +31,10 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.yatop.lambda</groupId>
+            <artifactId>lambda-framework</artifactId>
+            <version>${yatop.lambda.framework}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
@@ -113,11 +112,7 @@
         </dependency>
 
         <!-- fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.31</version>
-        </dependency>
+
 
         <!-- xss过滤 -->
         <dependency>
@@ -158,15 +153,6 @@
 
         <!-- commons -->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.6</version>
-        </dependency>
-        <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
             <version>1.3.3</version>
@@ -200,11 +186,6 @@
         <!--</dependency>-->
 
         <!-- google.guava/guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>25.1-jre</version>
-        </dependency>
         <dependency>
             <groupId>org.lionsoul</groupId>
             <artifactId>ip2region</artifactId>

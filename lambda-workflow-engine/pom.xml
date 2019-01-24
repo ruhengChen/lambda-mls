@@ -20,64 +20,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.yatop.lambda</groupId>
-			<artifactId>lambda-core</artifactId>
-			<version>${yatop.lambda.core}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.yatop.lambda</groupId>
-			<artifactId>lambda-workflow-core</artifactId>
-			<version>${yatop.lambda.workflow.core}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.yatop.lambda</groupId>
 			<artifactId>lambda-workflow-module</artifactId>
 			<version>${yatop.lambda.workflow.module}</version>
-		</dependency>
-
-		<!-- =========================================spring================= -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- =======================================spring boot================= -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-test-autoconfigure</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-		</dependency>
-
-		<!-- ========================= common  =============================== -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-csv</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.univocity</groupId>
-			<artifactId>univocity-parsers</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>jdk.tools</groupId>
-			<artifactId>jdk.tools</artifactId>
 		</dependency>
 	</dependencies>
 </project>
