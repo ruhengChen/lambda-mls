@@ -1,10 +1,12 @@
 package com.yatop.lambda.portal.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "pr_project_member")
-public class PrProjectMember {
+public class PrProjectMember implements Serializable{
+    private static final long serialVersionUID = 5009827874247172526L;
     /**
      * 项目ID
      */

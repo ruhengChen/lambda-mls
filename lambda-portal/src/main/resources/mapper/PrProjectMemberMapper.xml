@@ -15,4 +15,7 @@
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="CREATE_OPER" property="createOper" jdbcType="VARCHAR" />
   </resultMap>
+  <select id="findProjectMemberWithUser" resultType="ProjectMemberWithUser" parameterType="String">
+    select * from pr_project_member ppm left join
+  </select>
 </mapper>

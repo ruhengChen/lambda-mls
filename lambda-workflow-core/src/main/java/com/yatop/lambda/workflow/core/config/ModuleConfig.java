@@ -74,7 +74,7 @@ public class ModuleConfig implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        loadModuleConfiguration();
+        //loadModuleConfiguration();
     }
 
     public void loadModuleConfiguration() {
