@@ -1,4 +1,4 @@
-package com.yatop.lambda.base.mapper.extend;
+package com.yatop.lambda.base.extend.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;

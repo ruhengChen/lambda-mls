@@ -5,9 +5,11 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "pr_project_member")
+
 public class PrProjectMember implements Serializable {
 
     private static final long serialVersionUID = 7323820231535870010L;
+
     /**
      * 项目ID
      */
