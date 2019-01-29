@@ -6,7 +6,7 @@ import com.yatop.lambda.portal.common.util.TreeUtils;
 import com.yatop.lambda.portal.dao.MenuMapper;
 import com.yatop.lambda.portal.model.Menu;
 import com.yatop.lambda.portal.service.MenuService;
-import com.yatop.lambda.portal.service.RoleMenuServie;
+import com.yatop.lambda.portal.service.RoleMenuService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class MenuServiceImpl extends BaseService<Menu> implements MenuService {
     private MenuMapper menuMapper;
 
     @Autowired
-    private RoleMenuServie roleMenuService;
+    private RoleMenuService roleMenuService;
 
     @Autowired
     private WebApplicationContext applicationContext;

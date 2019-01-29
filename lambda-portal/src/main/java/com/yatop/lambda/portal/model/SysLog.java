@@ -1,184 +1,240 @@
 package com.yatop.lambda.portal.model;
 
-import com.yatop.lambda.portal.common.annotation.ExportConfig;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 
-@Table(name = "t_log")
+@Table(name = "sys_manage_log")
 public class SysLog implements Serializable {
+    private static final long serialVersionUID = -8878596941954995444L;
 
-	private static final long serialVersionUID = -8878596941954995444L;
+    // 用于搜索条件中的时间字段
+    @Transient
+    private String timeField;
 
-	@Id
-	@GeneratedValue(generator = "JDBC")
-	@Column(name = "ID")
-	private Long id;
+    /**
+     * 日志ID
+     */
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name = "USERNAME")
-	@ExportConfig(value = "操作用户")
-	private String username;
+    /**
+     * 操作用户
+     */
+    @Column(name = "USERNAME")
+    private String username;
 
-	@Column(name = "OPERATION")
-	@ExportConfig(value = "描述")
-	private String operation;
+    /**
+     * 耗时
+     */
+    @Column(name = "TIME")
+    private Long time;
 
-	@Column(name = "TIME")
-	@ExportConfig(value = "耗时（毫秒）")
-	private Long time;
+    /**
+     * 操作者IP
+     */
+    @Column(name = "IP")
+    private String ip;
 
-	@Column(name = "METHOD")
-	@ExportConfig(value = "操作方法")
-	private String method;
+    /**
+     * 创建时间
+     */
+    @Column(name = "CREATE_TIME")
+    private Date createTime;
 
-	@Column(name = "PARAMS")
-	@ExportConfig(value = "参数")
-	private String params;
+    /**
+     * 操作地点
+     */
+    private String location;
 
-	@Column(name = "IP")
-	@ExportConfig(value = "IP地址")
-	private String ip;
+    /**
+     * 操作内容
+     */
+    @Column(name = "OPERATION")
+    private String operation;
 
-	@Column(name = "CREATE_TIME")
-	@ExportConfig(value = "操作时间", convert = "c:com.yatop.lambda.portal.util.poi.convert.TimeConvert")
-	private Date createTime;
+    /**
+     * 操作方法
+     */
+    @Column(name = "METHOD")
+    private String method;
 
-	@Column(name = "LOCATION")
-	@ExportConfig(value = "地点")
-	private String location;
-	
-	// 用于搜索条件中的时间字段
-	@Transient
-	private String timeField;
+    /**
+     * 方法参数
+     */
+    @Column(name = "PARAMS")
+    private String params;
 
-	/**
-	 * @return ID
-	 */
-	public Long getId() {
-		return id;
-	}
+    /**
+     * 获取日志ID
+     *
+     * @return ID - 日志ID
+     */
+    public Long getId() {
+        return id;
+    }
 
-	/**
-	 * @param id
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * 设置日志ID
+     *
+     * @param id 日志ID
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/**
-	 * @return USERNAME
-	 */
-	public String getUsername() {
-		return username;
-	}
+    /**
+     * 获取操作用户
+     *
+     * @return USERNAME - 操作用户
+     */
+    public String getUsername() {
+        return username;
+    }
 
-	/**
-	 * @param username
-	 */
-	public void setUsername(String username) {
-		this.username = username == null ? null : username.trim();
-	}
+    /**
+     * 设置操作用户
+     *
+     * @param username 操作用户
+     */
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
 
-	/**
-	 * @return OPERATION
-	 */
-	public String getOperation() {
-		return operation;
-	}
+    /**
+     * 获取耗时
+     *
+     * @return TIME - 耗时
+     */
+    public Long getTime() {
+        return time;
+    }
 
-	/**
-	 * @param operation
-	 */
-	public void setOperation(String operation) {
-		this.operation = operation == null ? null : operation.trim();
-	}
+    /**
+     * 设置耗时
+     *
+     * @param time 耗时
+     */
+    public void setTime(Long time) {
+        this.time = time;
+    }
 
-	/**
-	 * @return TIME
-	 */
-	public Long getTime() {
-		return time;
-	}
+    /**
+     * 获取操作者IP
+     *
+     * @return IP - 操作者IP
+     */
+    public String getIp() {
+        return ip;
+    }
 
-	/**
-	 * @param time
-	 */
-	public void setTime(Long time) {
-		this.time = time;
-	}
+    /**
+     * 设置操作者IP
+     *
+     * @param ip 操作者IP
+     */
+    public void setIp(String ip) {
+        this.ip = ip == null ? null : ip.trim();
+    }
 
-	/**
-	 * @return METHOD
-	 */
-	public String getMethod() {
-		return method;
-	}
+    /**
+     * 获取创建时间
+     *
+     * @return CREATE_TIME - 创建时间
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	/**
-	 * @param method
-	 */
-	public void setMethod(String method) {
-		this.method = method == null ? null : method.trim();
-	}
+    /**
+     * 设置创建时间
+     *
+     * @param createTime 创建时间
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	/**
-	 * @return PARAMS
-	 */
-	public String getParams() {
-		return params;
-	}
+    /**
+     * 获取操作地点
+     *
+     * @return location - 操作地点
+     */
+    public String getLocation() {
+        return location;
+    }
 
-	/**
-	 * @param params
-	 */
-	public void setParams(String params) {
-		this.params = params == null ? null : params.trim();
-	}
+    /**
+     * 设置操作地点
+     *
+     * @param location 操作地点
+     */
+    public void setLocation(String location) {
+        this.location = location == null ? null : location.trim();
+    }
 
-	/**
-	 * @return IP
-	 */
-	public String getIp() {
-		return ip;
-	}
+    /**
+     * 获取操作内容
+     *
+     * @return OPERATION - 操作内容
+     */
+    public String getOperation() {
+        return operation;
+    }
 
-	/**
-	 * @param ip
-	 */
-	public void setIp(String ip) {
-		this.ip = ip == null ? null : ip.trim();
-	}
+    /**
+     * 设置操作内容
+     *
+     * @param operation 操作内容
+     */
+    public void setOperation(String operation) {
+        this.operation = operation == null ? null : operation.trim();
+    }
 
-	/**
-	 * @return CREATE_TIME
-	 */
-	public Date getCreateTime() {
-		return createTime;
-	}
+    /**
+     * 获取操作方法
+     *
+     * @return METHOD - 操作方法
+     */
+    public String getMethod() {
+        return method;
+    }
 
-	/**
-	 * @param createTime
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    /**
+     * 设置操作方法
+     *
+     * @param method 操作方法
+     */
+    public void setMethod(String method) {
+        this.method = method == null ? null : method.trim();
+    }
 
-	public String getLocation() {
-		return location;
-	}
+    /**
+     * 获取方法参数
+     *
+     * @return PARAMS - 方法参数
+     */
+    public String getParams() {
+        return params;
+    }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    /**
+     * 设置方法参数
+     *
+     * @param params 方法参数
+     */
+    public void setParams(String params) {
+        this.params = params == null ? null : params.trim();
+    }
 
-	public String getTimeField() {
-		return timeField;
-	}
+    public String getTimeField() {
+        return timeField;
+    }
 
-	public void setTimeField(String timeField) {
-		this.timeField = timeField;
-	}
-	
+    public void setTimeField(String timeField) {
+        this.timeField = timeField;
+    }
 
 }

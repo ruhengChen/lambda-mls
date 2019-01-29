@@ -37,7 +37,7 @@ public class MenuController extends BaseController {
         return "system/menu/menu";
     }
 
-    @RequestMapping("menu/menu")
+    @RequestMapping("menu/queryMenus")
     @ResponseBody
     public ResponseBo getMenu(String userName) {
         try {
@@ -73,7 +73,7 @@ public class MenuController extends BaseController {
         }
     }
 
-    @RequestMapping("menu/tree")
+    @RequestMapping("menu/menuTree")
     @ResponseBody
     public ResponseBo getMenuTree() {
         try {
@@ -145,7 +145,7 @@ public class MenuController extends BaseController {
 
     @Log("新增菜单/按钮")
     @RequiresPermissions("menu:add")
-    @RequestMapping("menu/add")
+    @RequestMapping("menu/addMenu")
     @ResponseBody
     public ResponseBo addMenu(Menu menu) {
         String name;
@@ -165,11 +165,11 @@ public class MenuController extends BaseController {
 
     @Log("删除菜单")
     @RequiresPermissions("menu:delete")
-    @RequestMapping("menu/delete")
+    @RequestMapping("menu/deleteMenu")
     @ResponseBody
-    public ResponseBo deleteMenus(String ids) {
+    public ResponseBo deleteMenus(String menuIds) {
         try {
-            this.menuService.deleteMeuns(ids);
+            this.menuService.deleteMeuns(menuIds);
             return ResponseBo.ok("删除成功！");
         } catch (Exception e) {
             logger.error("获取菜单失败", e);
@@ -179,7 +179,7 @@ public class MenuController extends BaseController {
 
     @Log("修改菜单/按钮")
     @RequiresPermissions("menu:update")
-    @RequestMapping("menu/update")
+    @RequestMapping("menu/updateMenu")
     @ResponseBody
     public ResponseBo updateMenu(Menu menu) {
         String name;
@@ -189,7 +189,8 @@ public class MenuController extends BaseController {
             name = "按钮";
         try {
             this.menuService.updateMenu(menu);
-            return ResponseBo.ok("修改" + name + "成功！");
+            Menu resMenu = this.menuService.findById(menu.getMenuId());
+            return ResponseBo.ok(resMenu);
         } catch (Exception e) {
             logger.error("修改{}失败", name, e);
             return ResponseBo.error("修改" + name + "失败，请联系网站管理员！");

@@ -1,106 +1,132 @@
 package com.yatop.lambda.portal.model;
 
-import com.yatop.lambda.portal.common.annotation.ExportConfig;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 
-@Table(name = "t_role")
+@Table(name = "sys_manage_role")
 public class Role implements Serializable {
+    private static final long serialVersionUID = -1714476694755654924L;
 
-	private static final long serialVersionUID = -1714476694755654924L;
+    /**
+     * 角色ID
+     */
+    @Id
+    @GeneratedValue(generator = "JDBC")
+    @Column(name = "ROLE_ID")
+    private Long roleId;
 
-	@Id
-	@GeneratedValue(generator = "JDBC")
-	@Column(name = "ROLE_ID")
-	private Long roleId;
+    /**
+     * 角色名称
+     */
+    @Column(name = "ROLE_NAME")
+    private String roleName;
 
-	@Column(name = "ROLE_NAME")
-	@ExportConfig(value = "角色")
-	private String roleName;
+    /**
+     * 角色描述
+     */
+    @Column(name = "REMARK")
+    private String remark;
 
-	@Column(name = "REMARK")
-	@ExportConfig(value = "描述")
-	private String remark;
+    /**
+     * 创建时间
+     */
+    @Column(name = "CREATE_TIME")
+    private Date createTime;
 
-	@Column(name = "CREATE_TIME")
-	@ExportConfig(value = "创建时间", convert = "c:com.yatop.lambda.portal.util.poi.convert.TimeConvert")
-	private Date createTime;
+    /**
+     * 修改时间
+     */
+    @Column(name = "MODIFY_TIME")
+    private Date modifyTime;
 
-	@Column(name = "MODIFY_TIME")
-	private Date modifyTime;
+    /**
+     * 获取角色ID
+     *
+     * @return ROLE_ID - 角色ID
+     */
+    public Long getRoleId() {
+        return roleId;
+    }
 
-	/**
-	 * @return ROLE_ID
-	 */
-	public Long getRoleId() {
-		return roleId;
-	}
+    /**
+     * 设置角色ID
+     *
+     * @param roleId 角色ID
+     */
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 
-	/**
-	 * @param roleId
-	 */
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
+    /**
+     * 获取角色名称
+     *
+     * @return ROLE_NAME - 角色名称
+     */
+    public String getRoleName() {
+        return roleName;
+    }
 
-	/**
-	 * @return ROLE_NAME
-	 */
-	public String getRoleName() {
-		return roleName;
-	}
+    /**
+     * 设置角色名称
+     *
+     * @param roleName 角色名称
+     */
+    public void setRoleName(String roleName) {
+        this.roleName = roleName == null ? null : roleName.trim();
+    }
 
-	/**
-	 * @param roleName
-	 */
-	public void setRoleName(String roleName) {
-		this.roleName = roleName == null ? null : roleName.trim();
-	}
+    /**
+     * 获取角色描述
+     *
+     * @return REMARK - 角色描述
+     */
+    public String getRemark() {
+        return remark;
+    }
 
-	/**
-	 * @return REMARK
-	 */
-	public String getRemark() {
-		return remark;
-	}
+    /**
+     * 设置角色描述
+     *
+     * @param remark 角色描述
+     */
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
 
-	/**
-	 * @param remark
-	 */
-	public void setRemark(String remark) {
-		this.remark = remark == null ? null : remark.trim();
-	}
+    /**
+     * 获取创建时间
+     *
+     * @return CREATE_TIME - 创建时间
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	/**
-	 * @return CREATE_TIME
-	 */
-	public Date getCreateTime() {
-		return createTime;
-	}
+    /**
+     * 设置创建时间
+     *
+     * @param createTime 创建时间
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	/**
-	 * @param createTime
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    /**
+     * 获取修改时间
+     *
+     * @return MODIFY_TIME - 修改时间
+     */
+    public Date getModifyTime() {
+        return modifyTime;
+    }
 
-	/**
-	 * @return MODIFY_TIME
-	 */
-	public Date getModifyTime() {
-		return modifyTime;
-	}
-
-	/**
-	 * @param modifyTime
-	 */
-	public void setModifyTime(Date modifyTime) {
-		this.modifyTime = modifyTime;
-	}
+    /**
+     * 设置修改时间
+     *
+     * @param modifyTime 修改时间
+     */
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
 }

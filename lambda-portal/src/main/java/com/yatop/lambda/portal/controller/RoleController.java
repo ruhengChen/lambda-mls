@@ -34,7 +34,7 @@ public class RoleController extends BaseController {
         return "system/role/role";
     }
 
-    @RequestMapping("role/list")
+    @RequestMapping("role/queryRoles")
     @RequiresPermissions("role:list")
     @ResponseBody
     public Map<String, Object> roleList(QueryRequest request, Role role) {
@@ -65,7 +65,7 @@ public class RoleController extends BaseController {
         }
     }
 
-    @RequestMapping("role/getRole")
+    @RequestMapping("role/queryRoleInfo")
     @ResponseBody
     public ResponseBo getRole(Long roleId) {
         try {
@@ -79,22 +79,23 @@ public class RoleController extends BaseController {
 
     @RequestMapping("role/checkRoleName")
     @ResponseBody
-    public boolean checkRoleName(String roleName, String oldRoleName) {
-        if (StringUtils.isNotBlank(oldRoleName) && roleName.equalsIgnoreCase(oldRoleName)) {
-            return true;
-        }
+    public ResponseBo checkRoleName(String roleName) {
+//        if (StringUtils.isNotBlank(oldRoleName) && roleName.equalsIgnoreCase(oldRoleName)) {
+//            return true;
+//        }
         Role result = this.roleService.findByName(roleName);
-        return result == null;
+        return ResponseBo.ok(result == null);
     }
 
     @Log("新增角色")
     @RequiresPermissions("role:add")
-    @RequestMapping("role/add")
+    @RequestMapping("role/addRole")
     @ResponseBody
     public ResponseBo addRole(Role role, Long[] menuId) {
         try {
             this.roleService.addRole(role, menuId);
-            return ResponseBo.ok("新增角色成功！");
+            Role resRole = this.roleService.findByName(role.getRoleName());
+            return ResponseBo.ok(resRole);
         } catch (Exception e) {
             log.error("新增角色失败", e);
             return ResponseBo.error("新增角色失败，请联系网站管理员！");
@@ -103,11 +104,11 @@ public class RoleController extends BaseController {
 
     @Log("删除角色")
     @RequiresPermissions("role:delete")
-    @RequestMapping("role/delete")
+    @RequestMapping("role/deleteRole")
     @ResponseBody
-    public ResponseBo deleteRoles(String ids) {
+    public ResponseBo deleteRoles(String roleIds) {
         try {
-            this.roleService.deleteRoles(ids);
+            this.roleService.deleteRoles(roleIds);
             return ResponseBo.ok("删除角色成功！");
         } catch (Exception e) {
             log.error("删除角色失败", e);
@@ -117,12 +118,13 @@ public class RoleController extends BaseController {
 
     @Log("修改角色")
     @RequiresPermissions("role:update")
-    @RequestMapping("role/update")
+    @RequestMapping("role/updateRole")
     @ResponseBody
     public ResponseBo updateRole(Role role, Long[] menuId) {
         try {
             this.roleService.updateRole(role, menuId);
-            return ResponseBo.ok("修改角色成功！");
+            Role resRole = this.roleService.findByName(role.getRoleName());
+            return ResponseBo.ok(resRole);
         } catch (Exception e) {
             log.error("修改角色失败", e);
             return ResponseBo.error("修改角色失败，请联系网站管理员！");

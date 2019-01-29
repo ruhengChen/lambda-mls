@@ -1,10 +1,13 @@
 package com.yatop.lambda.portal.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "dw_data_table")
-public class DwDataTable {
+public class DwDataTable implements Serializable {
+
+    private static final long serialVersionUID = 7780820231533230010L;
     /**
      * 数据表ID
      */

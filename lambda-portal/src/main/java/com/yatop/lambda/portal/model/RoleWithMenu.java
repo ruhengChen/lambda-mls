@@ -1,8 +1,9 @@
 package com.yatop.lambda.portal.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RoleWithMenu extends Role{
+public class RoleWithMenu extends Role implements Serializable {
 
 	private static final long serialVersionUID = 2013847071068967187L;
 	

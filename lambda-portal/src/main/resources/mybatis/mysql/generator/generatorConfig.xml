@@ -20,9 +20,9 @@
 		<!-- 数据库链接地址账号密码 -->
 		<jdbcConnection
 				driverClass="com.mysql.jdbc.Driver"
-				connectionURL="jdbc:mysql://localhost:3306/lambda-portal"
+				connectionURL="jdbc:mysql://192.168.19.194:3306/lambda_mls"
 				userId="root"
-				password="">
+				password="root">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false"/>
@@ -45,18 +45,18 @@
 		</javaClientGenerator>
 		<!-- 配置需要生成的表 -->
 
-		<table tableName="dw_data_table" domainObjectName="DwDataTable">
-		<property name="ignoreQualifiersAtRuntime" value="true" />
-		<generatedKey column="table_id" sqlStatement="Mysql" identity="true"/>
-		</table>
-		<table tableName="pr_project" domainObjectName="PrProject">
-			<property name="ignoreQualifiersAtRuntime" value="true" />
-			<generatedKey column="PROJECT_ID" sqlStatement="Mysql" identity="true"/>
-		</table>
-		<table tableName="pr_project_member" domainObjectName="PrProjectMember">
-			<property name="ignoreQualifiersAtRuntime" value="true" />
-			<generatedKey column="PROJECT_ID" sqlStatement="Mysql" identity="true"/>
-		</table>
+		<!--<table tableName="dw_data_table" domainObjectName="DwDataTable">-->
+		<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+		<!--<generatedKey column="table_id" sqlStatement="Mysql" identity="true"/>-->
+		<!--</table>-->
+		<!--<table tableName="pr_project" domainObjectName="PrProject">-->
+			<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+			<!--<generatedKey column="PROJECT_ID" sqlStatement="Mysql" identity="true"/>-->
+		<!--</table>-->
+		<!--<table tableName="pr_project_member" domainObjectName="PrProjectMember">-->
+			<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+			<!--<generatedKey column="PROJECT_ID" sqlStatement="Mysql" identity="true"/>-->
+		<!--</table>-->
 
 		<!--<table tableName="T_LOG" domainObjectName="SysLog">-->
 		<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
@@ -72,10 +72,48 @@
 		<!--<generatedKey column="role_id" sqlStatement="Mysql" identity="true"/>-->
 		<!--</table>-->
 
-		<!--<table tableName="t_user" domainObjectName="User">-->
-		<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
-		<!--<generatedKey column="user_id" sqlStatement="Mysql" identity="true"/>-->
+		<table tableName="sys_manage_user" domainObjectName="User">
+		<property name="ignoreQualifiersAtRuntime" value="true" />
+		<generatedKey column="user_id" sqlStatement="Mysql" identity="true"/>
+		</table>
+
+		<!--<table tableName="sys_manage_dept" domainObjectName="Dept">-->
+			<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+			<!--<generatedKey column="DEPT_ID" sqlStatement="Mysql" identity="true"/>-->
 		<!--</table>-->
+
+		<!--<table tableName="sys_manage_dict" domainObjectName="Dict">-->
+			<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+			<!--<generatedKey column="DICT_ID" sqlStatement="Mysql" identity="true"/>-->
+		<!--</table>-->
+
+		<!--<table tableName="sys_manage_log" domainObjectName="SysLog">-->
+			<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+			<!--<generatedKey column="ID" sqlStatement="Mysql" identity="true"/>-->
+		<!--</table>-->
+
+		<!--<table tableName="sys_manage_menu" domainObjectName="Menu">-->
+			<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+			<!--<generatedKey column="MENU_ID" sqlStatement="Mysql" identity="true"/>-->
+		<!--</table>-->
+
+		<!--<table tableName="sys_manage_role" domainObjectName="Role">-->
+			<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+			<!--<generatedKey column="MENU_ID" sqlStatement="Mysql" identity="true"/>-->
+		<!--</table>-->
+
+		<!--<table tableName="sys_manage_role_menu" domainObjectName="RoleMenu">-->
+			<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+		<!--</table>-->
+
+		<!--<table tableName="sys_manage_user_menu" domainObjectName="UserMenu">-->
+			<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+		<!--</table>-->
+
+		<!--<table tableName="sys_manage_user_role" domainObjectName="UserRole">-->
+			<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->
+		<!--</table>-->
+
 
 		<!--<table tableName="t_role_menu" domainObjectName="RoleMenu">-->
 		<!--<property name="ignoreQualifiersAtRuntime" value="true" />-->

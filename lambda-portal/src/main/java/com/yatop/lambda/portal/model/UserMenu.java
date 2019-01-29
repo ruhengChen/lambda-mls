@@ -1,39 +1,58 @@
 package com.yatop.lambda.portal.model;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name = "t_user_menu")
-public class UserMenu implements Serializable{
-	
-	private static final long serialVersionUID = -3166012934498268403L;
+@Table(name = "sys_manage_user_menu")
+public class UserMenu implements Serializable {
 
-	@Column(name = "USER_ID")
-	private Long userId;
 
-	@Column(name = "MENU_ID")
-	private Long menuId;
+    private static final long serialVersionUID = 71342434535870010L;
+    /**
+     * 用户id
+     */
+    @Column(name = "USER_ID")
+    private Long userId;
 
-	/**
-	 * @return USER_ID
-	 */
-	public Long getUserId() {
-		return userId;
-	}
+    /**
+     * 菜单id
+     */
+    @Column(name = "MENU_ID")
+    private Long menuId;
 
-	/**
-	 * @param userId
-	 */
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    /**
+     * 获取用户id
+     *
+     * @return USER_ID - 用户id
+     */
+    public Long getUserId() {
+        return userId;
+    }
 
-	public Long getMenuId() {
-		return menuId;
-	}
+    /**
+     * 设置用户id
+     *
+     * @param userId 用户id
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public void setMenuId(Long menuId) {
-		this.menuId = menuId;
-	}
+    /**
+     * 获取菜单id
+     *
+     * @return MENU_ID - 菜单id
+     */
+    public Long getMenuId() {
+        return menuId;
+    }
+
+    /**
+     * 设置菜单id
+     *
+     * @param menuId 菜单id
+     */
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
+    }
 }

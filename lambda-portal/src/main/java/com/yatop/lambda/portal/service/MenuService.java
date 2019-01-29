@@ -12,6 +12,7 @@ import java.util.Map;
 @CacheConfig(cacheNames = "MenuService")
 public interface MenuService extends IService<Menu> {
 
+
     List<Menu> findUserPermissions(String userName);
 
     List<Menu> findUserMenus(String userName);

@@ -1,13 +1,13 @@
 package com.yatop.lambda.portal.dao;
 
-
 import com.yatop.lambda.portal.common.config.MyMapper;
 import com.yatop.lambda.portal.model.Menu;
 
 import java.util.List;
 
 public interface MenuMapper extends MyMapper<Menu> {
-	
+
+
 	List<Menu> findUserPermissions(String userName);
 	
 	List<Menu> findUserMenus(String userName);

@@ -66,18 +66,28 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     }
 
     @Override
+    public List<User> findUserByConditions(User user, QueryRequest request){
+        try {
+            return this.userMapper.findUserByConditions(user);
+        } catch (Exception e) {
+            log.error("error", e);
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
     @Transactional
     public void registUser(User user) {
-        user.setCrateTime(new Date());
-        user.setTheme(User.DEFAULT_THEME);
-        user.setAvatar(User.DEFAULT_AVATAR);
-        user.setSsex(User.SEX_UNKNOW);
-        user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
-        this.save(user);
-        UserRole ur = new UserRole();
-        ur.setUserId(user.getUserId());
-        ur.setRoleId(3L);
-        this.userRoleMapper.insert(ur);
+//        user.setCrateTime(new Date());
+//        user.setTheme(User.DEFAULT_THEME);
+//        user.setAvatar(User.DEFAULT_AVATAR);
+//        user.setSsex(User.SEX_UNKNOW);
+//        user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
+//        this.save(user);
+//        UserRole ur = new UserRole();
+//        ur.setUserId(user.getUserId());
+//        ur.setRoleId(3L);
+//        this.userRoleMapper.insert(ur);
     }
 
     @Override
@@ -123,7 +133,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     @Override
     @Transactional
     public void updateUser(User user, Long[] roles, Long[] menuIds) {
-        user.setPassword(null);
+//        user.setPassword(null);
         user.setUsername(null);
         user.setModifyTime(new Date());
         this.updateNotNull(user);
