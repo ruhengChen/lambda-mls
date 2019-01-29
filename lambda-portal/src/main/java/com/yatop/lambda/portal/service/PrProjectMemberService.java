@@ -2,7 +2,6 @@ package com.yatop.lambda.portal.service;
 
 import com.yatop.lambda.portal.common.service.IService;
 import com.yatop.lambda.portal.model.PrProjectMember;
-import com.yatop.lambda.portal.model.ProjectMemberWithUser;
 
 import java.util.List;
 

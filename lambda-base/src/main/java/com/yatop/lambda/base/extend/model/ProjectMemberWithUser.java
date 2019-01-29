@@ -1,6 +1,7 @@
-package com.yatop.lambda.portal.model;
+package com.yatop.lambda.base.extend.model;
 
 
+import com.yatop.lambda.base.model.PrProjectMember;
 
 /**
  * Created by 19016 on 2019/1/28.

@@ -3,7 +3,6 @@ package com.yatop.lambda.portal.service.impl;
 import com.yatop.lambda.portal.common.service.impl.BaseService;
 import com.yatop.lambda.portal.dao.PrProjectMemberMapper;
 import com.yatop.lambda.portal.model.PrProjectMember;
-import com.yatop.lambda.portal.model.ProjectMemberWithUser;
 import com.yatop.lambda.portal.service.PrProjectMemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
