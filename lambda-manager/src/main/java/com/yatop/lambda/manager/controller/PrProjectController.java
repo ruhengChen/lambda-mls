@@ -1,11 +1,13 @@
-package com.yatop.lambda.portal.controller;
+package com.yatop.lambda.manager.controller;
 
+import com.yatop.lambda.base.model.PrProjectMember;
+import com.yatop.lambda.manager.service.PrProjectMemberService;
 import com.yatop.lambda.portal.common.controller.BaseController;
 import com.yatop.lambda.portal.common.domain.QueryRequest;
-import com.yatop.lambda.portal.model.User;
-import com.yatop.lambda.portal.service.PrProjectMemberService;
-import com.yatop.lambda.portal.service.PrProjectService;
+import com.yatop.lambda.portal.common.domain.ResponseBo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import java.util.Map;
  */
 @Controller
 public class PrProjectController extends BaseController {
+    private Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private PrProjectMemberService prProjectMemberService;
     @RequestMapping("projectMember/list") //todo
@@ -26,5 +29,16 @@ public class PrProjectController extends BaseController {
     public Map<String,Object> getProjectMemberWithUser(QueryRequest request, Long projectId){
         return super.selectByPageNumSize(request,()->prProjectMemberService.findProjectMemberWithUser(projectId));
     }
-
+    @RequestMapping("projectMember/add")
+    @RequiresPermissions("member:add")
+    @ResponseBody
+    public ResponseBo addProjectMember(PrProjectMember prProjectMember){
+        try{
+            prProjectMemberService.addProjectMember(prProjectMember);
+            return ResponseBo.ok("新增成功");
+        }catch(Exception e){
+            log.error("新增项目成员失败", e);
+            return ResponseBo.error("新增失败");
+        }
+    }
 }

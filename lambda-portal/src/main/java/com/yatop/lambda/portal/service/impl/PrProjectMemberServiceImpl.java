@@ -3,6 +3,7 @@ package com.yatop.lambda.portal.service.impl;
 import com.yatop.lambda.portal.common.service.impl.BaseService;
 import com.yatop.lambda.portal.dao.PrProjectMemberMapper;
 import com.yatop.lambda.portal.model.PrProjectMember;
+import com.yatop.lambda.portal.model.ProjectMemberWithUser;
 import com.yatop.lambda.portal.service.PrProjectMemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +25,18 @@ public class PrProjectMemberServiceImpl extends BaseService<PrProjectMember> imp
     @Autowired
     private PrProjectMemberMapper prProjectMemberMapper;
     @Override
-    public List<ProjectMemberWithUser> findProjectMemberWithUser(String username) {
+    public List<ProjectMemberWithUser> findProjectMemberWithUser(Long projectId) {
        try{
-           return this.prProjectMemberMapper.findProjectMemberWithUser(username);
+           return this.prProjectMemberMapper.findProjectMemberWithUser(projectId);
        }catch (Exception e){
            this.log.error("error", e);
            return new ArrayList<>();
        }
+    }
 
+    @Override
+    public void addProjectMember(PrProjectMember prProjectMember) {
 
     }
+
 }
