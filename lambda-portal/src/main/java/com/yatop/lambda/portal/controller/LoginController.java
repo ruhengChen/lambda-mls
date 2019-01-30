@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.config.FebsProperties;
 import com.yatop.lambda.portal.common.controller.BaseController;
+import com.yatop.lambda.portal.common.domain.JsonResponse;
 import com.yatop.lambda.portal.common.domain.ResponseBo;
 import com.yatop.lambda.portal.common.shiro.ShiroRealm;
 import com.yatop.lambda.portal.common.util.MD5Utils;
@@ -55,7 +56,7 @@ public class LoginController extends BaseController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ResponseBo login(@RequestBody JSONObject jsonObject) {
+    public JsonResponse login(@RequestBody JSONObject jsonObject) {
 //        String username, String password, String code, Boolean rememberMe
         String username = jsonObject.getString("username");
         String password = jsonObject.getString("password");
@@ -68,23 +69,32 @@ public class LoginController extends BaseController {
 //        shiroRealm.setCachingEnabled(true);
 //       shiroRealm.setAuthenticationCachingEnabled(true);
 
-        Session session = super.getSession();
-        password = MD5Utils.encrypt(username.toLowerCase(), password);
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
-        super.login(token);
+        try {
+            password = MD5Utils.encrypt(username.toLowerCase(), password);
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
+            Subject subject = getSubject();
+            if (subject != null)
+                subject.logout();
+            super.login(token);
+            this.userService.updateLoginTime(username);
 //        PrincipalCollection principal = (PrincipalCollection) SecurityUtils.getSubject().getPrincipal();
-        AuthorizationInfo simpleAuthorizationInfo = shiroRealm.doGetAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
+            AuthorizationInfo simpleAuthorizationInfo = shiroRealm.doGetAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
 
-        User user = this.userService.findByName(username);
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("userId", user.getUserId());
-        hashMap.put("userName", user.getUsername());
-        hashMap.put("roles", simpleAuthorizationInfo.getRoles());
-        hashMap.put("stringPermissions", simpleAuthorizationInfo.getStringPermissions());
+            User user = this.userService.findByName(username);
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("userId", user.getUserId());
+            hashMap.put("userName", user.getUsername());
+            hashMap.put("roles", simpleAuthorizationInfo.getRoles());
+            hashMap.put("stringPermissions", simpleAuthorizationInfo.getStringPermissions());
 
-        Subject subject = getSubject();
+
 //        AuthorizationInfo simpleAuthorizationInfo = shiroRealm.getAuthorizationCache().get(SecurityUtils.getSubject().getPrincipals());
-        return ResponseBo.ok(hashMap);
+            return JsonResponse.build(hashMap);
+        } catch (UnknownAccountException | IncorrectCredentialsException | LockedAccountException e) {
+            return JsonResponse.build(e);
+        } catch (AuthenticationException e) {
+            return JsonResponse.build(new Exception("认证失败！"));
+        }
 //        String sessionCode = (String) session.getAttribute(CODE_KEY);
 //        if (!code.equalsIgnoreCase(sessionCode)) {
 //            return ResponseBo.warn("验证码错误！");

@@ -76,7 +76,7 @@ public class FileUtil {
                 log.error("文件未找到", e);
             }
             if (operateSign) {
-                return ResponseBo.ok(fileName);
+                return ResponseBo.ok(fileName, "");
             } else {
                 return ResponseBo.error("导出Excel失败，请联系网站管理员！");
             }
@@ -107,7 +107,7 @@ public class FileUtil {
             operateSign = ExcelUtils.builder(clazz)
                     .toCsv(list, path);
             if (operateSign) {
-                return ResponseBo.ok(fileName);
+                return ResponseBo.ok(fileName, "");
             } else {
                 return ResponseBo.error("导出Csv失败，请联系网站管理员！");
             }

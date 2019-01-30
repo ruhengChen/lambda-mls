@@ -58,7 +58,7 @@ public class RedisController {
     public ResponseBo keys(String arg) {
         try {
             Set<String> set = this.redisService.getKeys(arg);
-            return ResponseBo.ok(set);
+            return ResponseBo.ok(set, "");
         } catch (Exception e) {
             return ResponseBo.error(e.getMessage());
         }
@@ -70,7 +70,7 @@ public class RedisController {
     public ResponseBo get(String arg) {
         try {
             String result = this.redisService.get(arg);
-            return ResponseBo.ok(result == null ? "" : result);
+            return ResponseBo.ok(result == null ? "" : result, "");
         } catch (Exception e) {
             return ResponseBo.error(e.getMessage());
         }
@@ -87,7 +87,7 @@ public class RedisController {
             else if (args.length != 2)
                 return ResponseBo.error("(error) ERR syntax error");
             String result = this.redisService.set(args[0], args[1]);
-            return ResponseBo.ok(result);
+            return ResponseBo.ok(result, "");
         } catch (Exception e) {
             return ResponseBo.error(e.getMessage());
         }
@@ -100,7 +100,7 @@ public class RedisController {
         try {
             String[] args = arg.split(",");
             Long result = this.redisService.del(args);
-            return ResponseBo.ok(INTEGER_PREFIX + result);
+            return ResponseBo.ok(INTEGER_PREFIX + result, "");
         } catch (Exception e) {
             return ResponseBo.error(e.getMessage());
         }
@@ -117,7 +117,7 @@ public class RedisController {
                 if (this.redisService.exists(key))
                     count++;
             }
-            return ResponseBo.ok(INTEGER_PREFIX + count);
+            return ResponseBo.ok(INTEGER_PREFIX + count, "");
         } catch (Exception e) {
             return ResponseBo.error(e.getMessage());
         }
@@ -128,7 +128,7 @@ public class RedisController {
     @ResponseBody
     public ResponseBo pttl(String arg) {
         try {
-            return ResponseBo.ok(INTEGER_PREFIX + this.redisService.pttl(arg));
+            return ResponseBo.ok(INTEGER_PREFIX + this.redisService.pttl(arg), "");
         } catch (Exception e) {
             return ResponseBo.error(e.getMessage());
         }
@@ -143,7 +143,7 @@ public class RedisController {
             if (arr.length != 2 || !isValidLong(arr[1])) {
                 return ResponseBo.error("(error) ERR wrong number of arguments for 'pexpire' command");
             }
-            return ResponseBo.ok(INTEGER_PREFIX + this.redisService.pexpire(arr[0], Long.valueOf(arr[1])));
+            return ResponseBo.ok(INTEGER_PREFIX + this.redisService.pexpire(arr[0], Long.valueOf(arr[1])), "");
         } catch (Exception e) {
             return ResponseBo.error(e.getMessage());
         }
