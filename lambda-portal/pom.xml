@@ -24,6 +24,7 @@
         <!--<mysql.driver.version>5.1.30</mysql.driver.version>-->
     <!--</properties>-->
     <properties>
+        <start-class>com.yatop.lambda.portal.Application</start-class>
         <mysql.driver.version>5.1.30</mysql.driver.version>
         <poi.version>3.13</poi.version>
     </properties>
@@ -37,7 +38,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>compile</scope>
+            <!--<scope>compile</scope>-->
         </dependency>
 
         <dependency>

@@ -27,8 +27,6 @@
             <artifactId>lambda-tools</artifactId>
             <version>${yatop.lambda.tools}</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test-autoconfigure</artifactId>

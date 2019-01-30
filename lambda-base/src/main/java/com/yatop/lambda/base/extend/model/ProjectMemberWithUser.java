@@ -3,9 +3,7 @@ package com.yatop.lambda.base.extend.model;
 
 import com.yatop.lambda.base.model.PrProjectMember;
 
-/**
- * Created by 19016 on 2019/1/28.
- */
+
 public class ProjectMemberWithUser extends PrProjectMember {
 
     private static final long serialVersionUID = -8078831798548519162L;

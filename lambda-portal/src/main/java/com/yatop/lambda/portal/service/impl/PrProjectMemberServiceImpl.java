@@ -27,6 +27,7 @@ public class PrProjectMemberServiceImpl extends BaseService<PrProjectMember> imp
     @Override
     public List<ProjectMemberWithUser> findProjectMemberWithUser(Long projectId) {
        try{
+           List<ProjectMemberWithUser> list=this.prProjectMemberMapper.findProjectMemberWithUser(projectId);
            return this.prProjectMemberMapper.findProjectMemberWithUser(projectId);
        }catch (Exception e){
            this.log.error("error", e);

@@ -8,12 +8,12 @@ spring:
     username: root
     password: root
 
-      # http://localhost:8081/druid/login
+    # http://localhost:8081/druid/login
     druid:
       # 数据库访问配置, 使用druid数据源
       db-type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: com.mysql.jdbc.Driver
-#      url: jdbc:mysql://rm-bp12uie49m8m0v2w1no.mysql.rds.aliyuncs.com:3306/chebei_mall?useUnicode=true&characterEncoding=utf8
+      #      url: jdbc:mysql://rm-bp12uie49m8m0v2w1no.mysql.rds.aliyuncs.com:3306/chebei_mall?useUnicode=true&characterEncoding=utf8
       url: jdbc:mysql://192.168.19.194:3306/lambda_mls?useUnicode=true&characterEncoding=utf8
       username: root
       password: root
@@ -38,7 +38,7 @@ spring:
       # 配置监控统计拦截的filters, 去掉后监控界面sql无法统计, 'wall'用于防火墙
       filters: stat
       # Spring监控AOP切入点，如 x.y.z.service.*,配置多个英文逗号分隔
-#      aop-patterns: cc.mrbird.*.servie.*
+      #      aop-patterns: cc.mrbird.*.servie.*
 
       # WebStatFilter配置
       web-stat-filter:
@@ -90,8 +90,8 @@ spring:
     # 连接超时时间（毫秒）
     timeout: 0
 
-#  thymeleaf:
-#    cache: false
+  #  thymeleaf:
+  #    cache: false
 
   aop:
     proxy-target-class: true
@@ -99,7 +99,7 @@ spring:
     type:
       redis
 
- # spring boot admin配置开始
+  # spring boot admin配置开始
   boot:
     admin:
       client:
