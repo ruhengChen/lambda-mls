@@ -1,5 +1,6 @@
 package com.yatop.lambda.portal.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.domain.ResponseBo;
 import com.yatop.lambda.portal.common.domain.Tree;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -47,8 +49,9 @@ public class DeptController {
 
     @RequestMapping("dept/queryDeptInfo")
     @ResponseBody
-    public ResponseBo getDept(Long deptId) {
+    public ResponseBo getDept(@RequestBody JSONObject jsonObject) {
         try {
+            Long deptId = jsonObject.getLong("deptId");
             Dept dept = this.deptService.findById(deptId);
             return ResponseBo.ok(dept);
         } catch (Exception e) {
@@ -60,7 +63,7 @@ public class DeptController {
     @RequestMapping("dept/queryDepts")
     @RequiresPermissions("dept:list")
     @ResponseBody
-    public List<Dept> deptList(Dept dept) {
+    public List<Dept> deptList(@RequestBody Dept dept) {
         try {
             return this.deptService.findAllDepts(dept);
         } catch (Exception e) {
@@ -71,7 +74,7 @@ public class DeptController {
 
     @RequestMapping("dept/excel")
     @ResponseBody
-    public ResponseBo deptExcel(Dept dept) {
+    public ResponseBo deptExcel(@RequestBody Dept dept) {
         try {
             List<Dept> list = this.deptService.findAllDepts(dept);
             return FileUtil.createExcelByPOIKit("部门表", list, Dept.class);
@@ -83,7 +86,7 @@ public class DeptController {
 
     @RequestMapping("dept/csv")
     @ResponseBody
-    public ResponseBo deptCsv(Dept dept) {
+    public ResponseBo deptCsv(@RequestBody Dept dept) {
         try {
             List<Dept> list = this.deptService.findAllDepts(dept);
             return FileUtil.createCsv("部门表", list, Dept.class);
@@ -95,10 +98,11 @@ public class DeptController {
 
     @RequestMapping("dept/checkDeptName")
     @ResponseBody
-    public ResponseBo checkDeptName(String deptName, String oldDeptName) {
+    public ResponseBo checkDeptName(@RequestBody JSONObject jsonObject) {
 //        if (StringUtils.isNotBlank(oldDeptName) && deptName.equalsIgnoreCase(oldDeptName)) {
 //            return true;
 //        }
+        String deptName = jsonObject.getString("deptName");
         Dept result = this.deptService.findByName(deptName);
         return ResponseBo.ok(result == null);
     }
@@ -107,7 +111,7 @@ public class DeptController {
     @RequiresPermissions("dept:add")
     @RequestMapping("dept/addDept")
     @ResponseBody
-    public ResponseBo addRole(Dept dept) {
+    public ResponseBo addRole(@RequestBody Dept dept) {
         try {
             this.deptService.addDept(dept);
             Dept dept1 = this.deptService.findById(dept.getDeptId());
@@ -122,8 +126,9 @@ public class DeptController {
     @RequiresPermissions("dept:delete")
     @RequestMapping("dept/deleteDepts")
     @ResponseBody
-    public ResponseBo deleteDepts(String deptIds) {
+    public ResponseBo deleteDepts(@RequestBody JSONObject jsonObject) {
         try {
+            String deptIds = jsonObject.getString("deptIds");
             this.deptService.deleteDepts(deptIds);
             return ResponseBo.ok("删除部门成功！");
         } catch (Exception e) {
@@ -136,7 +141,7 @@ public class DeptController {
     @RequiresPermissions("dept:update")
     @RequestMapping("dept/updateDept")
     @ResponseBody
-    public ResponseBo updateRole(Dept dept) {
+    public ResponseBo updateRole(@RequestBody Dept dept) {
         try {
             this.deptService.updateDept(dept);
             Dept dept1 = this.deptService.findById(dept.getDeptId());

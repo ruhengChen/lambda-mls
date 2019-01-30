@@ -1,5 +1,6 @@
 package com.yatop.lambda.portal.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.controller.BaseController;
 import com.yatop.lambda.portal.common.domain.ResponseBo;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -39,8 +41,9 @@ public class MenuController extends BaseController {
 
     @RequestMapping("menu/queryMenus")
     @ResponseBody
-    public ResponseBo getMenu(String userName) {
+    public ResponseBo getMenu(@RequestBody JSONObject jsonObject) {
         try {
+            String userName = jsonObject.getString("userName");
             List<Menu> menus = this.menuService.findUserMenus(userName);
             return ResponseBo.ok(menus);
         } catch (Exception e) {
@@ -51,8 +54,9 @@ public class MenuController extends BaseController {
 
     @RequestMapping("menu/getMenu")
     @ResponseBody
-    public ResponseBo getMenu(Long menuId) {
+    public ResponseBo getMenuInfo(@RequestBody JSONObject jsonObject) {
         try {
+            Long menuId = jsonObject.getLong("menuId");
             Menu menu = this.menuService.findById(menuId);
             return ResponseBo.ok(menu);
         } catch (Exception e) {
@@ -87,8 +91,9 @@ public class MenuController extends BaseController {
 
     @RequestMapping("menu/getUserMenu")
     @ResponseBody
-    public ResponseBo getUserMenu(String userName) {
+    public ResponseBo getUserMenu(@RequestBody JSONObject jsonObject) {
         try {
+            String userName = jsonObject.getString("userName");
             Tree<Menu> tree = this.menuService.getUserMenu(userName);
             return ResponseBo.ok(tree);
         } catch (Exception e) {
@@ -100,7 +105,7 @@ public class MenuController extends BaseController {
     @RequestMapping("menu/list")
     @RequiresPermissions("menu:list")
     @ResponseBody
-    public List<Menu> menuList(Menu menu) {
+    public List<Menu> menuList(@RequestBody Menu menu) {
         try {
             return this.menuService.findAllMenus(menu);
         } catch (Exception e) {
@@ -111,7 +116,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping("menu/excel")
     @ResponseBody
-    public ResponseBo menuExcel(Menu menu) {
+    public ResponseBo menuExcel(@RequestBody Menu menu) {
         try {
             List<Menu> list = this.menuService.findAllMenus(menu);
             return FileUtil.createExcelByPOIKit("菜单表", list, Menu.class);
@@ -123,7 +128,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping("menu/csv")
     @ResponseBody
-    public ResponseBo menuCsv(Menu menu) {
+    public ResponseBo menuCsv(@RequestBody Menu menu) {
         try {
             List<Menu> list = this.menuService.findAllMenus(menu);
             return FileUtil.createCsv("菜单表", list, Menu.class);
@@ -135,19 +140,21 @@ public class MenuController extends BaseController {
 
     @RequestMapping("menu/checkMenuName")
     @ResponseBody
-    public boolean checkMenuName(String menuName, String type, String oldMenuName) {
-        if (StringUtils.isNotBlank(oldMenuName) && menuName.equalsIgnoreCase(oldMenuName)) {
-            return true;
-        }
+    public ResponseBo checkMenuName(@RequestBody JSONObject jsonObject) {
+//        if (StringUtils.isNotBlank(oldMenuName) && menuName.equalsIgnoreCase(oldMenuName)) {
+//            return true;
+//        }
+        String menuName = jsonObject.getString("menuName");
+        String type = jsonObject.getString("type");
         Menu result = this.menuService.findByNameAndType(menuName, type);
-        return result == null;
+        return ResponseBo.ok(result == null);
     }
 
     @Log("新增菜单/按钮")
     @RequiresPermissions("menu:add")
     @RequestMapping("menu/addMenu")
     @ResponseBody
-    public ResponseBo addMenu(Menu menu) {
+    public ResponseBo addMenu(@RequestBody Menu menu) {
         String name;
         if (Menu.TYPE_MENU.equals(menu.getType())) {
             name = "菜单";
@@ -167,8 +174,9 @@ public class MenuController extends BaseController {
     @RequiresPermissions("menu:delete")
     @RequestMapping("menu/deleteMenu")
     @ResponseBody
-    public ResponseBo deleteMenus(String menuIds) {
+    public ResponseBo deleteMenus(@RequestBody JSONObject jsonObject) {
         try {
+            String menuIds = jsonObject.getString("menuIds");
             this.menuService.deleteMeuns(menuIds);
             return ResponseBo.ok("删除成功！");
         } catch (Exception e) {
@@ -181,7 +189,7 @@ public class MenuController extends BaseController {
     @RequiresPermissions("menu:update")
     @RequestMapping("menu/updateMenu")
     @ResponseBody
-    public ResponseBo updateMenu(Menu menu) {
+    public ResponseBo updateMenu(@RequestBody Menu menu) {
         String name;
         if (Menu.TYPE_MENU.equals(menu.getType()))
             name = "菜单";

@@ -139,7 +139,7 @@ public class LoginController extends BaseController {
 
     @Log("访问系统")
     @RequestMapping("/index")
-    public String index(Model model) {
+    public String index(@RequestBody Model model) {
         // 登录成后，即可通过 Subject 获取登录的用户信息
         User user = super.getCurrentUser();
         model.addAttribute("user", user);

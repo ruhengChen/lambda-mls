@@ -1,5 +1,6 @@
 package com.yatop.lambda.portal.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.controller.BaseController;
 import com.yatop.lambda.portal.common.domain.QueryRequest;
@@ -44,7 +45,7 @@ public class UserController extends BaseController {
 
     @RequestMapping("user/checkUserName")
     @ResponseBody
-//    @RequiresPermissions("user:checkUserName")
+    @RequiresPermissions("user:checkUserName")
     public ResponseBo checkUserName(@RequestBody User user) {
 //        if (StringUtils.isNotBlank(oldusername) && username.equalsIgnoreCase(oldusername)) {
 //            return true;
@@ -65,8 +66,9 @@ public class UserController extends BaseController {
     @RequestMapping("user/queryUserInfo")
     @ResponseBody
     @RequiresPermissions("user:query")
-    public ResponseBo getUser(Long userId) {
+    public ResponseBo getUser(@RequestBody JSONObject jsonObject) {
         try {
+            Long userId  = jsonObject.getLong("userId");
             User user = this.userService.findById(userId);
             return ResponseBo.ok(user);
         } catch (Exception e) {
@@ -79,7 +81,7 @@ public class UserController extends BaseController {
     @RequestMapping("user/queryUsers")
     @RequiresPermissions("user:list")
     @ResponseBody
-    public Map<String, Object> userList(QueryRequest request, User user) {
+    public Map<String, Object> userList(QueryRequest request, @RequestBody User user) {
         return super.selectByPageNumSize(request, () -> this.userService.findUserWithDept(user, request));
     }
 
@@ -87,13 +89,13 @@ public class UserController extends BaseController {
     @RequestMapping("user/queryUsersByConditions")
     @RequiresPermissions("user:list")
     @ResponseBody
-    public Map<String, Object> queryUsersByConditions(QueryRequest request, User user) {
+    public Map<String, Object> queryUsersByConditions(QueryRequest request,@RequestBody User user) {
         return super.selectByPageNumSize(request, () -> this.userService.findUserByConditions(user, request));
     }
 
     @RequestMapping("user/excel")
     @ResponseBody
-    public ResponseBo userExcel(User user) {
+    public ResponseBo userExcel(@RequestBody User user) {
         try {
             List<User> list = this.userService.findUserWithDept(user, null);
             return FileUtil.createExcelByPOIKit("用户表", list, User.class);
@@ -106,7 +108,7 @@ public class UserController extends BaseController {
 
     @RequestMapping("user/csv")
     @ResponseBody
-    public ResponseBo userCsv(User user) {
+    public ResponseBo userCsv(@RequestBody User user) {
         try {
             List<User> list = this.userService.findUserWithDept(user, null);
             return FileUtil.createCsv("用户表", list, User.class);
@@ -118,7 +120,7 @@ public class UserController extends BaseController {
 
     @RequestMapping("user/regist")
     @ResponseBody
-    public ResponseBo regist(User user) {
+    public ResponseBo regist(@RequestBody User user) {
         try {
             User result = this.userService.findByName(user.getUsername());
             if (result != null) {
@@ -135,7 +137,7 @@ public class UserController extends BaseController {
     @Log("更换主题")
     @RequestMapping("user/theme")
     @ResponseBody
-    public ResponseBo updateTheme(User user) {
+    public ResponseBo updateTheme(@RequestBody User user) {
         try {
             this.userService.updateTheme(user.getTheme(), user.getUsername());
             return ResponseBo.ok();
@@ -149,12 +151,14 @@ public class UserController extends BaseController {
     @RequiresPermissions("user:add")
     @RequestMapping("user/createUser")
     @ResponseBody
-    public ResponseBo addUser(User user, Long[] roles, Long[] menuId) {
+    public ResponseBo addUser(@RequestBody User user, @RequestBody JSONObject jsonObject) {
         try {
 //            if (ON.equalsIgnoreCase(user.getStatus()))
 //                user.setStatus(User.STATUS_VALID);
 //            else
 //                user.setStatus(User.STATUS_LOCK);
+            Long[] roles = (Long[])jsonObject.getJSONArray("roles").toArray();
+            Long[] menuId = (Long[])jsonObject.getJSONArray("menuId").toArray();
 
             this.userService.addUser(user, roles, menuId);
             User resUser = this.userService.findByName(user.getUsername());
@@ -169,7 +173,7 @@ public class UserController extends BaseController {
     @RequiresPermissions("user:status")
     @RequestMapping("user/updateUserStatus")
     @ResponseBody
-    public ResponseBo updateUserStatus(User user) {
+    public ResponseBo updateUserStatus(@RequestBody User user) {
         try {
             this.userService.updateUserProfile(user);
             User resUser = this.userService.findById(user.getUserId());
@@ -185,8 +189,10 @@ public class UserController extends BaseController {
     @RequiresPermissions("user:permissions")
     @RequestMapping("user/updateUserPermission")
     @ResponseBody
-    public ResponseBo updateUserPermission(User user, Long[] roles, Long[] menuId) {
+    public ResponseBo updateUserPermission(@RequestBody User user, @RequestBody JSONObject jsonObject) {
         try {
+            Long[] roles = (Long[])jsonObject.getJSONArray("roles").toArray();
+            Long[] menuId = (Long[])jsonObject.getJSONArray("menuId").toArray();
             this.userService.updateUser(user, roles, menuId);
             User resUser = this.userService.findById(user.getUserId());
             return ResponseBo.ok(resUser);
@@ -200,7 +206,7 @@ public class UserController extends BaseController {
     @RequiresPermissions("user:update")
     @RequestMapping("user/updateUserInfo")
     @ResponseBody
-    public ResponseBo updateUserInfo(User user) {
+    public ResponseBo updateUserInfo(@RequestBody User user) {
         try {
             String password;
             if(user.getPassword() == null) {
@@ -226,8 +232,9 @@ public class UserController extends BaseController {
     @RequiresPermissions("user:delete")
     @RequestMapping("user/deleteUsers")
     @ResponseBody
-    public ResponseBo deleteUsers(String userIds) {
+    public ResponseBo deleteUsers(@RequestBody JSONObject jsonObject) {
         try {
+            String userIds = jsonObject.getString("userIds");
             this.userService.deleteUsers(userIds);
 
             return ResponseBo.ok("删除用户成功！");
@@ -240,7 +247,8 @@ public class UserController extends BaseController {
 
     @RequestMapping("user/checkPassword")
     @ResponseBody
-    public boolean checkPassword(String password) {
+    public boolean checkPassword(@RequestBody JSONObject jsonObject) {
+        String password =  jsonObject.getString("password");
         User user = getCurrentUser();
         String encrypt = MD5Utils.encrypt(user.getUsername().toLowerCase(), password);
         return user.getPassword().equals(encrypt);
@@ -248,8 +256,9 @@ public class UserController extends BaseController {
 
     @RequestMapping("user/updatePassword")
     @ResponseBody
-    public ResponseBo updatePassword(String newPassword) {
+    public ResponseBo updatePassword(@RequestBody JSONObject jsonObject) {
         try {
+            String newPassword =  jsonObject.getString("newPassword");
             this.userService.updatePassword(newPassword);
             return ResponseBo.ok("更改密码成功！");
         } catch (Exception e) {
@@ -259,7 +268,7 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping("user/profile")
-    public String profileIndex(Model model) {
+    public String profileIndex(@RequestBody Model model) {
         User user = super.getCurrentUser();
         user = this.userService.findUserProfile(user);
         String ssex = user.getSsex();
@@ -276,8 +285,9 @@ public class UserController extends BaseController {
 
     @RequestMapping("user/getUserProfile")
     @ResponseBody
-    public ResponseBo getUserProfile(Long userId) {
+    public ResponseBo getUserProfile(@RequestBody JSONObject jsonObject) {
         try {
+            Long userId = jsonObject.getLong("userId");
             User user = new User();
             user.setUserId(userId);
             return ResponseBo.ok(this.userService.findUserProfile(user));
@@ -289,7 +299,7 @@ public class UserController extends BaseController {
 
     @RequestMapping("user/updateUserProfile")
     @ResponseBody
-    public ResponseBo updateUserProfile(User user) {
+    public ResponseBo updateUserProfile(@RequestBody User user) {
         try {
             this.userService.updateUserProfile(user);
             return ResponseBo.ok("更新个人信息成功！");
@@ -301,8 +311,9 @@ public class UserController extends BaseController {
 
     @RequestMapping("user/changeAvatar")
     @ResponseBody
-    public ResponseBo changeAvatar(String imgName) {
+    public ResponseBo changeAvatar(@RequestBody JSONObject jsonObject) {
         try {
+            String imgName = jsonObject.getString("imgName");
             String[] img = imgName.split("/");
             String realImgName = img[img.length - 1];
             User user = getCurrentUser();

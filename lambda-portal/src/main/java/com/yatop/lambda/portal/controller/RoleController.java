@@ -1,5 +1,7 @@
 package com.yatop.lambda.portal.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.controller.BaseController;
 import com.yatop.lambda.portal.common.domain.QueryRequest;
@@ -13,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,13 +40,13 @@ public class RoleController extends BaseController {
     @RequestMapping("role/queryRoles")
     @RequiresPermissions("role:list")
     @ResponseBody
-    public Map<String, Object> roleList(QueryRequest request, Role role) {
+    public Map<String, Object> roleList(QueryRequest request, @RequestBody Role role) {
         return super.selectByPageNumSize(request, () -> this.roleService.findAllRole(role));
     }
 
     @RequestMapping("role/excel")
     @ResponseBody
-    public ResponseBo roleExcel(Role role) {
+    public ResponseBo roleExcel(@RequestBody Role role) {
         try {
             List<Role> list = this.roleService.findAllRole(role);
             return FileUtil.createExcelByPOIKit("角色表", list, Role.class);
@@ -55,7 +58,7 @@ public class RoleController extends BaseController {
 
     @RequestMapping("role/csv")
     @ResponseBody
-    public ResponseBo roleCsv(Role role) {
+    public ResponseBo roleCsv(@RequestBody Role role) {
         try {
             List<Role> list = this.roleService.findAllRole(role);
             return FileUtil.createCsv("角色表", list, Role.class);
@@ -67,8 +70,9 @@ public class RoleController extends BaseController {
 
     @RequestMapping("role/queryRoleInfo")
     @ResponseBody
-    public ResponseBo getRole(Long roleId) {
+    public ResponseBo getRole(@RequestBody JSONObject jsonObject) {
         try {
+            Long roleId = jsonObject.getLong("roleId");
             Role role = this.roleService.findRoleWithMenus(roleId);
             return ResponseBo.ok(role);
         } catch (Exception e) {
@@ -79,10 +83,11 @@ public class RoleController extends BaseController {
 
     @RequestMapping("role/checkRoleName")
     @ResponseBody
-    public ResponseBo checkRoleName(String roleName) {
+    public ResponseBo checkRoleName(@RequestBody JSONObject jsonObject) {
 //        if (StringUtils.isNotBlank(oldRoleName) && roleName.equalsIgnoreCase(oldRoleName)) {
 //            return true;
 //        }
+        String roleName = jsonObject.getString("roleName");
         Role result = this.roleService.findByName(roleName);
         return ResponseBo.ok(result == null);
     }
@@ -91,8 +96,9 @@ public class RoleController extends BaseController {
     @RequiresPermissions("role:add")
     @RequestMapping("role/addRole")
     @ResponseBody
-    public ResponseBo addRole(Role role, Long[] menuId) {
+    public ResponseBo addRole(@RequestBody Role role, @RequestBody JSONArray jsonArray) {
         try {
+            Long[] menuId  = (Long[]) jsonArray.toArray();
             this.roleService.addRole(role, menuId);
             Role resRole = this.roleService.findByName(role.getRoleName());
             return ResponseBo.ok(resRole);
@@ -106,8 +112,9 @@ public class RoleController extends BaseController {
     @RequiresPermissions("role:delete")
     @RequestMapping("role/deleteRole")
     @ResponseBody
-    public ResponseBo deleteRoles(String roleIds) {
+    public ResponseBo deleteRoles(@RequestBody JSONObject jsonObject) {
         try {
+            String roleIds = jsonObject.getString("roleIds");
             this.roleService.deleteRoles(roleIds);
             return ResponseBo.ok("删除角色成功！");
         } catch (Exception e) {
@@ -120,8 +127,9 @@ public class RoleController extends BaseController {
     @RequiresPermissions("role:update")
     @RequestMapping("role/updateRole")
     @ResponseBody
-    public ResponseBo updateRole(Role role, Long[] menuId) {
+    public ResponseBo updateRole(@RequestBody Role role, @RequestBody JSONArray jsonArray) {
         try {
+            Long[] menuId = (Long[]) jsonArray.toArray();
             this.roleService.updateRole(role, menuId);
             Role resRole = this.roleService.findByName(role.getRoleName());
             return ResponseBo.ok(resRole);

@@ -1,5 +1,6 @@
 package com.yatop.lambda.portal.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.controller.BaseController;
 import com.yatop.lambda.portal.common.domain.QueryRequest;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -36,13 +38,13 @@ public class DictController extends BaseController {
     @RequestMapping("dict/list")
     @RequiresPermissions("dict:list")
     @ResponseBody
-    public Map<String, Object> dictList(QueryRequest request, Dict dict) {
+    public Map<String, Object> dictList(QueryRequest request, @RequestBody Dict dict) {
         return super.selectByPageNumSize(request, () -> this.dictService.findAllDicts(dict, request));
     }
 
     @RequestMapping("dict/excel")
     @ResponseBody
-    public ResponseBo dictExcel(Dict dict) {
+    public ResponseBo dictExcel(@RequestBody Dict dict) {
         try {
             List<Dict> list = this.dictService.findAllDicts(dict, null);
             return FileUtil.createExcelByPOIKit("字典表", list, Dict.class);
@@ -54,7 +56,7 @@ public class DictController extends BaseController {
 
     @RequestMapping("dict/csv")
     @ResponseBody
-    public ResponseBo dictCsv(Dict dict) {
+    public ResponseBo dictCsv(@RequestBody Dict dict) {
         try {
             List<Dict> list = this.dictService.findAllDicts(dict, null);
             return FileUtil.createCsv("字典表", list, Dict.class);
@@ -66,8 +68,9 @@ public class DictController extends BaseController {
 
     @RequestMapping("dict/getDict")
     @ResponseBody
-    public ResponseBo getDict(Long dictId) {
+    public ResponseBo getDict(@RequestBody JSONObject jsonObject) {
         try {
+            Long dictId = jsonObject.getLong("dictId");
             Dict dict = this.dictService.findById(dictId);
             return ResponseBo.ok(dict);
         } catch (Exception e) {
@@ -80,7 +83,7 @@ public class DictController extends BaseController {
     @RequiresPermissions("dict:add")
     @RequestMapping("dict/add")
     @ResponseBody
-    public ResponseBo addDict(Dict dict) {
+    public ResponseBo addDict(@RequestBody Dict dict) {
         try {
             this.dictService.addDict(dict);
             return ResponseBo.ok("新增字典成功！");
@@ -94,8 +97,9 @@ public class DictController extends BaseController {
     @RequiresPermissions("dict:delete")
     @RequestMapping("dict/delete")
     @ResponseBody
-    public ResponseBo deleteDicts(String ids) {
+    public ResponseBo deleteDicts(@RequestBody JSONObject jsonObject) {
         try {
+            String ids = jsonObject.getString("ids");
             this.dictService.deleteDicts(ids);
             return ResponseBo.ok("删除字典成功！");
         } catch (Exception e) {
@@ -108,7 +112,7 @@ public class DictController extends BaseController {
     @RequiresPermissions("dict:update")
     @RequestMapping("dict/update")
     @ResponseBody
-    public ResponseBo updateDict(Dict dict) {
+    public ResponseBo updateDict(@RequestBody Dict dict) {
         try {
             this.dictService.updateDict(dict);
             return ResponseBo.ok("修改字典成功！");

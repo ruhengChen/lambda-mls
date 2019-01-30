@@ -1,5 +1,6 @@
 package com.yatop.lambda.portal.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yatop.lambda.portal.common.controller.BaseController;
 import com.yatop.lambda.portal.common.domain.QueryRequest;
 import com.yatop.lambda.portal.common.domain.ResponseBo;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,13 +35,13 @@ public class LogController extends BaseController {
 
     @RequestMapping("log/queryLogs")
     @ResponseBody
-    public Map<String, Object> queryLogs(QueryRequest request, SysLog log) {
+    public Map<String, Object> queryLogs(QueryRequest request, @RequestBody SysLog log) {
         return super.selectByPageNumSize(request, () -> this.logService.findAllLogs(log));
     }
 
     @RequestMapping("log/excel")
     @ResponseBody
-    public ResponseBo logExcel(SysLog log) {
+    public ResponseBo logExcel(@RequestBody SysLog log) {
         try {
             List<SysLog> list = this.logService.findAllLogs(log);
             return FileUtil.createExcelByPOIKit("系统日志表", list, SysLog.class);
@@ -51,7 +53,7 @@ public class LogController extends BaseController {
 
     @RequestMapping("log/csv")
     @ResponseBody
-    public ResponseBo logCsv(SysLog log) {
+    public ResponseBo logCsv(@RequestBody SysLog log) {
         try {
             List<SysLog> list = this.logService.findAllLogs(log);
             return FileUtil.createCsv("系统日志表", list, SysLog.class);
@@ -64,8 +66,9 @@ public class LogController extends BaseController {
     @RequiresPermissions("log:delete")
     @RequestMapping("log/delete")
     @ResponseBody
-    public ResponseBo deleteLogss(String ids) {
+    public ResponseBo deleteLogss(@RequestBody JSONObject jsonObject) {
         try {
+            String ids = jsonObject.getString("ids");
             this.logService.deleteLogs(ids);
             return ResponseBo.ok("删除日志成功！");
         } catch (Exception e) {
