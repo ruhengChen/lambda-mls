@@ -13,10 +13,12 @@ spring:
       # 数据库访问配置, 使用druid数据源
       db-type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: com.mysql.jdbc.Driver
+
       #      url: jdbc:mysql://rm-bp12uie49m8m0v2w1no.mysql.rds.aliyuncs.com:3306/chebei_mall?useUnicode=true&characterEncoding=utf8
       url: jdbc:mysql://192.168.19.194:3306/lambda_mls?useUnicode=true&characterEncoding=utf8
       username: root
       password: root
+
       # 连接池配置
       initial-size: 5
       min-idle: 5
