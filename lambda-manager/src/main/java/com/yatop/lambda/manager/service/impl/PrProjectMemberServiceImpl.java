@@ -17,9 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by 19016 on 2019/1/29.
- */
+
 @Service("projectMemberService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class PrProjectMemberServiceImpl  implements PrProjectMemberService {
@@ -47,5 +45,18 @@ public class PrProjectMemberServiceImpl  implements PrProjectMemberService {
     public void addProjectMember(PrProjectMember prProjectMember) {
         User user=(User) SecurityUtils.getSubject().getPrincipal();
         projectMemberMgr.insertProjectMember(prProjectMember,user.getUsername());
+    }
+
+    /**
+     * 逻辑上删除项目成员
+     * 设置项目成员表状态为失效
+     * @param prProjectMember 项目成员对象
+     * @return
+     */
+    @Override
+    public int deleteProjectMember(PrProjectMember prProjectMember) {
+        User user=(User) SecurityUtils.getSubject().getPrincipal();
+        return projectMemberMgr.deleteProjectMember(prProjectMember.getProjectId(),
+                prProjectMember.getMemberUser(),user.getUsername());
     }
 }

@@ -13,4 +13,5 @@ import java.util.List;
 public interface PrProjectMemberService  {
      List<ProjectMemberWithUser> findProjectMemberWithUser(Long projectId);
      void addProjectMember(PrProjectMember prProjectMember);
+     int deleteProjectMember(PrProjectMember prProjectMember);
 }

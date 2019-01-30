@@ -23,7 +23,7 @@ public class PrProjectController extends BaseController {
     private Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private PrProjectMemberService prProjectMemberService;
-    @RequestMapping("projectMember/list") //todo
+    @RequestMapping("projectMember/list")
     @RequiresPermissions("member:list")
     @ResponseBody
     public Map<String,Object> getProjectMemberWithUser(QueryRequest request, Long projectId){
@@ -39,6 +39,17 @@ public class PrProjectController extends BaseController {
         }catch(Exception e){
             log.error("新增项目成员失败", e);
             return ResponseBo.error("新增失败");
+        }
+    }
+    @RequestMapping("projectMember/delete")
+    @RequiresPermissions("member:delete")
+    @ResponseBody
+    public ResponseBo deleteProjectMember(PrProjectMember prProjectMember){
+        try{
+            return ResponseBo.ok("删除成功");
+        }catch(Exception e){
+            log.error("删除项目成员失败", e);
+            return ResponseBo.error("删除失败");
         }
     }
 }
