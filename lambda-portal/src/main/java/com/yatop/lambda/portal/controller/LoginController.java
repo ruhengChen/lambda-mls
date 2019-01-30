@@ -1,5 +1,6 @@
 package com.yatop.lambda.portal.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.config.FebsProperties;
 import com.yatop.lambda.portal.common.controller.BaseController;
@@ -22,10 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +55,13 @@ public class LoginController extends BaseController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ResponseBo login(String username, String password, String code, Boolean rememberMe) {
+    public ResponseBo login(@RequestBody JSONObject jsonObject) {
+//        String username, String password, String code, Boolean rememberMe
+        String username = jsonObject.getString("username");
+        String password = jsonObject.getString("password");
+        String code = jsonObject.getString("code");
+        Boolean rememberMe = jsonObject.getBoolean("rememberMe");
+
 //        if (!StringUtils.isNotBlank(code)) {
 //            return ResponseBo.warn("验证码不能为空！");
 //        }

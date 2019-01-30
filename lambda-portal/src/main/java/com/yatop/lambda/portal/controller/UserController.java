@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,11 +45,11 @@ public class UserController extends BaseController {
     @RequestMapping("user/checkUserName")
     @ResponseBody
 //    @RequiresPermissions("user:checkUserName")
-    public ResponseBo checkUserName(String username) {
+    public ResponseBo checkUserName(@RequestBody User user) {
 //        if (StringUtils.isNotBlank(oldusername) && username.equalsIgnoreCase(oldusername)) {
 //            return true;
 //        }
-        User result = this.userService.findByName(username);
+        User result = this.userService.findByName(user.getUsername());
         return ResponseBo.ok(result == null);
     }
 //    @RequestMapping("user/checkUserName")
