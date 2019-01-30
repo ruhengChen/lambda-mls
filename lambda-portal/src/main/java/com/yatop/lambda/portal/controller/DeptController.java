@@ -33,7 +33,7 @@ public class DeptController {
         return "system/dept/dept";
     }
 
-    @RequestMapping("dept/tree")
+    @RequestMapping("dept/deptTree")
     @ResponseBody
     public ResponseBo getDeptTree() {
         try {
@@ -45,7 +45,7 @@ public class DeptController {
         }
     }
 
-    @RequestMapping("dept/getDept")
+    @RequestMapping("dept/queryDeptInfo")
     @ResponseBody
     public ResponseBo getDept(Long deptId) {
         try {
@@ -57,7 +57,7 @@ public class DeptController {
         }
     }
 
-    @RequestMapping("dept/list")
+    @RequestMapping("dept/queryDepts")
     @RequiresPermissions("dept:list")
     @ResponseBody
     public List<Dept> deptList(Dept dept) {
@@ -95,22 +95,23 @@ public class DeptController {
 
     @RequestMapping("dept/checkDeptName")
     @ResponseBody
-    public boolean checkDeptName(String deptName, String oldDeptName) {
-        if (StringUtils.isNotBlank(oldDeptName) && deptName.equalsIgnoreCase(oldDeptName)) {
-            return true;
-        }
+    public ResponseBo checkDeptName(String deptName, String oldDeptName) {
+//        if (StringUtils.isNotBlank(oldDeptName) && deptName.equalsIgnoreCase(oldDeptName)) {
+//            return true;
+//        }
         Dept result = this.deptService.findByName(deptName);
-        return result == null;
+        return ResponseBo.ok(result == null);
     }
 
     @Log("新增部门 ")
     @RequiresPermissions("dept:add")
-    @RequestMapping("dept/add")
+    @RequestMapping("dept/addDept")
     @ResponseBody
     public ResponseBo addRole(Dept dept) {
         try {
             this.deptService.addDept(dept);
-            return ResponseBo.ok("新增部门成功！");
+            Dept dept1 = this.deptService.findById(dept.getDeptId());
+            return ResponseBo.ok(dept1);
         } catch (Exception e) {
             log.error("新增部门失败", e);
             return ResponseBo.error("新增部门失败，请联系网站管理员！");
@@ -119,11 +120,11 @@ public class DeptController {
 
     @Log("删除部门")
     @RequiresPermissions("dept:delete")
-    @RequestMapping("dept/delete")
+    @RequestMapping("dept/deleteDepts")
     @ResponseBody
-    public ResponseBo deleteDepts(String ids) {
+    public ResponseBo deleteDepts(String deptIds) {
         try {
-            this.deptService.deleteDepts(ids);
+            this.deptService.deleteDepts(deptIds);
             return ResponseBo.ok("删除部门成功！");
         } catch (Exception e) {
             log.error("删除部门失败", e);
@@ -133,12 +134,13 @@ public class DeptController {
 
     @Log("修改部门 ")
     @RequiresPermissions("dept:update")
-    @RequestMapping("dept/update")
+    @RequestMapping("dept/updateDept")
     @ResponseBody
     public ResponseBo updateRole(Dept dept) {
         try {
             this.deptService.updateDept(dept);
-            return ResponseBo.ok("修改部门成功！");
+            Dept dept1 = this.deptService.findById(dept.getDeptId());
+            return ResponseBo.ok(dept1);
         } catch (Exception e) {
             log.error("修改部门失败", e);
             return ResponseBo.error("修改部门失败，请联系网站管理员！");

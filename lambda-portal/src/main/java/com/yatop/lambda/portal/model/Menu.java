@@ -1,200 +1,257 @@
 package com.yatop.lambda.portal.model;
 
-
-import com.yatop.lambda.portal.common.annotation.ExportConfig;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 
-@Table(name = "t_menu")
+@Table(name = "sys_manage_menu")
 public class Menu implements Serializable {
 
-	private static final long serialVersionUID = 7187628714679791771L;
+    private static final long serialVersionUID = 7187628714679791771L;
 
-	public static final String TYPE_MENU = "0";
+    public static final String TYPE_MENU = "0";
 
-	public static final String TYPE_BUTTON = "1";
+    public static final String TYPE_BUTTON = "1";
 
-	@Id
-	@GeneratedValue(generator = "JDBC")
-	@Column(name = "MENU_ID")
-	@ExportConfig(value = "编号")
-	private Long menuId;
+    /**
+     * 菜单/按钮ID
+     */
+    @Id
+    @Column(name = "MENU_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long menuId;
 
-	@Column(name = "PARENT_ID")
-	private Long parentId;
+    /**
+     * 上级菜单ID
+     */
+    @Column(name = "PARENT_ID")
+    private Long parentId;
 
-	@Column(name = "MENU_NAME")
-	@ExportConfig(value = "名称")
-	private String menuName;
+    /**
+     * 菜单/按钮名称
+     */
+    @Column(name = "MENU_NAME")
+    private String menuName;
 
-	@Column(name = "URL")
-	@ExportConfig(value = "地址")
-	private String url;
+    /**
+     * 菜单URL
+     */
+    @Column(name = "URL")
+    private String url;
 
-	@Column(name = "PERMS")
-	@ExportConfig(value = "权限标识")
-	private String perms;
+    /**
+     * 图标
+     */
+    @Column(name = "ICON")
+    private String icon;
 
-	@Column(name = "ICON")
-	@ExportConfig(value = "图标")
-	private String icon;
+    /**
+     * 类型 0菜单 1按钮
+     */
+    @Column(name = "TYPE")
+    private String type;
 
-	@Column(name = "TYPE")
-	@ExportConfig(value = "类型", convert = "s:0=菜单,1=按钮")
-	private String type;
+    /**
+     * 排序
+     */
+    @Column(name = "ORDER_NUM")
+    private Long orderNum;
 
-	@Column(name = "ORDER_NUM")
-	private Long orderNum;
+    /**
+     * 创建时间
+     */
+    @Column(name = "CREATE_TIME")
+    private Date createTime;
 
-	@Column(name = "CREATE_TIME")
-	@ExportConfig(value = "创建时间", convert = "c:com.yatop.lambda.portal.util.poi.convert.TimeConvert")
-	private Date createTime;
+    /**
+     * 修改时间
+     */
+    @Column(name = "MODIFY_TIME")
+    private Date modifyTime;
 
-	@Column(name = "MODIFY_TIME")
-	private Date modifyTime;
+    /**
+     * 权限标识
+     */
+    @Column(name = "PERMS")
+    private String perms;
 
-	/**
-	 * @return MENU_ID
-	 */
-	public Long getMenuId() {
-		return menuId;
-	}
+    /**
+     * 获取菜单/按钮ID
+     *
+     * @return MENU_ID - 菜单/按钮ID
+     */
+    public Long getMenuId() {
+        return menuId;
+    }
 
-	/**
-	 * @param menuId
-	 */
-	public void setMenuId(Long menuId) {
-		this.menuId = menuId;
-	}
+    /**
+     * 设置菜单/按钮ID
+     *
+     * @param menuId 菜单/按钮ID
+     */
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
+    }
 
-	/**
-	 * @return PARENT_ID
-	 */
-	public Long getParentId() {
-		return parentId;
-	}
+    /**
+     * 获取上级菜单ID
+     *
+     * @return PARENT_ID - 上级菜单ID
+     */
+    public Long getParentId() {
+        return parentId;
+    }
 
-	/**
-	 * @param parentId
-	 */
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
+    /**
+     * 设置上级菜单ID
+     *
+     * @param parentId 上级菜单ID
+     */
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 
-	/**
-	 * @return MENU_NAME
-	 */
-	public String getMenuName() {
-		return menuName;
-	}
+    /**
+     * 获取菜单/按钮名称
+     *
+     * @return MENU_NAME - 菜单/按钮名称
+     */
+    public String getMenuName() {
+        return menuName;
+    }
 
-	/**
-	 * @param menuName
-	 */
-	public void setMenuName(String menuName) {
-		this.menuName = menuName == null ? "" : menuName.trim();
-	}
+    /**
+     * 设置菜单/按钮名称
+     *
+     * @param menuName 菜单/按钮名称
+     */
+    public void setMenuName(String menuName) {
+        this.menuName = menuName == null ? null : menuName.trim();
+    }
 
-	/**
-	 * @return URL
-	 */
-	public String getUrl() {
-		return url;
-	}
+    /**
+     * 获取菜单URL
+     *
+     * @return URL - 菜单URL
+     */
+    public String getUrl() {
+        return url;
+    }
 
-	/**
-	 * @param url
-	 */
-	public void setUrl(String url) {
-		this.url = url == null ? "" : url.trim();
-	}
+    /**
+     * 设置菜单URL
+     *
+     * @param url 菜单URL
+     */
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
+    }
 
-	/**
-	 * @return PERMS
-	 */
-	public String getPerms() {
-		return perms;
-	}
+    /**
+     * 获取图标
+     *
+     * @return ICON - 图标
+     */
+    public String getIcon() {
+        return icon;
+    }
 
-	/**
-	 * @param perms
-	 */
-	public void setPerms(String perms) {
-		this.perms = perms == null ? "" : perms.trim();
-	}
+    /**
+     * 设置图标
+     *
+     * @param icon 图标
+     */
+    public void setIcon(String icon) {
+        this.icon = icon == null ? null : icon.trim();
+    }
 
-	/**
-	 * @return ICON
-	 */
-	public String getIcon() {
-		return icon;
-	}
+    /**
+     * 获取类型 0菜单 1按钮
+     *
+     * @return TYPE - 类型 0菜单 1按钮
+     */
+    public String getType() {
+        return type;
+    }
 
-	/**
-	 * @param icon
-	 */
-	public void setIcon(String icon) {
-		this.icon = icon == null ? "" : icon.trim();
-	}
+    /**
+     * 设置类型 0菜单 1按钮
+     *
+     * @param type 类型 0菜单 1按钮
+     */
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
 
-	/**
-	 * @return TYPE
-	 */
-	public String getType() {
-		return type;
-	}
+    /**
+     * 获取排序
+     *
+     * @return ORDER_NUM - 排序
+     */
+    public Long getOrderNum() {
+        return orderNum;
+    }
 
-	/**
-	 * @param type
-	 */
-	public void setType(String type) {
-		this.type = type == null ? "" : type.trim();
-	}
+    /**
+     * 设置排序
+     *
+     * @param orderNum 排序
+     */
+    public void setOrderNum(Long orderNum) {
+        this.orderNum = orderNum;
+    }
 
-	/**
-	 * @return ORDER_NUM
-	 */
-	public Long getOrderNum() {
-		return orderNum;
-	}
+    /**
+     * 获取创建时间
+     *
+     * @return CREATE_TIME - 创建时间
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	/**
-	 * @param orderNum
-	 */
-	public void setOrderNum(Long orderNum) {
-		this.orderNum = orderNum;
-	}
+    /**
+     * 设置创建时间
+     *
+     * @param createTime 创建时间
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	/**
-	 * @return CREATE_TIME
-	 */
-	public Date getCreateTime() {
-		return createTime;
-	}
+    /**
+     * 获取修改时间
+     *
+     * @return MODIFY_TIME - 修改时间
+     */
+    public Date getModifyTime() {
+        return modifyTime;
+    }
 
-	/**
-	 * @param createTime
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    /**
+     * 设置修改时间
+     *
+     * @param modifyTime 修改时间
+     */
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
 
-	/**
-	 * @return MODIFY_TIME
-	 */
-	public Date getModifyTime() {
-		return modifyTime;
-	}
+    /**
+     * 获取权限标识
+     *
+     * @return PERMS - 权限标识
+     */
+    public String getPerms() {
+        return perms;
+    }
 
-	/**
-	 * @param modifyTime
-	 */
-	public void setModifyTime(Date modifyTime) {
-		this.modifyTime = modifyTime;
-	}
+    /**
+     * 设置权限标识
+     *
+     * @param perms 权限标识
+     */
+    public void setPerms(String perms) {
+        this.perms = perms == null ? null : perms.trim();
+    }
 }

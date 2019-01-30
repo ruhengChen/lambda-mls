@@ -4,14 +4,18 @@ import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.config.FebsProperties;
 import com.yatop.lambda.portal.common.controller.BaseController;
 import com.yatop.lambda.portal.common.domain.ResponseBo;
+import com.yatop.lambda.portal.common.shiro.ShiroRealm;
 import com.yatop.lambda.portal.common.util.MD5Utils;
 import com.yatop.lambda.portal.common.util.vcode.Captcha;
 import com.yatop.lambda.portal.common.util.vcode.GifCaptcha;
 import com.yatop.lambda.portal.model.User;
 import com.yatop.lambda.portal.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class LoginController extends BaseController {
@@ -33,6 +39,10 @@ public class LoginController extends BaseController {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     private static final String CODE_KEY = "_code";
+
+    @Autowired
+    private ShiroRealm shiroRealm;
+
 
     @Autowired
     private FebsProperties febsProperties;
@@ -51,11 +61,26 @@ public class LoginController extends BaseController {
 //        if (!StringUtils.isNotBlank(code)) {
 //            return ResponseBo.warn("验证码不能为空！");
 //        }
+//        shiroRealm.setCachingEnabled(true);
+//       shiroRealm.setAuthenticationCachingEnabled(true);
+
         Session session = super.getSession();
         password = MD5Utils.encrypt(username.toLowerCase(), password);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         super.login(token);
-        return ResponseBo.ok();
+//        PrincipalCollection principal = (PrincipalCollection) SecurityUtils.getSubject().getPrincipal();
+        AuthorizationInfo simpleAuthorizationInfo = shiroRealm.doGetAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
+
+        User user = this.userService.findByName(username);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userId", user.getUserId());
+        hashMap.put("userName", user.getUsername());
+        hashMap.put("roles", simpleAuthorizationInfo.getRoles());
+        hashMap.put("stringPermissions", simpleAuthorizationInfo.getStringPermissions());
+
+        Subject subject = getSubject();
+//        AuthorizationInfo simpleAuthorizationInfo = shiroRealm.getAuthorizationCache().get(SecurityUtils.getSubject().getPrincipals());
+        return ResponseBo.ok(hashMap);
 //        String sessionCode = (String) session.getAttribute(CODE_KEY);
 //        if (!code.equalsIgnoreCase(sessionCode)) {
 //            return ResponseBo.warn("验证码错误！");

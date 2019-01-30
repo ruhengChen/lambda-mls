@@ -1,108 +1,132 @@
 package com.yatop.lambda.portal.model;
 
-
-import com.yatop.lambda.portal.common.annotation.ExportConfig;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 
-@Table(name = "t_dept")
-public class Dept implements Serializable {
+@Table(name = "sys_manage_dept")
+public class Dept  implements Serializable {
 
-	private static final long serialVersionUID = -7790334862410409053L;
+    private static final long serialVersionUID = 7780820231535870010L;
+    /**
+     * 部门ID
+     */
+    @Id
+    @Column(name = "DEPT_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long deptId;
 
-	@Id
-	@GeneratedValue(generator = "JDBC")
-	@Column(name = "DEPT_ID")
-	@ExportConfig(value = "编号")
-	private Long deptId;
+    /**
+     * 上级部门ID
+     */
+    @Column(name = "PARENT_ID")
+    private Long parentId;
 
-	@Column(name = "PARENT_ID")
-	private Long parentId;
+    /**
+     * 部门名称
+     */
+    @Column(name = "DEPT_NAME")
+    private String deptName;
 
-	@Column(name = "DEPT_NAME")
-	@ExportConfig(value = "部门名称")
-	private String deptName;
+    /**
+     * 排序
+     */
+    @Column(name = "ORDER_NUM")
+    private Long orderNum;
 
-	@Column(name = "ORDER_NUM")
-	private Long orderNum;
+    /**
+     * 创建时间
+     */
+    @Column(name = "CREATE_TIME")
+    private Date createTime;
 
-	@Column(name = "CREATE_TIME")
-	@ExportConfig(value = "创建时间", convert = "c:com.yatop.lambda.portal.common.util.poi.convert.TimeConvert")
-	private Date createTime;
+    /**
+     * 获取部门ID
+     *
+     * @return DEPT_ID - 部门ID
+     */
+    public Long getDeptId() {
+        return deptId;
+    }
 
-	/**
-	 * @return DEPT_ID
-	 */
-	public Long getDeptId() {
-		return deptId;
-	}
+    /**
+     * 设置部门ID
+     *
+     * @param deptId 部门ID
+     */
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
 
-	/**
-	 * @param deptId
-	 */
-	public void setDeptId(Long deptId) {
-		this.deptId = deptId;
-	}
+    /**
+     * 获取上级部门ID
+     *
+     * @return PARENT_ID - 上级部门ID
+     */
+    public Long getParentId() {
+        return parentId;
+    }
 
-	/**
-	 * @return PARENT_ID
-	 */
-	public Long getParentId() {
-		return parentId;
-	}
+    /**
+     * 设置上级部门ID
+     *
+     * @param parentId 上级部门ID
+     */
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 
-	/**
-	 * @param parentId
-	 */
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
+    /**
+     * 获取部门名称
+     *
+     * @return DEPT_NAME - 部门名称
+     */
+    public String getDeptName() {
+        return deptName;
+    }
 
-	/**
-	 * @return DEPT_NAME
-	 */
-	public String getDeptName() {
-		return deptName;
-	}
+    /**
+     * 设置部门名称
+     *
+     * @param deptName 部门名称
+     */
+    public void setDeptName(String deptName) {
+        this.deptName = deptName == null ? null : deptName.trim();
+    }
 
-	/**
-	 * @param deptName
-	 */
-	public void setDeptName(String deptName) {
-		this.deptName = deptName == null ? null : deptName.trim();
-	}
+    /**
+     * 获取排序
+     *
+     * @return ORDER_NUM - 排序
+     */
+    public Long getOrderNum() {
+        return orderNum;
+    }
 
-	/**
-	 * @return ORDER_NUM
-	 */
-	public Long getOrderNum() {
-		return orderNum;
-	}
+    /**
+     * 设置排序
+     *
+     * @param orderNum 排序
+     */
+    public void setOrderNum(Long orderNum) {
+        this.orderNum = orderNum;
+    }
 
-	/**
-	 * @param orderNum
-	 */
-	public void setOrderNum(Long orderNum) {
-		this.orderNum = orderNum;
-	}
+    /**
+     * 获取创建时间
+     *
+     * @return CREATE_TIME - 创建时间
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	/**
-	 * @return CREATE_TIME
-	 */
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	/**
-	 * @param createTime
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
+    /**
+     * 设置创建时间
+     *
+     * @param createTime 创建时间
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }

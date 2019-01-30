@@ -1,45 +1,58 @@
 package com.yatop.lambda.portal.model;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name = "t_user_role")
-public class UserRole implements Serializable{
-	
-	private static final long serialVersionUID = -3166012934498268403L;
+@Table(name = "sys_manage_user_role")
+public class UserRole implements Serializable {
 
-	@Column(name = "USER_ID")
-	private Long userId;
 
-	@Column(name = "ROLE_ID")
-	private Long roleId;
+    private static final long serialVersionUID = 778082123415870010L;
+    /**
+     * 用户ID
+     */
+    @Column(name = "USER_ID")
+    private Long userId;
 
-	/**
-	 * @return USER_ID
-	 */
-	public Long getUserId() {
-		return userId;
-	}
+    /**
+     * 角色ID
+     */
+    @Column(name = "ROLE_ID")
+    private Long roleId;
 
-	/**
-	 * @param userId
-	 */
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    /**
+     * 获取用户ID
+     *
+     * @return USER_ID - 用户ID
+     */
+    public Long getUserId() {
+        return userId;
+    }
 
-	/**
-	 * @return ROLE_ID
-	 */
-	public Long getRoleId() {
-		return roleId;
-	}
+    /**
+     * 设置用户ID
+     *
+     * @param userId 用户ID
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	/**
-	 * @param roleId
-	 */
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
+    /**
+     * 获取角色ID
+     *
+     * @return ROLE_ID - 角色ID
+     */
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    /**
+     * 设置角色ID
+     *
+     * @param roleId 角色ID
+     */
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 }

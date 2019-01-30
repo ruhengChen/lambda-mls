@@ -1,318 +1,399 @@
 package com.yatop.lambda.portal.model;
 
-
-import com.yatop.lambda.portal.common.annotation.ExportConfig;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 
-@Table(name = "t_user")
+@Table(name = "sys_manage_user")
 public class User implements Serializable {
 
-	private static final long serialVersionUID = -4852732617765810959L;
-	/**
-	 * 账户状态
-	 */
-	public static final String STATUS_VALID = "1";
+    private static final long serialVersionUID = -4852732617765810959L;
+    /**
+     * 账户状态
+     */
+    public static final String STATUS_VALID = "1";
 
-	public static final String STATUS_LOCK = "0";
+    public static final String STATUS_LOCK = "0";
 
-	public static final String DEFAULT_THEME = "green";
+    public static final String STATUS_CANCEL = "2";
 
-	public static final String DEFAULT_AVATAR = "default.jpg";
+    public static final String DEFAULT_THEME = "green";
 
-	/**
-	 * 性别
-	 */
-	public static final String SEX_MALE = "0";
+    public static final String DEFAULT_AVATAR = "default.jpg";
 
-	public static final String SEX_FEMALE = "1";
+    /**
+     * 性别
+     */
+    public static final String SEX_MALE = "0";
 
-	public static final String SEX_UNKNOW = "2";
+    public static final String SEX_FEMALE = "1";
 
-	@Id
-	@GeneratedValue(generator = "JDBC")
-	@Column(name = "USER_ID")
-	private Long userId;
+    public static final String SEX_UNKNOW = "2";
 
-	@Column(name = "USERNAME")
-	@ExportConfig(value = "用户名")
-	private String username;
+    /**
+     * 真实姓名
+     */
+    @Column(name = "USER_REL_NAME")
+    private String userRelName;
 
-	@Column(name = "PASSWORD")
-	private String password;
 
-	@Column(name = "DEPT_ID")
-	private Long deptId;
+    /**
+     * 用户ID
+     */
+    @Id
+    @Column(name = "USER_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
-	@Transient
-	@ExportConfig(value = "部门")
-	private String deptName;
+    /**
+     * 用户名
+     */
+    @Column(name = "USERNAME")
+    private String username;
 
-	@Column(name = "EMAIL")
-	@ExportConfig(value = "邮箱")
-	private String email;
+    /**
+     * 密码
+     */
+    @Column(name = "PASSWORD")
+    private String password;
 
-	@Column(name = "MOBILE")
-	@ExportConfig(value = "手机")
-	private String mobile;
+    /**
+     * 部门ID
+     */
+    @Column(name = "DEPT_ID")
+    private Long deptId;
 
-	@Column(name = "STATUS")
-	@ExportConfig(value = "状态", convert = "s:0=锁定,1=有效")
-	private String status = STATUS_VALID;
+    /**
+     * 邮箱
+     */
+    @Column(name = "EMAIL")
+    private String email;
 
-	@Column(name = "CRATE_TIME")
-	@ExportConfig(value = "创建时间", convert = "c:com.yatop.lambda.portal.common.util.poi.convert.TimeConvert")
-	private Date crateTime;
+    /**
+     * 联系电话
+     */
+    @Column(name = "MOBILE")
+    private String mobile;
 
-	@Column(name = "MODIFY_TIME")
-	private Date modifyTime;
+    /**
+     * 状态 0锁定 1有效 2 注销
+     */
+    @Column(name = "STATUS")
+    private String status;
 
-	@Column(name = "LAST_LOGIN_TIME")
-	private Date lastLoginTime;
+    /**
+     * 创建时间
+     */
+    @Column(name = "CRATE_TIME")
+    private Date crateTime;
 
-	@Column(name = "SSEX")
-	@ExportConfig(value = "性别", convert = "s:0=男,1=女,2=保密")
-	private String ssex;
+    /**
+     * 修改时间
+     */
+    @Column(name = "MODIFY_TIME")
+    private Date modifyTime;
 
-	@Column(name = "THEME")
-	private String theme;
+    /**
+     * 最近访问时间
+     */
+    @Column(name = "LAST_LOGIN_TIME")
+    private Date lastLoginTime;
 
-	@Column(name = "AVATAR")
-	private String avatar;
+    /**
+     * 性别 0男 1女
+     */
+    @Column(name = "SSEX")
+    private String ssex;
 
-	@Column(name = "DESCRIPTION")
-	private String description;
+    /**
+     * 主题
+     */
+    @Column(name = "THEME")
+    private String theme;
 
-	@Transient
-	private String roleName;
+    /**
+     * 头像
+     */
+    @Column(name = "AVATAR")
+    private String avatar;
 
-	/**
-	 * @return USER_ID
-	 */
-	public Long getUserId() {
-		return userId;
-	}
+    /**
+     * 描述
+     */
+    @Column(name = "DESCRIPTION")
+    private String description;
 
-	/**
-	 * @param userId
-	 */
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
 
-	/**
-	 * @return USERNAME
-	 */
-	public String getUsername() {
-		return username;
-	}
+    public String getUserRelName() {
+        return userRelName;
+    }
 
-	/**
-	 * @param username
-	 */
-	public void setUsername(String username) {
-		this.username = username == null ? null : username.trim();
-	}
+    public void setUserRelName(String userRelName) {
+        this.userRelName = userRelName;
+    }
 
-	/**
-	 * @return PASSWORD
-	 */
-	public String getPassword() {
-		return password;
-	}
+    /**
+     * 获取用户ID
+     *
+     * @return USER_ID - 用户ID
+     */
+    public Long getUserId() {
+        return userId;
+    }
 
-	/**
-	 * @param password
-	 */
-	public void setPassword(String password) {
-		this.password = password == null ? null : password.trim();
-	}
+    /**
+     * 设置用户ID
+     *
+     * @param userId 用户ID
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	/**
-	 * @return DEPT_ID
-	 */
-	public Long getDeptId() {
-		return deptId;
-	}
+    /**
+     * 获取用户名
+     *
+     * @return USERNAME - 用户名
+     */
+    public String getUsername() {
+        return username;
+    }
 
-	/**
-	 * @param deptId
-	 */
-	public void setDeptId(Long deptId) {
-		this.deptId = deptId;
-	}
+    /**
+     * 设置用户名
+     *
+     * @param username 用户名
+     */
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
 
-	/**
-	 * @return EMAIL
-	 */
-	public String getEmail() {
-		return email;
-	}
+    /**
+     * 获取密码
+     *
+     * @return PASSWORD - 密码
+     */
+    public String getPassword() {
+        return password;
+    }
 
-	/**
-	 * @param email
-	 */
-	public void setEmail(String email) {
-		this.email = email == null ? null : email.trim();
-	}
+    /**
+     * 设置密码
+     *
+     * @param password 密码
+     */
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
 
-	/**
-	 * @return MOBILE
-	 */
-	public String getMobile() {
-		return mobile;
-	}
+    /**
+     * 获取部门ID
+     *
+     * @return DEPT_ID - 部门ID
+     */
+    public Long getDeptId() {
+        return deptId;
+    }
 
-	/**
-	 * @param mobile
-	 */
-	public void setMobile(String mobile) {
-		this.mobile = mobile == null ? null : mobile.trim();
-	}
+    /**
+     * 设置部门ID
+     *
+     * @param deptId 部门ID
+     */
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
 
-	/**
-	 * @return STATUS
-	 */
-	public String getStatus() {
-		return status;
-	}
+    /**
+     * 获取邮箱
+     *
+     * @return EMAIL - 邮箱
+     */
+    public String getEmail() {
+        return email;
+    }
 
-	/**
-	 * @param status
-	 */
-	public void setStatus(String status) {
-		this.status = status == null ? null : status.trim();
-	}
+    /**
+     * 设置邮箱
+     *
+     * @param email 邮箱
+     */
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
 
-	/**
-	 * @return CRATE_TIME
-	 */
-	public Date getCrateTime() {
-		return crateTime;
-	}
+    /**
+     * 获取联系电话
+     *
+     * @return MOBILE - 联系电话
+     */
+    public String getMobile() {
+        return mobile;
+    }
 
-	/**
-	 * @param crateTime
-	 */
-	public void setCrateTime(Date crateTime) {
-		this.crateTime = crateTime;
-	}
+    /**
+     * 设置联系电话
+     *
+     * @param mobile 联系电话
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile == null ? null : mobile.trim();
+    }
 
-	/**
-	 * @return MODIFY_TIME
-	 */
-	public Date getModifyTime() {
-		return modifyTime;
-	}
+    /**
+     * 获取状态 0锁定 1有效
+     *
+     * @return STATUS - 状态 0锁定 1有效
+     */
+    public String getStatus() {
+        return status;
+    }
 
-	/**
-	 * @param modifyTime
-	 */
-	public void setModifyTime(Date modifyTime) {
-		this.modifyTime = modifyTime;
-	}
+    /**
+     * 设置状态 0锁定 1有效
+     *
+     * @param status 状态 0锁定 1有效 2 注销
+     */
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
 
-	/**
-	 * @return LAST_LOGIN_TIME
-	 */
-	public Date getLastLoginTime() {
-		return lastLoginTime;
-	}
+    /**
+     * 获取创建时间
+     *
+     * @return CRATE_TIME - 创建时间
+     */
+    public Date getCrateTime() {
+        return crateTime;
+    }
 
-	/**
-	 * @param lastLoginTime
-	 */
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
-	}
+    /**
+     * 设置创建时间
+     *
+     * @param crateTime 创建时间
+     */
+    public void setCrateTime(Date crateTime) {
+        this.crateTime = crateTime;
+    }
 
-	/**
-	 * @return SSEX
-	 */
-	public String getSsex() {
-		return ssex;
-	}
+    /**
+     * 获取修改时间
+     *
+     * @return MODIFY_TIME - 修改时间
+     */
+    public Date getModifyTime() {
+        return modifyTime;
+    }
 
-	/**
-	 * @param ssex
-	 */
-	public void setSsex(String ssex) {
-		this.ssex = ssex == null ? null : ssex.trim();
-	}
+    /**
+     * 设置修改时间
+     *
+     * @param modifyTime 修改时间
+     */
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
 
-	public String getTheme() {
-		return theme;
-	}
+    /**
+     * 获取最近访问时间
+     *
+     * @return LAST_LOGIN_TIME - 最近访问时间
+     */
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
 
-	public void setTheme(String theme) {
-		this.theme = theme;
-	}
+    /**
+     * 设置最近访问时间
+     *
+     * @param lastLoginTime 最近访问时间
+     */
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 
-	public String getDeptName() {
-		return deptName;
-	}
+    /**
+     * 获取性别 0男 1女
+     *
+     * @return SSEX - 性别 0男 1女
+     */
+    public String getSsex() {
+        return ssex;
+    }
 
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
-	}
+    /**
+     * 设置性别 0男 1女
+     *
+     * @param ssex 性别 0男 1女
+     */
+    public void setSsex(String ssex) {
+        this.ssex = ssex == null ? null : ssex.trim();
+    }
 
-	public String getAvatar() {
-		return avatar;
-	}
+    /**
+     * 获取主题
+     *
+     * @return THEME - 主题
+     */
+    public String getTheme() {
+        return theme;
+    }
 
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
+    /**
+     * 设置主题
+     *
+     * @param theme 主题
+     */
+    public void setTheme(String theme) {
+        this.theme = theme == null ? null : theme.trim();
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    /**
+     * 获取头像
+     *
+     * @return AVATAR - 头像
+     */
+    public String getAvatar() {
+        return avatar;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    /**
+     * 设置头像
+     *
+     * @param avatar 头像
+     */
+    public void setAvatar(String avatar) {
+        this.avatar = avatar == null ? null : avatar.trim();
+    }
 
-	public String getRoleName() {
-		return roleName;
-	}
+    /**
+     * 获取描述
+     *
+     * @return DESCRIPTION - 描述
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
+    /**
+     * 设置描述
+     *
+     * @param description 描述
+     */
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
+    }
 
-	@Override
-	public String toString() {
-		return "User{" +
-				"userId=" + userId +
-				", username='" + username + '\'' +
-				", password='" + password + '\'' +
-				", deptId=" + deptId +
-				", deptName='" + deptName + '\'' +
-				", email='" + email + '\'' +
-				", mobile='" + mobile + '\'' +
-				", status='" + status + '\'' +
-				", crateTime=" + crateTime +
-				", modifyTime=" + modifyTime +
-				", lastLoginTime=" + lastLoginTime +
-				", ssex='" + ssex + '\'' +
-				", theme='" + theme + '\'' +
-				", avatar='" + avatar + '\'' +
-				", description='" + description + '\'' +
-				", roleName='" + roleName + '\'' +
-				'}';
-	}
 
-	/**
-	 * shiro-redis v3.1.0 必须要有getAuthCacheKey()或者getId()方法
-	 * # Principal id field name. The field which you can get unique id to identify this principal.
-	 * # For example, if you use UserInfo as Principal class, the id field maybe userId, userName, email, etc.
-	 * # Remember to add getter to this id field. For example, getUserId(), getUserName(), getEmail(), etc.
-	 * # Default value is authCacheKey or id, that means your principal object has a method called "getAuthCacheKey()" or "getId()"
-	 * @return userId as Principal id field name
-	 */
-	public Long getAuthCacheKey() {
-		return userId;
-	}
+    /**
+     * shiro-redis v3.1.0 必须要有getAuthCacheKey()或者getId()方法
+     * # Principal id field name. The field which you can get unique id to identify this principal.
+     * # For example, if you use UserInfo as Principal class, the id field maybe userId, userName, email, etc.
+     * # Remember to add getter to this id field. For example, getUserId(), getUserName(), getEmail(), etc.
+     * # Default value is authCacheKey or id, that means your principal object has a method called "getAuthCacheKey()" or "getId()"
+     * @return userId as Principal id field name
+     */
+    public Long getAuthCacheKey() {
+        return userId;
+    }
 }

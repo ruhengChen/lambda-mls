@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yatop.lambda.portal.dao.UserMenuMapper" >
-  <resultMap id="BaseResultMap" type="com.yatop.lambda.portal.model.UserMenu" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yatop.lambda.portal.dao.UserMenuMapper">
+
+  <resultMap id="BaseResultMap" type="com.yatop.lambda.portal.model.UserMenu">
     <!--
       WARNING - @mbg.generated
     -->
-    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
-    <result column="MENU_ID" property="menuId" jdbcType="BIGINT" />
+    <result column="USER_ID" jdbcType="BIGINT" property="userId" />
+    <result column="MENU_ID" jdbcType="BIGINT" property="menuId" />
   </resultMap>
 </mapper>

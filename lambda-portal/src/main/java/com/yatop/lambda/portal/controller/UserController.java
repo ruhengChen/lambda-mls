@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class UserController extends BaseController {
 
     private static final String ON = "on";
 
+
     @RequestMapping("user")
     @RequiresPermissions("user:list")
     public String index(Model model) {
@@ -41,16 +43,27 @@ public class UserController extends BaseController {
 
     @RequestMapping("user/checkUserName")
     @ResponseBody
-    public boolean checkUserName(String username, String oldusername) {
-        if (StringUtils.isNotBlank(oldusername) && username.equalsIgnoreCase(oldusername)) {
-            return true;
-        }
+//    @RequiresPermissions("user:checkUserName")
+    public ResponseBo checkUserName(String username) {
+//        if (StringUtils.isNotBlank(oldusername) && username.equalsIgnoreCase(oldusername)) {
+//            return true;
+//        }
         User result = this.userService.findByName(username);
-        return result == null;
+        return ResponseBo.ok(result == null);
     }
+//    @RequestMapping("user/checkUserName")
+//    @ResponseBody
+//    public boolean checkUserName(String username, String oldusername) {
+//        if (StringUtils.isNotBlank(oldusername) && username.equalsIgnoreCase(oldusername)) {
+//            return true;
+//        }
+//        User result = this.userService.findByName(username);
+//        return result == null;
+//    }
 
-    @RequestMapping("user/getUser")
+    @RequestMapping("user/queryUserInfo")
     @ResponseBody
+    @RequiresPermissions("user:query")
     public ResponseBo getUser(Long userId) {
         try {
             User user = this.userService.findById(userId);
@@ -62,11 +75,19 @@ public class UserController extends BaseController {
     }
 
     @Log("获取用户信息")
-    @RequestMapping("user/list")
+    @RequestMapping("user/queryUsers")
     @RequiresPermissions("user:list")
     @ResponseBody
     public Map<String, Object> userList(QueryRequest request, User user) {
         return super.selectByPageNumSize(request, () -> this.userService.findUserWithDept(user, request));
+    }
+
+
+    @RequestMapping("user/queryUsersByConditions")
+    @RequiresPermissions("user:list")
+    @ResponseBody
+    public Map<String, Object> queryUsersByConditions(QueryRequest request, User user) {
+        return super.selectByPageNumSize(request, () -> this.userService.findUserByConditions(user, request));
     }
 
     @RequestMapping("user/excel")
@@ -80,6 +101,7 @@ public class UserController extends BaseController {
             return ResponseBo.error("导出Excel失败，请联系网站管理员！");
         }
     }
+
 
     @RequestMapping("user/csv")
     @ResponseBody
@@ -124,48 +146,91 @@ public class UserController extends BaseController {
 
     @Log("新增用户")
     @RequiresPermissions("user:add")
-    @RequestMapping("user/add")
+    @RequestMapping("user/createUser")
     @ResponseBody
     public ResponseBo addUser(User user, Long[] roles, Long[] menuId) {
         try {
-            if (ON.equalsIgnoreCase(user.getStatus()))
-                user.setStatus(User.STATUS_VALID);
-            else
-                user.setStatus(User.STATUS_LOCK);
+//            if (ON.equalsIgnoreCase(user.getStatus()))
+//                user.setStatus(User.STATUS_VALID);
+//            else
+//                user.setStatus(User.STATUS_LOCK);
+
             this.userService.addUser(user, roles, menuId);
-            return ResponseBo.ok("新增用户成功！");
+            User resUser = this.userService.findByName(user.getUsername());
+            return ResponseBo.ok(resUser);
         } catch (Exception e) {
             log.error("新增用户失败", e);
             return ResponseBo.error("新增用户失败，请联系网站管理员！");
         }
     }
 
-    @Log("修改用户")
-    @RequiresPermissions("user:update")
-    @RequestMapping("user/update")
+    @Log("修改用户状态")
+    @RequiresPermissions("user:status")
+    @RequestMapping("user/updateUserStatus")
     @ResponseBody
-    public ResponseBo updateUser(User user, Long[] rolesSelect, Long[] menuId) {
+    public ResponseBo updateUserStatus(User user) {
         try {
-            if (ON.equalsIgnoreCase(user.getStatus()))
-                user.setStatus(User.STATUS_VALID);
-            else
-                user.setStatus(User.STATUS_LOCK);
-            this.userService.updateUser(user, rolesSelect, menuId);
-            return ResponseBo.ok("修改用户成功！");
+            this.userService.updateUserProfile(user);
+            User resUser = this.userService.findById(user.getUserId());
+            return ResponseBo.ok(resUser);
         } catch (Exception e) {
-            log.error("修改用户失败", e);
+            log.error("修改用户角色状态", e);
             return ResponseBo.error("修改用户失败，请联系网站管理员！");
         }
     }
 
+
+    @Log("修改用户角色权限")
+    @RequiresPermissions("user:permissions")
+    @RequestMapping("user/updateUserPermission")
+    @ResponseBody
+    public ResponseBo updateUserPermission(User user, Long[] roles, Long[] menuId) {
+        try {
+            this.userService.updateUser(user, roles, menuId);
+            User resUser = this.userService.findById(user.getUserId());
+            return ResponseBo.ok(resUser);
+        } catch (Exception e) {
+            log.error("修改用户角色权限失败", e);
+            return ResponseBo.error("修改用户失败，请联系网站管理员！");
+        }
+    }
+
+    @Log("修改用户信息")
+    @RequiresPermissions("user:update")
+    @RequestMapping("user/updateUserInfo")
+    @ResponseBody
+    public ResponseBo updateUserInfo(User user) {
+        try {
+            String password;
+            if(user.getPassword() == null) {
+                User existUser = this.userService.findByName(user.getUsername());
+                password = existUser.getPassword();
+            }else {
+                password = user.getPassword();
+            }
+            String passwordRel = MD5Utils.encrypt(user.getUsername().toLowerCase(), password);
+            user.setPassword(passwordRel);
+            this.userService.updateUserProfile(user);
+            User resUser = this.userService.findById(user.getUserId());
+            return ResponseBo.ok(resUser);
+        } catch (Exception e) {
+            log.error("修改用户信息失败", e);
+            return ResponseBo.error("修改用户失败，请联系网站管理员！");
+        }
+    }
+
+
+
     @Log("删除用户")
     @RequiresPermissions("user:delete")
-    @RequestMapping("user/delete")
+    @RequestMapping("user/deleteUsers")
     @ResponseBody
-    public ResponseBo deleteUsers(String ids) {
+    public ResponseBo deleteUsers(String userIds) {
         try {
-            this.userService.deleteUsers(ids);
+            this.userService.deleteUsers(userIds);
+
             return ResponseBo.ok("删除用户成功！");
+
         } catch (Exception e) {
             log.error("删除用户失败", e);
             return ResponseBo.error("删除用户失败，请联系网站管理员！");

@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yatop.lambda.portal.dao.UserRoleMapper" >
-  <resultMap id="BaseResultMap" type="com.yatop.lambda.portal.model.UserRole" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yatop.lambda.portal.dao.UserRoleMapper">
+
+  <resultMap id="BaseResultMap" type="com.yatop.lambda.portal.model.UserRole">
     <!--
       WARNING - @mbg.generated
     -->
-    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
-    <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="USER_ID" jdbcType="BIGINT" property="userId" />
+    <result column="ROLE_ID" jdbcType="BIGINT" property="roleId" />
   </resultMap>
 </mapper>

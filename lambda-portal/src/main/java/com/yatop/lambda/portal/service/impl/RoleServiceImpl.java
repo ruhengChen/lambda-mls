@@ -6,7 +6,7 @@ import com.yatop.lambda.portal.dao.RoleMenuMapper;
 import com.yatop.lambda.portal.model.Role;
 import com.yatop.lambda.portal.model.RoleMenu;
 import com.yatop.lambda.portal.model.RoleWithMenu;
-import com.yatop.lambda.portal.service.RoleMenuServie;
+import com.yatop.lambda.portal.service.RoleMenuService;
 import com.yatop.lambda.portal.service.RoleService;
 import com.yatop.lambda.portal.service.UserRoleService;
 import org.apache.commons.lang3.StringUtils;
@@ -40,7 +40,7 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
     private UserRoleService userRoleService;
 
     @Autowired
-    private RoleMenuServie roleMenuService;
+    private RoleMenuService roleMenuService;
 
     @Override
     public List<Role> findUserRole(String userName) {

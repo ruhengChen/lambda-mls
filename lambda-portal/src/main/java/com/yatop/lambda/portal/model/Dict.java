@@ -1,107 +1,131 @@
 package com.yatop.lambda.portal.model;
 
-import com.google.common.base.MoreObjects;
-import com.yatop.lambda.portal.common.annotation.ExportConfig;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name = "t_dict")
-public class Dict implements Serializable{
+@Table(name = "sys_manage_dict")
+public class Dict implements Serializable {
 
-	private static final long serialVersionUID = 7780820231535870010L;
+    private static final long serialVersionUID = -7790334862410409053L;
+    /**
+     * 字典ID
+     */
+    @Id
+    @Column(name = "DICT_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long dictId;
 
-	@Id
-	@GeneratedValue(generator = "JDBC")
-	@Column(name = "DICT_ID")
-	@ExportConfig(value = "字典ID")
-	private Long dictId;
+    /**
+     * 键
+     */
+    @Column(name = "KEYY")
+    private String keyy;
 
-	@Column(name = "KEYY")
-	@ExportConfig(value = "字典Key")
-	private String keyy;
+    /**
+     * 值
+     */
+    @Column(name = "VALUEE")
+    private String valuee;
 
-	@Column(name = "VALUEE")
-	@ExportConfig(value = "字典Value")
-	private String valuee;
+    /**
+     * 字段名称
+     */
+    @Column(name = "FIELD_NAME")
+    private String fieldName;
 
-	@Column(name = "TABLE_NAME")
-	@ExportConfig(value = "列名")
-	private String tableName;
+    /**
+     * 表名
+     */
+    @Column(name = "TABLE_NAME")
+    private String tableName;
 
-	@Column(name = "FIELD_NAME")
-	@ExportConfig(value = "表名")
-	private String fieldName;
+    /**
+     * 获取字典ID
+     *
+     * @return DICT_ID - 字典ID
+     */
+    public Long getDictId() {
+        return dictId;
+    }
 
-	/**
-	 * @return DICT_ID
-	 */
-	public Long getDictId() {
-		return dictId;
-	}
+    /**
+     * 设置字典ID
+     *
+     * @param dictId 字典ID
+     */
+    public void setDictId(Long dictId) {
+        this.dictId = dictId;
+    }
 
-	/**
-	 * @param dictId
-	 */
-	public void setDictId(Long dictId) {
-		this.dictId = dictId;
-	}
+    /**
+     * 获取键
+     *
+     * @return KEYY - 键
+     */
+    public String getKeyy() {
+        return keyy;
+    }
 
-	public String getKeyy() {
-		return keyy;
-	}
+    /**
+     * 设置键
+     *
+     * @param keyy 键
+     */
+    public void setKeyy(String keyy) {
+        this.keyy = keyy;
+    }
 
-	public void setKeyy(String keyy) {
-		this.keyy = keyy;
-	}
+    /**
+     * 获取值
+     *
+     * @return VALUEE - 值
+     */
+    public String getValuee() {
+        return valuee;
+    }
 
-	public String getValuee() {
-		return valuee;
-	}
+    /**
+     * 设置值
+     *
+     * @param valuee 值
+     */
+    public void setValuee(String valuee) {
+        this.valuee = valuee == null ? null : valuee.trim();
+    }
 
-	public void setValuee(String valuee) {
-		this.valuee = valuee;
-	}
+    /**
+     * 获取字段名称
+     *
+     * @return FIELD_NAME - 字段名称
+     */
+    public String getFieldName() {
+        return fieldName;
+    }
 
-	/**
-	 * @return FIELD_NAME
-	 */
-	public String getFieldName() {
-		return fieldName;
-	}
+    /**
+     * 设置字段名称
+     *
+     * @param fieldName 字段名称
+     */
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName == null ? null : fieldName.trim();
+    }
 
-	/**
-	 * @param fieldName
-	 */
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName == null ? null : fieldName.trim();
-	}
+    /**
+     * 获取表名
+     *
+     * @return TABLE_NAME - 表名
+     */
+    public String getTableName() {
+        return tableName;
+    }
 
-	/**
-	 * @return TABLE_NAME
-	 */
-	public String getTableName() {
-		return tableName;
-	}
-
-	@Override
-	public String toString() {
-		return MoreObjects.toStringHelper(this)
-				.add("dictId", dictId)
-				.add("keyy", keyy)
-				.add("valuee", valuee)
-				.add("tableName", tableName)
-				.add("fieldName", fieldName)
-				.toString();
-	}
-
-	/**
-	 * @param tableName
-	 */
-	public void setTableName(String tableName) {
-		this.tableName = tableName == null ? null : tableName.trim();
-	}
+    /**
+     * 设置表名
+     *
+     * @param tableName 表名
+     */
+    public void setTableName(String tableName) {
+        this.tableName = tableName == null ? null : tableName.trim();
+    }
 }
