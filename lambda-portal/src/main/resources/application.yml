@@ -185,6 +185,3 @@ febs:
     # 验证码字符个数，默认4个字符
     length: 4
 
-logging:
-  level:
-    root: info
