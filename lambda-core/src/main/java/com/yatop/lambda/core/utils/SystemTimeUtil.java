@@ -1,6 +1,6 @@
 package com.yatop.lambda.core.utils;
 
-import com.yatop.lambda.base.mapper.extend.DatabaseTimeMapper;
+import com.yatop.lambda.base.extend.mapper.DatabaseTimeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

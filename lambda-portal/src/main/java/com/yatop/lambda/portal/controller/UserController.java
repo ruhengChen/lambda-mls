@@ -32,14 +32,6 @@ public class UserController extends BaseController {
     private UserService userService;
 
 
-    @RequestMapping("user")
-    @RequiresPermissions("user:list")
-    public String index(Model model) {
-        User user = super.getCurrentUser();
-        model.addAttribute("user", user);
-        return "system/user/user";
-    }
-
     @RequestMapping("user/checkUserName")
     @ResponseBody
     public JsonResponse checkUserName(@RequestBody JSONObject jsonObject) {

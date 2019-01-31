@@ -1,6 +1,6 @@
 package com.yatop.lambda.core.mgr.project;
 
-import com.yatop.lambda.base.mapper.extend.ProjectMapper;
+import com.yatop.lambda.base.extend.mapper.ProjectMapper;
 import com.yatop.lambda.base.model.PrProject;
 import com.yatop.lambda.base.model.PrProjectExample;
 import com.yatop.lambda.core.enums.LambdaExceptionEnum;

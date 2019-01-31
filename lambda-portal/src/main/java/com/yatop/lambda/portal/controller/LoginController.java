@@ -39,11 +39,6 @@ public class LoginController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
     @PostMapping("/login")
     @ResponseBody
     public JsonResponse login(@RequestBody JSONObject jsonObject) {
@@ -126,23 +121,23 @@ public class LoginController extends BaseController {
 //            log.error("图形验证码生成失败", e);
 //        }
 //    }
-
-    @RequestMapping("/")
-    public String redirectIndex() {
-        return "redirect:/index";
-    }
-
-    @GetMapping("/403")
-    public String forbid() {
-        return "403";
-    }
-
-    @Log("访问系统")
-    @RequestMapping("/index")
-    public String index(@RequestBody Model model) {
-        // 登录成后，即可通过 Subject 获取登录的用户信息
-        User user = super.getCurrentUser();
-        model.addAttribute("user", user);
-        return "index";
-    }
+//
+//    @RequestMapping("/")
+//    public String redirectIndex() {
+//        return "redirect:/index";
+//    }
+//
+//    @GetMapping("/403")
+//    public String forbid() {
+//        return "403";
+//    }
+//
+//    @Log("访问系统")
+//    @RequestMapping("/index")
+//    public String index(@RequestBody Model model) {
+//        // 登录成后，即可通过 Subject 获取登录的用户信息
+//        User user = super.getCurrentUser();
+//        model.addAttribute("user", user);
+//        return "index";
+//    }
 }

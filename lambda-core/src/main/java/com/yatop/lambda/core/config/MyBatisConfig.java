@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @MapperScan(
-        basePackages = {"com.yatop.lambda.base.mapper"},
+        basePackages = {"com.yatop.lambda.base.mapper", "com.yatop.lambda.base.extend.mapper"},
         sqlSessionFactoryRef = "coreSqlSessionFactory"
 )
 public class MyBatisConfig {

@@ -45,7 +45,7 @@
         order by u.user_id
     </select>
 
-    <select id="findUserByConditions" parameterType="user" resultType="user">
+    <select id="findUserByConditions" parameterType="com.yatop.lambda.portal.model.User" resultType="com.yatop.lambda.portal.model.User">
         select u.user_id userId,u.username,u.USER_REL_NAME userRelName,u.email,u.mobile,u.status,u.crate_time crateTime,
         u.ssex,d.dept_name deptName from sys_manage_user u
         left join sys_manage_dept d on(u.dept_id = d.dept_id)
@@ -68,21 +68,21 @@
 
 
 
-    <select id="findUserWithRole" resultType="userWithRole">
+    <select id="findUserWithRole" resultType="com.yatop.lambda.portal.model.UserWithRole">
 		select u.user_id userId,u.username,u.user_rel_name userRelName,u.dept_id deptId,u.email,u.mobile,
 		u.status,u.ssex,ur.role_id roleId from sys_manage_user u
 		left join sys_manage_user_role ur on (u.user_id = ur.user_id)
 		where u.user_id = #{userId}
   </select>
 
-    <select id="findUserWithMenu" resultType="userWithMenu">
+    <select id="findUserWithMenu" resultType="com.yatop.lambda.portal.model.UserWithMenu">
 		select u.user_id userId,u.username,u.user_rel_name userRelName,u.dept_id deptId,u.email,u.mobile,
 		u.status,u.ssex,um.menu_id menuId from sys_manage_user u
 		left join sys_manage_user_menu um on (u.user_id = um.user_id)
 		where u.user_id = #{userId}
   </select>
 
-    <select id="findUserProfile" parameterType="user" resultType="user">
+    <select id="findUserProfile" parameterType="com.yatop.lambda.portal.model.User" resultType="com.yatop.lambda.portal.model.User">
 	SELECT
 		U .USERNAME,
 		U .USER_REL_NAME userRelName,
