@@ -23,6 +23,11 @@
     <dependencies>
         <dependency>
             <groupId>com.yatop.lambda</groupId>
+            <artifactId>lambda-portal</artifactId>
+            <version>${yatop.lambda.portal}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yatop.lambda</groupId>
             <artifactId>lambda-core</artifactId>
             <version>${yatop.lambda.core}</version>
         </dependency>

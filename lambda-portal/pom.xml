@@ -24,7 +24,7 @@
         <!--<mysql.driver.version>5.1.30</mysql.driver.version>-->
     <!--</properties>-->
     <properties>
-        <start-class>com.yatop.lambda.portal.Application</start-class>
+        <!--<start-class>com.yatop.lambda.portal.Application</start-class>-->
         <mysql.driver.version>5.1.30</mysql.driver.version>
         <poi.version>3.13</poi.version>
     </properties>
@@ -35,11 +35,11 @@
             <artifactId>lambda-framework</artifactId>
             <version>${yatop.lambda.framework}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <!--<scope>compile</scope>-->
-        </dependency>
+            &lt;!&ndash;<scope>compile</scope>&ndash;&gt;
+        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -67,11 +67,11 @@
         </dependency>
 
         <!-- pagehelper 分页插件 -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.5</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -167,11 +167,11 @@
         </dependency>
 
         <!-- druid数据源驱动 -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.10</version>
-        </dependency>
+        </dependency>-->
 
         <!-- reflecyions tools -->
         <dependency>
@@ -205,6 +205,20 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.yatop.lambda.LambdaApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.16</version>
@@ -212,7 +226,7 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <version>1.3.2</version>
@@ -240,7 +254,7 @@
                     </dependency>
 
                 </dependencies>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>

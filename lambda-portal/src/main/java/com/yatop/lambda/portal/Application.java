@@ -14,13 +14,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@SpringBootApplication
-@RestController
-@MapperScan("com.yatop.lambda.portal.dao")
+//@SpringBootApplication
+//@RestController
+//@MapperScan("com.yatop.lambda.portal.dao")
 //@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
 //@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class })
 public class Application {
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+//    public static void main(String[] args) {
+//        SpringApplication.run(Application.class, args);
+//    }
 }

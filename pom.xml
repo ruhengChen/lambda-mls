@@ -18,6 +18,7 @@
 	
 	<properties>
         <yatop.lambda.framework>1.0.0</yatop.lambda.framework>
+        <yatop.lambda.portal>1.0.0</yatop.lambda.portal>
         <yatop.lambda.base>1.0.0</yatop.lambda.base>
         <yatop.lambda.core>1.0.0</yatop.lambda.core>
         <yatop.lambda.tools>1.0.0</yatop.lambda.tools>
