@@ -6,6 +6,6 @@ import com.yatop.lambda.portal.model.PrProject;
 /**
  * Created by 19016 on 2019/1/28.
  */
-public interface PrProjectService extends IService<PrProject>{
+public interface PrProjectService extends IService<PrProject> {
 
 }

@@ -2,15 +2,11 @@ package com.yatop.lambda.portal.service.impl;
 
 import com.yatop.lambda.portal.common.service.impl.BaseService;
 import com.yatop.lambda.portal.model.RoleMenu;
-import com.yatop.lambda.portal.model.RoleWithMenu;
 import com.yatop.lambda.portal.service.RoleMenuService;
-import com.yatop.lambda.portal.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service("roleMenuService")
@@ -19,16 +15,14 @@ public class RoleMenuServiceImpl extends BaseService<RoleMenu> implements RoleMe
 
 	@Override
 	@Transactional
-	public void deleteRoleMenusByRoleId(String roleIds) {
-		List<String> list = Arrays.asList(roleIds.split(","));
-		this.batchDelete(list, "roleId", RoleMenu.class);
+	public void deleteRoleMenusByRoleId(List<String> roleIds) {
+		this.batchDelete(roleIds, "roleId", RoleMenu.class);
 	}
 
 	@Override
 	@Transactional
-	public void deleteRoleMenusByMenuId(String menuIds) {
-		List<String> list = Arrays.asList(menuIds.split(","));
-		this.batchDelete(list, "menuId", RoleMenu.class);
+	public void deleteRoleMenusByMenuId(List<String> menuIds) {
+		this.batchDelete(menuIds, "menuId", RoleMenu.class);
 	}
 
 }

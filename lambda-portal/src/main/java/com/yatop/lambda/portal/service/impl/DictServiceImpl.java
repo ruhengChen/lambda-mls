@@ -14,7 +14,6 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service("dictService")
@@ -56,9 +55,8 @@ public class DictServiceImpl extends BaseService<Dict> implements DictService {
 
 	@Override
 	@Transactional
-	public void deleteDicts(String dictIds) {
-		List<String> list = Arrays.asList(dictIds.split(","));
-		this.batchDelete(list, "dictId", Dict.class);
+	public void deleteDicts(List<String> dictIds) {
+		this.batchDelete(dictIds, "dictId", Dict.class);
 	}
 
 	@Override

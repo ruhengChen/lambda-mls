@@ -28,13 +28,13 @@ public interface UserService extends IService<User> {
     void updateTheme(String theme, String userName);
 
     @CacheEvict(allEntries = true)
-    void addUser(User user, Long[] roles, Long[] menuIds);
+    void addUser(User user, List<Long> roles, List<Long> menuIds);
 
     @CacheEvict(key = "#p0", allEntries = true)
-    void updateUser(User user, Long[] roles, Long[] menuIds);
+    void updateUser(User user, List<Long> roles, List<Long> menuIds);
 
     @CacheEvict(key = "#p0", allEntries = true)
-    void deleteUsers(String userIds);
+    void deleteUsers(List<String> userIds);
 
     void updateLoginTime(String userName);
 
@@ -44,6 +44,8 @@ public interface UserService extends IService<User> {
 
     void updateUserProfile(User user);
 
+    void updateUserPassword(User user);
 
+    void updateUserStatus(User user);
 
 }

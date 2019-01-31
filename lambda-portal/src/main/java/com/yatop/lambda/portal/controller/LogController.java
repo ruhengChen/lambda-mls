@@ -1,43 +1,38 @@
-//package com.yatop.lambda.portal.controller;
-//
-//import com.alibaba.fastjson.JSONObject;
-//import com.yatop.lambda.portal.common.controller.BaseController;
-//import com.yatop.lambda.portal.common.domain.QueryRequest;
-//import com.yatop.lambda.portal.common.domain.ResponseBo;
-//import com.yatop.lambda.portal.common.util.FileUtil;
-//import com.yatop.lambda.portal.model.SysLog;
-//import com.yatop.lambda.portal.service.LogService;
-//import org.apache.shiro.authz.annotation.RequiresPermissions;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.ResponseBody;
-//
-//import java.util.List;
-//import java.util.Map;
-//
-//@Controller
-//public class LogController extends BaseController {
-//
-//    private Logger logger = LoggerFactory.getLogger(this.getClass());
-//
-//    @Autowired
-//    private LogService logService;
-//
-//    @RequestMapping("log")
-//    @RequiresPermissions("log:list")
-//    public String index() {
-//        return "system/log/log";
-//    }
-//
-//    @RequestMapping("log/queryLogs")
-//    @ResponseBody
-//    public Map<String, Object> queryLogs(QueryRequest request, @RequestBody SysLog log) {
-//        return super.selectByPageNumSize(request, () -> this.logService.findAllLogs(log));
-//    }
+package com.yatop.lambda.portal.controller;
+
+import com.yatop.lambda.portal.common.controller.BaseController;
+import com.yatop.lambda.portal.common.domain.JsonResponse;
+import com.yatop.lambda.portal.common.domain.QueryRequest;
+import com.yatop.lambda.portal.model.SysLog;
+import com.yatop.lambda.portal.service.LogService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class LogController extends BaseController {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private LogService logService;
+
+    @RequestMapping("log")
+    @RequiresPermissions("log:list")
+    public String index() {
+        return "system/log/log";
+    }
+
+    @RequestMapping("log/queryLogs")
+    @ResponseBody
+    public JsonResponse queryLogs(QueryRequest request, @RequestBody SysLog log) {
+        return super.selectByPageNumSize(request, () -> this.logService.findAllLogs(log));
+    }
 //
 //    @RequestMapping("log/excel")
 //    @ResponseBody
@@ -76,4 +71,4 @@
 //            return ResponseBo.error("删除日志失败，请联系网站管理员！");
 //        }
 //    }
-//}
+}

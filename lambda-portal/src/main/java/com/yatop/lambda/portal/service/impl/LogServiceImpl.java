@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.service.impl.BaseService;
-//import com.yatop.lambda.portal.common.util.AddressUtils;
 import com.yatop.lambda.portal.model.SysLog;
 import com.yatop.lambda.portal.service.LogService;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +23,8 @@ import tk.mybatis.mapper.entity.Example.Criteria;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.*;
+
+//import com.yatop.lambda.portal.common.util.AddressUtils;
 
 @Service("logService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)

@@ -1,6 +1,7 @@
 package com.yatop.lambda.portal.controller;
 
 import com.yatop.lambda.portal.common.annotation.Log;
+import com.yatop.lambda.portal.common.domain.JsonResponse;
 import com.yatop.lambda.portal.common.domain.ResponseBo;
 import com.yatop.lambda.portal.model.UserOnline;
 import com.yatop.lambda.portal.service.SessionService;
@@ -35,24 +36,24 @@ public class SessionController {
     @ResponseBody
     @RequestMapping("session/list")
     @RequiresPermissions("session:list")
-    public Map<String, Object> list() {
+    public JsonResponse list() {
         List<UserOnline> list = sessionService.list();
         Map<String, Object> rspData = new HashMap<>();
         rspData.put("rows", list);
         rspData.put("total", list.size());
-        return rspData;
+        return JsonResponse.build(rspData);
     }
 
     @ResponseBody
     @RequiresPermissions("user:kickout")
     @RequestMapping("session/forceLogout")
-    public ResponseBo forceLogout(String id) {
+    public JsonResponse forceLogout(String id) {
         try {
             sessionService.forceLogout(id);
-            return ResponseBo.ok();
+            return JsonResponse.build("");
         } catch (Exception e) {
             log.error("踢出用户失败", e);
-            return ResponseBo.error("踢出用户失败");
+            return JsonResponse.build(new Exception("踢出用户失败"));
         }
 
     }

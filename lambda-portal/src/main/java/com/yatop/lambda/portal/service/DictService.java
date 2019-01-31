@@ -22,7 +22,7 @@ public interface DictService extends IService<Dict> {
     void addDict(Dict dict);
 
     @CacheEvict(key = "#p0", allEntries = true)
-    void deleteDicts(String dictIds);
+    void deleteDicts(List<String> dictIds);
 
     @CacheEvict(key = "#p0", allEntries = true)
     void updateDict(Dict dicdt);

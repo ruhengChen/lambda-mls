@@ -5,19 +5,13 @@ import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.config.FebsProperties;
 import com.yatop.lambda.portal.common.controller.BaseController;
 import com.yatop.lambda.portal.common.domain.JsonResponse;
-import com.yatop.lambda.portal.common.domain.ResponseBo;
 import com.yatop.lambda.portal.common.shiro.ShiroRealm;
 import com.yatop.lambda.portal.common.util.MD5Utils;
-import com.yatop.lambda.portal.common.util.vcode.Captcha;
-import com.yatop.lambda.portal.common.util.vcode.GifCaptcha;
 import com.yatop.lambda.portal.model.User;
 import com.yatop.lambda.portal.service.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,11 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 public class LoginController extends BaseController {

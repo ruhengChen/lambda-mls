@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service("userRoleService")
@@ -16,16 +15,14 @@ public class UserRoleServiceImpl extends BaseService<UserRole> implements UserRo
 
 	@Override
 	@Transactional
-	public void deleteUserRolesByRoleId(String roleIds) {
-		List<String> list = Arrays.asList(roleIds.split(","));
-		this.batchDelete(list, "roleId", UserRole.class);
+	public void deleteUserRolesByRoleId(List<String> roleIds) {
+		this.batchDelete(roleIds, "roleId", UserRole.class);
 	}
 
 	@Override
 	@Transactional
-	public void deleteUserRolesByUserId(String userIds) {
-		List<String> list = Arrays.asList(userIds.split(","));
-		this.batchDelete(list, "userId", UserRole.class);
+	public void deleteUserRolesByUserId(List<String> userIds) {
+		this.batchDelete(userIds, "userId", UserRole.class);
 	}
 
 }

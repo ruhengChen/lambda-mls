@@ -2,6 +2,7 @@ package com.yatop.lambda.portal.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.yatop.lambda.portal.common.annotation.Log;
+import com.yatop.lambda.portal.common.domain.JsonResponse;
 import com.yatop.lambda.portal.common.domain.RedisInfo;
 import com.yatop.lambda.portal.common.domain.ResponseBo;
 import com.yatop.lambda.portal.common.service.RedisService;
@@ -55,54 +56,54 @@ public class RedisController {
     @Log("执行Redis keys命令")
     @RequestMapping("keys")
     @ResponseBody
-    public ResponseBo keys(String arg) {
+    public JsonResponse keys(String arg) {
         try {
             Set<String> set = this.redisService.getKeys(arg);
-            return ResponseBo.ok(set, "");
+            return JsonResponse.build(set);
         } catch (Exception e) {
-            return ResponseBo.error(e.getMessage());
+            return JsonResponse.build(e);
         }
     }
 
     @Log("执行Redis get命令")
     @RequestMapping("get")
     @ResponseBody
-    public ResponseBo get(String arg) {
+    public JsonResponse get(String arg) {
         try {
             String result = this.redisService.get(arg);
-            return ResponseBo.ok(result == null ? "" : result, "");
+            return JsonResponse.build(result == null ? "" : result);
         } catch (Exception e) {
-            return ResponseBo.error(e.getMessage());
+            return JsonResponse.build(e);
         }
     }
 
     @Log("执行Redis set命令")
     @RequestMapping("set")
     @ResponseBody
-    public ResponseBo set(String arg) {
+    public JsonResponse set(String arg) {
         try {
             String[] args = arg.split(",");
             if (args.length == 1)
-                return ResponseBo.error("(error) ERR wrong number of arguments for 'set' command");
+                return JsonResponse.build(new Exception("(error) ERR wrong number of arguments for 'set' command"));
             else if (args.length != 2)
-                return ResponseBo.error("(error) ERR syntax error");
+                return JsonResponse.build(new Exception("(error) ERR syntax error"));
             String result = this.redisService.set(args[0], args[1]);
-            return ResponseBo.ok(result, "");
+            return JsonResponse.build(result);
         } catch (Exception e) {
-            return ResponseBo.error(e.getMessage());
+            return JsonResponse.build(e);
         }
     }
 
     @Log("执行Redis del命令")
     @RequestMapping("del")
     @ResponseBody
-    public ResponseBo del(String arg) {
+    public JsonResponse del(String arg) {
         try {
             String[] args = arg.split(",");
             Long result = this.redisService.del(args);
-            return ResponseBo.ok(INTEGER_PREFIX + result, "");
+            return JsonResponse.build(INTEGER_PREFIX + result);
         } catch (Exception e) {
-            return ResponseBo.error(e.getMessage());
+            return JsonResponse.build(e);
         }
     }
 

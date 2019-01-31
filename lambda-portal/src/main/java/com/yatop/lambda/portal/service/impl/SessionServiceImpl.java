@@ -1,7 +1,6 @@
 package com.yatop.lambda.portal.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.yatop.lambda.portal.common.util.AddressUtils;
 import com.yatop.lambda.portal.model.User;
 import com.yatop.lambda.portal.model.UserOnline;
 import com.yatop.lambda.portal.service.SessionService;
@@ -15,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+//import com.yatop.lambda.portal.common.util.AddressUtils;
 
 /**
  * Shiro Session 对象管理

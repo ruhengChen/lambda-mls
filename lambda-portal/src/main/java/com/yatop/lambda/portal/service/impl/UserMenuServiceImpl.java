@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service("userMenuService")
@@ -16,16 +15,14 @@ public class UserMenuServiceImpl extends BaseService<UserMenu> implements UserMe
 
 	@Override
 	@Transactional
-	public void deleteUserMenusByRoleId(String menuIds) {
-		List<String> list = Arrays.asList(menuIds.split(","));
-		this.batchDelete(list, "menuId", UserMenu.class);
+	public void deleteUserMenusByRoleId(List<String> menuIds) {
+		this.batchDelete(menuIds, "menuId", UserMenu.class);
 	}
 
 	@Override
 	@Transactional
-	public void deleteUserMenusByUserId(String userIds) {
-		List<String> list = Arrays.asList(userIds.split(","));
-		this.batchDelete(list, "userId", UserMenu.class);
+	public void deleteUserMenusByUserId(List<String> userIds) {
+		this.batchDelete(userIds, "userId", UserMenu.class);
 	}
 
 }

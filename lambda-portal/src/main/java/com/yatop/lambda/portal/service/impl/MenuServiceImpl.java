@@ -137,11 +137,10 @@ public class MenuServiceImpl extends BaseService<Menu> implements MenuService {
 
     @Override
     @Transactional
-    public void deleteMeuns(String menuIds) {
-        List<String> list = Arrays.asList(menuIds.split(","));
-        this.batchDelete(list, "menuId", Menu.class);
+    public void deleteMeuns(List<String> menuIds) {
+        this.batchDelete(menuIds, "menuId", Menu.class);
         this.roleMenuService.deleteRoleMenusByMenuId(menuIds);
-        this.menuMapper.changeToTop(list);
+        this.menuMapper.changeToTop(menuIds);
     }
 
     @Override

@@ -102,7 +102,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     @Transactional
-    public void addUser(User user, Long[] roles, Long[] menuIds) {
+    public void addUser(User user, List<Long> roles, List<Long> menuIds) {
         user.setCrateTime(new Date());
         user.setTheme(User.DEFAULT_THEME);
         user.setAvatar(User.DEFAULT_AVATAR);
@@ -112,8 +112,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         setUserMenus(user, menuIds);
     }
 
-    private void setUserRoles(User user, Long[] roles) {
-        Arrays.stream(roles).forEach(roleId -> {
+    private void setUserRoles(User user, List<Long> roles) {
+        roles.forEach(roleId -> {
             UserRole ur = new UserRole();
             ur.setUserId(user.getUserId());
             ur.setRoleId(roleId);
@@ -121,8 +121,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         });
     }
 
-    private void setUserMenus(User user, Long[] menuIds) {
-        Arrays.stream(menuIds).forEach(menuId -> {
+    private void setUserMenus(User user, List<Long> menuIds) {
+        menuIds.forEach(menuId -> {
             UserMenu um = BeanUtils.instantiateClass(UserMenu.class);
             um.setUserId(user.getUserId());
             um.setMenuId(menuId);
@@ -132,7 +132,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(User user, Long[] roles, Long[] menuIds) {
+    public void updateUser(User user, List<Long> roles, List<Long> menuIds) {
 //        user.setPassword(null);
         user.setUsername(null);
         user.setModifyTime(new Date());
@@ -149,9 +149,9 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     @Transactional
-    public void deleteUsers(String userIds) {
-        List<String> list = Arrays.asList(userIds.split(","));
-        this.batchDelete(list, "userId", User.class);
+    public void deleteUsers(List<String> userIds) {
+
+        this.batchDelete(userIds, "userId", User.class);
 
         this.userRoleService.deleteUserRolesByUserId(userIds);
         this.userMenuService.deleteUserMenusByUserId(userIds);
@@ -209,8 +209,21 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     public void updateUserProfile(User user) {
         user.setUsername(null);
         user.setPassword(null);
+        user.setStatus(null);
         if (user.getDeptId() == null)
             user.setDeptId(0L);
+        this.updateNotNull(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateUserPassword(User user){
+        this.updateNotNull(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateUserStatus(User user){
         this.updateNotNull(user);
     }
 

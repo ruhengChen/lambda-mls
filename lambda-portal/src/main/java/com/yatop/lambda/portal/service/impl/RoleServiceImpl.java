@@ -72,14 +72,14 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Override
     @Transactional
-    public void addRole(Role role, Long[] menuIds) {
+    public void addRole(Role role, List<Long> menuIds) {
         role.setCreateTime(new Date());
         this.save(role);
         setRoleMenus(role, menuIds);
     }
 
-    private void setRoleMenus(Role role, Long[] menuIds) {
-        Arrays.stream(menuIds).forEach(menuId -> {
+    private void setRoleMenus(Role role, List<Long> menuIds) {
+        menuIds.forEach(menuId -> {
             RoleMenu rm = new RoleMenu();
             rm.setMenuId(menuId);
             rm.setRoleId(role.getRoleId());
@@ -89,9 +89,8 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Override
     @Transactional
-    public void deleteRoles(String roleIds) {
-        List<String> list = Arrays.asList(roleIds.split(","));
-        this.batchDelete(list, "roleId", Role.class);
+    public void deleteRoles(List<String> roleIds) {
+        this.batchDelete(roleIds, "roleId", Role.class);
 
         this.roleMenuService.deleteRoleMenusByRoleId(roleIds);
         this.userRoleService.deleteUserRolesByRoleId(roleIds);
@@ -111,7 +110,7 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Override
     @Transactional
-    public void updateRole(Role role, Long[] menuIds) {
+    public void updateRole(Role role, List<Long> menuIds) {
         role.setModifyTime(new Date());
         this.updateNotNull(role);
         Example example = new Example(RoleMenu.class);

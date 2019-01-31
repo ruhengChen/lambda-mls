@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -79,10 +78,9 @@ public class DeptServiceImpl extends BaseService<Dept> implements DeptService {
 
 	@Override
 	@Transactional
-	public void deleteDepts(String deptIds) {
-		List<String> list = Arrays.asList(deptIds.split(","));
-		this.batchDelete(list, "deptId", Dept.class);
-		this.deptMapper.changeToTop(list);
+	public void deleteDepts(List<String> deptIds) {
+		this.batchDelete(deptIds, "deptId", Dept.class);
+		this.deptMapper.changeToTop(deptIds);
 	}
 
 	@Override

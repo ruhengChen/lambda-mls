@@ -2,6 +2,7 @@ package com.yatop.lambda.portal.common.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yatop.lambda.portal.common.domain.JsonResponse;
 import com.yatop.lambda.portal.common.domain.QueryRequest;
 import com.yatop.lambda.portal.model.User;
 import org.apache.shiro.SecurityUtils;
@@ -36,14 +37,14 @@ public class BaseController {
         getSubject().login(token);
     }
 
-    private Map<String, Object> getDataTable(PageInfo<?> pageInfo) {
+    private JsonResponse getDataTable(PageInfo<?> pageInfo) {
         Map<String, Object> rspData = new HashMap<>();
         rspData.put("rows", pageInfo.getList());
         rspData.put("total", pageInfo.getTotal());
-        return rspData;
+        return JsonResponse.build(rspData);
     }
 
-    protected Map<String, Object> selectByPageNumSize(QueryRequest request, Supplier<?> s) {
+    protected JsonResponse selectByPageNumSize(QueryRequest request, Supplier<?> s) {
         PageHelper.startPage(request.getPageNum(), request.getPageSize());
         PageInfo<?> pageInfo = new PageInfo<>((List<?>) s.get());
         PageHelper.clearPage();
