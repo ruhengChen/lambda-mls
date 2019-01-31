@@ -1,4 +1,4 @@
-package com.yatop.lambda.component.MachineLearning.train.tuningModel
+package com.yatop.lambda.component.test.MachineLearning.train.tuningModel
 
 import org.apache.spark.ml.evaluation.RegressionEvaluator
 import org.apache.spark.ml.regression.LinearRegression

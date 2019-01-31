@@ -1,12 +1,11 @@
-package com.yatop.lambda.component.MachineLearning.alogrithm.classifier.logistic
-
-import com.yatop.lambda.component.MachineLearning.featureEngine.FeaturesEngine
+package com.yatop.lambda.component.test.MachineLearning.alogrithm.classifier.logistic
 import org.apache.spark.ml.{Pipeline, PipelineStage}
 import org.apache.spark.ml.classification.LogisticRegression
 import org.apache.spark.ml.feature._
 import org.apache.spark.ml.util.DefaultParamsWritable
 import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
 import org.apache.spark.sql.types.StringType
+import com.yatop.lambda.component.test.MachineLearning.featureEngine.FeaturesEngine.FeaturesEngine
 
 import scala.collection.mutable
 class classifier_logisticregression(val maxIter:Int,

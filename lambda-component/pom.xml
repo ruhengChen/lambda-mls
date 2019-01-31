@@ -16,8 +16,14 @@
     <name>lambda-component</name>
     <url>http://maven.apache.org</url>
 
+    <properties><json4s.version>3.3.0</json4s.version></properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.json4s</groupId>
+            <artifactId>json4s-native_2.11</artifactId>
+            <version>${json4s.version}</version>
+        </dependency>
 		    <!-- https://mvnrepository.com/artifact/net.alchim31.maven/scala-maven-plugin -->
         <dependency>
             <groupId>org.scala-lang.modules</groupId>

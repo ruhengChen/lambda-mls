@@ -1,4 +1,4 @@
-package com.yatop.lambda.component.MachineLearning.featureEngine
+package com.yatop.lambda.component.test.MachineLearning.featureEngine.FeaturesEngine
 
 import org.apache.spark.ml.feature.{OneHotEncoder, StringIndexer}
 import org.apache.spark.sql.DataFrame

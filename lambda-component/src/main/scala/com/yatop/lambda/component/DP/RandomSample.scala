@@ -1,11 +1,11 @@
-package com.yatop.lambda.component.DP
+package cn.crh.lambda.scala.DP
 
-import java.util.Random
-
-import com.alibaba.fastjson.JSON
+import cn.crh.lambda.scala.utils.DecoupJson
 import com.yatop.lambda.component.DP
-import com.yatop.lambda.component.utils.{DecoupJson, MyLogging}
+import com.yatop.lambda.component.utils.MyLogging
 import org.apache.spark.sql.SparkSession
+
+import scala.util.Random
 
 
 /**

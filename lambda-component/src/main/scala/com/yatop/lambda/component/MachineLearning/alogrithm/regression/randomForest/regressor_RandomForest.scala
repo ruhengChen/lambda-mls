@@ -1,6 +1,6 @@
-package com.yatop.lambda.component.MachineLearning.alogrithm.regression.randomForest
+package com.yatop.lambda.component.test.MachineLearning.alogrithm.regression.randomForest
 
-import com.yatop.lambda.component.MachineLearning.featureEngine.OneHotFeaturesEngineering
+import com.yatop.lambda.component.test.MachineLearning.featureEngine.FeaturesEngine.OneHotFeaturesEngineering
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.ml.regression.{RandomForestRegressionModel, RandomForestRegressor}

@@ -1,14 +1,15 @@
-package com.yatop.lambda.component.utils
+package cn.crh.lambda.scala.utils
 
 import java.io.FileWriter
 
+import com.yatop.lambda.component.utils.MyLogging
 import org.apache.spark.ml.PipelineModel
-import org.apache.spark.sql.catalyst.expressions.aggregate._
 import org.apache.spark.sql.catalyst.expressions.{Cast, Expression, GetArrayItem, Literal}
+import org.apache.spark.sql.catalyst.expressions.aggregate._
 import org.apache.spark.sql.functions.{col, sum}
 import org.apache.spark.sql.types.{IntegerType, StringType}
-import org.apache.spark.sql.{Column, DataFrame, SparkSession}
-import org.json4s.jackson.Serialization.write
+import org.apache.spark.sql.{Column, DataFrame, Row, SparkSession}
+import org.json4s.jackson.Serialization.{read, write}
 import org.json4s._
 import org.json4s.native.JsonMethods._
 import org.json4s.native.Serialization
@@ -348,7 +349,6 @@ class DecoupJson(jsonFilePath: String) extends MyLogging {
     val characteristicMap = getParameterCharacteristicMap
     val charValue = characteristicMap \ s"$charCode" \ "char_value" match {
       case JBool(value) => value
-      case _ => null
     }
     charValue
   }

@@ -1,6 +1,6 @@
-package com.yatop.lambda.component.MachineLearning.alogrithm.classifier.gbtc
+package com.yatop.lambda.component.test.MachineLearning.alogrithm.classifier.gbtc
 
-import com.yatop.lambda.component.MachineLearning.featureEngine.OneHotFeaturesEngineering
+import com.yatop.lambda.component.test.MachineLearning.featureEngine.FeaturesEngine.OneHotFeaturesEngineering
 import org.apache.spark.ml.{Model, Pipeline, PipelineModel}
 import org.apache.spark.ml.classification.{GBTClassificationModel, GBTClassifier}
 import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator

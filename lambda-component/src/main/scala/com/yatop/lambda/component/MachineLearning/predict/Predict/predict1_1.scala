@@ -1,4 +1,4 @@
-package com.yatop.lambda.component.MachineLearning.predict.Predict
+package com.yatop.lambda.component.test.MachineLearning.predict.Predict
 
 import org.apache.spark.ml.PipelineModel
 import org.apache.spark.sql.SparkSession

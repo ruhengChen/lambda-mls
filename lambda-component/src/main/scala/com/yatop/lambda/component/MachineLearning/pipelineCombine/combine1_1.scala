@@ -1,4 +1,4 @@
-package com.yatop.lambda.component.MachineLearning.pipelineCombine
+package com.yatop.lambda.component.test.MachineLearning.pipelineCombine
 
 import org.apache.spark.ml.feature.{OneHotEncoder, StringIndexer}
 import org.apache.spark.sql.SparkSession

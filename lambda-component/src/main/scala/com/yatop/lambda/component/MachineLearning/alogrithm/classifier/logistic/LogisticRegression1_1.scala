@@ -1,4 +1,4 @@
-package com.yatop.lambda.component.MachineLearning.alogrithm.classifier.logistic
+package com.yatop.lambda.component.test.MachineLearning.alogrithm.classifier.logistic
 
 import org.apache.spark.ml.classification.LogisticRegression
 import org.apache.spark.sql.SparkSession

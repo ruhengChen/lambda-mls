@@ -1,11 +1,11 @@
-package com.yatop.lambda.component.DP
 
 import java.util.Random
 
-import com.yatop.lambda.component.utils.{DecoupJson, MyLogging}
-import org.apache.spark.sql.functions.sum
-import org.apache.spark.sql.types.DoubleType
+import cn.crh.lambda.scala.utils.DecoupJson
+import com.yatop.lambda.component.utils.MyLogging
 import org.apache.spark.sql.{Row, SparkSession}
+import org.apache.spark.sql.types.DoubleType
+import org.apache.spark.sql.functions.sum
 
 
 /**
