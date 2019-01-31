@@ -12,7 +12,6 @@
 	<artifactId>lambda-mls</artifactId>
 	<version>1.0.0</version>
     <packaging>pom</packaging>
-
 	
 	<name>lambda-mls</name>
     <url>http://maven.apache.org</url>
@@ -30,7 +29,6 @@
         <yatop.lambda.studio>1.0.0</yatop.lambda.studio>
         <yatop.lambda.open>1.0.0</yatop.lambda.open>
         <yatop.lambda.decision>1.0.0</yatop.lambda.decision>
-        <yatop.lambda.portal>1.0.0</yatop.lambda.portal>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -67,15 +65,14 @@
     <modules>
         <module>lambda-mybatis-generator</module>
         <module>lambda-framework</module>
-        <module>lambda-portal</module>
         <module>lambda-base</module>
         <module>lambda-core</module>
         <module>lambda-tools</module>
         <module>lambda-workflow-core</module>
         <module>lambda-workflow-engine</module>
         <module>lambda-workflow-module</module>
+        <module>lambda-portal</module>
         <module>lambda-manager</module>
-        <!-- <module>lambda-manager-ui</module> -->
         <!-- <module>lambda-open</module> -->
         <!-- <module>lambda-decision</module> -->
         <module>lambda-cluster-adapter</module>
@@ -90,66 +87,6 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guave.version}</version>
-        </dependency>
-
-        <!--other-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-csv</artifactId>
-            <version>${commons-csv.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-compress</artifactId>
-            <version>1.18</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.janino</groupId>
-            <artifactId>commons-compiler</artifactId>
-            <version>2.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.univocity</groupId>
-            <artifactId>univocity-parsers</artifactId>
-            <version>${univocity-parsers}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>jdk.tools</groupId>
-            <artifactId>jdk.tools</artifactId>
-            <version>${jdk.tool.version}</version>
-            <scope>system</scope>
-            <systemPath>${env.JAVA_HOME}/lib/tools.jar</systemPath>
         </dependency>
     </dependencies>
 
@@ -199,7 +136,41 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${springfox-swagger-ui.version}</version>
             </dependency>-->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guave.version}</version>
+            </dependency>
+            
+            <!--other-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-csv</artifactId>
+                <version>${commons-csv.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.univocity</groupId>
+                <artifactId>univocity-parsers</artifactId>
+                <version>${univocity-parsers}</version>
+            </dependency>
 
+            <dependency>
+                <groupId>jdk.tools</groupId>
+                <artifactId>jdk.tools</artifactId>
+                <version>${jdk.tool.version}</version>
+                <scope>system</scope>
+                <systemPath>${env.JAVA_HOME}/lib/tools.jar</systemPath>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

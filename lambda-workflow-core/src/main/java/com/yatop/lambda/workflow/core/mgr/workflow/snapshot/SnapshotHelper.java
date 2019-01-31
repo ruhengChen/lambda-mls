@@ -37,7 +37,7 @@ public class SnapshotHelper {
     }
 
     public static Snapshot querySnapshot4Execution(ExecutionJob job) {
-        return Snapshot.BuildSnapshot4Execution(querySnapshot(job.data().getRelSnapshotId()), job.enableFlushSnapshot());
+        return Snapshot.BuildSnapshot4Execution(querySnapshot(job.data().getRelSnapshotId()), job);
     }
 
     public static Snapshot simulateSnapshot4Template(Long templateId) {
