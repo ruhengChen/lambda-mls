@@ -9,11 +9,10 @@ import com.yatop.lambda.workflow.core.richmodel.RichModel;
 import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptChar;
 import com.yatop.lambda.workflow.core.richmodel.workflow.value.CharValue;
 
-public class NodeParameter extends RichModel<WfFlowNodeParameter> {
+public class NodeParameter extends RichModel<WfFlowNodeParameter> implements Comparable<NodeParameter> {
 
     private CharValue charValue;
     private boolean simulateParameter;  //标记来自ParameterHelper.simulateParameter构建的模拟节点参数
-    private boolean isStateChanged;
 
     public NodeParameter(WfFlowNodeParameter data, CharValue charValue) {
         this(data, charValue, false);
@@ -23,17 +22,17 @@ public class NodeParameter extends RichModel<WfFlowNodeParameter> {
         super(data);
         this.charValue = charValue;
         this.simulateParameter = simulateParameter;
-        this.isStateChanged = false;
+    }
+
+    @Override
+    public int compareTo(NodeParameter o) {
+        return this.getCmptChar().data().getCharId().compareTo(o.getCmptChar().data().getCharId());
     }
 
     @Override
     public void clear() {
         charValue = null;
         super.clear();
-    }
-
-    public boolean isStateChanged() {
-        return isStateChanged;
     }
 
     protected void flush(String operId) {
@@ -69,14 +68,12 @@ public class NodeParameter extends RichModel<WfFlowNodeParameter> {
     public void changeOccuredWarning(String warningMsg) {
         if(!DataUtil.equals(this.data().getWarningMsg(), warningMsg)) {
             this.data().setWarningMsg(warningMsg);
-            isStateChanged = true;
         }
     }
 
     public void clearOccuredWarning() {
         if(this.isOccuredWarning()) {
             this.changeOccuredWarning(null);
-            isStateChanged = true;
         }
     }
 

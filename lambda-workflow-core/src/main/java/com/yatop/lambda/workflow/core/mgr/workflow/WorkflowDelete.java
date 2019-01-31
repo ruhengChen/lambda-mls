@@ -6,6 +6,7 @@ import com.yatop.lambda.core.mgr.workflow.WorkflowMgr;
 import com.yatop.lambda.workflow.core.context.WorkflowContext;
 import com.yatop.lambda.workflow.core.mgr.workflow.node.NodeDelete;
 import com.yatop.lambda.workflow.core.mgr.workflow.node.link.LinkDelete;
+import com.yatop.lambda.workflow.core.mgr.workflow.snapshot.SnapshotCreate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,9 @@ public class WorkflowDelete {
     @Autowired
     LinkDelete linkDelete;
 
+    @Autowired
+    SnapshotCreate snapshotCreate;
+
     public void deleteWorkflow(WorkflowContext workflowContext) {
 
         if(workflowContext.isLazyLoadMode())
@@ -30,7 +34,8 @@ public class WorkflowDelete {
         if(workflowContext.isLoadNodeParameter())
             throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete workflow error -- workflow context work in not load-data-port-schema mode.", "系统内部错误，请联系管理员");
 
-        //TODO 暂不进行 delete snapshot, job<task, task output>
+        //TODO 暂不进行 delete snapshot<copy, execution>, job<task, task output>
+        snapshotCreate.createSnapshot4Delete(workflowContext);
 
         nodeDelete.deleteAllNodes(workflowContext);
         linkDelete.deleteAllLinks(workflowContext);

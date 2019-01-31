@@ -10,5 +10,5 @@ public class SnapshotDelete {
     @Autowired
     SnapshotMgr snapshotMgr;
 
-    //TODO 快照删除暂不考虑，涉及快照关联的资源删除，例如codeScript，jsonObject之类，需要判断当前工作流是否仍然引用这些资源
+    //TODO 副本快照删除直接调用SnapshotMgr.deleteSnapshot4Copy, 其他类型快照删除暂时不考虑
 }

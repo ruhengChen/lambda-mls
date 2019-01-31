@@ -53,7 +53,7 @@ public enum JobTypeEnum {
     RUN_ONLINE_SCHEDULE(101, "Run Online Schedule"),
 
     /**
-     * 数据文件上传
+     * 数据文件导入
      */
     RUN_DATAFILE_IMPORT(200, "Run Datafile Import");
 

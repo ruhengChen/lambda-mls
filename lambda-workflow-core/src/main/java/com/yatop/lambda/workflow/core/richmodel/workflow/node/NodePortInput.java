@@ -7,7 +7,7 @@ import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptCha
 import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptCharType;
 import com.yatop.lambda.workflow.core.richmodel.workflow.module.ModulePort;
 
-public class NodePortInput extends RichModel<WfFlowNodePort> {
+public class NodePortInput extends RichModel<WfFlowNodePort> implements Comparable<NodePortInput> {
 
     private ModulePort modulePort;
     private boolean analyzed;
@@ -16,6 +16,11 @@ public class NodePortInput extends RichModel<WfFlowNodePort> {
         super(data);
         this.modulePort = modulePort;
         this.analyzed = false;
+    }
+
+    @Override
+    public int compareTo(NodePortInput o) {
+        return this.getCmptChar().data().getCharId().compareTo(o.getCmptChar().data().getCharId());
     }
 
     @Override

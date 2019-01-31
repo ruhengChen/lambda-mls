@@ -22,7 +22,7 @@ public class SchemaQuery {
 
     public void querySchemas(WorkflowContext workflowContext, Node node) {
 
-        if(node.outputPortCount() > 0) {
+        if(!node.isTailNode()) {
             int counter = 0;
             for (NodePortOutput port : node.getOutputNodePorts()) {
                 if (port.isDataTablePort()) {

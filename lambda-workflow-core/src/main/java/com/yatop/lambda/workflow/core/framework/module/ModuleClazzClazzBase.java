@@ -1,16 +1,21 @@
 package com.yatop.lambda.workflow.core.framework.module;
 
+import com.yatop.lambda.workflow.core.config.ComponentConfig;
+import com.yatop.lambda.workflow.core.config.ModuleConfig;
 import com.yatop.lambda.workflow.core.context.ExecutionTaskContext;
 import com.yatop.lambda.workflow.core.context.WorkflowContext;
+import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptChar;
 import com.yatop.lambda.workflow.core.richmodel.workflow.execution.ExecutionTask;
 import com.yatop.lambda.workflow.core.richmodel.workflow.node.Node;
 import com.yatop.lambda.workflow.core.richmodel.workflow.node.NodeSchema;
 import com.yatop.lambda.workflow.core.richmodel.workflow.value.CharValue;
 import com.yatop.lambda.workflow.core.utils.CollectionUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 public abstract class ModuleClazzClazzBase implements IModuleClazz {
 
@@ -29,12 +34,19 @@ public abstract class ModuleClazzClazzBase implements IModuleClazz {
         ModuleClazzClazzBase.putClazzBean(this.getClass().getName(), this);
     }
 
+
+    @Autowired
+    ComponentConfig componentConfig;
+
+    @Autowired
+    ModuleConfig moduleConfig;
+
     //
     //接口方法默认实现
     //
 
     @Override
-    public TreeMap<String, String> checkParameter(WorkflowContext workflowContext, Node node) {
+    public TreeMap<CmptChar, String> checkParameter(WorkflowContext workflowContext, Node node) {
         return null;
     }
 
@@ -74,12 +86,12 @@ public abstract class ModuleClazzClazzBase implements IModuleClazz {
     }
 
     @Override
-    public HashSet<String> reanalyzeSchemaParameterSet() {
+    public TreeSet<CmptChar> reanalyzeSchemaParameterSet() {
         return null;
     }
 
     @Override
-    public TreeMap<String, NodeSchema> analyzeSchema(WorkflowContext workflowContext, Node node) {
+    public TreeMap<CmptChar, NodeSchema> analyzeSchema(WorkflowContext workflowContext, Node node) {
         return null;
     }
 }

@@ -2,6 +2,7 @@ package com.yatop.lambda.workflow.core.framework.module;
 
 import com.yatop.lambda.workflow.core.context.ExecutionTaskContext;
 import com.yatop.lambda.workflow.core.context.WorkflowContext;
+import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptChar;
 import com.yatop.lambda.workflow.core.richmodel.workflow.execution.ExecutionTask;
 import com.yatop.lambda.workflow.core.richmodel.workflow.node.Node;
 import com.yatop.lambda.workflow.core.richmodel.workflow.node.NodeSchema;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.InitializingBean;
 
 import java.util.HashSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /*
 
@@ -23,8 +25,8 @@ public interface IModuleClazz extends InitializingBean {
     //方法失败或异常抛出Exception，Module类实现该接口，适当封装一些中间abstract组件类以便复用
 
     //校验参数处理，例如：数据表读取组件需要校验对应的数据表是否正常
-    //key:charId, warningMessage
-    TreeMap<String, String> checkParameter(WorkflowContext workflowContext, Node node);
+    //key:CmptChar, warningMessage
+    TreeMap<CmptChar, String> checkParameter(WorkflowContext workflowContext, Node node);
 
 /*
     //是否支持生成摘要
@@ -53,6 +55,7 @@ public interface IModuleClazz extends InitializingBean {
     //////////////////////////////////////////////////////
 
     //本地运行，组件无需提交集群时，引擎将调用该方法，例如：算法组件的输出内容由本地进行计算
+    //出错时，在方法内部对task调用setOccuredWarning进行warning message做设置
     void execute(ExecutionTaskContext context);
 
     //////////////////////////////////////////////////////
@@ -63,17 +66,18 @@ public interface IModuleClazz extends InitializingBean {
     boolean supportAnalyzeSchema();
 
     //影响重新分析schema的参数集合
-    //返回特征代码集合
-    HashSet<String> reanalyzeSchemaParameterSet();
+    //返回特征集合
+    TreeSet<CmptChar> reanalyzeSchemaParameterSet();
     /* {
-        static final HashSet<String> parameterSet = new HashSet<String>() {{
-            add("xxx");
-            add("yyy");
+        static final TreeSet<String> parameterSet = new TreeSet<String>() {{
+            add(componentConfig.getCharacteristic("char-id-A"));
+            add(componentConfig.getCharacteristic("char-id-B"));
+            add(componentConfig.getCharacteristic("char-id-C"));
         }};
         return parameterSet;
     };*/
 
     //分析数据输出端口schema
-    //key:charId, NodeSchema
-    TreeMap<String, NodeSchema> analyzeSchema(WorkflowContext workflowContext, Node node);
+    //key:OutputPort-CmptChar, NodeSchema
+    TreeMap<CmptChar, NodeSchema> analyzeSchema(WorkflowContext workflowContext, Node node);
 }

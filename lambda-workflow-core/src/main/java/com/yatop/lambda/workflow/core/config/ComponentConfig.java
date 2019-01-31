@@ -121,25 +121,25 @@ public class ComponentConfig implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        loadComponentConfiguration();
+        //loadComponentConfiguration();
     }
 
     private void loadComponentConfiguration() {
 
         //特征类型相关
-        //loadCmptCharTypeConfig();
+        loadCmptCharTypeConfig();
 
         //特征相关
-        //loadCmptCharConfig();
+        loadCmptCharConfig();
 
         //规格相关
-        //loadCmptSpecConfig();
+        loadCmptSpecConfig();
 
         //组件相关
-        //loadComponentConfig();
+        loadComponentConfig();
 
         //校验相关
-        //checkConfiguration();
+        checkConfiguration();
     }
 
     private void loadCmptCharTypeConfig() {

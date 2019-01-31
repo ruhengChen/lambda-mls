@@ -22,13 +22,20 @@
             <artifactId>lambda-core</artifactId>
             <version>${yatop.lambda.core}</version>
         </dependency>
+
+        <!-- =========================================spring================= -->
         <dependency>
-            <groupId>com.yatop.lambda</groupId>
-            <artifactId>lambda-cluster-adapter</artifactId>
-            <version>${yatop.lambda.cluster.adapter}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
-
+        <!-- =======================================spring boot================= -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test-autoconfigure</artifactId>
@@ -39,6 +46,27 @@
             <artifactId>spring-security-test</artifactId>
         </dependency>
 
+        <!-- ========================= common  =============================== -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.univocity</groupId>
+            <artifactId>univocity-parsers</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>jdk.tools</groupId>
+            <artifactId>jdk.tools</artifactId>
+        </dependency>
     </dependencies>
 </project>

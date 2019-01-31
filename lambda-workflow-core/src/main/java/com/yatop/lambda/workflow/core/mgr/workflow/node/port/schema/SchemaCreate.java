@@ -30,7 +30,6 @@ public class SchemaCreate {
         object.setObjectSrc(JsonObjectSourceEnum.EDITOR.getSource());
         object.setOwnerProjectId(workflowContext.getProject().data().getProjectId());
         object.setRelFlowId(workflowContext.getWorkflow().data().getFlowId());
-        object.setRelSnapshotVersion(workflowContext.getWorkflow().data().getNextSnapshotVersion());
         object.setRelNodeId(node.data().getNodeId());
         object.setRelCharId(outputPort.getCmptChar().data().getCharId());
         object.setRelTaskId(-1L);

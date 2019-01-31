@@ -1,6 +1,6 @@
 package com.yatop.lambda.core.mgr.experiment;
 
-import com.yatop.lambda.base.extend.mapper.ExperimentTemplateMapper;
+import com.yatop.lambda.base.mapper.extend.ExperimentTemplateMapper;
 import com.yatop.lambda.base.model.EmExperimentTemplate;
 import com.yatop.lambda.base.model.EmExperimentTemplateExample;
 import com.yatop.lambda.core.enums.LambdaExceptionEnum;

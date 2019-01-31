@@ -6,11 +6,11 @@ import com.yatop.lambda.workflow.core.richmodel.component.characteristic.CmptCha
 import com.yatop.lambda.workflow.core.richmodel.workflow.value.CharValue;
 
 //TODO 待进一步确定实现方案
-/*
+
 public class GlobalParameter extends RichModel<WfFlowGlobalParameter> {
     private CmptChar cmptChar;  //关联计算组件特征
-    private CharValue globalDefaultValue;
-    private CharValue globalValue;
+    //private CharValue globalDefaultValue;
+    //private CharValue globalValue;
 
     public GlobalParameter(WfFlowGlobalParameter data, CmptChar cmptChar) {
         super(data);
@@ -26,4 +26,4 @@ public class GlobalParameter extends RichModel<WfFlowGlobalParameter> {
     public CmptChar getCmptChar() {
         return cmptChar;
     }
-}*/
+}

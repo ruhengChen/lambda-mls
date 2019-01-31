@@ -1,4 +1,4 @@
-package com.yatop.lambda.base.extend.mapper;
+package com.yatop.lambda.base.mapper.extend;
 
 import org.apache.ibatis.annotations.Select;
 

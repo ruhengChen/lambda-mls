@@ -6,6 +6,7 @@ import com.yatop.lambda.core.enums.DataStatusEnum;
 import com.yatop.lambda.core.enums.SnapshotStateEnum;
 import com.yatop.lambda.core.enums.SnapshotTypeEnum;
 import com.yatop.lambda.core.mgr.workflow.snapshot.SnapshotMgr;
+import com.yatop.lambda.workflow.core.mgr.experiment.ExperimentTemplateHelper;
 import com.yatop.lambda.workflow.core.richmodel.experiment.ExperimentTemplate;
 import com.yatop.lambda.workflow.core.richmodel.project.Project;
 import com.yatop.lambda.workflow.core.richmodel.workflow.execution.ExecutionJob;
@@ -39,7 +40,11 @@ public class SnapshotHelper {
         return Snapshot.BuildSnapshot4Execution(querySnapshot(job.data().getRelSnapshotId()), job.enableFlushSnapshot());
     }
 
-    public static Snapshot simulateSnapshot4Template(ExperimentTemplate template) {
+    public static Snapshot simulateSnapshot4Template(Long templateId) {
+        return simulateSnapshot4Template(ExperimentTemplateHelper.queryExperimentTemplate(templateId));
+    }
+
+    private static Snapshot simulateSnapshot4Template(ExperimentTemplate template) {
         PrProject dataProject = new PrProject();
         dataProject.setProjectId(-1L);
         dataProject.setProjectCode("SIMULATION_PROJECT");

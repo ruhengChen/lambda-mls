@@ -1,6 +1,5 @@
 package com.yatop.lambda.workflow.core.mgr.workflow.analyzer;
 
-import com.yatop.lambda.core.enums.IsRequiredEnum;
 import com.yatop.lambda.core.enums.LambdaExceptionEnum;
 import com.yatop.lambda.core.exception.LambdaException;
 import com.yatop.lambda.core.utils.DataUtil;
@@ -23,7 +22,7 @@ public class SchemaAnalyzer4CreateAndUpdate {
             TreeMap<Long, NodePortOutput> upstreamNonWebPorts = workflowContext.fetchNonWebUpstreamPorts(currentNode);
             for (NodePortInput inputDataPort : currentNode.getInputDataTablePorts()) {
                 //仅对必须输入端口的上游端口状态做分析判断
-                if (inputDataPort.getCmptChar().data().getIsRequired() == IsRequiredEnum.YES.getMark()) {
+                if (inputDataPort.getCmptChar().isRequired()) {
                     NodePortOutput upstreamDataPort = CollectionUtil.get(upstreamNonWebPorts, inputDataPort.data().getNodePortId());
                     if (DataUtil.isNotNull(upstreamDataPort)) {
                         if (!upstreamDataPort.isDataTablePort())

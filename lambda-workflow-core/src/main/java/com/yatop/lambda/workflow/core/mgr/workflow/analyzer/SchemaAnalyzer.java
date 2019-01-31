@@ -86,14 +86,27 @@ public class SchemaAnalyzer {
         }
     }
 
-    private static void dealAnalyzeSchema4RefreshSchema(WorkflowContext workflowContext) {
+    public static void dealAnalyzeSchema4RefreshSchema(WorkflowContext workflowContext) {
 
-        List<Node> headNodes = WorkflowContextHelper.searchHeadNodes(workflowContext);
+        List<Node> headNodes = searchReadTableHeadNodes(workflowContext);
         if(DataUtil.isNotEmpty(headNodes)) {
             for(Node headNode : headNodes) {
                 if(SchemaAnalyzerHelper.needAnalyzeNode(headNode))
                     SchemaAnalyzer4RefreshSchema.analyzeStartNode(workflowContext, headNode);
             }
         }
+    }
+
+    public static List<Node> searchReadTableHeadNodes(WorkflowContext workflowContext) {
+        if(workflowContext.nodeCount() == 0)
+            return null;
+
+        List<Node> headNodes = new ArrayList<Node>();
+        for(Node node : workflowContext.getNodes()) {
+            if(node.isHeadNode() && node.haveOutputDataTablePort()) {
+                headNodes.add(node);
+            }
+        }
+        return headNodes;
     }
 }

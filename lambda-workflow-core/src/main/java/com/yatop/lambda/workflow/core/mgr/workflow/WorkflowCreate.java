@@ -41,10 +41,10 @@ public class WorkflowCreate {
         flow.setOwnerProjectId(experiment.data().getOwnerProjectId());
         flow = workflowMgr.insertWorkflow(flow, operId);
 
+        flow.setFlowDfsDir(WorkDirectoryUtil.getWorkFLowDfsDirectory(experiment.data().getOwnerProjectId(), flow.getFlowId()));
+        flow.setFlowLocalDir(WorkDirectoryUtil.getWorkFLowLocalDirectory(experiment.data().getOwnerProjectId(), flow.getFlowId()));
+        workflowMgr.updateWorkflow(flow, operId);
         Workflow richWorkflow = new Workflow(flow, experiment);
-        richWorkflow.data().setFlowDfsDir(WorkDirectoryUtil.getWorkFLowDfsDirectory(experiment.data().getOwnerProjectId(), richWorkflow.data().getFlowId()));
-        richWorkflow.data().setFlowLocalDir(WorkDirectoryUtil.getWorkFLowLocalDirectory(experiment.data().getOwnerProjectId(), richWorkflow.data().getFlowId()));
-        workflowMgr.updateWorkflow(richWorkflow.data(), operId);
 
         //richWorkflow.copyProperties(workflowMgr.queryWorkflow(richWorkflow.data().getFlowId()));
         richWorkflow.changeState2Draft();
@@ -84,6 +84,8 @@ public class WorkflowCreate {
                 }
             }
         }
+        
+        thisWorkFlowContext.flush();
         return thisWorkFlowContext;
     }
 }

@@ -27,9 +27,8 @@ public class SnapshotCreate {
         snapshot.setSnapshotVersion(workflow.data().getNextSnapshotVersion());
         snapshot.setSnapshotState(snapshotState.getState());
         snapshot = snapshotMgr.insertSnapshot(snapshot, workflowContext.getOperId());
-        Snapshot richSnapshot = Snapshot.BuildSnapshot4Create(snapshot, workflowContext);
-        snapshotMgr.updateSnapshot(richSnapshot.data(), workflowContext.getOperId());
         workflow.increaseNextSnapshotVersion();
+        Snapshot richSnapshot = Snapshot.BuildSnapshot4Create(snapshot/*, workflowContext*/);
         return richSnapshot;
     }
 
@@ -38,10 +37,18 @@ public class SnapshotCreate {
     }
 
     public Snapshot createSnapshot4Copy(WorkflowContext workflowContext, String copyName) {
-        return createSnapshot(workflowContext, copyName, SnapshotTypeEnum.COPY, SnapshotStateEnum.FINISHED);
+        Snapshot snapshot = createSnapshot(workflowContext, copyName, SnapshotTypeEnum.COPY, SnapshotStateEnum.FINISHED);
+        snapshot.syncWorkflowContext2Snapshot(workflowContext);
+        snapshot.flushSnapshotContent();
+        snapshotMgr.updateSnapshot(snapshot.data(), workflowContext.getOperId());
+        return snapshot;
     }
 
     public Snapshot createSnapshot4Delete(WorkflowContext workflowContext) {
-        return createSnapshot(workflowContext, null, SnapshotTypeEnum.DELETE, SnapshotStateEnum.FINISHED);
+        Snapshot snapshot = createSnapshot(workflowContext, null, SnapshotTypeEnum.DELETE, SnapshotStateEnum.FINISHED);
+        snapshot.syncWorkflowContext2Snapshot(workflowContext);
+        snapshot.flushSnapshotContent();
+        snapshotMgr.updateSnapshot(snapshot.data(), workflowContext.getOperId());
+        return snapshot;
     }
 }

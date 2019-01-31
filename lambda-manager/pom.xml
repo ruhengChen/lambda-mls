@@ -16,7 +16,9 @@
     <name>lambda-manager</name>
     <url>http://maven.apache.org</url>
 
-
+    <properties>
+        <shiro.version>1.4.0</shiro.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -24,16 +26,11 @@
             <artifactId>lambda-core</artifactId>
             <version>${yatop.lambda.core}</version>
         </dependency>
-        <dependency>
-            <groupId>com.yatop.lambda</groupId>
-            <artifactId>lambda-portal</artifactId>
-            <version>${yatop.lambda.portal}</version>
-        </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.yatop.lambda</groupId>
             <artifactId>lambda-workflow-engine</artifactId>
             <version>${yatop.lambda.workflow.engine}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- =========================================spring================= -->
         <dependency>
@@ -43,14 +40,6 @@
         </dependency>
 
         <!-- =======================================spring boot================= -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
@@ -64,10 +53,47 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- ========================= common  =============================== -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.univocity</groupId>
+            <artifactId>univocity-parsers</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jdk.tools</groupId>
+            <artifactId>jdk.tools</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -104,7 +130,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.yatop.lambda.AppMain</mainClass>
+                    <mainClass>com.yatop.lambda.LambdaApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
@@ -157,7 +183,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <!--<state>1.7</state>-->
+                    <source>1.7</source>
                     <target>1.7</target>
                     <encoding>UTF-8</encoding>
                 </configuration>

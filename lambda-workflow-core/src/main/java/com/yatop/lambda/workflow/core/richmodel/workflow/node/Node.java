@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-public class Node extends RichModel<WfFlowNode> {
+public class Node extends RichModel<WfFlowNode> implements Comparable<Node> {
 
     private Module module;
     private TreeMap<String, NodeParameter> parameters = new TreeMap<String, NodeParameter>();   //组件参数，key=charId
@@ -36,14 +36,17 @@ public class Node extends RichModel<WfFlowNode> {
     private int indegree;
     private boolean deleted;
     private boolean analyzed;
-    private boolean isStateChanged;
 
     public Node(WfFlowNode data, Module module) {
         super(data);
         this.module = module;
         this.deleted = false;
         this.analyzed = false;
-        this.isStateChanged = false;
+    }
+
+    @Override
+    public int compareTo(Node o) {
+        return this.data().getNodeId().compareTo(o.data().getNodeId());
     }
 
     @Override
@@ -59,10 +62,6 @@ public class Node extends RichModel<WfFlowNode> {
         super.clear();
     }
 
-    public boolean isStateChanged() {
-        return isStateChanged;
-    }
-
     public void flush(boolean flushNodeParameter, boolean flushDataPortSchema, String operId) {
 
         if(!this.isDeleted()) {
@@ -76,7 +75,7 @@ public class Node extends RichModel<WfFlowNode> {
                     parameter.flush(operId);
                 }
             }
-            if (flushDataPortSchema && this.outputPortCount() > 0) {
+            if (flushDataPortSchema && !this.isTailNode()) {
                 for (NodePortOutput outputPort : this.getOutputNodePorts()) {
                     outputPort.flush(operId);
                 }
@@ -147,7 +146,6 @@ public class Node extends RichModel<WfFlowNode> {
             return;
 
         this.data().setNodeState(stateEnum.getState());
-        this.isStateChanged = true;
     }
 
     public Module getModule() {
@@ -168,6 +166,10 @@ public class Node extends RichModel<WfFlowNode> {
 
     public NodeParameter getParameter(String charId) {
         return CollectionUtil.get(parameters, charId);
+    }
+
+    public NodeParameter getParameter(CmptChar cmptChar) {
+        return getParameter(cmptChar.data().getCharId());
     }
 
     public NodeParameter getParameterByCharCode(String charCode) {
@@ -204,6 +206,10 @@ public class Node extends RichModel<WfFlowNode> {
 
     public NodeParameter getOptimizeParameter(String charId) {
         return CollectionUtil.get(optimizeParameters, charId);
+    }
+
+    public NodeParameter getOptimizeParameter(CmptChar cmptChar) {
+        return getOptimizeParameter(cmptChar.data().getCharId());
     }
 
     public NodeParameter getOptimizeParameterByCharCode(String charCode) {
@@ -409,12 +415,12 @@ public class Node extends RichModel<WfFlowNode> {
     }
 
     public void markAnalyzed() {
-        if(inputPortCount() > 0) {
+        if(!this.isHeadNode()) {
             for (NodePortInput inputNodePort : this.getInputNodePorts()) {
                 inputNodePort.markAnalyzed();
             }
         }
-        if(outputPortCount() > 0) {
+        if(!this.isTailNode()) {
             for (NodePortOutput outputNodePort : this.getOutputNodePorts()) {
                 outputNodePort.markAnalyzed();
             }

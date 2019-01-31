@@ -79,6 +79,32 @@ public class SnapshotMgr extends BaseMgr {
 
     /*
      *
+     *   逻辑删除快照信息
+     *   返回删除数量
+     *
+     * */
+    public int deleteSnapshot4Copy(Long snapshotId, String operId) {
+        if(DataUtil.isNull(snapshotId) || DataUtil.isEmpty(operId)){
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete snapshot info -- invalid delete condition.", "无效删除条件");
+        }
+
+        try {
+            WfSnapshot deleteSnapshot = new WfSnapshot();
+            deleteSnapshot.setSnapshotContent(null);
+            deleteSnapshot.setStatus(DataStatusEnum.INVALID.getStatus());
+            deleteSnapshot.setLastUpdateTime(SystemTimeUtil.getCurrentTime());
+            deleteSnapshot.setLastUpdateOper(operId);
+
+            WfSnapshotExample example = new WfSnapshotExample();
+            example.createCriteria().andSnapshotIdEqualTo(snapshotId).andSnapshotTypeEqualTo(SnapshotTypeEnum.COPY.getType()).andStatusEqualTo(DataStatusEnum.NORMAL.getStatus());
+            return wfSnapshotMapper.updateByExampleWithBLOBs(deleteSnapshot, example);
+        } catch (Throwable e) {
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Delete snapshot info failed.", "删除快照信息失败", e);
+        }
+    }
+
+    /*
+     *
      *   逻辑删除快照信息（按工作流ID）
      *   返回删除数量
      *

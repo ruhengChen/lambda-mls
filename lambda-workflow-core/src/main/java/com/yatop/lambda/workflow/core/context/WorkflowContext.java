@@ -7,6 +7,7 @@ import com.yatop.lambda.workflow.core.mgr.warehouse.DataWarehouseHelper;
 import com.yatop.lambda.workflow.core.mgr.warehouse.ModelWarehouseHelper;
 import com.yatop.lambda.workflow.core.mgr.workflow.analyzer.SchemaAnalyzer;
 import com.yatop.lambda.workflow.core.mgr.workflow.analyzer.SchemaAnalyzerHelper;
+import com.yatop.lambda.workflow.core.mgr.workflow.module.AnalyzeNodeStateHelper;
 import com.yatop.lambda.workflow.core.mgr.workflow.node.port.schema.SchemaHelper;
 import com.yatop.lambda.workflow.core.mgr.workflow.snapshot.SnapshotHelper;
 import com.yatop.lambda.workflow.core.richmodel.data.table.DataWarehouse;
@@ -103,8 +104,8 @@ public class WorkflowContext implements IWorkContext {
     }
 
     //实验模版查看使用
-    public static WorkflowContext BuildWorkflowContext4ViewTemplate(ExperimentTemplate template, String operId) {
-        return BuildWorkflowContext4Snapshot(SnapshotHelper.simulateSnapshot4Template(template), operId);
+    public static WorkflowContext BuildWorkflowContext4ViewTemplate(Long templateId, String operId) {
+        return BuildWorkflowContext4Snapshot(SnapshotHelper.simulateSnapshot4Template(templateId), operId);
     }
 
     //快照查看使用
@@ -160,11 +161,14 @@ public class WorkflowContext implements IWorkContext {
         this.enableFlushWorkflow = currentJob.enableFlushWorkflow();
         this.currentJob = currentJob;
         this.putExecutionJob(currentJob);
+        currentJob.parseJobContent(this);
 
         if(!currentJob.enableFlushSnapshot()) {
             //TODO Clear [workflow & Node]'s execution information by job type
-
             //TODO loadAllTasks and set [workflow state & last job id] & [node state & last task id]
+            //离线调度和在线调度，重置为ready，lastTaskId置为null，同时加载所有作业下的task做syncTaskState2Node
+        } else{
+            //工作台运行和数据文件导入，正常情况不需要重置，仅create job时根据对分析结果的作业节点做重置syncTaskState2Node
         }
     }
 
@@ -197,11 +201,14 @@ public class WorkflowContext implements IWorkContext {
     }
 
     public void flush() {
+        if(this.workflow.isDeleted())
+            return;
 
         if(this.isEnableFlushWorkflow() && this.workflow.data().getFlowId() > 0) {
 
-            if (loadNodeParameter && loadDataPortSchema) {
+            if (loadNodeParameter && loadDataPortSchema && !isAnalyzeWithNone()) {
                 SchemaAnalyzer.dealAnalyzeSchema(this);
+                this.markAnalyzeWithNone();
             }
 
             if (this.nodeCount() > 0) {
@@ -215,7 +222,8 @@ public class WorkflowContext implements IWorkContext {
         if(this.isExecutionWorkMode()) {
             if(tasks.size() > 0) {
                 for(ExecutionTask task : CollectionUtil.toList(tasks)) {
-                    task.flush(this.getOperId());
+                    if(task.data().getOwnerJobId().equals(currentJob.data().getJobId()))
+                        task.flush(this.getOperId());
                 }
             }
             this.getCurrentJob().flush(this);
@@ -233,25 +241,38 @@ public class WorkflowContext implements IWorkContext {
         this.putNode(node);
         this.workflow.changeState2Draft();
         this.markAnalyzeWithCreateNode(node);
+        AnalyzeNodeStateHelper.analyzeInputPortAndParameter(this, node, true);
     }
 
     public void doneCreateLink(NodeLink link) {
         this.putLink(link);
         this.workflow.changeState2Draft();
         this.markAnalyzeWithCreateLink(link);
+        AnalyzeNodeStateHelper.analyzeInputPortAndParameter(this, this.fetchDownstreamNode(link));
     }
 
     public void doneUpdateNodeParameter(Node node, NodeParameter parameter) {
         node.downgradeState2Ready();
         this.workflow.changeState2Draft();
-        if(parameter.getCmptChar().data().getSpecType() == SpecTypeEnum.PARAMETER.getType())
+        if(parameter.getCmptChar().data().getSpecType() == SpecTypeEnum.PARAMETER.getType()) {
             this.markAnalyzeWithUpdateNodeParameter(node, parameter);
+        }
+        AnalyzeNodeStateHelper.analyzeInputPortAndParameter(this, node);
     }
 
     public void doneDeleteNode(Node node) {
         node.markDeleted();
         this.workflow.changeState2Draft();
         this.markAnalyzeWithDeleteNode(node);
+
+        TreeMap<Long, List<Node>> downstreamNodes = this.fetchDownstreamNodes(node);
+        if(DataUtil.isNotEmpty(downstreamNodes)) {
+            for (List<Node> chainList : CollectionUtil.toList(downstreamNodes)) {
+                for(Node downstreamNode : chainList) {
+                    AnalyzeNodeStateHelper.analyzeInputPortAndParameter(this, downstreamNode);
+                }
+            }
+        }
     }
 
     public void doneRecoverNode(Node node) {
@@ -262,6 +283,7 @@ public class WorkflowContext implements IWorkContext {
         link.markDeleted();
         this.workflow.changeState2Draft();
         this.markAnalyzeWithDeleteLink(link);
+        AnalyzeNodeStateHelper.analyzeInputPortAndParameter(this, this.fetchDownstreamNode(link));
     }
 
     /*
@@ -300,6 +322,10 @@ public class WorkflowContext implements IWorkContext {
 
     public boolean isAnalyzeWithRefreshSchema() {
         return this.schemaAnalyze.getType() == AnalyzeTypeEnum.REFRESH_SCHEMA.getType();
+    }
+
+    private void markAnalyzeWithNone() {
+        this.schemaAnalyze = AnalyzeTypeEnum.NONE;
     }
 
     private void markAnalyzeWithCreateNode(Node node) {
@@ -577,6 +603,18 @@ public class WorkflowContext implements IWorkContext {
         return null;
     }
 
+    public List<Node> fetchUpstreamNodes(NodePortInput intputNodePort) {
+        List<NodeLink> inLinks = this.fetchInLinks(intputNodePort);
+        if(DataUtil.isNotEmpty(inLinks)) {
+            List<Node> upstreamNodes = new LinkedList<Node>();
+            for(NodeLink nodeLink : inLinks) {
+                CollectionUtil.add(upstreamNodes, this.fetchUpstreamNode(nodeLink));
+            }
+            return upstreamNodes;
+        }
+        return null;
+    }
+
     public List<Node> fetchDownstreamNodes(NodePortOutput outputNodePort) {
         List<NodeLink> outLinks = this.fetchOutLinks(outputNodePort);
         if(DataUtil.isNotEmpty(outLinks)) {
@@ -585,6 +623,30 @@ public class WorkflowContext implements IWorkContext {
                 CollectionUtil.add(downstreamNodes, this.fetchDownstreamNode(nodeLink));
             }
             return downstreamNodes;
+        }
+        return null;
+    }
+
+    public Node fetchNonWebUpstreamNode(NodePortInput intputNodePort) {
+        NodeLink nodeLink = this.fetchNonWebInLink(intputNodePort);
+        if(DataUtil.isNotNull(nodeLink)) {
+            Node upstreamNode = this.fetchUpstreamNode(nodeLink);
+            if(!upstreamNode.isWebNode())
+                return upstreamNode;
+        }
+        return null;
+    }
+
+    public List<Node> fetchNonWebDownstreamNodes(NodePortOutput outputNodePort) {
+        List<NodeLink> outLinks = this.fetchOutLinks(outputNodePort);
+        if(DataUtil.isNotEmpty(outLinks)) {
+            List<Node> downstreamNodes = new LinkedList<Node>();
+            for(NodeLink nodeLink : outLinks) {
+                Node downstreamNode = this.fetchDownstreamNode(nodeLink);
+                if(!downstreamNode.isWebNode())
+                    CollectionUtil.add(downstreamNodes, downstreamNode);
+            }
+            return DataUtil.isNotEmpty(downstreamNodes) ? downstreamNodes : null;
         }
         return null;
     }
@@ -714,9 +776,19 @@ public class WorkflowContext implements IWorkContext {
         return getNonWebInLink(dstPortId);
     }
 
+    public NodeLink fetchNonWebInLink(NodePortInput inputNodePort) {
+        WorkflowContextHelper.loadInLinks(this, inputNodePort.data().getNodePortId());
+        return getNonWebInLink(inputNodePort.data().getNodePortId());
+    }
+
     public NodeLink fetchWebInLink(Long dstPortId) {
         WorkflowContextHelper.loadInLinks(this, dstPortId);
         return getWebInLink(dstPortId);
+    }
+
+    public NodeLink fetchWebInLink(NodePortInput inputNodePort) {
+        WorkflowContextHelper.loadInLinks(this, inputNodePort.data().getNodePortId());
+        return getWebInLink(inputNodePort.data().getNodePortId());
     }
 
     public List<NodeLink> fetchNonWebInLinks(Node node) {

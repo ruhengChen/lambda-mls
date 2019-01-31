@@ -7,7 +7,6 @@ import com.yatop.lambda.core.mgr.workflow.node.NodeMgr;
 import com.yatop.lambda.core.utils.DataUtil;
 import com.yatop.lambda.workflow.core.config.ModuleConfig;
 import com.yatop.lambda.workflow.core.context.WorkflowContext;
-import com.yatop.lambda.workflow.core.mgr.workflow.module.ParameterCheckHelper;
 import com.yatop.lambda.workflow.core.mgr.workflow.node.parameter.ParameterQuery;
 import com.yatop.lambda.workflow.core.mgr.workflow.node.port.NodePortQuery;
 import com.yatop.lambda.workflow.core.richmodel.workflow.module.Module;
@@ -56,7 +55,7 @@ public class NodeQuery {
         nodePortQuery.queryNodePorts(workflowContext, richNode);
         if(!workflowContext.isLoadNodeParameter()) {
             parameterQuery.queryParameters(workflowContext, richNode);
-            //ParameterCheckHelper.checkParameter(workflowContext, richNode);
+            //AnalyzeNodeStateHelper.analyzeInputPortAndParameter(workflowContext, richNode);
         }
         return richNode;
     }
@@ -68,20 +67,20 @@ public class NodeQuery {
         }
 
         for(WfFlowNode node : nodeList) {
+            if(DataUtil.isNotNull(workflowContext.getNode(node.getNodeId())))
+                continue;
+
             Module module = moduleConfig.getModule(node.getRefModuleId());
             if(DataUtil.isNull(module)) {
                 throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Query node failed -- module not found.", "节点信息错误", node);
             }
-
-            if(DataUtil.isNotNull(workflowContext.getNode(node.getNodeId())))
-                continue;
 
             Node richNode = new Node(node, module);
             workflowContext.putNode(richNode);
             nodePortQuery.queryNodePorts(workflowContext, richNode);
             if(!workflowContext.isLoadNodeParameter()) {
                 parameterQuery.queryParameters(workflowContext, richNode);
-                //ParameterCheckHelper.checkParameter(workflowContext, richNode);
+                //AnalyzeNodeStateHelper.analyzeInputPortAndParameter(workflowContext, richNode);
             }
         }
     }

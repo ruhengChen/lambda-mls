@@ -39,23 +39,17 @@ lambda.mls:
 #### 日志级别配置
 ##############################################################
 logging.file: logs/lambda-mls.log
-logging.level.com.yatop.lambda.base: DEBUG
-logging.level.org.apache.hadoop.yarn.client.RMProxy: WARN
-logging.level.cn.com.bsfit.portal.mapper: INFO
-logging.level.com.atomikos: INFO
-logging.level.org.apache.parquet.hadoop.ColumnChunkPageWriteStore: WARN
-logging.level.org.apache.parquet.hadoop.InternalParquetRecordWriter: WARN
-logging.level.org.apache.parquet.hadoop.InternalParquetRecordReader : WARN
-logging.level.org.apache.parquet.hadoop.ParquetFileReader : WARN
-logging.level.org.apache.spark.deploy.yarn.Client: WARN
-logging.level.org.apache.spark.SecurityManager : WARN
+logging.level.com.yatop.lambda: DEBUG
+logging.level.org.apache.hadoop: WARN
+logging.level.org.apache.parquet: WARN
+logging.level.org.apache.spark: WARN
 
 ###############################################################
 #### tomcat配置
 ###############################################################
 server.session-timeout: 3600
-spring.http.multipart.maxRequestSize: 5001Mb
-spring.http.multipart.maxFileSize: 5000Mb
+spring.http.multipart.maxRequestSize: 501Mb
+spring.http.multipart.maxFileSize: 500Mb
 server.tomcat.compression: 1024
 server.tomcat.compressableMimeTypes: application/json,application/xml,application/javascript,text/html,text/xml,text/plain
 

@@ -161,32 +161,6 @@ public class WorkflowContextHelper {
         }
     }
 
-    public static List<Node> searchHeadNodes(WorkflowContext workflowContext) {
-        if(workflowContext.nodeCount() == 0)
-            return null;
-
-        List<Node> headNodes = new ArrayList<Node>();
-        for(Node node : workflowContext.getNodes()) {
-            if(node.isHeadNode()) {
-                headNodes.add(node);
-            }
-        }
-        return headNodes;
-    }
-
-    public static List<Node> searchReadTableHeadNodes(WorkflowContext workflowContext) {
-        if(workflowContext.nodeCount() == 0)
-            return null;
-
-        List<Node> headNodes = new ArrayList<Node>();
-        for(Node node : workflowContext.getNodes()) {
-            if(node.isHeadNode() && node.haveOutputDataTablePort()) {
-                headNodes.add(node);
-            }
-        }
-        return headNodes;
-    }
-
     //检测是否存在有向循环图，排除web工作流节点
     public static boolean existDirectedCyclicGraph(WorkflowContext workflowContext) {
 

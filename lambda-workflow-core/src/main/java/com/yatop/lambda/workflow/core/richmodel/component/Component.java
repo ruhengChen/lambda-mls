@@ -212,7 +212,7 @@ public class Component extends RichModel<CfComponent> {
         switch (SourceLevelEnum.valueOf(cmptChar.data().getSrcLevel())) {
             case SPECIFICATION:
             case COMPONENT:
-                if(cmptChar.data().getIsRequired() == IsRequiredEnum.YES.getMark() && DataUtil.isEmpty(this.getConfigCharValue(cmptChar)))
+                if(cmptChar.isRequired() && DataUtil.isEmpty(this.getConfigCharValue(cmptChar)))
                     return true;
           //case WORKFLOW:
         }

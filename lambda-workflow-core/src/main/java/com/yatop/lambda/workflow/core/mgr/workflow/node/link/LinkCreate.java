@@ -48,7 +48,7 @@ public class LinkCreate {
         workflowContext.doneCreateLink(richNodeLink);
 
         if(WorkflowContextHelper.existDirectedCyclicGraph(workflowContext)) {
-            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Create node link failed -- Create link will make workflow exists directed cyclic graph..", "新建链接将导致工作流产生有向循环图", srcNodePort, dstNodePort);
+            throw new LambdaException(LambdaExceptionEnum.F_WORKFLOW_DEFAULT_ERROR, "Create node link failed -- Create link will make workflow exists directed cyclic graph..", "新建链接将产生有向循环图", srcNodePort, dstNodePort);
         }
         return richNodeLink;
     }
