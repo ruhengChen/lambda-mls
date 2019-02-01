@@ -30,7 +30,7 @@ public class DictController extends BaseController {
 
 
     @RequestMapping("dict/list")
-    @RequiresPermissions("dict:list")
+    @RequiresPermissions("sys:dict:list")
     @ResponseBody
     public JsonResponse dictList(QueryRequest request, @RequestBody Dict dict) {
         return super.selectByPageNumSize(request, () -> this.dictService.findAllDicts(dict, request));
@@ -74,7 +74,7 @@ public class DictController extends BaseController {
     }
 
     @Log("新增字典 ")
-    @RequiresPermissions("dict:add")
+    @RequiresPermissions("sys:dict:add")
     @RequestMapping("dict/add")
     @ResponseBody
     public JsonResponse addDict(@RequestBody Dict dict) {
@@ -89,7 +89,7 @@ public class DictController extends BaseController {
     }
 
     @Log("删除字典")
-    @RequiresPermissions("dict:delete")
+    @RequiresPermissions("sys:dict:delete")
     @RequestMapping("dict/delete")
     @ResponseBody
     public JsonResponse deleteDicts(@RequestBody JSONObject jsonObject) {
@@ -107,7 +107,7 @@ public class DictController extends BaseController {
     }
 
     @Log("修改字典 ")
-    @RequiresPermissions("dict:update")
+    @RequiresPermissions("sys:dict:update")
     @RequestMapping("dict/update")
     @ResponseBody
     public JsonResponse updateDict(@RequestBody Dict dict) {

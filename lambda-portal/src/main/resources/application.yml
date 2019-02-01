@@ -12,6 +12,7 @@ lambda.mls:
     driverClassName: com.mysql.jdbc.Driver
     ###################以下为druid增加的配置###########################
     type: com.alibaba.druid.pool.DruidDataSource
+
     # 下面为连接池的补充设置，应用到上面所有数据源中
     # 初始化大小，最小，最大
     initialSize: 5
@@ -146,7 +147,7 @@ spring:
         username: mrbird
         password: 123456
   application:
-    name: febs
+    name: lambda-mls-sys-manage
 #
 #info:
 #  app:
@@ -190,6 +191,7 @@ management:
 
 # febs 配置
 lambda-mls-sys-manage:
+  showsql: true
   # 时间类型参数在前端页面的展示格式，默认格式为 yyyy-MM-dd HH:mm:ss
   timeFormat: yyyy-MM-dd HH:mm:ss
   # 是否开启 AOP 日志，默认开启

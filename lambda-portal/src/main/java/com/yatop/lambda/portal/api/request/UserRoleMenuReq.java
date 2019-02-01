@@ -1,11 +1,16 @@
-package com.yatop.lambda.portal.model;
+package com.yatop.lambda.portal.api.request;
+
+import com.yatop.lambda.portal.model.User;
 
 import java.util.List;
 
-public class UserWithRoleAndMenu extends User{
+public class UserRoleMenuReq {
 	
 	private static final long serialVersionUID = -5680235862276163462L;
-	
+
+	private User user;
+
+
 	private Long roleId;
 	
 	private List<Long> roleIds;
@@ -44,5 +49,14 @@ public class UserWithRoleAndMenu extends User{
 
 	public void setMenuIds(List<Long> menuIds) {
 		this.menuIds = menuIds;
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

@@ -2,10 +2,8 @@ package com.yatop.lambda.portal.common.shiro;
 
 import com.yatop.lambda.portal.model.Menu;
 import com.yatop.lambda.portal.model.Role;
-import com.yatop.lambda.portal.model.RoleWithMenu;
 import com.yatop.lambda.portal.model.User;
 import com.yatop.lambda.portal.service.MenuService;
-import com.yatop.lambda.portal.service.RoleMenuService;
 import com.yatop.lambda.portal.service.RoleService;
 import com.yatop.lambda.portal.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -15,10 +13,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

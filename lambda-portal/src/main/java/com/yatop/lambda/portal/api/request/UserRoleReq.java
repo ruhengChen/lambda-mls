@@ -1,8 +1,10 @@
-package com.yatop.lambda.portal.model;
+package com.yatop.lambda.portal.api.request;
+
+import com.yatop.lambda.portal.model.User;
 
 import java.util.List;
 
-public class UserWithRole extends User{
+public class UserRoleReq extends User {
 	
 	private static final long serialVersionUID = -5680235862276163462L;
 	

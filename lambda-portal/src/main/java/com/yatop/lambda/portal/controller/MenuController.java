@@ -92,7 +92,7 @@ public class MenuController extends BaseController {
     }
 
     @RequestMapping("menu/list")
-    @RequiresPermissions("menu:list")
+    @RequiresPermissions("sys:menu:list")
     @ResponseBody
     public JsonResponse menuList(@RequestBody Menu menu) {
         try {
@@ -140,7 +140,7 @@ public class MenuController extends BaseController {
     }
 
     @Log("新增菜单/按钮")
-    @RequiresPermissions("menu:add")
+    @RequiresPermissions("sys:menu:add")
     @RequestMapping("menu/addMenu")
     @ResponseBody
     public JsonResponse addMenu(@RequestBody Menu menu) {
@@ -161,7 +161,7 @@ public class MenuController extends BaseController {
     }
 
     @Log("删除菜单")
-    @RequiresPermissions("menu:delete")
+    @RequiresPermissions("sys:menu:delete")
     @RequestMapping("menu/deleteMenu")
     @ResponseBody
     public JsonResponse deleteMenus(@RequestBody JSONObject jsonObject) {
@@ -181,7 +181,7 @@ public class MenuController extends BaseController {
     }
 
     @Log("修改菜单/按钮")
-    @RequiresPermissions("menu:update")
+    @RequiresPermissions("sys:menu:update")
     @RequestMapping("menu/updateMenu")
     @ResponseBody
     public JsonResponse updateMenu(@RequestBody Menu menu) {

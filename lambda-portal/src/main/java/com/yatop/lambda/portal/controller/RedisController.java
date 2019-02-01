@@ -26,7 +26,7 @@ public class RedisController {
     private RedisService redisService;
 
     @RequestMapping("info")
-    @RequiresPermissions("redis:list")
+    @RequiresPermissions("sys:redis:list")
     public String getRedisInfo(Model model) {
         List<RedisInfo> infoList = this.redisService.getRedisInfo();
         model.addAttribute("infoList", infoList);
@@ -34,7 +34,7 @@ public class RedisController {
     }
 
     @RequestMapping("terminal")
-    @RequiresPermissions("redis:terminal")
+    @RequiresPermissions("sys:redis:terminal")
     public String redisTerminal(Model model) {
         String osName = System.getProperty("os.name");
         model.addAttribute("osName", osName);

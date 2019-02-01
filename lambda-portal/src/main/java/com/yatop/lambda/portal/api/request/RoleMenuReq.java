@@ -1,22 +1,24 @@
-package com.yatop.lambda.portal.model;
+package com.yatop.lambda.portal.api.request;
+
+import com.yatop.lambda.portal.model.Role;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class RoleWithMenu extends Role implements Serializable {
+public class RoleMenuReq implements Serializable {
 
 	private static final long serialVersionUID = 2013847071068967187L;
-	
-	private Long menuId;
-	
+
 	private List<Long> menuIds;
 
-	public Long getMenuId() {
-		return menuId;
+	private Role role;
+
+	public Role getRole() {
+		return role;
 	}
 
-	public void setMenuId(Long menuId) {
-		this.menuId = menuId;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public List<Long> getMenuIds() {
@@ -26,7 +28,5 @@ public class RoleWithMenu extends Role implements Serializable {
 	public void setMenuIds(List<Long> menuIds) {
 		this.menuIds = menuIds;
 	}
-	
-	
 
 }

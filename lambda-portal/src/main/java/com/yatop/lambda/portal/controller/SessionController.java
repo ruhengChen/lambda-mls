@@ -1,9 +1,9 @@
 package com.yatop.lambda.portal.controller;
 
+import com.yatop.lambda.portal.api.response.UserOnlineResp;
 import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.domain.JsonResponse;
-import com.yatop.lambda.portal.common.domain.ResponseBo;
-import com.yatop.lambda.portal.model.UserOnline;
+//import com.yatop.lambda.portal.common.domain.ResponseBo;
 import com.yatop.lambda.portal.service.SessionService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -28,16 +28,16 @@ public class SessionController {
 
     @Log("获取在线用户信息")
     @RequestMapping("session")
-    @RequiresPermissions("session:list")
+    @RequiresPermissions("sys:session:list")
     public String online() {
         return "system/monitor/online";
     }
 
     @ResponseBody
     @RequestMapping("session/list")
-    @RequiresPermissions("session:list")
+    @RequiresPermissions("sys:session:list")
     public JsonResponse list() {
-        List<UserOnline> list = sessionService.list();
+        List<UserOnlineResp> list = sessionService.list();
         Map<String, Object> rspData = new HashMap<>();
         rspData.put("rows", list);
         rspData.put("total", list.size());

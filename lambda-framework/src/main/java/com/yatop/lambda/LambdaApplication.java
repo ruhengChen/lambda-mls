@@ -5,8 +5,10 @@
  import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  import org.springframework.boot.builder.SpringApplicationBuilder;
  import org.springframework.boot.context.event.ApplicationPreparedEvent;
+ import org.springframework.cache.annotation.EnableCaching;
  import org.springframework.context.ApplicationListener;
 
+ @EnableCaching
  @SpringBootApplication(exclude = { /*SecurityAutoConfiguration.class, */ DataSourceAutoConfiguration.class})
  public class LambdaApplication {
      public static void main(String[] args) {

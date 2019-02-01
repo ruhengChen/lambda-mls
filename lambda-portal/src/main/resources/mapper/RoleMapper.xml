@@ -21,10 +21,16 @@
 	where u.username = #{userName}
   </select>
 
-  <select id="findById" resultType="com.yatop.lambda.portal.model.RoleWithMenu">
+  <select id="findById" resultType="com.yatop.lambda.portal.api.request.RoleMenuReq">
   	select r.role_id roleId,r.role_name roleName,r.remark,
   	rm.menu_id menuId from sys_manage_role r
 	left join sys_manage_role_menu rm on(r.role_id = rm.role_id)
 	where r.role_id = #{roleId}
   </select>
+
+    <select id="findMenuIdsByRole" parameterType="java.lang.Long"  resultType="java.lang.Long">
+        select rm.menu_id menuId from sys_manage_role r
+	left join sys_manage_role_menu rm on(r.role_id = rm.role_id)
+	where r.role_id = #{roleId}
+    </select>
 </mapper>

@@ -70,6 +70,7 @@ public class JsonResponse implements Serializable{
     }
 
     public static JsonResponse build(Object data) {
+        if(data == null) return new JsonResponse("");
         return new JsonResponse(data);
     }
 

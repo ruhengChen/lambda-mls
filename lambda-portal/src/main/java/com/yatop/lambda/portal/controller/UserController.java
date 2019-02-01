@@ -1,27 +1,25 @@
 package com.yatop.lambda.portal.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yatop.lambda.portal.api.response.UserRoleMenuResp;
 import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.controller.BaseController;
 import com.yatop.lambda.portal.common.domain.JsonResponse;
 import com.yatop.lambda.portal.common.domain.QueryRequest;
 import com.yatop.lambda.portal.common.util.MD5Utils;
 import com.yatop.lambda.portal.model.User;
-import com.yatop.lambda.portal.model.UserWithRoleAndMenu;
+import com.yatop.lambda.portal.api.request.UserRoleMenuReq;
 import com.yatop.lambda.portal.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserController extends BaseController {
@@ -47,12 +45,12 @@ public class UserController extends BaseController {
     @Log("查询用户信息")
     @RequestMapping("user/queryUserInfo")
     @ResponseBody
-    @RequiresPermissions("user:query")
-    public JsonResponse getUser(@RequestBody JSONObject jsonObject) {
+    @RequiresPermissions("sys:user:query")
+    public JsonResponse getUser(@RequestBody User user) {
         try {
-            Long userId = jsonObject.getLong("userId");
-            User user = this.userService.findById(userId);
-            return JsonResponse.build(user);
+
+            UserRoleMenuResp userRoleMenuResp = this.userService.findById(user);
+            return JsonResponse.build(userRoleMenuResp);
         } catch (Exception e) {
             log.error("获取用户失败", e);
             return JsonResponse.build(new Exception("获取用户失败，请联系网站管理员！"));
@@ -61,7 +59,7 @@ public class UserController extends BaseController {
 
     @Log("获取用户列表信息")
     @RequestMapping("user/queryUsers")
-    @RequiresPermissions("user:list")
+    @RequiresPermissions("sys:user:list")
     @ResponseBody
     public JsonResponse userList(QueryRequest request, User user) {
         return super.selectByPageNumSize(request, () -> this.userService.findUserWithDept(user, request));
@@ -69,21 +67,22 @@ public class UserController extends BaseController {
 
 
     @Log("新增用户")
-    @RequiresPermissions("user:add")
+    @RequiresPermissions("sys:user:add")
     @RequestMapping("user/createUser")
     @ResponseBody
-    public JsonResponse addUser(@RequestBody UserWithRoleAndMenu userWithRoleAndMenu) {
+    public JsonResponse addUser(@RequestBody UserRoleMenuReq userRoleMenuReq) {
         try {
 //            if (ON.equalsIgnoreCase(user.getStatus()))
 //                user.setStatus(User.STATUS_VALID);
 //            else
 //                user.setStatus(User.STATUS_LOCK);
 
-            List<Long> roleIds = userWithRoleAndMenu.getRoleIds();
-            List<Long> menuIds = userWithRoleAndMenu.getMenuIds();
+            List<Long> roleIds = userRoleMenuReq.getRoleIds();
+            List<Long> menuIds = userRoleMenuReq.getMenuIds();
+            User user = userRoleMenuReq.getUser();
 
-            this.userService.addUser(userWithRoleAndMenu, roleIds, menuIds);
-            User resUser = this.userService.findByName(userWithRoleAndMenu.getUsername());
+            this.userService.addUser(user, roleIds, menuIds);
+            User resUser = this.userService.findByName(user.getUsername());
             return JsonResponse.build(resUser);
         } catch (Exception e) {
             log.error("新增用户失败", e);
@@ -92,21 +91,21 @@ public class UserController extends BaseController {
     }
 
     @Log("修改用户状态")
-    @RequiresPermissions("user:status")
+    @RequiresPermissions("sys:user:status")
     @RequestMapping("user/updateUserStatus")
     @ResponseBody
     public JsonResponse updateUserStatus(@RequestBody JSONObject jsonObject) {
         try {
-            Long userId =  jsonObject.getLong("userId");
-            String username =  jsonObject.getString("username");
-            String newStatus =  jsonObject.getString("newStatus");
+            Long userId = jsonObject.getLong("userId");
+            String username = jsonObject.getString("username");
+            String newStatus = jsonObject.getString("newStatus");
             User user = new User();
             user.setUserId(userId);
             user.setUsername(username);
             user.setStatus(newStatus);
             this.userService.updateUserStatus(user);
-            User resUser = this.userService.findById(user.getUserId());
-            return JsonResponse.build(resUser);
+            UserRoleMenuResp userRoleMenuResp = this.userService.findById(user);
+            return JsonResponse.build(userRoleMenuResp);
         } catch (Exception e) {
             log.error("修改用户角色状态失败", e);
             return JsonResponse.build(new Exception("修改用户失败，请联系网站管理员！"));
@@ -115,17 +114,18 @@ public class UserController extends BaseController {
 
 
     @Log("修改用户角色权限")
-    @RequiresPermissions("user:permissions")
+    @RequiresPermissions("sys:user:permissions")
     @RequestMapping("user/updateUserPermission")
     @ResponseBody
-    public JsonResponse updateUserPermission(@RequestBody UserWithRoleAndMenu userWithRoleAndMenu) {
+    public JsonResponse updateUserPermission(@RequestBody UserRoleMenuReq userRoleMenuReq) {
         try {
-            List<Long> roleIds = userWithRoleAndMenu.getRoleIds();
-            List<Long> menuIds = userWithRoleAndMenu.getMenuIds();
+            List<Long> roleIds = userRoleMenuReq.getRoleIds();
+            List<Long> menuIds = userRoleMenuReq.getMenuIds();
+            User user = userRoleMenuReq.getUser();
 
-            this.userService.updateUser(userWithRoleAndMenu, roleIds, menuIds);
-            User resUser = this.userService.findById(userWithRoleAndMenu.getUserId());
-            return JsonResponse.build(resUser);
+            this.userService.updateUser(user, roleIds, menuIds);
+            UserRoleMenuResp userRoleMenuResp = this.userService.findById(user);
+            return JsonResponse.build(userRoleMenuResp);
         } catch (Exception e) {
             log.error("修改用户角色权限失败", e);
             return JsonResponse.build(new Exception("修改用户失败，请联系网站管理员！"));
@@ -133,14 +133,14 @@ public class UserController extends BaseController {
     }
 
     @Log("修改用户信息")
-    @RequiresPermissions("user:update")
+    @RequiresPermissions("sys:user:update")
     @RequestMapping("user/updateUserInfo")
     @ResponseBody
     public JsonResponse updateUserInfo(@RequestBody User user) {
         try {
             this.userService.updateUserProfile(user);
-            User resUser = this.userService.findById(user.getUserId());
-            return JsonResponse.build(resUser);
+            UserRoleMenuResp userRoleMenuResp = this.userService.findById(user);
+            return JsonResponse.build(userRoleMenuResp.getUser());
         } catch (Exception e) {
             log.error("修改用户信息失败", e);
             return JsonResponse.build(new Exception("修改用户失败，请联系网站管理员！"));
@@ -148,14 +148,14 @@ public class UserController extends BaseController {
     }
 
     @Log("修改用户密码")
-    @RequiresPermissions("user:update")
+    @RequiresPermissions("sys:user:update")
     @RequestMapping("user/updateUserPassword")
     @ResponseBody
     public JsonResponse updateUserPassword(@RequestBody JSONObject jsonObject) {
         try {
-            Long userId =  jsonObject.getLong("userId");
-            String username =  jsonObject.getString("username");
-            String newPassword =  jsonObject.getString("newPassword");
+            Long userId = jsonObject.getLong("userId");
+            String username = jsonObject.getString("username");
+            String newPassword = jsonObject.getString("newPassword");
 
             String password = MD5Utils.encrypt(username.toLowerCase(), newPassword);
             User user = new User();
@@ -163,8 +163,8 @@ public class UserController extends BaseController {
             user.setUserId(userId);
 
             this.userService.updateUserPassword(user);
-            User resUser = this.userService.findById(user.getUserId());
-            return JsonResponse.build(resUser);
+            UserRoleMenuResp userRoleMenuResp = this.userService.findById(user);
+            return JsonResponse.build(userRoleMenuResp.getUser());
         } catch (Exception e) {
             log.error("修改用户信息失败", e);
             return JsonResponse.build(new Exception("修改用户失败，请联系网站管理员！"));
@@ -172,42 +172,21 @@ public class UserController extends BaseController {
     }
 
 
-    @Log("删除用户")
-    @RequiresPermissions("user:delete")
-    @RequestMapping("user/deleteUsers")
-    @ResponseBody
-    public JsonResponse deleteUsers(@RequestBody JSONObject jsonObject) {
-        try {
-            List<String> userIds = JSONObject.parseArray(jsonObject.getJSONArray("userIds").toJSONString(), String.class);
-
-            this.userService.deleteUsers(userIds);
-
-            Map<String, Integer> resMap = new HashMap<String, Integer>(){{
-                put("rowCounts", userIds.size());
-            }};
-            return JsonResponse.build(resMap);
-
-        } catch (Exception e) {
-            log.error("删除用户失败", e);
-            return JsonResponse.build(new Exception("删除用户失败，请联系网站管理员！"));
-        }
-    }
-
     @RequestMapping("user/updatePassword")
     @ResponseBody
     public JsonResponse updatePassword(@RequestBody JSONObject jsonObject) {
         try {
-            String newPassword =  jsonObject.getString("newPassword");
-            String oldPassword =  jsonObject.getString("oldPassword");
+            String newPassword = jsonObject.getString("newPassword");
+            String oldPassword = jsonObject.getString("oldPassword");
 
             User user = getCurrentUser();
             String encrypt = MD5Utils.encrypt(user.getUsername().toLowerCase(), oldPassword);
-            if(user.getPassword().equals(encrypt)){
+            if (user.getPassword().equals(encrypt)) {
                 this.userService.updatePassword(newPassword);
                 return JsonResponse.build("");
-            } else{
-                return JsonResponse.build(new Exception("旧密码错误！"));
             }
+            return JsonResponse.build(new Exception("旧密码错误！"));
+
 
         } catch (Exception e) {
             log.error("修改密码失败", e);
@@ -221,8 +200,10 @@ public class UserController extends BaseController {
     public JsonResponse getUserProfile(@RequestBody JSONObject jsonObject) {
         try {
             Long userId = jsonObject.getLong("userId");
-            User user = new User();
-            user.setUserId(userId);
+            User user = getCurrentUser();
+            if (!user.getUserId().equals(userId)) {
+                return JsonResponse.build(new Exception("只允许查看当前用户个人信息"));
+            }
             return JsonResponse.build(this.userService.findUserProfile(user));
         } catch (Exception e) {
             log.error("获取用户信息失败", e);
@@ -235,11 +216,12 @@ public class UserController extends BaseController {
     public JsonResponse updateUserProfile(@RequestBody User user) {
         try {
             User currentUser = getCurrentUser();
-            if(! currentUser.getUserId().equals(user.getUserId())){
+            if (!currentUser.getUserId().equals(user.getUserId())) {
                 return JsonResponse.build(new Exception("只能修改当前用户信息"));
             }
             this.userService.updateUserProfile(user);
-            return JsonResponse.build(null);
+            UserRoleMenuResp userRoleMenuResp = this.userService.findById(user);
+            return JsonResponse.build(userRoleMenuResp.getUser());
         } catch (Exception e) {
             log.error("更新用户信息失败", e);
             return JsonResponse.build(new Exception("更新用户信息失败，请联系网站管理员！"));
@@ -351,5 +333,27 @@ public class UserController extends BaseController {
 //        }
 //        model.addAttribute("user", user);
 //        return "system/user/profile";
+//    }
+
+//
+//    @Log("删除用户")
+//    @RequiresPermissions("sys:user:delete")
+//    @RequestMapping("user/deleteUsers")
+//    @ResponseBody
+//    public JsonResponse deleteUsers(@RequestBody JSONObject jsonObject) {
+//        try {
+//            List<String> userIds = JSONObject.parseArray(jsonObject.getJSONArray("userIds").toJSONString(), String.class);
+//
+//            this.userService.deleteUsers(userIds);
+//
+//            Map<String, Integer> resMap = new HashMap<String, Integer>(){{
+//                put("rowCounts", userIds.size());
+//            }};
+//            return JsonResponse.build(resMap);
+//
+//        } catch (Exception e) {
+//            log.error("删除用户失败", e);
+//            return JsonResponse.build(new Exception("删除用户失败，请联系网站管理员！"));
+//        }
 //    }
 }

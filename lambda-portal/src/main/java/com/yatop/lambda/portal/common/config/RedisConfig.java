@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +31,7 @@ import java.nio.charset.Charset;
 import java.time.Duration;
 
 @Configuration
-
+@EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
     @Value("${spring.redis.host}")
@@ -134,28 +135,29 @@ public class RedisConfig extends CachingConfigurerSupport {
         template.setConnectionFactory(redisConnectionFactory);
         return template;
     }
-}
 
-class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
-    private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
-    private Class<T> clazz;
 
-    FastJsonRedisSerializer(Class<T> clazz) {
-        super();
-        this.clazz = clazz;
-    }
+    public static class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
+        private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+        private Class<T> clazz;
 
-    @Override
-    public byte[] serialize(T t) throws SerializationException {
-        return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(DEFAULT_CHARSET);
-    }
-
-    @Override
-    public T deserialize(byte[] bytes) throws SerializationException {
-        if (bytes.length <= 0) {
-            return null;
+        FastJsonRedisSerializer(Class<T> clazz) {
+            super();
+            this.clazz = clazz;
         }
-        String str = new String(bytes, DEFAULT_CHARSET);
-        return JSON.parseObject(str, clazz);
+
+        @Override
+        public byte[] serialize(T t) throws SerializationException {
+            return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(DEFAULT_CHARSET);
+        }
+
+        @Override
+        public T deserialize(byte[] bytes) throws SerializationException {
+            if (bytes.length <= 0) {
+                return null;
+            }
+            String str = new String(bytes, DEFAULT_CHARSET);
+            return JSON.parseObject(str, clazz);
+        }
     }
 }

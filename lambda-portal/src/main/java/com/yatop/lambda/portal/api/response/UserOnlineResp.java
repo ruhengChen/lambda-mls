@@ -1,9 +1,9 @@
-package com.yatop.lambda.portal.model;
+package com.yatop.lambda.portal.api.response;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class UserOnline implements Serializable{
+public class UserOnlineResp implements Serializable{
 	
 	private static final long serialVersionUID = 3828664348416633856L;
 	

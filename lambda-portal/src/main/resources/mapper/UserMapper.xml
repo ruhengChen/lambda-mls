@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yatop.lambda.portal.dao.UserMapper" >
-    <resultMap id="BaseResultMap" type="com.yatop.lambda.portal.model.User" >
+<mapper namespace="com.yatop.lambda.portal.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.yatop.lambda.portal.model.User">
         <!--
           WARNING - @mbg.generated
         -->
-        <id column="USER_ID" property="userId" jdbcType="BIGINT" />
-        <result column="USERNAME" property="username" jdbcType="VARCHAR" />
-        <result column="USER_REL_NAME" property="userRelName" jdbcType="VARCHAR" />
-        <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
-        <result column="DEPT_ID" property="deptId" jdbcType="BIGINT" />
-        <result column="EMAIL" property="email" jdbcType="VARCHAR" />
-        <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
-        <result column="STATUS" property="status" jdbcType="CHAR" />
-        <result column="CRATE_TIME" property="crateTime" jdbcType="TIMESTAMP" />
-        <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
-        <result column="LAST_LOGIN_TIME" property="lastLoginTime" jdbcType="TIMESTAMP" />
-        <result column="SSEX" property="ssex" jdbcType="CHAR" />
-        <result column="THEME" property="theme" jdbcType="VARCHAR" />
-        <result column="AVATAR" property="avatar" jdbcType="VARCHAR" />
-        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+        <id column="USER_ID" property="userId" jdbcType="BIGINT"/>
+        <result column="USERNAME" property="username" jdbcType="VARCHAR"/>
+        <result column="USER_REL_NAME" property="userRelName" jdbcType="VARCHAR"/>
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR"/>
+        <result column="DEPT_ID" property="deptId" jdbcType="BIGINT"/>
+        <result column="EMAIL" property="email" jdbcType="VARCHAR"/>
+        <result column="MOBILE" property="mobile" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="CHAR"/>
+        <result column="CRATE_TIME" property="crateTime" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="LAST_LOGIN_TIME" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="SSEX" property="ssex" jdbcType="CHAR"/>
+        <result column="THEME" property="theme" jdbcType="VARCHAR"/>
+        <result column="AVATAR" property="avatar" jdbcType="VARCHAR"/>
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
     </resultMap>
 
 
-
-    <select id="findUserWithDept" parameterType="user" resultType="user">
+    <select id="findUserWithDept" parameterType="com.yatop.lambda.portal.model.User"
+            resultType="com.yatop.lambda.portal.model.User">
         select u.user_id userId,u.username,u.USER_REL_NAME userRelName,u.email,u.mobile,u.status,u.crate_time crateTime,
         u.ssex,d.dept_name deptName from sys_manage_user u
         left join sys_manage_dept d on(u.dept_id = d.dept_id)
@@ -45,7 +45,8 @@
         order by u.user_id
     </select>
 
-    <select id="findUserByConditions" parameterType="com.yatop.lambda.portal.model.User" resultType="com.yatop.lambda.portal.model.User">
+    <select id="findUserByConditions" parameterType="com.yatop.lambda.portal.model.User"
+            resultType="com.yatop.lambda.portal.model.User">
         select u.user_id userId,u.username,u.USER_REL_NAME userRelName,u.email,u.mobile,u.status,u.crate_time crateTime,
         u.ssex,d.dept_name deptName from sys_manage_user u
         left join sys_manage_dept d on(u.dept_id = d.dept_id)
@@ -67,22 +68,22 @@
     </select>
 
 
-
-    <select id="findUserWithRole" resultType="com.yatop.lambda.portal.model.UserWithRole">
+    <select id="findUserWithRole" resultType="com.yatop.lambda.portal.api.request.UserRoleReq">
 		select u.user_id userId,u.username,u.user_rel_name userRelName,u.dept_id deptId,u.email,u.mobile,
 		u.status,u.ssex,ur.role_id roleId from sys_manage_user u
 		left join sys_manage_user_role ur on (u.user_id = ur.user_id)
 		where u.user_id = #{userId}
   </select>
 
-    <select id="findUserWithMenu" resultType="com.yatop.lambda.portal.model.UserWithMenu">
+    <select id="findUserWithMenu" resultType="com.yatop.lambda.portal.api.request.UserMenuReq">
 		select u.user_id userId,u.username,u.user_rel_name userRelName,u.dept_id deptId,u.email,u.mobile,
 		u.status,u.ssex,um.menu_id menuId from sys_manage_user u
 		left join sys_manage_user_menu um on (u.user_id = um.user_id)
 		where u.user_id = #{userId}
   </select>
 
-    <select id="findUserProfile" parameterType="com.yatop.lambda.portal.model.User" resultType="com.yatop.lambda.portal.model.User">
+    <select id="findUserProfile" parameterType="com.yatop.lambda.portal.model.User"
+            resultType="com.yatop.lambda.portal.model.User">
 	SELECT
 		U .USERNAME,
 		U .USER_REL_NAME userRelName,
@@ -114,4 +115,15 @@
 		U .USER_ID,
 		U .dept_id
   </select>
+
+    <select id="findMenuIdsByUser" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select rm.menu_id menuId from sys_manage_user r
+    left join sys_manage_user_menu rm on(r.user_id = rm.user_id)
+    where r.user_id = #{userId}
+
+    </select><select id="findRoleIdsByUser" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select rm.role_id roleId from sys_manage_user r
+    left join sys_manage_user_role rm on(r.user_id = rm.user_id)
+    where r.user_id = #{userId}
+    </select>
 </mapper>

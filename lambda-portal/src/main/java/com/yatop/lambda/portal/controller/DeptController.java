@@ -56,7 +56,7 @@ public class DeptController {
     }
 
     @RequestMapping("dept/queryDepts")
-    @RequiresPermissions("dept:list")
+    @RequiresPermissions("sys:dept:list")
     @ResponseBody
     public JsonResponse deptList(@RequestBody Dept dept) {
         try {
@@ -103,7 +103,7 @@ public class DeptController {
     }
 
     @Log("新增部门 ")
-    @RequiresPermissions("dept:add")
+    @RequiresPermissions("sys:dept:add")
     @RequestMapping("dept/addDept")
     @ResponseBody
     public JsonResponse addRole(@RequestBody Dept dept) {
@@ -118,7 +118,7 @@ public class DeptController {
     }
 
     @Log("删除部门")
-    @RequiresPermissions("dept:delete")
+    @RequiresPermissions("sys:dept:delete")
     @RequestMapping("dept/deleteDepts")
     @ResponseBody
     public JsonResponse deleteDepts(@RequestBody JSONObject jsonObject) {
@@ -136,7 +136,7 @@ public class DeptController {
     }
 
     @Log("修改部门 ")
-    @RequiresPermissions("dept:update")
+    @RequiresPermissions("sys:dept:update")
     @RequestMapping("dept/updateDept")
     @ResponseBody
     public JsonResponse updateRole(@RequestBody Dept dept) {

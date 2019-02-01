@@ -2,8 +2,8 @@ package com.yatop.lambda.portal.dao;
 
 import com.yatop.lambda.portal.common.config.MyMapper;
 import com.yatop.lambda.portal.model.User;
-import com.yatop.lambda.portal.model.UserWithMenu;
-import com.yatop.lambda.portal.model.UserWithRole;
+import com.yatop.lambda.portal.api.request.UserMenuReq;
+import com.yatop.lambda.portal.api.request.UserRoleReq;
 
 import java.util.List;
 
@@ -13,11 +13,14 @@ public interface UserMapper extends MyMapper<User> {
 
 	List<User> findUserByConditions(User user);
 
-	List<UserWithRole> findUserWithRole(Long userId);
+	List<UserRoleReq> findUserWithRole(Long userId);
 
-	List<UserWithMenu> findUserWithMenu(Long userId);
+	List<UserMenuReq> findUserWithMenu(Long userId);
 	
 	User findUserProfile(User user);
 
+	List<Long> findMenuIdsByUser(Long userId);
+
+	List<Long> findRoleIdsByUser(Long userId);
 
 }
