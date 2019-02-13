@@ -1,7 +1,6 @@
 package com.yatop.lambda.portal.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yatop.lambda.portal.common.annotation.Log;
 import com.yatop.lambda.portal.common.config.FebsProperties;
 import com.yatop.lambda.portal.common.controller.BaseController;
 import com.yatop.lambda.portal.common.domain.JsonResponse;
@@ -17,8 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 
@@ -78,7 +78,7 @@ public class LoginController extends BaseController {
         } catch (UnknownAccountException | IncorrectCredentialsException | LockedAccountException e) {
             return JsonResponse.build(e);
         } catch (AuthenticationException e) {
-            return JsonResponse.build(new Exception("认证失败！"));
+            return JsonResponse.buildError(new Exception("认证失败！"));
         }
 //        String sessionCode = (String) session.getAttribute(CODE_KEY);
 //        if (!code.equalsIgnoreCase(sessionCode)) {

@@ -38,7 +38,7 @@ public class MenuController extends BaseController {
             return JsonResponse.build(menus);
         } catch (Exception e) {
             logger.error("获取菜单失败", e);
-            return JsonResponse.build(new Exception("获取菜单失败！"));
+            return JsonResponse.buildError(new Exception("获取菜单失败！"));
         }
     }
 
@@ -51,7 +51,7 @@ public class MenuController extends BaseController {
             return JsonResponse.build(menu);
         } catch (Exception e) {
             logger.error("获取菜单信息失败", e);
-            return JsonResponse.build(new Exception("获取信息失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("获取信息失败，请联系网站管理员！"));
         }
     }
 
@@ -63,7 +63,7 @@ public class MenuController extends BaseController {
             return JsonResponse.build(tree);
         } catch (Exception e) {
             logger.error("获取菜单列表失败", e);
-            return JsonResponse.build(new Exception("获取菜单列表失败！"));
+            return JsonResponse.buildError(new Exception("获取菜单列表失败！"));
         }
     }
 
@@ -75,7 +75,7 @@ public class MenuController extends BaseController {
             return JsonResponse.build(tree);
         } catch (Exception e) {
             logger.error("获取菜单树失败", e);
-            return JsonResponse.build(new Exception("获取菜单树失败！"));
+            return JsonResponse.buildError(new Exception("获取菜单树失败！"));
         }
     }
 
@@ -88,7 +88,7 @@ public class MenuController extends BaseController {
             return JsonResponse.build(tree);
         } catch (Exception e) {
             logger.error("获取用户菜单失败", e);
-            return JsonResponse.build(new Exception("获取用户菜单失败！"));
+            return JsonResponse.buildError(new Exception("获取用户菜单失败！"));
         }
     }
 
@@ -100,7 +100,7 @@ public class MenuController extends BaseController {
             return JsonResponse.build(this.menuService.findAllMenus(menu));
         } catch (Exception e) {
             logger.error("获取菜单集合失败", e);
-            return JsonResponse.build(new Exception("获取菜单集合失败"));
+            return JsonResponse.buildError(new Exception("获取菜单集合失败"));
         }
     }
 //
@@ -157,7 +157,7 @@ public class MenuController extends BaseController {
             return JsonResponse.build(menu1);
         } catch (Exception e) {
             logger.error("新增{}失败", name, e);
-            return JsonResponse.build(new Exception("新增" + name + "失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("新增" + name + "失败，请联系网站管理员！"));
         }
     }
 
@@ -177,7 +177,7 @@ public class MenuController extends BaseController {
             return JsonResponse.build(resMap);
         } catch (Exception e) {
             logger.error("获取菜单失败", e);
-            return JsonResponse.build(new Exception("删除失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("删除失败，请联系网站管理员！"));
         }
     }
 
@@ -197,7 +197,7 @@ public class MenuController extends BaseController {
             return JsonResponse.build(resMenu);
         } catch (Exception e) {
             logger.error("修改{}失败", name, e);
-            return JsonResponse.build(new Exception("修改" + name + "失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("修改" + name + "失败，请联系网站管理员！"));
         }
     }
 

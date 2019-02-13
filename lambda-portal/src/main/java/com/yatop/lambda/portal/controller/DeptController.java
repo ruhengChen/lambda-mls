@@ -37,7 +37,7 @@ public class DeptController {
 //            return ResponseBo.ok(tree);
         } catch (Exception e) {
             log.error("获取部门树失败", e);
-            return JsonResponse.build(new Exception("获取部门树失败！"));
+            return JsonResponse.buildError(new Exception("获取部门树失败！"));
 //            return ResponseBo.error("获取部门树失败！");
         }
     }
@@ -51,7 +51,7 @@ public class DeptController {
             return JsonResponse.build(dept);
         } catch (Exception e) {
             log.error("获取部门信息失败", e);
-            return JsonResponse.build(new Exception("获取部门信息失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("获取部门信息失败，请联系网站管理员！"));
         }
     }
 
@@ -63,7 +63,7 @@ public class DeptController {
             return JsonResponse.build(this.deptService.findAllDepts(dept));
         } catch (Exception e) {
             log.error("获取部门列表失败", e);
-            return JsonResponse.build(new Exception("获取部门列表失败"));
+            return JsonResponse.buildError(new Exception("获取部门列表失败"));
         }
     }
 //
@@ -113,7 +113,7 @@ public class DeptController {
             return JsonResponse.build(dept1);
         } catch (Exception e) {
             log.error("新增部门失败", e);
-            return JsonResponse.build(new Exception("新增部门失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("新增部门失败，请联系网站管理员！"));
         }
     }
 
@@ -131,7 +131,7 @@ public class DeptController {
             return JsonResponse.build(resMap);
         } catch (Exception e) {
             log.error("删除部门失败", e);
-            return JsonResponse.build(new Exception("删除部门失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("删除部门失败，请联系网站管理员！"));
         }
     }
 
@@ -146,7 +146,7 @@ public class DeptController {
             return JsonResponse.build(dept1);
         } catch (Exception e) {
             log.error("修改部门失败", e);
-            return JsonResponse.build(new Exception("修改部门失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("修改部门失败，请联系网站管理员！"));
         }
     }
 }

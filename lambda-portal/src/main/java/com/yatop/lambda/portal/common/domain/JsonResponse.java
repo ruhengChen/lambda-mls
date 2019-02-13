@@ -17,17 +17,19 @@ public class JsonResponse implements Serializable{
 
     private String errorHint;
 
+    private JsonResponse() {}
+
     private JsonResponse(Object data) {
         this.success = true;
         this.data = data;
     }
 
-    private JsonResponse(Exception e) {
+    /*private JsonResponse(Exception e) {
         this.success = false;
         this.errorCode = "500";
         this.errorMessage = e.getMessage();
         this.errorHint = "";
-    }
+    }*/
 
     public Boolean getSuccess() {
         return success;
@@ -70,11 +72,17 @@ public class JsonResponse implements Serializable{
     }
 
     public static JsonResponse build(Object data) {
-        if(data == null) return new JsonResponse("");
+//        if(data == null) return new JsonResponse("");
         return new JsonResponse(data);
     }
 
-    public static JsonResponse build(Exception e) {
-        return new JsonResponse(e);
+    public static JsonResponse buildError(Exception e) {
+        //return new JsonResponse(e);
+        JsonResponse resp = new JsonResponse();
+        resp.success = false;
+        resp.errorCode = "500";
+        resp.errorMessage = e.getMessage();
+        resp.errorHint = "";
+        return resp;
     }
 }

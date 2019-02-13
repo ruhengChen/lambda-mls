@@ -45,7 +45,7 @@ public class RoleController extends BaseController {
             return JsonResponse.build(roleMenuResp);
         } catch (Exception e) {
             log.error("获取角色信息失败", e);
-            return JsonResponse.build(new Exception("获取角色信息失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("获取角色信息失败，请联系网站管理员！"));
         }
     }
 
@@ -73,7 +73,7 @@ public class RoleController extends BaseController {
             return JsonResponse.build(resRole);
         } catch (Exception e) {
             log.error("新增角色失败", e);
-            return JsonResponse.build(new Exception("新增角色失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("新增角色失败，请联系网站管理员！"));
         }
     }
 
@@ -93,7 +93,7 @@ public class RoleController extends BaseController {
             return JsonResponse.build(resMap);
         } catch (Exception e) {
             log.error("删除角色失败", e);
-            return JsonResponse.build(new Exception("删除角色失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("删除角色失败，请联系网站管理员！"));
         }
     }
 
@@ -113,7 +113,7 @@ public class RoleController extends BaseController {
             return JsonResponse.build(resRole);
         } catch (Exception e) {
             log.error("修改角色失败", e);
-            return JsonResponse.build(new Exception("修改角色失败，请联系网站管理员！"));
+            return JsonResponse.buildError(new Exception("修改角色失败，请联系网站管理员！"));
         }
     }
 }

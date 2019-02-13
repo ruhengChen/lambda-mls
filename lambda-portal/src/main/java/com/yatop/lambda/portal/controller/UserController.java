@@ -39,6 +39,7 @@ public class UserController extends BaseController {
 //        }
         User result = this.userService.findByName(username);
         return JsonResponse.build(result == null);
+//        return JsonResponse.build(null);
     }
 
 

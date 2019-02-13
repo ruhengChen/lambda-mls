@@ -53,7 +53,7 @@ public class SessionController {
             return JsonResponse.build("");
         } catch (Exception e) {
             log.error("踢出用户失败", e);
-            return JsonResponse.build(new Exception("踢出用户失败"));
+            return JsonResponse.buildError(new Exception("踢出用户失败"));
         }
 
     }
