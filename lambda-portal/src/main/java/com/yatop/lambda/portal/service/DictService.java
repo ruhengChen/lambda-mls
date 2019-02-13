@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,8 +58,9 @@ public class DictService extends BaseService<Dict> {
 
 	@CacheEvict(key = "#p0", allEntries = true)
 	@Transactional
-	public void deleteDicts(List<String> dictIds) {
-		this.batchDelete(dictIds, "dictId", Dict.class);
+	public int deleteDicts(List<String> dictIds) {
+		return this.batchDelete(dictIds, "dictId", Dict.class);
+
 	}
 
 	@CacheEvict(key = "#p0", allEntries = true)

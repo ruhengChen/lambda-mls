@@ -79,19 +79,20 @@ public class RoleService extends BaseService<Role> {
     }
 
     @Transactional
-    public void deleteRoles(List<String> roleIds) {
-        this.batchDelete(roleIds, "roleId", Role.class);
+    public int deleteRoles(List<String> roleIds) {
+        int deleteCount = this.batchDelete(roleIds, "roleId", Role.class);
 
         this.roleMenuService.deleteRoleMenusByRoleId(roleIds);
         this.userRoleService.deleteUserRolesByRoleId(roleIds);
-
+        return deleteCount;
     }
 
     public RoleMenuResp findRoleWithMenus(Role role) {
         List<Long> menuList = this.roleMapper.findMenuIdsByRole(role.getRoleId());
         RoleMenuResp roleMenuResp = new RoleMenuResp();
         roleMenuResp.setMenuIds(menuList);
-        roleMenuResp.setRole(role);
+        Role role1= this.roleMapper.findRoleById(role.getRoleId());
+        roleMenuResp.setRole(role1);
         return roleMenuResp;
     }
 

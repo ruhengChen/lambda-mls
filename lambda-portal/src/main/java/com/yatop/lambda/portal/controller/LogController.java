@@ -5,12 +5,10 @@ import com.yatop.lambda.portal.common.domain.JsonResponse;
 import com.yatop.lambda.portal.common.domain.QueryRequest;
 import com.yatop.lambda.portal.model.SysLog;
 import com.yatop.lambda.portal.service.LogService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,7 +23,7 @@ public class LogController extends BaseController {
 
     @RequestMapping("log/queryLogs")
     @ResponseBody
-    public JsonResponse queryLogs(QueryRequest request, @RequestBody SysLog log) {
+    public JsonResponse queryLogs(QueryRequest request, SysLog log) {
         return super.selectByPageNumSize(request, () -> this.logService.findAllLogs(log));
     }
 //

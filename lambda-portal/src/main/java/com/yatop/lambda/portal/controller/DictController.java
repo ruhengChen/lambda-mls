@@ -29,12 +29,74 @@ public class DictController extends BaseController {
     private DictService dictService;
 
 
-    @RequestMapping("dict/list")
+    @RequestMapping("dict/queryDicts")
     @RequiresPermissions("sys:dict:list")
     @ResponseBody
-    public JsonResponse dictList(QueryRequest request, @RequestBody Dict dict) {
+    public JsonResponse queryDicts(QueryRequest request, Dict dict) {
         return super.selectByPageNumSize(request, () -> this.dictService.findAllDicts(dict, request));
     }
+
+    @RequestMapping("dict/queryDictInfo")
+    @ResponseBody
+    public JsonResponse queryDictInfo(@RequestBody JSONObject jsonObject) {
+        try {
+            Long dictId = jsonObject.getLong("dictId");
+            Dict dict = this.dictService.findById(dictId);
+            return JsonResponse.build(dict);
+        } catch (Exception e) {
+            log.error("获取字典信息失败", e);
+            return JsonResponse.build(new Exception("获取字典信息失败，请联系网站管理员！"));
+        }
+    }
+
+    @Log("新增字典 ")
+    @RequiresPermissions("sys:dict:add")
+    @RequestMapping("dict/addDict")
+    @ResponseBody
+    public JsonResponse addDict(@RequestBody Dict dict) {
+        try {
+            this.dictService.addDict(dict);
+            Dict resDict = this.dictService.findById(dict.getDictId());
+            return JsonResponse.build(resDict);
+        } catch (Exception e) {
+            log.error("新增字典失败", e);
+            return JsonResponse.build(new Exception("新增字典失败，请联系网站管理员！"));
+        }
+    }
+
+    @Log("删除字典")
+    @RequiresPermissions("sys:dict:delete")
+    @RequestMapping("dict/deleteDicts")
+    @ResponseBody
+    public JsonResponse deleteDicts(@RequestBody JSONObject jsonObject) {
+        try {
+            List<String> dictIds = JSONObject.parseArray(jsonObject.getJSONArray("dictIds").toJSONString(), String.class);
+            int deleteCount = this.dictService.deleteDicts(dictIds);
+            Map<String, Integer> resMap = new HashMap<String, Integer>(){{
+                put("rowCounts", deleteCount);
+            }};
+            return JsonResponse.build(resMap);
+        } catch (Exception e) {
+            log.error("删除字典失败", e);
+            return JsonResponse.build(new Exception("删除字典失败，请联系网站管理员！"));
+        }
+    }
+
+    @Log("修改字典 ")
+    @RequiresPermissions("sys:dict:update")
+    @RequestMapping("dict/updateDict")
+    @ResponseBody
+    public JsonResponse updateDict(@RequestBody Dict dict) {
+        try {
+            this.dictService.updateDict(dict);
+            Dict resDict = this.dictService.findById(dict.getDictId());
+            return JsonResponse.build(resDict);
+        } catch (Exception e) {
+            log.error("修改字典失败", e);
+            return JsonResponse.build(new Exception("修改字典失败，请联系网站管理员！"));
+        }
+    }
+}
 //
 //    @RequestMapping("dict/excel")
 //    @ResponseBody
@@ -59,65 +121,3 @@ public class DictController extends BaseController {
 //            return ResponseBo.error("导出Csv失败，请联系网站管理员！");
 //        }
 //    }
-
-    @RequestMapping("dict/getDict")
-    @ResponseBody
-    public JsonResponse getDict(@RequestBody JSONObject jsonObject) {
-        try {
-            Long dictId = jsonObject.getLong("dictId");
-            Dict dict = this.dictService.findById(dictId);
-            return JsonResponse.build(dict);
-        } catch (Exception e) {
-            log.error("获取字典信息失败", e);
-            return JsonResponse.build(new Exception("获取字典信息失败，请联系网站管理员！"));
-        }
-    }
-
-    @Log("新增字典 ")
-    @RequiresPermissions("sys:dict:add")
-    @RequestMapping("dict/add")
-    @ResponseBody
-    public JsonResponse addDict(@RequestBody Dict dict) {
-        try {
-            this.dictService.addDict(dict);
-            Dict resDict = this.dictService.findById(dict.getDictId());
-            return JsonResponse.build(resDict);
-        } catch (Exception e) {
-            log.error("新增字典失败", e);
-            return JsonResponse.build(new Exception("新增字典失败，请联系网站管理员！"));
-        }
-    }
-
-    @Log("删除字典")
-    @RequiresPermissions("sys:dict:delete")
-    @RequestMapping("dict/delete")
-    @ResponseBody
-    public JsonResponse deleteDicts(@RequestBody JSONObject jsonObject) {
-        try {
-            List<String> dictIds = JSONObject.parseArray(jsonObject.getJSONArray("dictIds").toJSONString(), String.class);
-            this.dictService.deleteDicts(dictIds);
-            Map<String, Integer> resMap = new HashMap<String, Integer>(){{
-                put("rowCounts", dictIds.size());
-            }};
-            return JsonResponse.build(resMap);
-        } catch (Exception e) {
-            log.error("删除字典失败", e);
-            return JsonResponse.build(new Exception("删除字典失败，请联系网站管理员！"));
-        }
-    }
-
-    @Log("修改字典 ")
-    @RequiresPermissions("sys:dict:update")
-    @RequestMapping("dict/update")
-    @ResponseBody
-    public JsonResponse updateDict(@RequestBody Dict dict) {
-        try {
-            this.dictService.updateDict(dict);
-            Dict resDict = this.dictService.findById(dict.getDictId());
-            return JsonResponse.build(resDict);
-        } catch (Exception e) {
-            log.error("修改字典失败", e);
-            return JsonResponse.build(new Exception("修改字典失败，请联系网站管理员！"));
-        }
-    }
-}

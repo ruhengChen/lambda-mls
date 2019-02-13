@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -130,10 +129,11 @@ public class MenuService extends BaseService<Menu> {
     }
 
     @Transactional
-    public void deleteMeuns(List<String> menuIds) {
-        this.batchDelete(menuIds, "menuId", Menu.class);
+    public int deleteMeuns(List<String> menuIds) {
+        int deleteCount = this.batchDelete(menuIds, "menuId", Menu.class);
         this.roleMenuService.deleteRoleMenusByMenuId(menuIds);
         this.menuMapper.changeToTop(menuIds);
+        return deleteCount;
     }
 
     @Cacheable(key = "'url_'+ #p0")

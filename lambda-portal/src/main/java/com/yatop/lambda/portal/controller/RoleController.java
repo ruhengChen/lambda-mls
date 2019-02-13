@@ -79,16 +79,16 @@ public class RoleController extends BaseController {
 
     @Log("删除角色")
     @RequiresPermissions("sys:role:delete")
-    @RequestMapping("role/deleteRole")
+    @RequestMapping("role/deleteRoles")
     @ResponseBody
     public JsonResponse deleteRoles(@RequestBody JSONObject jsonObject) {
         try {
             List<String> roleIds = JSONObject.parseArray(jsonObject.getJSONArray("roleIds").toJSONString(), String.class);
 
-            this.roleService.deleteRoles(roleIds);
+            int deleteCount = this.roleService.deleteRoles(roleIds);
 
             Map<String, Integer> resMap = new HashMap<String, Integer>(){{
-                put("rowCounts", roleIds.size());
+                put("rowCounts", deleteCount);
             }};
             return JsonResponse.build(resMap);
         } catch (Exception e) {

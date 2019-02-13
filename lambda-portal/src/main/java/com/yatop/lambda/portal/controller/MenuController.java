@@ -6,6 +6,7 @@ import com.yatop.lambda.portal.common.controller.BaseController;
 import com.yatop.lambda.portal.common.domain.JsonResponse;
 import com.yatop.lambda.portal.common.domain.Tree;
 import com.yatop.lambda.portal.model.Menu;
+import com.yatop.lambda.portal.model.User;
 import com.yatop.lambda.portal.service.MenuService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -30,9 +31,9 @@ public class MenuController extends BaseController {
 
     @RequestMapping("menu/queryMenus")
     @ResponseBody
-    public JsonResponse getMenu(@RequestBody JSONObject jsonObject) {
+    public JsonResponse getMenu(User user) {
         try {
-            String userName = jsonObject.getString("userName");
+            String userName = user.getUsername();
             List<Menu> menus = this.menuService.findUserMenus(userName);
             return JsonResponse.build(menus);
         } catch (Exception e) {
@@ -162,16 +163,16 @@ public class MenuController extends BaseController {
 
     @Log("删除菜单")
     @RequiresPermissions("sys:menu:delete")
-    @RequestMapping("menu/deleteMenu")
+    @RequestMapping("menu/deleteMenus")
     @ResponseBody
     public JsonResponse deleteMenus(@RequestBody JSONObject jsonObject) {
         try {
             List<String> menuIds = JSONObject.parseArray(jsonObject.getJSONArray("menuIds").toJSONString(), String.class);
 
-            this.menuService.deleteMeuns(menuIds);
+            int deleteCount = this.menuService.deleteMeuns(menuIds);
 
             Map<String, Integer> resMap = new HashMap<String, Integer>() {{
-                put("rowCount", menuIds.size());
+                put("rowCount", deleteCount);
             }};
             return JsonResponse.build(resMap);
         } catch (Exception e) {

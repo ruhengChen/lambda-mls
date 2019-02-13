@@ -72,9 +72,10 @@ public class DeptService extends BaseService<Dept> {
 	}
 
 	@Transactional
-	public void deleteDepts(List<String> deptIds) {
-		this.batchDelete(deptIds, "deptId", Dept.class);
+	public int deleteDepts(List<String> deptIds) {
+		int deleteCount =this.batchDelete(deptIds, "deptId", Dept.class);
 		this.deptMapper.changeToTop(deptIds);
+		return deleteCount;
 	}
 
 	public Dept findById(Long deptId) {

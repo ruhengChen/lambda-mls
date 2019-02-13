@@ -58,7 +58,7 @@ public class DeptController {
     @RequestMapping("dept/queryDepts")
     @RequiresPermissions("sys:dept:list")
     @ResponseBody
-    public JsonResponse deptList(@RequestBody Dept dept) {
+    public JsonResponse deptList(Dept dept) {
         try {
             return JsonResponse.build(this.deptService.findAllDepts(dept));
         } catch (Exception e) {
@@ -124,9 +124,9 @@ public class DeptController {
     public JsonResponse deleteDepts(@RequestBody JSONObject jsonObject) {
         try {
             List<String> deptIds = JSONObject.parseArray(jsonObject.getJSONArray("deptIds").toJSONString(), String.class);
-            this.deptService.deleteDepts(deptIds);
+            int deleteCount = this.deptService.deleteDepts(deptIds);
             Map<String, Integer> resMap = new HashMap<String, Integer>(){{
-                put("rowCounts", deptIds.size());
+                put("rowCounts", deleteCount);
             }};
             return JsonResponse.build(resMap);
         } catch (Exception e) {

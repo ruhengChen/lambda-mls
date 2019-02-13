@@ -13,4 +13,6 @@ public interface RoleMapper extends MyMapper<Role> {
 	List<RoleMenuReq> findById(Long roleId);
 
 	List<Long> findMenuIdsByRole(Long roleId);
+
+	Role findRoleById(Long roleId);
 }

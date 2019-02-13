@@ -182,7 +182,8 @@ public class UserService extends BaseService<User> {
         userRoleMenuResp.setRoleIds(roleList);
         List<Long> menuList = this.userMapper.findMenuIdsByUser(user.getUserId());
         userRoleMenuResp.setMenuIds(menuList);
-        userRoleMenuResp.setUser(user);
+        User user1 = this.userMapper.findUserProfile(user);
+        userRoleMenuResp.setUser(user1);
         return userRoleMenuResp;
     }
 
